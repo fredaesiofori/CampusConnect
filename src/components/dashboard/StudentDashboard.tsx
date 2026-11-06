@@ -1582,6 +1582,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       <CovaAssistant
         userName={activeUser?.fullName}
         studentProfile={activeUser?.profile}
+        savedOpportunities={savedOpportunities}
+        onToggleSave={toggleSave}
+        onSelectOpportunity={(opp) => setSelectedOpportunity(opp)}
       />
     </div>
   );

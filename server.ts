@@ -75,16 +75,28 @@ function findRelevantOpportunities(query: string, student?: StudentContext): Opp
   const queryTokens = cleanQuery
     .replace(/[^\w\s]/g, ' ')
     .split(/\s+/)
-    .filter((t) => t.length > 2);
+    .filter((t) => t.length >= 2);
 
   const preferredCountries = (student?.preferredDestinations || []).map((c) => c.toLowerCase());
   const degree = (student?.intendedDegree || student?.educationLevel || '').toLowerCase();
   const field = (student?.fieldOfStudy || '').toLowerCase();
 
+  // Specific country intent flags via word boundaries
+  const wantsUS = /\b(us|usa|united states|america|american)\b/i.test(query);
+  const wantsUK = /\b(uk|united kingdom|britain|british|england|scotland)\b/i.test(query);
+  const wantsCanada = /\b(canada|canadian)\b/i.test(query);
+  const wantsGhana = /\b(ghana|ghanaian)\b/i.test(query);
+  const wantsNigeria = /\b(nigeria|nigerian)\b/i.test(query);
+  const wantsGermany = /\b(germany|german)\b/i.test(query);
+  const wantsKenya = /\b(kenya|kenyan)\b/i.test(query);
+  const wantsSouthAfrica = /\b(south africa|south african)\b/i.test(query);
+  const wantsAustralia = /\b(australia|australian)\b/i.test(query);
+
   const scored: { item: OpportunityItem; score: number }[] = authenticOpportunities.map((item) => {
     let score = 0;
     const country = (item.country || '').toLowerCase();
     const city = (item.city || '').toLowerCase();
+    const countryCode = (item.countryCode || '').toLowerCase();
     const title = (item.title || item.officialName || '').toLowerCase();
     const summary = (item.summary || item.officialRuleSummary || '').toLowerCase();
     const category = (item.category || '').toLowerCase();
@@ -94,8 +106,9 @@ function findRelevantOpportunities(query: string, student?: StudentContext): Opp
     const testStatus = (item.testWaiverRules?.status || item.testWaiverRules?.details || '').toLowerCase();
     const fundingType = (item.fundingDetails?.type || item.fundingDetails?.details || '').toLowerCase();
 
-    // Matches against user query tokens
+    // Matches against query tokens
     for (const token of queryTokens) {
+      if (token === 'university' || token === 'universities' || token === 'find' || token === 'with') continue;
       if (title.includes(token)) score += 8;
       if (country.includes(token) || city.includes(token)) score += 6;
       if (fields.some((f: string) => f.includes(token))) score += 5;
@@ -103,35 +116,50 @@ function findRelevantOpportunities(query: string, student?: StudentContext): Opp
       if (summary.includes(token)) score += 2;
     }
 
-    // Boost if student preferred destination matches
-    if (preferredCountries.some((pc) => country.includes(pc) || pc.includes(country))) {
+    // Specific country intent matches
+    if (wantsUS && (country.includes('united states') || countryCode === 'us')) score += 18;
+    if (wantsUK && (country.includes('united kingdom') || countryCode === 'gb')) score += 18;
+    if (wantsCanada && country.includes('canada')) score += 18;
+    if (wantsGhana && country.includes('ghana')) score += 18;
+    if (wantsNigeria && country.includes('nigeria')) score += 18;
+    if (wantsGermany && country.includes('germany')) score += 18;
+    if (wantsKenya && country.includes('kenya')) score += 18;
+    if (wantsSouthAfrica && country.includes('south africa')) score += 18;
+    if (wantsAustralia && country.includes('australia')) score += 18;
+
+    // Student profile destination boost
+    if (preferredCountries.some((pc) => country.includes(pc) || pc.includes(country) || (pc.includes('united states') && countryCode === 'us'))) {
+      score += 8;
+    }
+
+    // Degree level match
+    if (degree && degrees.some((d: string) => d.includes(degree) || degree.includes(d))) {
       score += 4;
     }
 
-    // Boost if degree level matches
-    if (degree && degrees.some((d: string) => d.includes(degree) || degree.includes(d))) {
-      score += 3;
-    }
-
-    // Boost if field of study matches
+    // Field of study match
     if (field && (fields.some((f: string) => f.includes(field)) || summary.includes(field) || title.includes(field))) {
-      score += 3;
+      score += 4;
     }
 
-    // Specific intent bonuses
-    if (cleanQuery.includes('scholarship') || cleanQuery.includes('funding')) {
-      if (category.includes('scholarship') || fundingType.includes('fully') || fundingType.includes('100%')) {
-        score += 5;
-      }
-    }
+    // Specific fee waiver intent
     if (cleanQuery.includes('fee waiver') || cleanQuery.includes('$0') || cleanQuery.includes('no fee') || cleanQuery.includes('free application')) {
       if (feeStatus.includes('free') || feeStatus.includes('$0') || feeStatus.includes('waiver')) {
-        score += 6;
+        score += 10;
       }
     }
-    if (cleanQuery.includes('sat') || cleanQuery.includes('gre') || cleanQuery.includes('test optional') || cleanQuery.includes('waec')) {
-      if (testStatus.includes('optional') || testStatus.includes('waiver') || testStatus.includes('free') || testStatus.includes('waec')) {
-        score += 6;
+
+    // Specific scholarship intent
+    if (cleanQuery.includes('scholarship') || cleanQuery.includes('funding') || cleanQuery.includes('fully funded')) {
+      if (category.includes('scholarship') || fundingType.includes('fully') || fundingType.includes('100%')) {
+        score += 10;
+      }
+    }
+
+    // Specific test waiver intent (SAT / GRE / WAEC)
+    if (cleanQuery.includes('sat') || cleanQuery.includes('gre') || cleanQuery.includes('test optional') || cleanQuery.includes('no sat') || cleanQuery.includes('without sat')) {
+      if (testStatus.includes('optional') || testStatus.includes('free') || testStatus.includes('waiver') || testStatus.includes('waec')) {
+        score += 10;
       }
     }
 
@@ -141,6 +169,32 @@ function findRelevantOpportunities(query: string, student?: StudentContext): Opp
   // Sort descending by score, take top 10 relevant matches
   scored.sort((a, b) => b.score - a.score);
   return scored.filter((s) => s.score > 0).slice(0, 10).map((s) => s.item);
+}
+
+function generateFollowUpSuggestions(query: string, matches: OpportunityItem[]): string[] {
+  const q = query.toLowerCase();
+  const suggestions: string[] = [];
+
+  if (!q.includes('fully funded') && !q.includes('full scholarship')) {
+    suggestions.push('Show fully funded options');
+  }
+  if (!q.includes('sat') && !q.includes('gre') && !q.includes('test optional')) {
+    suggestions.push('Find universities without SAT requirements');
+  }
+  if (!q.includes('fee waiver') && !q.includes('$0') && !q.includes('free application')) {
+    suggestions.push('Filter for $0 application fee universities');
+  }
+  if (!q.includes('waec') && !q.includes('wassce') && !q.includes('ielts')) {
+    suggestions.push('Show universities accepting WAEC / WASSCE');
+  }
+  if (!q.includes('master') && !q.includes('postgraduate') && !q.includes('phd')) {
+    suggestions.push('Explore Master’s & Postgraduate scholarships');
+  }
+  if (!q.includes('canada') && !q.includes('uk') && !q.includes('united states')) {
+    suggestions.push('Find top universities in Canada & the UK');
+  }
+
+  return suggestions.slice(0, 4);
 }
 
 function buildGroundingPrompt(opportunities: OpportunityItem[]): string {
@@ -377,6 +431,13 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
         }
       }
 
+      const topMatches = relevantOpportunities.slice(0, 4);
+      const followUps = generateFollowUpSuggestions(message, relevantOpportunities);
+
+      if (topMatches.length > 0 || followUps.length > 0) {
+        res.write(`data: ${JSON.stringify({ matchedOpportunities: topMatches, followUps })}\n\n`);
+      }
+
       res.write('data: [DONE]\n\n');
       res.end();
     } else {
@@ -414,8 +475,13 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
         }
       }
 
+      const topMatches = relevantOpportunities.slice(0, 4);
+      const followUps = generateFollowUpSuggestions(message, relevantOpportunities);
+
       res.json({
         response: response.text || '',
+        matchedOpportunities: topMatches,
+        followUps,
         matchedOpportunitiesCount: relevantOpportunities.length,
       });
     }
