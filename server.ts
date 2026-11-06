@@ -243,7 +243,16 @@ CRITICAL ACCURACY & GROUNDING RULES:
 3. FORMATTING LINKS: Always format university and scholarship portals as clickable markdown links using their exact verified official URL, e.g. [University of Oxford - Admissions Portal](https://www.ox.ac.uk).
 4. UNVERIFIED OR UNCERTAIN INFORMATION: If current deadlines, fees, or requirements cannot be verified from the provided data or authoritative knowledge, explicitly say so (e.g., "Deadlines and fee waiver policies vary annually; please confirm directly on the official portal before applying").
 5. PERSONALIZATION: When the student's degree, target destination, or field of study is provided, tailor your recommendations directly to their profile.
-6. PRACTICAL ROADMAPS: Break down actionable steps (e.g., transcripts, WES evaluation, English proficiency waivers like WAEC/NECO for West African students, letters of recommendation, statement of purpose).`;
+6. APPLICATION TRACKER & PROGRESS:
+   - When the student asks about their existing university or scholarship applications, reference their real records in the provided TARGET TRACKER.
+   - Accurately report their actual progress stage (Saved, Preparing Application, Application Submitted, Accepted / Enrolled).
+   - If they have no saved universities or want to update their progress, explain that they can confirm stage updates directly on the interactive tracker cards in the chat or in the Target Tracker board.
+   - NEVER fabricate application statuses or claim an application was submitted unless confirmed.
+7. APPLICATION GUIDANCE & ROADMAPS:
+   - Break down actionable steps (transcripts, WES evaluation, English proficiency waivers like WAEC/NECO for West African students, letters of recommendation, statement of purpose, financial declaration).
+   - When students ask for personal statement or motivation letter help, offer clear, structured outlines (Hook/Intro, Academic Background, Projects/Research, Career Vision, Why This University).
+8. DEADLINE PRIORITIZATION:
+   - Help students prioritize applications based on verified deadlines and cycle urgency. Never invent deadlines or claim reminders were scheduled unless actually confirmed.`;
 
 // -------------------------------------------------------------
 // Health Check Endpoint
@@ -263,10 +272,22 @@ app.get('/api/cova/health', (_req: Request, res: Response) => {
 // -------------------------------------------------------------
 // COVA Chat Endpoint (Supports SSE streaming & JSON response)
 // -------------------------------------------------------------
+interface StudentTrackerRecord {
+  id: string;
+  officialName: string;
+  country: string;
+  stage: 'saved' | 'preparing' | 'submitted' | 'accepted';
+  deadlineText?: string;
+  feeStatus?: string;
+  testStatus?: string;
+  fundingType?: string;
+}
+
 interface ChatRequestBody {
   message?: string;
   conversationHistory?: Array<{ role: 'user' | 'model'; content: string }>;
   studentProfile?: StudentContext;
+  studentTracker?: StudentTrackerRecord[];
   stream?: boolean;
 }
 
@@ -284,7 +305,7 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
   }
 
   // 2. Input Validation
-  const { message, conversationHistory = [], studentProfile, stream = true } = req.body;
+  const { message, conversationHistory = [], studentProfile, studentTracker, stream = true } = req.body;
 
   if (!message || typeof message !== 'string' || message.trim().length === 0) {
     res.status(400).json({ error: 'Message cannot be empty.' });
@@ -340,6 +361,47 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
     }
   }
 
+  // Student Application Tracker Context
+  let studentTrackerSummary = '';
+  let trackerOpportunities: OpportunityItem[] = [];
+
+  if (studentTracker && Array.isArray(studentTracker)) {
+    if (studentTracker.length > 0) {
+      const lines = studentTracker.map((item, idx) => {
+        return `${idx + 1}. [ID: ${item.id}] ${item.officialName} (${item.country}) | Stage: "${item.stage}" | Deadline: ${item.deadlineText || 'Rolling'} | Fee: ${item.feeStatus || 'Standard'} | Funding: ${item.fundingType || 'Standard'}`;
+      });
+      studentTrackerSummary = `AUTHENTICATED STUDENT TARGET TRACKER (CURRENT SAVED APPLICATIONS):\n${lines.join('\n')}\n\n`;
+
+      const cleanLower = message.toLowerCase();
+      const isTrackerQuery =
+        cleanLower.includes('tracker') ||
+        cleanLower.includes('my application') ||
+        cleanLower.includes('my applications') ||
+        cleanLower.includes('status') ||
+        cleanLower.includes('preparing') ||
+        cleanLower.includes('submitted') ||
+        cleanLower.includes('accepted') ||
+        cleanLower.includes('saved') ||
+        studentTracker.some((t) => cleanLower.includes(t.officialName.toLowerCase()) || cleanLower.includes(t.id));
+
+      if (isTrackerQuery) {
+        const trackerIds = new Set(studentTracker.map((t) => t.id));
+        trackerOpportunities = authenticOpportunities.filter(
+          (opp) =>
+            trackerIds.has(opp.id) ||
+            studentTracker.some(
+              (t) =>
+                opp.id.includes(t.id) ||
+                t.id.includes(opp.id) ||
+                (opp.officialName && t.officialName && opp.officialName.toLowerCase().includes(t.officialName.toLowerCase()))
+            )
+        );
+      }
+    } else {
+      studentTrackerSummary = `AUTHENTICATED STUDENT TARGET TRACKER:\nThe student currently has 0 saved or tracked universities.\n\n`;
+    }
+  }
+
   // 5. Build Gemini API Contents
   try {
     const ai = new GoogleGenAI({ apiKey });
@@ -358,8 +420,8 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
       }
     }
 
-    // Add current user turn augmented with student profile and grounding context
-    const augmentedUserTurn = `${studentContextSummary}${groundingContext}\n\nSTUDENT INQUIRY:\n${message.trim()}`;
+    // Add current user turn augmented with student profile, tracker context, and grounding
+    const augmentedUserTurn = `${studentContextSummary}${studentTrackerSummary}${groundingContext}\n\nSTUDENT INQUIRY:\n${message.trim()}`;
     contents.push({
       role: 'user',
       parts: [{ text: augmentedUserTurn }],
@@ -434,8 +496,8 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
       const topMatches = relevantOpportunities.slice(0, 4);
       const followUps = generateFollowUpSuggestions(message, relevantOpportunities);
 
-      if (topMatches.length > 0 || followUps.length > 0) {
-        res.write(`data: ${JSON.stringify({ matchedOpportunities: topMatches, followUps })}\n\n`);
+      if (topMatches.length > 0 || followUps.length > 0 || trackerOpportunities.length > 0) {
+        res.write(`data: ${JSON.stringify({ matchedOpportunities: topMatches, followUps, trackerOpportunities })}\n\n`);
       }
 
       res.write('data: [DONE]\n\n');
@@ -481,6 +543,7 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
       res.json({
         response: response.text || '',
         matchedOpportunities: topMatches,
+        trackerOpportunities,
         followUps,
         matchedOpportunitiesCount: relevantOpportunities.length,
       });

@@ -1583,8 +1583,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         userName={activeUser?.fullName}
         studentProfile={activeUser?.profile}
         savedOpportunities={savedOpportunities}
+        applicationTracker={applicationTracker}
         onToggleSave={toggleSave}
+        onUpdateApplicationStatus={updateAppStatus}
         onSelectOpportunity={(opp) => setSelectedOpportunity(opp)}
+        onNavigateToTracker={() => setActiveTab('tracker')}
       />
     </div>
   );
