@@ -1,0 +1,471 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import 'dotenv/config';
+import express, { Request, Response } from 'express';
+import { createServer as createViteServer } from 'vite';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { GoogleGenAI } from '@google/genai';
+import { authenticOpportunities, OpportunityItem } from './src/data/opportunities';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const isProduction = process.env.NODE_ENV === 'production';
+
+app.use(express.json({ limit: '1mb' }));
+
+// -------------------------------------------------------------
+// In-Memory Rate Limiter (Max 30 requests per minute per IP)
+// -------------------------------------------------------------
+const ipRequestTimestamps = new Map<string, number[]>();
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const MAX_REQUESTS_PER_WINDOW = 30;
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const timestamps = ipRequestTimestamps.get(ip) || [];
+  const validTimestamps = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+
+  if (validTimestamps.length >= MAX_REQUESTS_PER_WINDOW) {
+    ipRequestTimestamps.set(ip, validTimestamps);
+    return false;
+  }
+
+  validTimestamps.push(now);
+  ipRequestTimestamps.set(ip, validTimestamps);
+  return true;
+}
+
+// Clean up stale rate limiter entries every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, timestamps] of ipRequestTimestamps.entries()) {
+    const valid = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+    if (valid.length === 0) {
+      ipRequestTimestamps.delete(ip);
+    } else {
+      ipRequestTimestamps.set(ip, valid);
+    }
+  }
+}, 5 * 60 * 1000);
+
+// -------------------------------------------------------------
+// Opportunity Grounding Engine
+// Matches user query + student profile against authenticOpportunities
+// -------------------------------------------------------------
+interface StudentContext {
+  nationality?: string;
+  countryOfResidence?: string;
+  preferredDestinations?: string[];
+  educationLevel?: string;
+  intendedDegree?: string;
+  fieldOfStudy?: string;
+  fundingPreference?: string;
+  testPreference?: string;
+}
+
+function findRelevantOpportunities(query: string, student?: StudentContext): OpportunityItem[] {
+  const cleanQuery = query.toLowerCase();
+  const queryTokens = cleanQuery
+    .replace(/[^\w\s]/g, ' ')
+    .split(/\s+/)
+    .filter((t) => t.length > 2);
+
+  const preferredCountries = (student?.preferredDestinations || []).map((c) => c.toLowerCase());
+  const degree = (student?.intendedDegree || student?.educationLevel || '').toLowerCase();
+  const field = (student?.fieldOfStudy || '').toLowerCase();
+
+  const scored: { item: OpportunityItem; score: number }[] = authenticOpportunities.map((item) => {
+    let score = 0;
+    const country = (item.country || '').toLowerCase();
+    const city = (item.city || '').toLowerCase();
+    const title = (item.title || item.officialName || '').toLowerCase();
+    const summary = (item.summary || item.officialRuleSummary || '').toLowerCase();
+    const category = (item.category || '').toLowerCase();
+    const degrees = (item.degreeLevels || []).map((d: string) => d.toLowerCase());
+    const fields = (item.studyFields || []).map((f: string) => f.toLowerCase());
+    const feeStatus = (item.applicationFees?.status || item.applicationFees?.details || '').toLowerCase();
+    const testStatus = (item.testWaiverRules?.status || item.testWaiverRules?.details || '').toLowerCase();
+    const fundingType = (item.fundingDetails?.type || item.fundingDetails?.details || '').toLowerCase();
+
+    // Matches against user query tokens
+    for (const token of queryTokens) {
+      if (title.includes(token)) score += 8;
+      if (country.includes(token) || city.includes(token)) score += 6;
+      if (fields.some((f: string) => f.includes(token))) score += 5;
+      if (feeStatus.includes(token) || testStatus.includes(token)) score += 4;
+      if (summary.includes(token)) score += 2;
+    }
+
+    // Boost if student preferred destination matches
+    if (preferredCountries.some((pc) => country.includes(pc) || pc.includes(country))) {
+      score += 4;
+    }
+
+    // Boost if degree level matches
+    if (degree && degrees.some((d: string) => d.includes(degree) || degree.includes(d))) {
+      score += 3;
+    }
+
+    // Boost if field of study matches
+    if (field && (fields.some((f: string) => f.includes(field)) || summary.includes(field) || title.includes(field))) {
+      score += 3;
+    }
+
+    // Specific intent bonuses
+    if (cleanQuery.includes('scholarship') || cleanQuery.includes('funding')) {
+      if (category.includes('scholarship') || fundingType.includes('fully') || fundingType.includes('100%')) {
+        score += 5;
+      }
+    }
+    if (cleanQuery.includes('fee waiver') || cleanQuery.includes('$0') || cleanQuery.includes('no fee') || cleanQuery.includes('free application')) {
+      if (feeStatus.includes('free') || feeStatus.includes('$0') || feeStatus.includes('waiver')) {
+        score += 6;
+      }
+    }
+    if (cleanQuery.includes('sat') || cleanQuery.includes('gre') || cleanQuery.includes('test optional') || cleanQuery.includes('waec')) {
+      if (testStatus.includes('optional') || testStatus.includes('waiver') || testStatus.includes('free') || testStatus.includes('waec')) {
+        score += 6;
+      }
+    }
+
+    return { item, score };
+  });
+
+  // Sort descending by score, take top 10 relevant matches
+  scored.sort((a, b) => b.score - a.score);
+  return scored.filter((s) => s.score > 0).slice(0, 10).map((s) => s.item);
+}
+
+function buildGroundingPrompt(opportunities: OpportunityItem[]): string {
+  if (opportunities.length === 0) {
+    return 'No specific pre-matched opportunities found for this query in the local verified index. Rely on general verified knowledge and instruct the student to check official portals.';
+  }
+
+  const itemsText = opportunities
+    .map((o, idx) => {
+      const url = o.officialWebsite || o.officialUrl || o.sourceUrl || '#';
+      const fees = o.applicationFees?.status ? `${o.applicationFees.status}: ${o.applicationFees.details || ''}` : 'Standard';
+      const tests = o.testWaiverRules?.status ? `${o.testWaiverRules.status}: ${o.testWaiverRules.details || ''}` : 'Standard';
+      const funding = o.fundingDetails?.type ? `${o.fundingDetails.type} (${o.fundingDetails.amount || 'Varies'})` : 'Standard';
+      const deadline = o.deadlines?.deadlineText || o.deadlines?.term || 'Rolling';
+
+      return `[Match ${idx + 1}]
+Name: ${o.title || o.officialName}
+Country: ${o.country} (${o.city})
+Category: ${o.category} | Levels: ${(o.degreeLevels || []).join(', ')}
+Funding: ${funding}
+Application Fee Policy: ${fees}
+Test Policy (SAT/GRE/IELTS): ${tests}
+Deadline: ${deadline}
+Official Portal Link: ${url}
+Summary: ${o.summary || o.officialRuleSummary || ''}`;
+    })
+    .join('\n\n');
+
+  return `VERIFIED CAMPUS CONNECT OPPORTUNITY RECORDS:\n${itemsText}`;
+}
+
+// -------------------------------------------------------------
+// System Instruction for COVA Assistant
+// -------------------------------------------------------------
+const COVA_SYSTEM_INSTRUCTION = `You are COVA (Campus Opportunity & Virtual Assistant), the intelligent, encouraging, and highly accurate AI advisor for Campus Connect.
+Campus Connect is a premier discovery and application platform dedicated to helping international students—especially ambitious scholars across Africa and the Global South—access verified universities, scholarships, application fee waivers, and funding worldwide.
+
+YOUR IDENTITY & TONE:
+- Professional, warm, empowering, highly knowledgeable, and clear.
+- Speak directly to the student as their trusted educational mentor.
+- Be concise yet thorough. Avoid generic filler or repetitive disclaimers.
+
+CRITICAL ACCURACY & GROUNDING RULES:
+1. STRICT TRUTHFULNESS: Only recommend real universities, legitimate scholarship programs, and accurate admissions policies. NEVER invent university names, fake scholarship amounts, made-up deadlines, or nonexistent waiver codes.
+2. VERIFIED DATA USAGE: When Campus Connect verified opportunity records are provided in the context, integrate them naturally. Highlight their verified benefits (e.g. "$0 Application Fee", "SAT/GRE Optional", "Fully Funded", "WAEC English Accepted").
+3. FORMATTING LINKS: Always format university and scholarship portals as clickable markdown links using their exact verified official URL, e.g. [University of Oxford - Admissions Portal](https://www.ox.ac.uk).
+4. UNVERIFIED OR UNCERTAIN INFORMATION: If current deadlines, fees, or requirements cannot be verified from the provided data or authoritative knowledge, explicitly say so (e.g., "Deadlines and fee waiver policies vary annually; please confirm directly on the official portal before applying").
+5. PERSONALIZATION: When the student's degree, target destination, or field of study is provided, tailor your recommendations directly to their profile.
+6. PRACTICAL ROADMAPS: Break down actionable steps (e.g., transcripts, WES evaluation, English proficiency waivers like WAEC/NECO for West African students, letters of recommendation, statement of purpose).`;
+
+// -------------------------------------------------------------
+// Health Check Endpoint
+// -------------------------------------------------------------
+app.get('/api/cova/health', (_req: Request, res: Response) => {
+  const apiKeyPresent = Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim() !== '');
+  res.json({
+    status: 'ok',
+    assistantName: 'COVA',
+    model: 'gemini-3.8-flash',
+    geminiConfigured: apiKeyPresent,
+    totalVerifiedOpportunities: authenticOpportunities.length,
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// -------------------------------------------------------------
+// COVA Chat Endpoint (Supports SSE streaming & JSON response)
+// -------------------------------------------------------------
+interface ChatRequestBody {
+  message?: string;
+  conversationHistory?: Array<{ role: 'user' | 'model'; content: string }>;
+  studentProfile?: StudentContext;
+  stream?: boolean;
+}
+
+app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Response) => {
+  const clientIp = req.ip || req.socket.remoteAddress || 'unknown-client';
+  console.log(`[COVA] Received chat request from ${clientIp}, stream: ${req.body?.stream}`);
+
+  // 1. Rate Limiting Check
+  if (!checkRateLimit(clientIp)) {
+    console.warn(`[COVA] Rate limit exceeded for ${clientIp}`);
+    res.status(429).json({
+      error: 'Rate limit exceeded. Please wait a few moments before sending another message.',
+    });
+    return;
+  }
+
+  // 2. Input Validation
+  const { message, conversationHistory = [], studentProfile, stream = true } = req.body;
+
+  if (!message || typeof message !== 'string' || message.trim().length === 0) {
+    res.status(400).json({ error: 'Message cannot be empty.' });
+    return;
+  }
+
+  if (message.length > 2000) {
+    res.status(400).json({ error: 'Message is too long. Please keep your question under 2,000 characters.' });
+    return;
+  }
+
+  // 3. API Key Validation
+  const apiKey = process.env.GEMINI_API_KEY?.trim();
+  if (!apiKey) {
+    const missingKeyMessage =
+      'COVA AI is currently awaiting its Gemini API key. Please add your GEMINI_API_KEY to AI Studio Secrets (or your environment variables) to enable live AI responses.';
+
+    if (stream) {
+      res.setHeader('Content-Type', 'text/event-stream');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Connection', 'keep-alive');
+      res.write(`event: error\ndata: ${JSON.stringify({ error: missingKeyMessage, code: 'MISSING_API_KEY' })}\n\n`);
+      res.end();
+      return;
+    }
+
+    res.status(503).json({
+      error: missingKeyMessage,
+      code: 'MISSING_API_KEY',
+    });
+    return;
+  }
+
+  // 4. Retrieve Context & Grounding from Campus Connect Opportunities
+  const relevantOpportunities = findRelevantOpportunities(message, studentProfile);
+  const groundingContext = buildGroundingPrompt(relevantOpportunities);
+
+  let studentContextSummary = '';
+  if (studentProfile) {
+    const parts: string[] = [];
+    if (studentProfile.nationality) parts.push(`Nationality: ${studentProfile.nationality}`);
+    if (studentProfile.countryOfResidence) parts.push(`Residence: ${studentProfile.countryOfResidence}`);
+    if (studentProfile.intendedDegree) parts.push(`Target Degree: ${studentProfile.intendedDegree}`);
+    if (studentProfile.fieldOfStudy) parts.push(`Field of Study: ${studentProfile.fieldOfStudy}`);
+    if (studentProfile.preferredDestinations?.length) {
+      parts.push(`Preferred Destinations: ${studentProfile.preferredDestinations.join(', ')}`);
+    }
+    if (studentProfile.fundingPreference) parts.push(`Funding Need: ${studentProfile.fundingPreference}`);
+    if (studentProfile.testPreference) parts.push(`Testing Preference: ${studentProfile.testPreference}`);
+
+    if (parts.length > 0) {
+      studentContextSummary = `AUTHENTICATED STUDENT PROFILE CONTEXT:\n${parts.join('\n')}\n\n`;
+    }
+  }
+
+  // 5. Build Gemini API Contents
+  try {
+    const ai = new GoogleGenAI({ apiKey });
+
+    // Format conversation history
+    const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
+
+    // Filter and sanitize past turns (limit to last 8 turns for responsive latency)
+    const recentHistory = conversationHistory.slice(-8);
+    for (const turn of recentHistory) {
+      if (turn && (turn.role === 'user' || turn.role === 'model') && typeof turn.content === 'string') {
+        contents.push({
+          role: turn.role,
+          parts: [{ text: turn.content }],
+        });
+      }
+    }
+
+    // Add current user turn augmented with student profile and grounding context
+    const augmentedUserTurn = `${studentContextSummary}${groundingContext}\n\nSTUDENT INQUIRY:\n${message.trim()}`;
+    contents.push({
+      role: 'user',
+      parts: [{ text: augmentedUserTurn }],
+    });
+
+    // Helper to extract user-friendly error messages
+    const extractCleanErrorMessage = (err: any): string => {
+      if (!err) return 'An unexpected error occurred while communicating with COVA. Please try again.';
+      const msg = err.message || String(err);
+      try {
+        const parsed = JSON.parse(msg);
+        if (parsed?.error?.message) {
+          if (parsed.error.code === 503 || parsed.error.status === 'UNAVAILABLE') {
+            return 'Gemini AI is currently experiencing high demand. Please try again in a few moments.';
+          }
+          return parsed.error.message;
+        }
+      } catch {
+        // Not JSON
+      }
+      return msg;
+    };
+
+    if (stream) {
+      // 6a. SSE Streaming Response with resilient model fallback
+      res.setHeader('Content-Type', 'text/event-stream');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Connection', 'keep-alive');
+      res.flushHeaders?.();
+
+      let responseStream;
+      try {
+        responseStream = await ai.models.generateContentStream({
+          model: 'gemini-3.8-flash',
+          contents,
+          config: {
+            systemInstruction: COVA_SYSTEM_INSTRUCTION,
+            temperature: 0.65,
+          },
+        });
+      } catch (err: any) {
+        console.warn('Primary model gemini-3.8-flash unavailable, attempting fallback to gemini-3.1-flash-lite:', err?.message);
+        try {
+          responseStream = await ai.models.generateContentStream({
+            model: 'gemini-3.1-flash-lite',
+            contents,
+            config: {
+              systemInstruction: COVA_SYSTEM_INSTRUCTION,
+              temperature: 0.65,
+            },
+          });
+        } catch (liteErr: any) {
+          console.warn('Fallback to gemini-3.1-flash-lite failed, attempting gemini-flash-latest:', liteErr?.message);
+          responseStream = await ai.models.generateContentStream({
+            model: 'gemini-flash-latest',
+            contents,
+            config: {
+              systemInstruction: COVA_SYSTEM_INSTRUCTION,
+              temperature: 0.65,
+            },
+          });
+        }
+      }
+
+      for await (const chunk of responseStream) {
+        const text = chunk.text;
+        if (text) {
+          res.write(`data: ${JSON.stringify({ chunk: text })}\n\n`);
+        }
+      }
+
+      res.write('data: [DONE]\n\n');
+      res.end();
+    } else {
+      // 6b. Non-Streaming JSON Response with resilient model fallback
+      let response;
+      try {
+        response = await ai.models.generateContent({
+          model: 'gemini-3.8-flash',
+          contents,
+          config: {
+            systemInstruction: COVA_SYSTEM_INSTRUCTION,
+            temperature: 0.65,
+          },
+        });
+      } catch (err: any) {
+        console.warn('Primary model gemini-3.8-flash unavailable, attempting fallback to gemini-3.1-flash-lite:', err?.message);
+        try {
+          response = await ai.models.generateContent({
+            model: 'gemini-3.1-flash-lite',
+            contents,
+            config: {
+              systemInstruction: COVA_SYSTEM_INSTRUCTION,
+              temperature: 0.65,
+            },
+          });
+        } catch {
+          response = await ai.models.generateContent({
+            model: 'gemini-flash-latest',
+            contents,
+            config: {
+              systemInstruction: COVA_SYSTEM_INSTRUCTION,
+              temperature: 0.65,
+            },
+          });
+        }
+      }
+
+      res.json({
+        response: response.text || '',
+        matchedOpportunitiesCount: relevantOpportunities.length,
+      });
+    }
+  } catch (error: any) {
+    console.error('COVA Gemini generation error:', error);
+    const friendlyMessage =
+      (error && typeof error === 'object' && 'message' in error)
+        ? (error.message.includes('high demand') || error.message.includes('503') || error.message.includes('UNAVAILABLE')
+            ? 'Gemini AI is currently experiencing high demand. Please try again in a few moments.'
+            : error.message)
+        : 'An unexpected error occurred while communicating with COVA. Please try again.';
+
+    if (stream && !res.headersSent) {
+      res.setHeader('Content-Type', 'text/event-stream');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Connection', 'keep-alive');
+      res.write(`event: error\ndata: ${JSON.stringify({ error: friendlyMessage })}\n\n`);
+      res.end();
+    } else if (stream && res.headersSent) {
+      res.write(`event: error\ndata: ${JSON.stringify({ error: friendlyMessage })}\n\n`);
+      res.end();
+    } else {
+      res.status(500).json({ error: friendlyMessage });
+    }
+  }
+});
+
+// -------------------------------------------------------------
+// Vite Middleware / Static Server
+// -------------------------------------------------------------
+async function startServer() {
+  if (!isProduction) {
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: 'spa',
+    });
+    app.use(vite.middlewares);
+  } else {
+    app.use(express.static(path.resolve(__dirname, 'dist')));
+    app.get('*', (_req, res) => {
+      res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+    });
+  }
+
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`[Campus Connect] Server running on http://0.0.0.0:${PORT} (mode: ${process.env.NODE_ENV || 'development'})`);
+  });
+}
+
+startServer().catch((err) => {
+  console.error('Failed to start Campus Connect server:', err);
+  process.exit(1);
+});

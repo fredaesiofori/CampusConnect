@@ -1579,7 +1579,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       />
 
       {/* 3. COVA AI Virtual Assistant Interface */}
-      <CovaAssistant userName={activeUser?.fullName} />
+      <CovaAssistant
+        userName={activeUser?.fullName}
+        studentProfile={activeUser?.profile}
+      />
     </div>
   );
 };

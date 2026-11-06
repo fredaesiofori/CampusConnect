@@ -581,7 +581,10 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({
       </footer>
 
       {/* COVA AI Virtual Assistant */}
-      <CovaAssistant userName={currentUser?.fullName} />
+      <CovaAssistant
+        userName={currentUser?.fullName}
+        studentProfile={currentUser?.profile}
+      />
     </div>
   );
 };
