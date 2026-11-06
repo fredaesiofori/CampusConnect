@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6846F5;
+  --color-primary-hover: #5534E4;
+  --color-primary-active: #4829CE;
+  --color-primary-light: #7E60F7;
+  --color-primary-soft: #F0EDFF;
+  
+  --color-midnight: #15152F;
+  --color-midnight-surface: #1E1E3F;
+  --color-midnight-card: #25254D;
+  
+  --color-lavender: #F0EDFF;
+  --color-lavender-hover: #E5DEFF;
+  --color-lavender-border: #DDD6FE;
+  
+  --color-gold: #E7B75C;
+  --color-gold-hover: #DBA747;
+  --color-gold-soft: #FDF9EE;
+  --color-gold-border: #F5E0B3;
+  
+  --color-text-primary: #15152F;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #94A3B8;
+  
+  --color-surface-base: #FFFFFF;
+  --color-surface-raised: #FDFDFE;
+  --color-surface-subtle: #F8F9FD;
+  --color-border-subtle: #E2E8F0;
+  --color-border-focus: #6846F5;
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --shadow-soft-xs: 0 1px 2px 0 rgba(21, 21, 47, 0.04);
+  --shadow-soft-sm: 0 2px 4px -1px rgba(21, 21, 47, 0.05), 0 1px 2px -1px rgba(21, 21, 47, 0.03);
+  --shadow-soft-md: 0 4px 12px -2px rgba(21, 21, 47, 0.07), 0 2px 6px -2px rgba(21, 21, 47, 0.04);
+  --shadow-soft-lg: 0 12px 24px -4px rgba(21, 21, 47, 0.09), 0 4px 8px -2px rgba(21, 21, 47, 0.04);
+  --shadow-soft-xl: 0 20px 32px -6px rgba(21, 21, 47, 0.12), 0 8px 12px -4px rgba(21, 21, 47, 0.05);
+}
+
+:root {
+  --color-primary: #6846F5;
+  --color-midnight: #15152F;
+  --color-lavender: #F0EDFF;
+  --color-gold: #E7B75C;
+  --color-text-primary: #15152F;
+  --color-text-secondary: #64748B;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: #15152F;
+  background-color: #FFFFFF;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Campus Connect Desktop Hero Grid Layout */
+@media (min-width: 768px) {
+  .hero-grid-desktop {
+    display: grid !important;
+    grid-template-columns: 1.05fr 0.95fr !important;
+    align-items: center !important;
+  }
+}
+
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F8F9FD;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}

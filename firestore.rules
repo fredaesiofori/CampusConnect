@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidOpportunity(data, opportunityId) {
+      return data.id == opportunityId &&
+        data.isVerified == true &&
+        data.officialName is string && data.officialName.size() > 0 && data.officialName.size() <= 200 &&
+        data.institution is string && data.institution.size() > 0 && data.institution.size() <= 200 &&
+        data.country is string && data.country.size() > 0 && data.country.size() <= 100 &&
+        data.officialWebsite is string && data.officialWebsite.size() > 5 && data.officialWebsite.size() <= 1000 &&
+        data.sourceUrl is string && data.sourceUrl.size() > 5 && data.sourceUrl.size() <= 1000;
+    }
+
+    function isValidUserProfile(data, userId) {
+      return data.uid == userId &&
+        data.email is string &&
+        data.email.size() > 3 &&
+        data.email.size() <= 254 &&
+        (!('fullName' in data) || (data.fullName is string && data.fullName.size() <= 120)) &&
+        (!('profile' in data) || data.profile is map) &&
+        (!('savedOpportunities' in data) || (data.savedOpportunities is list && data.savedOpportunities.size() <= 200)) &&
+        (!('applicationTracker' in data) || data.applicationTracker is map);
+    }
+
+    // 1. Public Opportunities Collection
+    // Public directory of verified real university records, official source URLs, and eligibility criteria.
+    // Readable by all visitors, writeable by authenticated clients for verified records, protected from deletion.
+    match /opportunities/{opportunityId} {
+      allow read: if true;
+      allow create, update: if isAuthenticated() && isValidId(opportunityId) && isValidOpportunity(request.resource.data, opportunityId);
+      allow delete: if false;
+    }
+
+    // 2. Private Student User Profiles Collection
+    // Students can read and update ONLY their own profile, academic preferences, and saved opportunities.
+    match /users/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow list: if false; // Prevent enumerating other student accounts
+      allow create: if isOwner(userId) && isValidId(userId) && isValidUserProfile(request.resource.data, userId);
+      allow update: if isOwner(userId) && isValidId(userId) && isValidUserProfile(request.resource.data, userId);
+      allow delete: if isOwner(userId) && isValidId(userId);
+    }
+
+    // Default deny all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,270 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <!-- Vibrant Blue to Purple Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1D4ED8" />
+      <stop offset="35%" stop-color="#2563EB" />
+      <stop offset="65%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+
+    <!-- Radial Glows -->
+    <radialGradient id="ambientGlow1" cx="30%" cy="20%" r="50%">
+      <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.45" />
+      <stop offset="100%" stop-color="#2563EB" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="ambientGlow2" cx="80%" cy="80%" r="50%">
+      <stop offset="0%" stop-color="#C084FC" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="spotlight" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Gown Gradients -->
+    <linearGradient id="gownShade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E1E2E" />
+      <stop offset="50%" stop-color="#11111B" />
+      <stop offset="100%" stop-color="#09090D" />
+    </linearGradient>
+    <linearGradient id="gownHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#313244" />
+      <stop offset="100%" stop-color="#181825" />
+    </linearGradient>
+
+    <!-- Sash / Stole Gradient -->
+    <linearGradient id="sashGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="40%" stop-color="#EAB308" />
+      <stop offset="100%" stop-color="#CA8A04" />
+    </linearGradient>
+
+    <!-- Skin Gradients -->
+    <linearGradient id="skinTone" x1="30%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%" stop-color="#8D5524" />
+      <stop offset="50%" stop-color="#703D14" />
+      <stop offset="100%" stop-color="#552C0C" />
+    </linearGradient>
+    <linearGradient id="skinHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A56A38" />
+      <stop offset="100%" stop-color="#7A4217" />
+    </linearGradient>
+
+    <!-- Cap Gradients -->
+    <linearGradient id="capTop" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#242436" />
+      <stop offset="50%" stop-color="#181824" />
+      <stop offset="100%" stop-color="#111118" />
+    </linearGradient>
+    <linearGradient id="tasselGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="50%" stop-color="#FACC15" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+
+    <!-- Diploma Gradients -->
+    <linearGradient id="diplomaPaper" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="40%" stop-color="#F8FAFC" />
+      <stop offset="85%" stop-color="#E2E8F0" />
+      <stop offset="100%" stop-color="#CBD5E1" />
+    </linearGradient>
+    <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F43F5E" />
+      <stop offset="50%" stop-color="#E11D48" />
+      <stop offset="100%" stop-color="#9F1239" />
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="shadowFilter" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0B0B1E" flood-opacity="0.45" />
+    </filter>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- BACKGROUND: Bright Blue-to-Purple Gradient -->
+  <rect width="800" height="600" fill="url(#bgGradient)" />
+
+  <!-- Ambient Glow overlays -->
+  <rect width="800" height="600" fill="url(#ambientGlow1)" />
+  <rect width="800" height="600" fill="url(#ambientGlow2)" />
+  <circle cx="400" cy="220" r="320" fill="url(#spotlight)" />
+
+  <!-- Subtle celebratory sparkles / bokeh in the background -->
+  <g opacity="0.4" fill="#FFFFFF">
+    <circle cx="160" cy="120" r="3" />
+    <circle cx="210" cy="180" r="2" />
+    <circle cx="120" cy="260" r="4" opacity="0.3" />
+    <circle cx="680" cy="140" r="3" />
+    <circle cx="640" cy="220" r="2" />
+    <circle cx="720" cy="280" r="3.5" opacity="0.5" />
+    <polygon points="180,80 183,88 191,91 183,94 180,102 177,94 169,91 177,88" fill="#FDE047" opacity="0.75" />
+    <polygon points="630,95 633,101 639,104 633,107 630,113 627,107 621,104 627,101" fill="#FDE047" opacity="0.8" />
+    <polygon points="690,190 692,195 697,197 692,199 690,204 688,199 683,197 688,195" fill="#E0E7FF" opacity="0.6" />
+    <polygon points="130,200 132,204 136,206 132,208 130,212 128,208 124,206 128,204" fill="#E0E7FF" opacity="0.5" />
+  </g>
+
+  <!-- GRADUATE CHARACTER -->
+  <g filter="url(#shadowFilter)">
+    <!-- Back Hair / Silhouette -->
+    <path d="M 330 200 C 330 140, 470 140, 470 200 C 470 250, 480 300, 485 330 C 440 335, 360 335, 315 330 C 320 300, 330 250, 330 200 Z" fill="#181411" />
+
+    <!-- Gown Base / Shoulders & Torso -->
+    <!-- Main Body of Gown -->
+    <path d="M 230 600 L 260 380 C 275 350, 330 330, 400 330 C 470 330, 525 350, 540 380 L 570 600 Z" fill="url(#gownShade)" />
+
+    <!-- Gown Pleats and Folds -->
+    <path d="M 360 345 Q 365 480 350 600" stroke="#262738" stroke-width="3" fill="none" opacity="0.7" />
+    <path d="M 440 345 Q 435 480 450 600" stroke="#262738" stroke-width="3" fill="none" opacity="0.7" />
+    <path d="M 400 340 L 400 600" stroke="#0D0E15" stroke-width="4" fill="none" />
+    <path d="M 310 400 Q 300 500 280 600" stroke="#2A2B3D" stroke-width="3" fill="none" opacity="0.5" />
+    <path d="M 490 400 Q 500 500 520 600" stroke="#2A2B3D" stroke-width="3" fill="none" opacity="0.5" />
+
+    <!-- Left Arm & Sleeve (holding diploma) -->
+    <path d="M 260 380 C 235 420, 230 460, 245 520 C 265 540, 310 520, 330 490 L 310 420 Z" fill="url(#gownHighlight)" />
+    <!-- Sleeve Opening Fold -->
+    <ellipse cx="280" cy="510" rx="35" ry="18" fill="#111119" stroke="#262738" stroke-width="2" />
+
+    <!-- Right Arm & Sleeve -->
+    <path d="M 540 380 C 565 420, 570 470, 555 530 C 535 550, 490 530, 470 500 L 490 420 Z" fill="url(#gownHighlight)" />
+    <ellipse cx="520" cy="520" rx="35" ry="18" fill="#111119" stroke="#262738" stroke-width="2" />
+
+    <!-- Academic Stole / Golden Sash (V-neck ceremonial drape) -->
+    <g>
+      <!-- Left Sash -->
+      <path d="M 345 330 L 320 480 L 355 485 L 375 365 Z" fill="url(#sashGrad)" />
+      <!-- Right Sash -->
+      <path d="M 455 330 L 480 480 L 445 485 L 425 365 Z" fill="url(#sashGrad)" />
+      <!-- Sash Neck Band -->
+      <path d="M 345 330 C 375 350, 425 350, 455 330 C 445 320, 355 320, 345 330 Z" fill="url(#sashGrad)" />
+      <!-- Gold Fringe at ends of stole -->
+      <line x1="320" y1="480" x2="320" y2="495" stroke="#CA8A04" stroke-width="2" stroke-dasharray="2 2" />
+      <line x1="335" y1="482" x2="335" y2="497" stroke="#CA8A04" stroke-width="2" stroke-dasharray="2 2" />
+      <line x1="350" y1="484" x2="350" y2="499" stroke="#CA8A04" stroke-width="2" stroke-dasharray="2 2" />
+      <line x1="450" y1="484" x2="450" y2="499" stroke="#CA8A04" stroke-width="2" stroke-dasharray="2 2" />
+      <line x1="465" y1="482" x2="465" y2="497" stroke="#CA8A04" stroke-width="2" stroke-dasharray="2 2" />
+      <line x1="480" y1="480" x2="480" y2="495" stroke="#CA8A04" stroke-width="2" stroke-dasharray="2 2" />
+    </g>
+
+    <!-- Neck & White Collar Shirt -->
+    <polygon points="380,310 400,345 365,335" fill="#FFFFFF" />
+    <polygon points="420,310 400,345 435,335" fill="#F1F5F9" />
+    <path d="M 370 280 L 370 330 C 385 340, 415 340, 430 330 L 430 280 Z" fill="url(#skinTone)" />
+    <!-- Neck shadow -->
+    <path d="M 370 280 C 390 300, 410 300, 430 280 C 430 295, 370 295, 370 280 Z" fill="#502808" opacity="0.45" />
+
+    <!-- Head & Face -->
+    <!-- Jaw and Ears -->
+    <ellipse cx="340" cy="245" rx="10" ry="16" fill="url(#skinTone)" />
+    <ellipse cx="460" cy="245" rx="10" ry="16" fill="url(#skinTone)" />
+    <!-- Face Contour -->
+    <path d="M 345 220 C 340 180, 460 180, 455 220 C 455 270, 435 305, 400 305 C 365 305, 345 270, 345 220 Z" fill="url(#skinHighlight)" />
+
+    <!-- Facial Features -->
+    <!-- Eyes -->
+    <ellipse cx="375" cy="230" rx="7" ry="4.5" fill="#181824" />
+    <ellipse cx="425" cy="230" rx="7" ry="4.5" fill="#181824" />
+    <circle cx="377" cy="229" r="2" fill="#FFFFFF" />
+    <circle cx="427" cy="229" r="2" fill="#FFFFFF" />
+    <!-- Eyebrows -->
+    <path d="M 363 218 Q 375 213 388 217" stroke="#1F150D" stroke-width="3" stroke-linecap="round" fill="none" />
+    <path d="M 437 218 Q 425 213 412 217" stroke="#1F150D" stroke-width="3" stroke-linecap="round" fill="none" />
+    <!-- Nose -->
+    <path d="M 400 225 L 396 250 Q 400 255 404 250 Z" fill="#693710" />
+    <!-- Warm Smiling Mouth & Teeth -->
+    <path d="M 376 268 Q 400 292 424 268 Z" fill="#451A08" />
+    <path d="M 380 269 Q 400 282 420 269 Z" fill="#FFFFFF" />
+    <!-- Lip contour -->
+    <path d="M 374 268 Q 400 273 426 268" stroke="#5E2A12" stroke-width="2" fill="none" stroke-linecap="round" />
+    <!-- Smile cheek creases -->
+    <path d="M 366 258 Q 368 266 373 270" stroke="#7A4217" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6" />
+    <path d="M 434 258 Q 432 266 427 270" stroke="#7A4217" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6" />
+
+    <!-- Forehead Hair Trim -->
+    <path d="M 345 205 C 365 190, 435 190, 455 205 C 445 195, 355 195, 345 205 Z" fill="#151210" />
+
+    <!-- BLACK GRADUATION CAP (MORTARBOARD) -->
+    <!-- Cap Skull Cap Band -->
+    <ellipse cx="400" cy="180" rx="65" ry="24" fill="#1A1A26" />
+    <path d="M 335 180 C 335 200, 465 200, 465 180 L 465 170 C 465 190, 335 190, 335 170 Z" fill="#12121B" />
+
+    <!-- Diamond Mortarboard Top -->
+    <polygon points="400,105 535,145 400,185 265,145" fill="url(#capTop)" stroke="#313244" stroke-width="1.5" />
+    <!-- Mortarboard Edge Thickness / 3D rim -->
+    <polygon points="265,145 400,185 400,192 265,152" fill="#0C0D13" />
+    <polygon points="400,185 535,145 535,152 400,192" fill="#171822" />
+
+    <!-- Center Cap Button -->
+    <ellipse cx="400" cy="145" rx="7" ry="4" fill="#2E2F40" />
+
+    <!-- GOLDEN TASSEL -->
+    <path d="M 400 145 Q 460 155 480 185 Q 495 210 490 260" stroke="url(#tasselGold)" stroke-width="3.5" fill="none" stroke-linecap="round" />
+    <!-- Tassel Ring / Band -->
+    <rect x="484" y="258" width="12" height="5" rx="2" fill="#EAB308" />
+    <!-- Tassel Fringe Body -->
+    <path d="M 483 263 L 480 305 L 500 305 L 497 263 Z" fill="url(#tasselGold)" />
+    <line x1="483" y1="305" x2="483" y2="310" stroke="#CA8A04" stroke-width="1.5" />
+    <line x1="488" y1="305" x2="488" y2="311" stroke="#EAB308" stroke-width="1.5" />
+    <line x1="493" y1="305" x2="493" y2="312" stroke="#FDE047" stroke-width="1.5" />
+    <line x1="498" y1="305" x2="498" y2="309" stroke="#B45309" stroke-width="1.5" />
+
+    <!-- HANDS HOLDING ROLLED DIPLOMA -->
+    <g>
+      <!-- Graduate's Hands -->
+      <!-- Left Hand holding diploma -->
+      <ellipse cx="360" cy="460" rx="16" ry="14" fill="url(#skinTone)" />
+      <!-- Fingers wrapped around diploma -->
+      <rect x="350" y="445" width="22" height="7" rx="3.5" fill="url(#skinHighlight)" transform="rotate(-15 350 445)" />
+      <rect x="352" y="454" width="22" height="7" rx="3.5" fill="url(#skinHighlight)" transform="rotate(-15 352 454)" />
+      <rect x="354" y="463" width="22" height="7" rx="3.5" fill="url(#skinHighlight)" transform="rotate(-15 354 463)" />
+      <rect x="356" y="472" width="20" height="6.5" rx="3.5" fill="url(#skinHighlight)" transform="rotate(-15 356 472)" />
+
+      <!-- Right Hand holding diploma -->
+      <ellipse cx="435" cy="445" rx="16" ry="14" fill="url(#skinTone)" />
+      <rect x="425" y="430" width="22" height="7" rx="3.5" fill="url(#skinHighlight)" transform="rotate(-15 425 430)" />
+      <rect x="427" y="439" width="22" height="7" rx="3.5" fill="url(#skinHighlight)" transform="rotate(-15 427 439)" />
+      <rect x="429" y="448" width="22" height="7" rx="3.5" fill="url(#skinHighlight)" transform="rotate(-15 429 448)" />
+
+      <!-- THE ROLLED DIPLOMA (cylinder at an angle) -->
+      <g transform="rotate(-15 400 455)" filter="url(#cardShadow)">
+        <!-- Diploma Tube Shadow & Cylinder -->
+        <rect x="290" y="438" width="220" height="34" rx="17" fill="url(#diplomaPaper)" stroke="#CBD5E1" stroke-width="1.5" />
+        <!-- Rolled Paper Inner Spiral at ends -->
+        <ellipse cx="295" cy="455" rx="6" ry="14" fill="#E2E8F0" stroke="#94A3B8" stroke-width="1.5" />
+        <path d="M 295 448 A 4 7 0 0 1 295 460" stroke="#64748B" stroke-width="1" fill="none" />
+        <ellipse cx="505" cy="455" rx="6" ry="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1" />
+
+        <!-- Subtle embossed text line hints on parchment -->
+        <line x1="320" y1="449" x2="370" y2="449" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3" opacity="0.6" />
+        <line x1="430" y1="449" x2="480" y2="449" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3" opacity="0.6" />
+        <line x1="320" y1="458" x2="365" y2="458" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 2" opacity="0.6" />
+        <line x1="435" y1="458" x2="480" y2="458" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4 2" opacity="0.6" />
+
+        <!-- CRIMSON RED SILK RIBBON TIED IN THE MIDDLE -->
+        <!-- Ribbon Wrap -->
+        <rect x="390" y="437" width="22" height="36" fill="url(#ribbonGrad)" rx="3" />
+        <!-- Ribbon Highlights -->
+        <line x1="395" y1="437" x2="395" y2="473" stroke="#FDA4AF" stroke-width="1.5" opacity="0.7" />
+        <!-- Ribbon Bow Knot -->
+        <circle cx="401" cy="455" r="7" fill="#BE123C" />
+        <ellipse cx="396" cy="452" rx="6" ry="3.5" fill="url(#ribbonGrad)" transform="rotate(-30 396 452)" />
+        <ellipse cx="406" cy="452" rx="6" ry="3.5" fill="url(#ribbonGrad)" transform="rotate(30 406 452)" />
+        <!-- Ribbon Hanging Tails -->
+        <path d="M 398 458 Q 394 478 388 495 L 396 492 L 401 460 Z" fill="#BE123C" />
+        <path d="M 403 458 Q 407 478 414 495 L 406 492 L 402 460 Z" fill="#9F1239" />
+        <!-- Gold Seal Stamp on Ribbon -->
+        <circle cx="401" cy="455" r="4.5" fill="#FACC15" stroke="#CA8A04" stroke-width="1" />
+      </g>
+    </g>
+  </g>
+
+  <!-- Ambient lighting overlay on bottom for smooth depth -->
+  <rect y="520" width="800" height="80" fill="url(#bgGradient)" opacity="0.4" />
+</svg>

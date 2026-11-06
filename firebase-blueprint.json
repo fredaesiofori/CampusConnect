@@ -1,0 +1,126 @@
+{
+  "entities": {
+    "Opportunity": {
+      "title": "Opportunity",
+      "description": "Verified university and study opportunity record containing official URLs, verification citations, and eligibility rules.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the opportunity"
+        },
+        "officialName": {
+          "type": "string",
+          "description": "Official institutional name"
+        },
+        "country": {
+          "type": "string",
+          "description": "Host country name"
+        },
+        "officialWebsite": {
+          "type": "string",
+          "description": "Official university website URL"
+        },
+        "sourceUrl": {
+          "type": "string",
+          "description": "Primary verified admissions or scholarship bulletin source URL"
+        },
+        "isVerified": {
+          "type": "boolean",
+          "description": "Whether this record is verified against official registry"
+        },
+        "verificationSource": {
+          "type": "string",
+          "description": "Official authority and citation verifying this listing"
+        },
+        "verifiedAt": {
+          "type": "string",
+          "description": "Academic cycle or date of verification"
+        },
+        "eligibilityCountries": {
+          "type": "array",
+          "description": "List of countries or regions eligible for this opportunity"
+        },
+        "degreeLevels": {
+          "type": "array",
+          "description": "Eligible degree levels (Undergraduate, Master's, PhD)"
+        },
+        "fundingDetails": {
+          "type": "object",
+          "description": "Structured details on tuition coverage and living allowances"
+        },
+        "applicationFees": {
+          "type": "object",
+          "description": "Application fee status, amount, and waiver instructions"
+        },
+        "testWaiverRules": {
+          "type": "object",
+          "description": "SAT/ACT and English language waiver policies"
+        },
+        "deadlines": {
+          "type": "object",
+          "description": "Term and verified deadline date or rolling notice"
+        },
+        "studyFields": {
+          "type": "array",
+          "description": "Eligible fields of study and academic majors"
+        }
+      },
+      "required": ["id", "officialName", "country", "sourceUrl", "isVerified"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Private student account profile with academic preferences, saved opportunities, and application tracker.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Authentication user ID"
+        },
+        "email": {
+          "type": "string",
+          "description": "Student email address"
+        },
+        "fullName": {
+          "type": "string",
+          "description": "Student full legal name"
+        },
+        "profile": {
+          "type": "object",
+          "description": "Academic onboarding profile including nationality, degree goal, and study destinations"
+        },
+        "savedOpportunities": {
+          "type": "array",
+          "description": "List of saved opportunity IDs in student's target list"
+        },
+        "applicationTracker": {
+          "type": "object",
+          "description": "Mapping of opportunity IDs to application progress stages"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of account creation"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last update"
+        }
+      },
+      "required": ["uid", "email"]
+    }
+  },
+  "firestore": {
+    "/opportunities/{opportunityId}": {
+      "schema": {
+        "$ref": "#/entities/Opportunity"
+      },
+      "description": "Public directory of verified real university programs and scholarships."
+    },
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Private student user account and academic profile data."
+    }
+  }
+}

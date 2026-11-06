@@ -1,0 +1,6 @@
+{
+  "name": "Campus Connect - Visual Design System",
+  "description": "Visual design system and reusable UI tokens for Campus Connect, an education technology platform helping African students discover and secure global scholarships.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
