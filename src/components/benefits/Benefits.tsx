@@ -17,23 +17,23 @@ interface BenefitItem {
 const benefits: BenefitItem[] = [
   {
     id: 'universities-pathways',
-    title: 'Universities & Study Pathways',
+    title: 'Universities Worldwide',
     description:
-      'Explore accredited degree programs across Ghana 🇬🇭, the United States, UK, Canada, Germany, Australia, and worldwide.',
+      'Discover verified undergraduate and postgraduate programs across Ghana, the United States, UK, Canada, Germany, Australia, and other international destinations.',
     icon: <GraduationCap className="w-6 h-6 text-[#6846F5]" />,
   },
   {
     id: 'app-fee-sat-waivers',
-    title: '$0 App Fees & Test Waivers',
+    title: 'Fee Waivers, Test Policies & Aid',
     description:
-      'Access institutions offering automatic $0 application fees, SAT/test-optional pathways, and WASSCE English waivers.',
+      'Find universities with free applications or fee waivers, SAT-free and test-optional admission pathways, and scholarship or financial aid opportunities.',
     icon: <Target className="w-6 h-6 text-[#6846F5]" />,
   },
   {
     id: 'admissions-funding',
-    title: 'Admissions Rules & Funding',
+    title: 'Application Planning & COVA AI',
     description:
-      'Evaluate official eligibility criteria, required documentation, and verified full-ride or need-based scholarships.',
+      'Understand official requirements and deadlines, save universities and opportunities, track active applications, and receive tailored guidance from COVA AI.',
     icon: <ClipboardCheck className="w-6 h-6 text-[#6846F5]" />,
   },
 ];
@@ -49,13 +49,13 @@ export const Benefits: React.FC<{ className?: string }> = ({ className = '' }) =
         {/* Section Header */}
         <div className="max-w-3xl mb-10 sm:mb-14 lg:mb-16">
           <span className="block text-xs font-semibold tracking-wider uppercase text-[#6846F5] mb-2 sm:mb-3">
-            MORE THAN JUST SCHOLARSHIPS
+            GLOBAL EDUCATION OPPORTUNITIES
           </span>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display tracking-tight text-[#15152F] [text-wrap:balance]">
-            Universities, waivers, and clear admissions requirements.
+            Universities, admissions pathways, and financial support in one place.
           </h2>
           <p className="mt-2.5 sm:mt-3.5 text-sm sm:text-base lg:text-lg text-[#64748B] leading-relaxed [text-wrap:pretty]">
-            Discover institutions with no application fee, pathways without SATs, official entry criteria, and verified financial support.
+            Explore international study programs, check entry criteria and deadlines, identify fee-waiver or test-optional options where offered, and organize every application.
           </p>
         </div>
 

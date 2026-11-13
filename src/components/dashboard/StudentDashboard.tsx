@@ -47,13 +47,21 @@ import {
   FolderCheck,
   Compass,
   ArrowUpRight,
+  ArrowLeft,
   LayoutDashboard,
   BookOpen,
   Settings,
 } from 'lucide-react';
 import { authenticOpportunities, OpportunityItem, evaluateOpportunityDeadline } from '../../data/opportunities';
 import { Button } from '../ui/Button';
-import { authService, User } from '../../services/auth';
+import {
+  authService,
+  User,
+  TargetPriority,
+  TargetListItem,
+  ActiveApplicationItem,
+  ActiveApplicationStage,
+} from '../../services/auth';
 import {
   currentFirebaseProjectId,
   currentFirestoreDatabaseId,
@@ -61,11 +69,14 @@ import {
   seedVerifiedOpportunitiesToFirestore,
   fetchVerifiedOpportunitiesFromFirestore,
   saveStudentProfileToFirestore,
+  checkCurrentUserIsAdmin,
 } from '../../services/firebase';
 import { CountrySelect, CountryMultiSelect } from '../ui/CountrySelect';
 import { DashboardSidebar, DashboardNavTab } from './DashboardSidebar';
 import { UniversityCard } from './UniversityCard';
 import { TargetTrackerBoard, ApplicationStage } from './TargetTrackerBoard';
+import { SavedOpportunitiesView } from './SavedOpportunitiesView';
+import { ApplicationsView } from './ApplicationsView';
 import { OpportunityDetailModal } from './OpportunityDetailModal';
 import { StudentSettingsCentre } from './StudentSettingsCentre';
 import { UniversityLogo } from '../ui/UniversityLogo';
@@ -129,6 +140,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const [activeTab, setActiveTab] = useState<DashboardNavTab>(
     initialQuery || initialDestination ? 'universities' : 'overview'
   );
+
+  // Dedicated sub-view inside Overview for Saved Opportunities & Applications
+  const [overviewSection, setOverviewSection] = useState<'home' | 'saved' | 'applications'>('home');
 
   // Mobile sidebar drawer state
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -196,15 +210,43 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   // Selected opportunity for detail modal matching mockup screen 3
   const [selectedOpportunity, setSelectedOpportunity] = useState<OpportunityItem | null>(null);
 
-  // Feedback toast
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  // Feedback toast (with honest error variant)
+  const [toastMessage, setToastMessage] = useState<{ text: string; isError?: boolean } | null>(null);
 
-  // Saved opportunities set & application tracker status
+  // Saved opportunities set (Personal Bookmarks ONLY)
   const [savedOpportunities, setSavedOpportunities] = useState<Set<string>>(() => {
     const fromUser = initialUser?.savedOpportunities || [];
     return new Set(fromUser);
   });
 
+  // Target List (Future Study Goals ONLY — completely separate from Saved Opportunities)
+  const [targetList, setTargetList] = useState<Record<string, TargetListItem>>(() => {
+    return initialUser?.targetList || {};
+  });
+
+  // Active Applications (Started Applications ONLY — excludes bookmarks & unstarted targets)
+  const [activeApplications, setActiveApplications] = useState<Record<string, ActiveApplicationItem>>(() => {
+    if (initialUser?.activeApplications && Object.keys(initialUser.activeApplications).length > 0) {
+      return initialUser.activeApplications;
+    }
+    const hydrated: Record<string, ActiveApplicationItem> = {};
+    const tracker = initialUser?.applicationTracker || {};
+    Object.entries(tracker).forEach(([oppId, stage]) => {
+      if (stage === 'preparing' || stage === 'submitted' || stage === 'accepted') {
+        const now = new Date().toISOString();
+        hydrated[oppId] = {
+          opportunityId: oppId,
+          stage,
+          completedTasks: [],
+          startedAt: now,
+          updatedAt: now,
+        };
+      }
+    });
+    return hydrated;
+  });
+
+  // Legacy tracker status map synced for COVA compatibility
   const [applicationTracker, setApplicationTracker] = useState<Record<string, ApplicationStage>>(() => {
     return (initialUser?.applicationTracker as Record<string, ApplicationStage>) || {};
   });
@@ -243,10 +285,56 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   // Verified Opportunities State (Hydrated from Firestore & backed by verified registry)
   const [opportunities, setOpportunities] = useState<OpportunityItem[]>(authenticOpportunities);
 
-  const showNotification = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3200);
+  const showNotification = (msg: string, isError = false) => {
+    setToastMessage({ text: msg, isError });
+    setTimeout(() => setToastMessage(null), 3800);
   };
+
+  // Helper to navigate across Dashboard sections while supporting browser Back button
+  const navigateToDashboardView = (
+    tab: DashboardNavTab,
+    section: 'home' | 'saved' | 'applications' = 'home'
+  ) => {
+    setActiveTab(tab);
+    setOverviewSection(section);
+    setCurrentPage(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      window.history.pushState({ dashboardTab: tab, overviewSection: section }, '');
+    } catch {
+      // Ignore if history push is restricted
+    }
+  };
+
+  const handleBackToOverview = () => {
+    setActiveTab('overview');
+    setOverviewSection('home');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      window.history.pushState({ dashboardTab: 'overview', overviewSection: 'home' }, '');
+    } catch {
+      // Ignore
+    }
+  };
+
+  // Support browser Back/Forward navigation within Dashboard views
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      const state = event.state as {
+        dashboardTab?: DashboardNavTab;
+        overviewSection?: 'home' | 'saved' | 'applications';
+      } | null;
+      if (state && state.dashboardTab) {
+        setActiveTab(state.dashboardTab);
+        setOverviewSection(state.overviewSection || 'home');
+      } else {
+        setActiveTab('overview');
+        setOverviewSection('home');
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Sync initial query/destination from Hero Search if updated
   useEffect(() => {
@@ -270,6 +358,17 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         isConnected: res.isConnected,
         error: res.error,
       }));
+    });
+
+    // Hydrate authenticated student's live Firestore profile, bookmarks, targets, and applications
+    authService.refreshCurrentUserFromFirestore().then((freshUser) => {
+      if (freshUser) {
+        setActiveUser({ ...freshUser });
+        setSavedOpportunities(new Set(freshUser.savedOpportunities || []));
+        setTargetList(freshUser.targetList || {});
+        setActiveApplications(freshUser.activeApplications || {});
+        setApplicationTracker((freshUser.applicationTracker as Record<string, ApplicationStage>) || {});
+      }
     });
 
     fetchVerifiedOpportunitiesFromFirestore()
@@ -296,131 +395,252 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
   // Profile Edit Form State (for the My Profile section)
   const userProfile = activeUser?.profile;
-  const [profNationality, setProfNationality] = useState(userProfile?.nationality || 'Ghanaian');
-  const [profResidence, setProfResidence] = useState(userProfile?.countryOfResidence || 'Ghana');
+  const [profFullName, setProfFullName] = useState(activeUser?.fullName || '');
+  const [profPhone, setProfPhone] = useState(userProfile?.phone || '');
+  const [profNationality, setProfNationality] = useState(userProfile?.nationality || '');
+  const [profResidence, setProfResidence] = useState(userProfile?.countryOfResidence || '');
+  const [profCurrentSchool, setProfCurrentSchool] = useState(userProfile?.currentSchool || '');
+  const [profEduLevel, setProfEduLevel] = useState(userProfile?.educationLevel || '');
+  const [profIntendedDegree, setProfIntendedDegree] = useState(userProfile?.intendedDegree || '');
+  const [profFieldOfStudy, setProfFieldOfStudy] = useState(userProfile?.fieldOfStudy || '');
+  const [profGraduationYear, setProfGraduationYear] = useState(userProfile?.graduationYear || '');
   const [profDestinations, setProfDestinations] = useState<string[]>(
-    userProfile?.preferredDestinations || ['Ghana', 'United States', 'United Kingdom', 'Canada']
+    userProfile?.preferredDestinations || []
   );
-  const [profEduLevel, setProfEduLevel] = useState(
-    userProfile?.educationLevel || 'Senior High School (WASSCE / SSSCE / WAEC)'
+  const [profFundingPreference, setProfFundingPreference] = useState(
+    userProfile?.fundingPreference || ''
   );
-  const [profIntendedDegree, setProfIntendedDegree] = useState(
-    userProfile?.intendedDegree || "Undergraduate (Bachelor's)"
-  );
-  const [profFieldOfStudy, setProfFieldOfStudy] = useState(
-    userProfile?.fieldOfStudy || 'Computer Science & Software Engineering'
-  );
-  const [profGraduationYear, setProfGraduationYear] = useState(
-    userProfile?.graduationYear || '2026'
+  const [profTestPreference, setProfTestPreference] = useState(
+    userProfile?.testPreference || ''
   );
   const [isSavingProfile, setIsSavingProfile] = useState(false);
+  const [profileSaveFeedback, setProfileSaveFeedback] = useState<{
+    type: 'success' | 'error' | 'info';
+    text: string;
+  } | null>(null);
 
-  // Keep form state in sync with active user updates from Settings or Firestore
+  // Keep form state and list states in sync with active user updates
   useEffect(() => {
-    if (activeUser?.profile) {
-      setProfNationality(activeUser.profile.nationality || 'Ghanaian');
-      setProfResidence(activeUser.profile.countryOfResidence || activeUser.country || 'Ghana');
-      setProfDestinations(
-        activeUser.profile.preferredDestinations || ['Ghana', 'United States', 'United Kingdom', 'Canada']
-      );
-      setProfEduLevel(activeUser.profile.educationLevel || 'Senior High School (WASSCE / SSSCE / WAEC)');
-      setProfIntendedDegree(activeUser.profile.intendedDegree || activeUser.degreeLevel || "Undergraduate (Bachelor's)");
-      setProfFieldOfStudy(activeUser.profile.fieldOfStudy || activeUser.studyField || 'Computer Science & Software Engineering');
-      setProfGraduationYear(activeUser.profile.graduationYear || '2026');
+    if (activeUser) {
+      setProfFullName(activeUser.fullName || '');
+      setSavedOpportunities(new Set(activeUser.savedOpportunities || []));
+      setTargetList(activeUser.targetList || {});
+      if (activeUser.activeApplications) {
+        setActiveApplications(activeUser.activeApplications);
+      }
+      setApplicationTracker((activeUser.applicationTracker as Record<string, ApplicationStage>) || {});
+
+      if (activeUser.profile) {
+        setProfPhone(activeUser.profile.phone || '');
+        setProfNationality(activeUser.profile.nationality || '');
+        setProfResidence(activeUser.profile.countryOfResidence || activeUser.country || '');
+        setProfCurrentSchool(activeUser.profile.currentSchool || '');
+        setProfEduLevel(activeUser.profile.educationLevel || '');
+        setProfIntendedDegree(activeUser.profile.intendedDegree || activeUser.degreeLevel || '');
+        setProfFieldOfStudy(activeUser.profile.fieldOfStudy || activeUser.studyField || '');
+        setProfGraduationYear(activeUser.profile.graduationYear || '');
+        setProfDestinations(activeUser.profile.preferredDestinations || []);
+        setProfFundingPreference(activeUser.profile.fundingPreference || '');
+        setProfTestPreference(activeUser.profile.testPreference || '');
+      }
     }
   }, [activeUser]);
 
-  // Toggle Save Opportunity & sync with Cloud Firestore
+  // Toggle Save Opportunity (Personal Bookmark ONLY — never modifies Target List or Applications)
   const toggleSave = async (opportunityId: string, title: string) => {
-    const isSaved = savedOpportunities.has(opportunityId);
-    let updatedSet: Set<string>;
-
-    if (isSaved) {
-      updatedSet = new Set(savedOpportunities);
-      updatedSet.delete(opportunityId);
-      setSavedOpportunities(updatedSet);
-      showNotification(`Removed "${title}" from Target Tracker.`);
-    } else {
-      updatedSet = new Set(savedOpportunities);
-      updatedSet.add(opportunityId);
-      setSavedOpportunities(updatedSet);
-      showNotification(`Saved "${title}" to Target Tracker!`);
+    const res = await authService.toggleSavedOpportunitySynced(opportunityId);
+    if (!res.success) {
+      showNotification(res.error || 'Could not update bookmark. Please check your connection.', true);
+      return;
     }
 
-    const updatedUser = authService.toggleSavedOpportunity(opportunityId);
-    if (updatedUser) {
-      setActiveUser(updatedUser);
+    if (res.user) {
+      setActiveUser({ ...res.user });
+      setSavedOpportunities(new Set(res.user.savedOpportunities || []));
+    }
+
+    if (res.isSaved) {
+      showNotification(`Bookmarked "${title}" in Saved Opportunities.`);
+    } else {
+      showNotification(`Removed "${title}" from Saved Opportunities.`);
     }
   };
 
-  // Update Application Tracker Stage
+  // Upsert Target List Goal
+  const handleUpsertTarget = async (input: {
+    opportunityId: string;
+    priority: TargetPriority;
+    intakeYear: string;
+    personalGoal: string;
+  }) => {
+    const res = await authService.upsertTargetListItem(input);
+    if (!res.success) {
+      showNotification(res.error || 'Could not save Target List item.', true);
+      return;
+    }
+    if (res.user) {
+      setActiveUser({ ...res.user });
+      setTargetList(res.user.targetList || {});
+    }
+    showNotification(
+      res.persistedToCloud
+        ? 'Target List updated and saved.'
+        : 'Target List updated for current session.'
+    );
+  };
+
+  // Remove Target List Goal
+  const handleRemoveTarget = async (opportunityId: string, title: string) => {
+    const res = await authService.removeTargetListItem(opportunityId);
+    if (!res.success) {
+      showNotification(res.error || 'Could not remove target.', true);
+      return;
+    }
+    if (res.user) {
+      setActiveUser({ ...res.user });
+      setTargetList(res.user.targetList || {});
+    }
+    showNotification(`Removed "${title}" from Target List.`);
+  };
+
+  // Start Active Application (requires prior confirmation in UI)
+  const handleStartApplication = async (
+    opportunityId: string,
+    initialStage: ActiveApplicationStage = 'preparing'
+  ) => {
+    const res = await authService.startActiveApplication(opportunityId, initialStage);
+    if (!res.success) {
+      showNotification(res.error || 'Could not start application.', true);
+      return;
+    }
+    if (res.user) {
+      setActiveUser({ ...res.user });
+      setActiveApplications(res.user.activeApplications || {});
+      setApplicationTracker((res.user.applicationTracker as Record<string, ApplicationStage>) || {});
+    }
+    if (res.alreadyExists) {
+      showNotification('This opportunity already has an active application.');
+    } else {
+      showNotification('Application started! Track deadlines and tasks in Applications.');
+    }
+  };
+
+  // Update Active Application (stage or task checklist)
+  const handleUpdateActiveApplication = async (
+    opportunityId: string,
+    patch: { stage?: ActiveApplicationStage; completedTasks?: string[]; notes?: string }
+  ) => {
+    const res = await authService.updateActiveApplication(opportunityId, patch);
+    if (!res.success) {
+      showNotification(res.error || 'Could not update application.', true);
+      return;
+    }
+    if (res.user) {
+      setActiveUser({ ...res.user });
+      setActiveApplications(res.user.activeApplications || {});
+      setApplicationTracker((res.user.applicationTracker as Record<string, ApplicationStage>) || {});
+    }
+    if (patch.stage) {
+      const stageNames: Record<ActiveApplicationStage, string> = {
+        preparing: 'Preparing Application',
+        submitted: 'Application Submitted',
+        accepted: 'Accepted / Enrolled',
+      };
+      showNotification(`Application status updated to "${stageNames[patch.stage]}".`);
+    }
+  };
+
+  // Remove/Withdraw Active Application
+  const handleRemoveActiveApplication = async (opportunityId: string, title: string) => {
+    const res = await authService.removeActiveApplication(opportunityId);
+    if (!res.success) {
+      showNotification(res.error || 'Could not remove application.', true);
+      return;
+    }
+    if (res.user) {
+      setActiveUser({ ...res.user });
+      setActiveApplications(res.user.activeApplications || {});
+      setApplicationTracker((res.user.applicationTracker as Record<string, ApplicationStage>) || {});
+    }
+    showNotification(`Removed "${title}" from active applications.`);
+  };
+
+  // Legacy / COVA Application Tracker Stage callback
   const updateAppStatus = async (
     opportunityId: string,
     status: ApplicationStage
   ) => {
-    const updated = {
-      ...applicationTracker,
-      [opportunityId]: status,
-    };
-    setApplicationTracker(updated);
-
-    const labels: Record<ApplicationStage, string> = {
-      saved: 'Saved Target',
-      preparing: 'Preparing Application',
-      submitted: 'Application Submitted',
-      accepted: 'Accepted / Enrolled',
-    };
-    showNotification(`Moved to "${labels[status]}" stage.`);
-
+    if (status === 'preparing' || status === 'submitted' || status === 'accepted') {
+      await handleUpdateActiveApplication(opportunityId, { stage: status });
+      return;
+    }
     const updatedUser = authService.updateApplicationStatus(opportunityId, status);
     if (updatedUser) {
-      setActiveUser(updatedUser);
+      setActiveUser({ ...updatedUser });
+      setApplicationTracker((updatedUser.applicationTracker as Record<string, ApplicationStage>) || {});
     }
   };
 
-  // Save updated profile preferences
+  // Save updated profile preferences (honest persistence verification)
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSavingProfile(true);
+    setProfileSaveFeedback(null);
 
     try {
-      const updated = authService.updateProfile({
-        nationality: profNationality,
-        countryOfResidence: profResidence,
-        preferredDestinations: profDestinations,
-        educationLevel: profEduLevel,
-        intendedDegree: profIntendedDegree,
-        fieldOfStudy: profFieldOfStudy,
-        graduationYear: profGraduationYear,
-        onboardingCompleted: true,
+      const fundingTypeMap: Record<string, string> = {
+        'Fully Funded Only': 'fully_funded',
+        'Partial & Merit Scholarships': 'partially_funded',
+        'Self-Funded / Standard Tuition': 'self_funded',
+        'All Funding Types': 'all',
+      };
+
+      const res = await authService.saveDashboardProfile({
+        fullName: profFullName,
+        profileData: {
+          phone: profPhone.trim(),
+          nationality: profNationality.trim(),
+          countryOfResidence: profResidence.trim(),
+          currentSchool: profCurrentSchool.trim(),
+          educationLevel: profEduLevel.trim(),
+          graduationYear: profGraduationYear.trim(),
+          intendedDegree: profIntendedDegree.trim(),
+          fieldOfStudy: profFieldOfStudy.trim(),
+          preferredDestinations: profDestinations,
+          fundingPreference: profFundingPreference.trim(),
+          ...(fundingTypeMap[profFundingPreference]
+            ? { fundingTypePreference: fundingTypeMap[profFundingPreference] }
+            : {}),
+          testPreference: profTestPreference.trim(),
+        },
       });
 
-      if (updated) {
-        setActiveUser(updated);
-        setSelectedUserCountry(profResidence);
-        try {
-          await saveStudentProfileToFirestore(
-            updated.id,
-            updated.email,
-            {
-              nationality: profNationality,
-              countryOfResidence: profResidence,
-              preferredDestinations: profDestinations,
-              educationLevel: profEduLevel,
-              intendedDegree: profIntendedDegree,
-              fieldOfStudy: profFieldOfStudy,
-              graduationYear: profGraduationYear,
-              onboardingCompleted: true,
-            },
-            updated.fullName
-          );
-        } catch (err) {
-          console.warn('Firestore profile persist:', err);
-        }
-        showNotification('Profile and preferences updated successfully!');
+      if (!res.success || !res.user) {
+        const errMsg = res.error || 'Failed to save profile changes. Please try again.';
+        setProfileSaveFeedback({ type: 'error', text: errMsg });
+        showNotification(errMsg, true);
+        return;
+      }
+
+      setActiveUser({ ...res.user });
+      if (profResidence.trim()) {
+        setSelectedUserCountry(profResidence.trim());
+      }
+
+      if (res.persistedToCloud) {
+        const msg = 'Personal, academic, and study details saved to your account.';
+        setProfileSaveFeedback({ type: 'success', text: msg });
+        showNotification(msg);
+      } else {
+        const msg =
+          'Profile updated locally, but cloud persistence could not be confirmed. Please sign in again to sync to your account.';
+        setProfileSaveFeedback({ type: 'info', text: msg });
+        showNotification(msg);
       }
     } catch {
-      showNotification('Error saving profile changes. Please try again.');
+      const errMsg = 'Unexpected error saving profile changes.';
+      setProfileSaveFeedback({ type: 'error', text: errMsg });
+      showNotification(errMsg, true);
     } finally {
       setIsSavingProfile(false);
     }
@@ -429,18 +649,25 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const handleManualDbSync = async () => {
     setDbState((prev) => ({ ...prev, isSyncing: true }));
     try {
-      const count = await seedVerifiedOpportunitiesToFirestore();
-      if (count > 0) {
-        showNotification(`University directory updated with ${count} verified institutions.`);
-      } else {
-        showNotification('University and scholarship directory verified.');
+      const isAdmin = await checkCurrentUserIsAdmin(true);
+      if (!isAdmin) {
+        showNotification(
+          'Administrator privileges (verified Firebase custom claim) are required to edit directory records.',
+          true
+        );
+        return;
       }
+      const count = await seedVerifiedOpportunitiesToFirestore();
+      showNotification(`University directory updated with ${count} verified institutions.`);
       const live = await fetchVerifiedOpportunitiesFromFirestore();
       if (live && live.length > 0) {
         setOpportunities(live);
       }
-    } catch {
-      showNotification('University directory verified.');
+    } catch (err: any) {
+      showNotification(
+        err?.message || 'Permission denied: administrator privileges are required to modify university records.',
+        true
+      );
     } finally {
       setDbState((prev) => ({ ...prev, isSyncing: false }));
     }
@@ -673,12 +900,105 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     return prioritizedOpportunities.slice(start, start + pageSize);
   }, [prioritizedOpportunities, currentPage, pageSize]);
 
-  // Saved Items List for Tracker Board
+  // Saved Items List for Saved Opportunities View
   const savedItemsList = useMemo(() => {
     return opportunities.filter((item) => savedOpportunities.has(item.id));
   }, [opportunities, savedOpportunities]);
 
-  // Counts for Badges & Stat Cards
+  // Real Profile Completion & Missing Information (Personal, Academic, Study Preferences)
+  const profileCompletion = useMemo(() => {
+    const p = activeUser?.profile;
+    const checks: { id: string; label: string; category: string; completed: boolean }[] = [
+      {
+        id: 'prof-fullname',
+        label: 'Full Legal Name',
+        category: 'Personal',
+        completed: Boolean(activeUser?.fullName && activeUser.fullName.trim().length >= 2),
+      },
+      {
+        id: 'prof-phone',
+        label: 'Phone / WhatsApp Number',
+        category: 'Personal',
+        completed: Boolean(p?.phone && p.phone.trim().length >= 5),
+      },
+      {
+        id: 'prof-nationality',
+        label: 'Nationality / Citizenship',
+        category: 'Personal',
+        completed: Boolean(p?.nationality && p.nationality.trim().length > 0),
+      },
+      {
+        id: 'prof-residence',
+        label: 'Country of Residence',
+        category: 'Personal',
+        completed: Boolean((p?.countryOfResidence || activeUser?.country || '').trim().length > 0),
+      },
+      {
+        id: 'prof-school',
+        label: 'Current / Previous School',
+        category: 'Academic',
+        completed: Boolean(p?.currentSchool && p.currentSchool.trim().length > 1),
+      },
+      {
+        id: 'prof-edu-level',
+        label: 'Current Education Level',
+        category: 'Academic',
+        completed: Boolean(p?.educationLevel && p.educationLevel.trim().length > 0),
+      },
+      {
+        id: 'prof-grad-year',
+        label: 'Graduation Year',
+        category: 'Academic',
+        completed: Boolean(p?.graduationYear && p.graduationYear.trim().length > 0),
+      },
+      {
+        id: 'prof-intended-degree',
+        label: 'Intended Degree Level',
+        category: 'Study Preferences',
+        completed: Boolean((p?.intendedDegree || activeUser?.degreeLevel || '').trim().length > 0),
+      },
+      {
+        id: 'prof-field',
+        label: 'Field of Study',
+        category: 'Study Preferences',
+        completed: Boolean((p?.fieldOfStudy || activeUser?.studyField || '').trim().length > 0),
+      },
+      {
+        id: 'prof-destinations',
+        label: 'Preferred Study Destinations',
+        category: 'Study Preferences',
+        completed: Boolean(p?.preferredDestinations && p.preferredDestinations.length > 0),
+      },
+      {
+        id: 'prof-funding',
+        label: 'Funding Preference',
+        category: 'Study Preferences',
+        completed: Boolean(
+          (p?.fundingPreference && p.fundingPreference.trim().length > 0) ||
+            (p?.fundingTypePreference && p.fundingTypePreference.trim().length > 0)
+        ),
+      },
+      {
+        id: 'prof-test',
+        label: 'Standardized Test Preference',
+        category: 'Study Preferences',
+        completed: Boolean(p?.testPreference && p.testPreference.trim().length > 0),
+      },
+    ];
+
+    const completedCount = checks.filter((c) => c.completed).length;
+    const missingFields = checks.filter((c) => !c.completed);
+    const percentage = Math.round((completedCount / checks.length) * 100);
+
+    return {
+      percentage,
+      completedCount,
+      totalCount: checks.length,
+      missingFields,
+    };
+  }, [activeUser]);
+
+  // Real Counts for Badges & 4 Stat Cards (strictly separated, no hardcoded fake fallbacks)
   const counts = useMemo(() => {
     const scCount = opportunities.filter((i) => {
       if (!i) return false;
@@ -687,18 +1007,42 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     }).length;
     const uniCount = opportunities.length;
 
-    // Applications in progress (preparing + submitted)
-    const activeApps = Object.values(applicationTracker).filter(
-      (s) => s === 'preparing' || s === 'submitted'
-    ).length;
+    const opportunityIds = new Set(opportunities.map((o) => o.id));
+    const activeAppItems = Object.values(activeApplications).filter(
+      (a) =>
+        (a.stage === 'preparing' || a.stage === 'submitted' || a.stage === 'accepted') &&
+        (opportunityIds.size === 0 || opportunityIds.has(a.opportunityId))
+    );
+    const targetItems = Object.values(targetList).filter(
+      (t) => opportunityIds.size === 0 || opportunityIds.has(t.opportunityId)
+    );
+
+    const savedUnis = savedItemsList.filter((i) => i.category !== 'scholarship').length;
+    const savedScholarships = savedItemsList.filter((i) => {
+      const fType = i.funding?.type || i.fundingDetails?.type || '';
+      return i.category === 'scholarship' || fType === 'Fully Funded' || fType === '100% Need-Met';
+    }).length;
+
+    const preparingApps = activeAppItems.filter((a) => a.stage === 'preparing').length;
+    const submittedApps = activeAppItems.filter((a) => a.stage === 'submitted').length;
+    const acceptedApps = activeAppItems.filter((a) => a.stage === 'accepted').length;
+
+    const highPriorityTargets = targetItems.filter((t) => t.priority === 'High').length;
 
     return {
       universities: uniCount,
       scholarships: scCount,
-      saved: savedOpportunities.size,
-      applications: activeApps,
+      saved: savedItemsList.length,
+      savedUnis,
+      savedScholarships,
+      applications: activeAppItems.length,
+      preparingApps,
+      submittedApps,
+      acceptedApps,
+      targets: targetItems.length,
+      highPriorityTargets,
     };
-  }, [savedOpportunities, opportunities, applicationTracker]);
+  }, [savedItemsList, opportunities, activeApplications, targetList]);
 
   // Recommended Universities for Dashboard: Prioritizes user's country and aligns with study preferences
   const recommendedUniversities = useMemo(() => {
@@ -794,9 +1138,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       <DashboardSidebar
         activeTab={activeTab}
         onSelectTab={(tab) => {
-          setActiveTab(tab);
-          setCurrentPage(1);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          navigateToDashboardView(tab, 'home');
         }}
         onLogout={onLogout || (() => {})}
         isOpenMobile={isMobileSidebarOpen}
@@ -810,9 +1152,19 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
       {/* Floating Action Feedback Toast */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#10132D] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
-          <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
-          <span>{toastMessage}</span>
+        <div
+          className={`fixed bottom-6 right-6 z-50 text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border animate-in fade-in slide-in-from-bottom-2 duration-150 ${
+            toastMessage.isError
+              ? 'bg-rose-700 border-rose-500'
+              : 'bg-[#10132D] border-[#25254D]'
+          }`}
+        >
+          {toastMessage.isError ? (
+            <AlertCircle className="w-4 h-4 text-rose-200 shrink-0" />
+          ) : (
+            <CheckCircle2 className="w-4 h-4 text-[#E7B75C] shrink-0" />
+          )}
+          <span>{toastMessage.text}</span>
         </div>
       )}
 
@@ -838,16 +1190,20 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               </span>
               <span className="text-slate-300 hidden sm:inline">/</span>
               <h1 className="text-sm sm:text-base font-bold text-[#10132D] capitalize">
-                {activeTab === 'overview'
+                {activeTab === 'overview' && overviewSection === 'saved'
+                  ? 'Saved Opportunities'
+                  : activeTab === 'overview' && overviewSection === 'applications'
+                  ? 'Applications'
+                  : activeTab === 'overview'
                   ? 'Dashboard Overview'
                   : activeTab === 'universities'
                   ? 'Explore Universities'
                   : activeTab === 'scholarships'
                   ? 'Scholarships & Grants'
                   : activeTab === 'tracker'
-                  ? 'Target Tracker'
+                  ? 'Target List'
                   : activeTab === 'profile'
-                  ? 'My Scholar Profile'
+                  ? 'My Profile'
                   : activeTab === 'resources'
                   ? 'Academic Resources'
                   : 'Settings'}
@@ -890,9 +1246,36 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         {/* Main Content Body */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6 pb-8 sm:pb-10 lg:pb-12">
           {/* ========================================================================= */}
-          {/* VIEW A: DASHBOARD OVERVIEW (Mockup Screen 4) */}
+          {/* VIEW A: DASHBOARD OVERVIEW & CARD SUB-DESTINATIONS */}
           {/* ========================================================================= */}
-          {activeTab === 'overview' && (
+          {activeTab === 'overview' && overviewSection === 'saved' && (
+            <SavedOpportunitiesView
+              savedItems={savedItemsList}
+              targetList={targetList}
+              onRemoveBookmark={toggleSave}
+              onAddToTargetList={handleUpsertTarget}
+              onOpenDetails={setSelectedOpportunity}
+              onExploreDirectory={(tab) => navigateToDashboardView(tab, 'home')}
+              onBack={handleBackToOverview}
+            />
+          )}
+
+          {activeTab === 'overview' && overviewSection === 'applications' && (
+            <ApplicationsView
+              opportunities={opportunities}
+              activeApplications={activeApplications}
+              targetList={targetList}
+              onUpdateApplication={handleUpdateActiveApplication}
+              onStartApplication={handleStartApplication}
+              onRemoveApplication={handleRemoveActiveApplication}
+              onOpenDetails={setSelectedOpportunity}
+              onOpenTargetList={() => navigateToDashboardView('tracker', 'home')}
+              onExploreDirectory={() => navigateToDashboardView('universities', 'home')}
+              onBack={handleBackToOverview}
+            />
+          )}
+
+          {activeTab === 'overview' && overviewSection === 'home' && (
             <div className="space-y-6 animate-in fade-in duration-150">
               {/* Greeting Header */}
               <div className="space-y-1">
@@ -904,22 +1287,42 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 </p>
               </div>
 
-              {/* 4 Stat & Action Cards Grid matching mockup screen 4 */}
+              {/* 4 Stat & Action Cards Grid — Each Card Performs a Distinct Function */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {/* Card 1: My Profile */}
+                {/* Card 1: MY PROFILE — Personal & Academic Identity */}
                 <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-3">
                   <div>
                     <div className="w-10 h-10 rounded-xl bg-[#F0EDFF] text-[#6846F5] flex items-center justify-center mb-3">
                       <UserRound className="w-5 h-5" />
                     </div>
-                    <h3 className="text-sm font-bold text-[#10132D]">My Profile</h3>
-                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                      Complete your profile to get better match recommendations.
+                    <div className="flex items-baseline justify-between gap-2">
+                      <h3 className="text-sm font-bold text-[#10132D]">My Profile</h3>
+                      <span className="text-2xl font-bold text-[#10132D]">
+                        {profileCompletion.percentage}%
+                      </span>
+                    </div>
+                    <div className="w-full h-1.5 rounded-full bg-slate-100 overflow-hidden mt-2">
+                      <div
+                        className="h-full rounded-full bg-[#6846F5] transition-all duration-300"
+                        style={{ width: `${profileCompletion.percentage}%` }}
+                      />
+                    </div>
+                    <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                      {profileCompletion.missingFields.length > 0
+                        ? `Missing: ${profileCompletion.missingFields
+                            .slice(0, 2)
+                            .map((f) => f.label)
+                            .join(', ')}${
+                            profileCompletion.missingFields.length > 2
+                              ? ` +${profileCompletion.missingFields.length - 2} more`
+                              : ''
+                          }`
+                        : 'Personal, academic & study details complete.'}
                     </p>
                   </div>
                   <button
                     type="button"
-                    onClick={() => setActiveTab('profile')}
+                    onClick={() => navigateToDashboardView('profile', 'home')}
                     className="text-xs font-bold text-[#6846F5] hover:underline flex items-center gap-1 pt-1 cursor-pointer"
                   >
                     <span>View Profile</span>
@@ -927,23 +1330,27 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   </button>
                 </div>
 
-                {/* Card 2: Saved Universities */}
+                {/* Card 2: SAVED OPPORTUNITIES — Personal Bookmarks */}
                 <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-3">
                   <div>
                     <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-3">
                       <Heart className="w-5 h-5" />
                     </div>
                     <div className="flex items-baseline justify-between">
-                      <h3 className="text-sm font-bold text-[#10132D]">Saved Universities</h3>
+                      <h3 className="text-sm font-bold text-[#10132D]">Saved Opportunities</h3>
                       <span className="text-2xl font-bold text-[#10132D]">
-                        {counts.saved > 0 ? counts.saved : 12}
+                        {counts.saved}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-1">Institutions saved to your radar.</p>
+                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                      {counts.saved === 0
+                        ? 'No bookmarked universities or scholarships yet.'
+                        : `${counts.savedUnis} ${counts.savedUnis === 1 ? 'university' : 'universities'} · ${counts.savedScholarships} ${counts.savedScholarships === 1 ? 'scholarship' : 'scholarships'} bookmarked.`}
+                    </p>
                   </div>
                   <button
                     type="button"
-                    onClick={() => setActiveTab('tracker')}
+                    onClick={() => navigateToDashboardView('overview', 'saved')}
                     className="text-xs font-bold text-[#6846F5] hover:underline flex items-center gap-1 pt-1 cursor-pointer"
                   >
                     <span>View Saved</span>
@@ -951,7 +1358,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   </button>
                 </div>
 
-                {/* Card 3: Applications */}
+                {/* Card 3: APPLICATIONS — Active Application Management */}
                 <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-3">
                   <div>
                     <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
@@ -960,14 +1367,18 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     <div className="flex items-baseline justify-between">
                       <h3 className="text-sm font-bold text-[#10132D]">Applications</h3>
                       <span className="text-2xl font-bold text-[#10132D]">
-                        {counts.applications > 0 ? counts.applications : 3}
+                        {counts.applications}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-1">Active application tracks.</p>
+                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                      {counts.applications === 0
+                        ? 'No active applications started yet.'
+                        : `${counts.preparingApps} preparing · ${counts.submittedApps} submitted${counts.acceptedApps > 0 ? ` · ${counts.acceptedApps} accepted` : ''}.`}
+                    </p>
                   </div>
                   <button
                     type="button"
-                    onClick={() => setActiveTab('tracker')}
+                    onClick={() => navigateToDashboardView('overview', 'applications')}
                     className="text-xs font-bold text-[#6846F5] hover:underline flex items-center gap-1 pt-1 cursor-pointer"
                   >
                     <span>Track Progress</span>
@@ -975,7 +1386,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   </button>
                 </div>
 
-                {/* Card 4: Target List */}
+                {/* Card 4: TARGET LIST — Future Study Goals */}
                 <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-3">
                   <div>
                     <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
@@ -984,14 +1395,18 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     <div className="flex items-baseline justify-between">
                       <h3 className="text-sm font-bold text-[#10132D]">Target List</h3>
                       <span className="text-2xl font-bold text-[#10132D]">
-                        {counts.saved > 0 ? counts.saved : 4}
+                        {counts.targets}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-1">Target intake cycles.</p>
+                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                      {counts.targets === 0
+                        ? 'Shortlist institutions & goals you plan to pursue.'
+                        : `${counts.highPriorityTargets} high priority · ${counts.targets} future study ${counts.targets === 1 ? 'goal' : 'goals'}.`}
+                    </p>
                   </div>
                   <button
                     type="button"
-                    onClick={() => setActiveTab('tracker')}
+                    onClick={() => navigateToDashboardView('tracker', 'home')}
                     className="text-xs font-bold text-[#6846F5] hover:underline flex items-center gap-1 pt-1 cursor-pointer"
                   >
                     <span>Manage Goals</span>
@@ -1014,7 +1429,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
                   <button
                     type="button"
-                    onClick={() => setActiveTab('universities')}
+                    onClick={() => navigateToDashboardView('universities', 'home')}
                     className="text-xs font-bold text-[#6846F5] hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <span>View All</span>
@@ -1361,129 +1776,417 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           )}
 
           {/* ========================================================================= */}
-          {/* VIEW C: TARGET TRACKER KANBAN BOARD (Mockup Screen 5) */}
+          {/* VIEW C: TARGET LIST — FUTURE STUDY GOALS */}
           {/* ========================================================================= */}
           {activeTab === 'tracker' && (
             <div className="animate-in fade-in duration-150">
               <TargetTrackerBoard
-                savedItems={savedItemsList}
-                applicationTracker={applicationTracker}
-                onUpdateStage={updateAppStatus}
+                opportunities={opportunities}
+                targetList={targetList}
+                activeApplications={activeApplications}
+                onUpsertTarget={handleUpsertTarget}
+                onRemoveTarget={handleRemoveTarget}
+                onStartApplicationFromTarget={handleStartApplication}
+                onOpenApplications={() => navigateToDashboardView('overview', 'applications')}
                 onOpenDetails={setSelectedOpportunity}
-                onExploreMore={() => setActiveTab('universities')}
+                onExploreMore={() => navigateToDashboardView('universities', 'home')}
+                onBack={handleBackToOverview}
               />
             </div>
           )}
 
           {/* ========================================================================= */}
-          {/* VIEW D: MY PROFILE & ACADEMIC PREFERENCES */}
+          {/* VIEW D: MY PROFILE — PERSONAL & ACADEMIC IDENTITY */}
           {/* ========================================================================= */}
           {activeTab === 'profile' && (
-            <div className="bg-white rounded-2xl border border-[#E2E8F0] p-6 sm:p-8 space-y-6 animate-in fade-in duration-150">
-              <div className="border-b border-[#E2E8F0] pb-4">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#6846F5]">
-                  Scholar Account Preferences
-                </span>
-                <h2 className="text-2xl font-bold font-display text-[#10132D] mt-1">
-                  My Scholar Profile &amp; Preferences
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  Edit your nationality, current residence, target degree, field of study, and preferred study destinations.
-                </p>
+            <div className="space-y-5 animate-in fade-in duration-150">
+              <button
+                type="button"
+                onClick={handleBackToOverview}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-[#6846F5] transition-colors cursor-pointer py-1"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Back to Dashboard Overview</span>
+              </button>
+
+              {/* Profile Completion & Missing Information Card */}
+              <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 sm:p-6 shadow-xs space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[#6846F5]">
+                      Personal &amp; Academic Identity
+                    </span>
+                    <h2 className="text-2xl font-bold font-display text-[#10132D] mt-0.5">
+                      My Profile
+                    </h2>
+                    <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                      Manage your personal details, academic background, and study preferences.
+                    </p>
+                  </div>
+
+                  <div className="sm:text-right shrink-0">
+                    <div className="text-2xl font-bold font-display text-[#10132D]">
+                      {profileCompletion.percentage}% Complete
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      {profileCompletion.completedCount} of {profileCompletion.totalCount} profile fields filled
+                    </p>
+                  </div>
+                </div>
+
+                <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all duration-300 ${
+                      profileCompletion.percentage === 100 ? 'bg-emerald-500' : 'bg-[#6846F5]'
+                    }`}
+                    style={{ width: `${profileCompletion.percentage}%` }}
+                  />
+                </div>
+
+                {profileCompletion.missingFields.length > 0 ? (
+                  <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200 space-y-2">
+                    <p className="text-xs font-bold text-amber-900">
+                      Missing Information ({profileCompletion.missingFields.length}) — click to complete:
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {profileCompletion.missingFields.map((field) => (
+                        <button
+                          key={field.id}
+                          type="button"
+                          onClick={() => {
+                            const el = document.getElementById(field.id);
+                            if (el) {
+                              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                              el.focus();
+                            }
+                          }}
+                          className="px-2.5 py-1 rounded-lg bg-white hover:bg-amber-100 border border-amber-200 text-[11px] font-semibold text-amber-900 transition-colors cursor-pointer"
+                        >
+                          + {field.label} ({field.category})
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center gap-2 text-xs font-semibold text-emerald-800">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Your personal, academic, and study profile is 100% complete.</span>
+                  </div>
+                )}
               </div>
 
-              <form onSubmit={handleSaveProfile} className="space-y-6 max-w-2xl">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-[#10132D] mb-1.5">
-                      Full Legal Name
-                    </label>
-                    <input
-                      type="text"
-                      value={activeUser?.fullName || ''}
-                      disabled
-                      className="w-full h-11 px-3.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 text-sm cursor-not-allowed"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-[#10132D] mb-1.5">
-                      Account Email Address
-                    </label>
-                    <input
-                      type="email"
-                      value={activeUser?.email || ''}
-                      disabled
-                      className="w-full h-11 px-3.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 text-sm cursor-not-allowed"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <CountrySelect
-                    id="edit-nationality"
-                    label="Nationality / Citizenship"
-                    mode="nationality"
-                    value={profNationality}
-                    onChange={setProfNationality}
-                  />
-                  <CountrySelect
-                    id="edit-residence"
-                    label="Current Country of Residence"
-                    mode="country"
-                    value={profResidence}
-                    onChange={setProfResidence}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-[#10132D] mb-1.5">
-                      Target Degree
-                    </label>
-                    <select
-                      value={profIntendedDegree}
-                      onChange={(e) => setProfIntendedDegree(e.target.value)}
-                      className="w-full h-11 px-3.5 rounded-xl border border-[#CBD5E1] bg-white text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none"
-                    >
-                      <option value="Undergraduate (Bachelor's)">Undergraduate (Bachelor&apos;s)</option>
-                      <option value="Master's (Postgraduate)">Master&apos;s Degree</option>
-                      <option value="Doctorate / PhD">Doctorate / PhD</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-[#10132D] mb-1.5">
-                      Field of Study
-                    </label>
-                    <input
-                      type="text"
-                      value={profFieldOfStudy}
-                      onChange={(e) => setProfFieldOfStudy(e.target.value)}
-                      required
-                      className="w-full h-11 px-3.5 rounded-xl border border-[#CBD5E1] bg-white text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <CountryMultiSelect
-                  label="Preferred Study Destinations"
-                  selectedCountries={profDestinations}
-                  onChange={setProfDestinations}
-                />
-
-                <div className="pt-2 flex items-center gap-3">
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="md"
-                    disabled={isSavingProfile}
-                    rightIcon={<Save className="w-4 h-4" />}
-                    className="bg-[#6846F5] hover:bg-[#5835E5] text-white shadow-md"
+              {/* Editable Profile Sections */}
+              <div className="bg-white rounded-2xl border border-[#E2E8F0] p-6 sm:p-8 space-y-6 shadow-xs">
+                {profileSaveFeedback && (
+                  <div
+                    className={`p-3.5 rounded-xl border text-xs flex items-center gap-2 font-medium ${
+                      profileSaveFeedback.type === 'error'
+                        ? 'bg-rose-50 border-rose-200 text-rose-700'
+                        : profileSaveFeedback.type === 'info'
+                        ? 'bg-blue-50 border-blue-200 text-blue-800'
+                        : 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                    }`}
                   >
-                    {isSavingProfile ? 'Saving...' : 'Save Profile Changes'}
-                  </Button>
-                </div>
-              </form>
+                    {profileSaveFeedback.type === 'error' ? (
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                    ) : (
+                      <CheckCircle2 className="w-4 h-4 shrink-0" />
+                    )}
+                    <span>{profileSaveFeedback.text}</span>
+                  </div>
+                )}
+
+                <form onSubmit={handleSaveProfile} className="space-y-8 max-w-3xl">
+                  {/* Section 1: Personal Information */}
+                  <div className="space-y-4">
+                    <div className="pb-2 border-b border-slate-100">
+                      <h3 className="text-sm font-bold text-[#10132D]">1. Personal Information</h3>
+                      <p className="text-xs text-slate-500">
+                        Your legal identity, contact number, citizenship, and residence.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label
+                          htmlFor="prof-fullname"
+                          className="block text-xs font-semibold text-[#10132D] mb-1.5"
+                        >
+                          Full Legal Name
+                        </label>
+                        <input
+                          id="prof-fullname"
+                          type="text"
+                          value={profFullName}
+                          onChange={(e) => setProfFullName(e.target.value)}
+                          required
+                          placeholder="e.g. Kwame Mensah"
+                          className="w-full h-11 px-3.5 rounded-xl border border-[#CBD5E1] bg-white text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-[#10132D] mb-1.5">
+                          Account Email Address
+                        </label>
+                        <input
+                          type="email"
+                          value={activeUser?.email || ''}
+                          disabled
+                          className="w-full h-11 px-3.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 text-sm cursor-not-allowed"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <label
+                          htmlFor="prof-phone"
+                          className="block text-xs font-semibold text-[#10132D] mb-1.5"
+                        >
+                          Phone / WhatsApp Number
+                        </label>
+                        <input
+                          id="prof-phone"
+                          type="tel"
+                          value={profPhone}
+                          onChange={(e) => setProfPhone(e.target.value)}
+                          placeholder="e.g. +233 24 000 0000"
+                          className="w-full h-11 px-3.5 rounded-xl border border-[#CBD5E1] bg-white text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none"
+                        />
+                      </div>
+
+                      <CountrySelect
+                        id="prof-nationality"
+                        label="Nationality / Citizenship"
+                        mode="nationality"
+                        value={profNationality}
+                        onChange={setProfNationality}
+                      />
+
+                      <CountrySelect
+                        id="prof-residence"
+                        label="Current Country of Residence"
+                        mode="country"
+                        value={profResidence}
+                        onChange={setProfResidence}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Section 2: Academic Qualifications */}
+                  <div className="space-y-4">
+                    <div className="pb-2 border-b border-slate-100">
+                      <h3 className="text-sm font-bold text-[#10132D]">2. Academic Qualifications</h3>
+                      <p className="text-xs text-slate-500">
+                        Your current school, completed/current qualification, and graduation timeline.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <label
+                          htmlFor="prof-school"
+                          className="block text-xs font-semibold text-[#10132D] mb-1.5"
+                        >
+                          Current / Previous School
+                        </label>
+                        <input
+                          id="prof-school"
+                          type="text"
+                          value={profCurrentSchool}
+                          onChange={(e) => setProfCurrentSchool(e.target.value)}
+                          placeholder="e.g. Presec Legon / KNUST"
+                          className="w-full h-11 px-3.5 rounded-xl border border-[#CBD5E1] bg-white text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="prof-edu-level"
+                          className="block text-xs font-semibold text-[#10132D] mb-1.5"
+                        >
+                          Current Education Level
+                        </label>
+                        <select
+                          id="prof-edu-level"
+                          value={profEduLevel}
+                          onChange={(e) => setProfEduLevel(e.target.value)}
+                          className="w-full h-11 px-3.5 rounded-xl border border-[#CBD5E1] bg-white text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none"
+                        >
+                          <option value="">Select education level...</option>
+                          <option value="Senior High School / WASSCE">Senior High School / WASSCE</option>
+                          <option value="Senior High School (WASSCE / SSSCE / WAEC)">
+                            Senior High School (WASSCE / SSSCE / WAEC)
+                          </option>
+                          <option value="Cambridge A-Levels / International Baccalaureate (IB)">
+                            Cambridge A-Levels / IB
+                          </option>
+                          <option value="HND / Polytechnic / Diploma">HND / Polytechnic / Diploma</option>
+                          <option value="Undergraduate (Currently Enrolled Student)">
+                            Undergraduate (Currently Enrolled)
+                          </option>
+                          <option value="Bachelor's Degree (Completed / Graduate)">
+                            Bachelor&apos;s Degree (Completed)
+                          </option>
+                          <option value="Master's Degree (Completed / In Progress)">Master&apos;s Degree</option>
+                          <option value="Doctorate / PhD">Doctorate / PhD</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="prof-grad-year"
+                          className="block text-xs font-semibold text-[#10132D] mb-1.5"
+                        >
+                          Expected / Completed Graduation Year
+                        </label>
+                        <select
+                          id="prof-grad-year"
+                          value={profGraduationYear}
+                          onChange={(e) => setProfGraduationYear(e.target.value)}
+                          className="w-full h-11 px-3.5 rounded-xl border border-[#CBD5E1] bg-white text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none"
+                        >
+                          <option value="">Select year...</option>
+                          <option value="2022">2022</option>
+                          <option value="2023">2023</option>
+                          <option value="2024">2024</option>
+                          <option value="2025">2025</option>
+                          <option value="2026">2026</option>
+                          <option value="2027">2027</option>
+                          <option value="2028">2028</option>
+                          <option value="2029">2029</option>
+                          <option value="2030+">2030+</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Section 3: Study Preferences */}
+                  <div className="space-y-4">
+                    <div className="pb-2 border-b border-slate-100">
+                      <h3 className="text-sm font-bold text-[#10132D]">3. Study Preferences</h3>
+                      <p className="text-xs text-slate-500">
+                        Your target degree, academic field, destinations, funding, and standardized testing plan.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label
+                          htmlFor="prof-intended-degree"
+                          className="block text-xs font-semibold text-[#10132D] mb-1.5"
+                        >
+                          Intended Degree Level
+                        </label>
+                        <select
+                          id="prof-intended-degree"
+                          value={profIntendedDegree}
+                          onChange={(e) => setProfIntendedDegree(e.target.value)}
+                          className="w-full h-11 px-3.5 rounded-xl border border-[#CBD5E1] bg-white text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none"
+                        >
+                          <option value="">Select degree...</option>
+                          <option value="Undergraduate">Undergraduate</option>
+                          <option value="Undergraduate (Bachelor's)">Undergraduate (Bachelor&apos;s)</option>
+                          <option value="Master's (Postgraduate)">Master&apos;s Degree</option>
+                          <option value="Doctorate / PhD">Doctorate / PhD</option>
+                          <option value="Direct PhD (Post-Bachelor's)">Direct PhD (Post-Bachelor&apos;s)</option>
+                          <option value="Professional Degree (Pre-Med, Law, MBA)">
+                            Professional Degree (Pre-Med, Law, MBA)
+                          </option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="prof-field"
+                          className="block text-xs font-semibold text-[#10132D] mb-1.5"
+                        >
+                          Field of Study
+                        </label>
+                        <input
+                          id="prof-field"
+                          type="text"
+                          value={profFieldOfStudy}
+                          onChange={(e) => setProfFieldOfStudy(e.target.value)}
+                          placeholder="e.g. Computer Science & Engineering"
+                          className="w-full h-11 px-3.5 rounded-xl border border-[#CBD5E1] bg-white text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label
+                          htmlFor="prof-funding"
+                          className="block text-xs font-semibold text-[#10132D] mb-1.5"
+                        >
+                          Funding Preference
+                        </label>
+                        <select
+                          id="prof-funding"
+                          value={profFundingPreference}
+                          onChange={(e) => setProfFundingPreference(e.target.value)}
+                          className="w-full h-11 px-3.5 rounded-xl border border-[#CBD5E1] bg-white text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none"
+                        >
+                          <option value="">Select funding preference...</option>
+                          <option value="Fully Funded Only">Fully Funded Only</option>
+                          <option value="Partial & Merit Scholarships">Partial &amp; Merit Scholarships</option>
+                          <option value="Self-Funded / Standard Tuition">Self-Funded / Standard Tuition</option>
+                          <option value="All Funding Types">All Funding Types</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="prof-test"
+                          className="block text-xs font-semibold text-[#10132D] mb-1.5"
+                        >
+                          Standardized Test Preference
+                        </label>
+                        <select
+                          id="prof-test"
+                          value={profTestPreference}
+                          onChange={(e) => setProfTestPreference(e.target.value)}
+                          className="w-full h-11 px-3.5 rounded-xl border border-[#CBD5E1] bg-white text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none"
+                        >
+                          <option value="">Select test preference...</option>
+                          <option value="Test-Optional / Waiver Preferred">
+                            Test-Optional / Waiver Preferred
+                          </option>
+                          <option value="WAEC / WASSCE English Accepted">
+                            WAEC / WASSCE English Accepted
+                          </option>
+                          <option value="Taking SAT / ACT">Taking SAT / ACT</option>
+                          <option value="Taking GRE / GMAT">Taking GRE / GMAT</option>
+                          <option value="IELTS / TOEFL Completed">IELTS / TOEFL Completed</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div id="prof-destinations" tabIndex={-1} className="focus:outline-none">
+                      <CountryMultiSelect
+                        label="Preferred Study Destinations"
+                        selectedCountries={profDestinations}
+                        onChange={setProfDestinations}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex items-center gap-3">
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="md"
+                      disabled={isSavingProfile}
+                      rightIcon={<Save className="w-4 h-4" />}
+                      className="bg-[#6846F5] hover:bg-[#5835E5] text-white shadow-md"
+                    >
+                      {isSavingProfile ? 'Saving...' : 'Save Profile Changes'}
+                    </Button>
+                  </div>
+                </form>
+              </div>
             </div>
           )}
 
@@ -1580,9 +2283,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
       {/* 3. COVA AI Virtual Assistant Interface */}
       <CovaAssistant
+        userId={activeUser?.id}
         userName={activeUser?.fullName}
         studentProfile={activeUser?.profile}
         savedOpportunities={savedOpportunities}
+        targetList={targetList}
+        activeApplications={activeApplications}
         applicationTracker={applicationTracker}
         onToggleSave={toggleSave}
         onUpdateApplicationStatus={updateAppStatus}

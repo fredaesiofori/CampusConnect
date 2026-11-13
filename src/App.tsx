@@ -16,7 +16,9 @@ import { Hero } from './components/hero/Hero';
 import { Benefits } from './components/benefits/Benefits';
 import { HowItWorks } from './components/how-it-works/HowItWorks';
 import { TrustSection } from './components/trust/TrustSection';
+import { FAQSection } from './components/faq/FAQSection';
 import { FinalCTA } from './components/cta/FinalCTA';
+import { NewsletterSection } from './components/newsletter/NewsletterSection';
 import { Footer } from './components/footer/Footer';
 import { InfoModal } from './components/ui/InfoModal';
 import { StudentDashboard } from './components/dashboard/StudentDashboard';
@@ -85,30 +87,29 @@ export default function App() {
 
   // Initialize session and hash router listener on mount
   useEffect(() => {
-    // 1. Initialize demo scholar account in local persistent storage
-    authService.initDefaultDemoUser().catch(console.error);
-
-    // 2. Check for existing active session
+    // 1. Check for cached authenticated user while Firebase Auth resolves
     const active = authService.getCurrentUser();
     if (active) {
       setCurrentUser(active);
       setIsLoggedIn(true);
     }
 
-    // 3. Attach real-time Firebase Auth state subscriber for seamless multi-tab & cross-device sync
+    // 2. Attach real-time Firebase Auth state subscriber for seamless multi-tab & cross-device sync
     const unsubscribeAuth = authService.initAuthListener((syncedUser) => {
       if (syncedUser) {
         setCurrentUser(syncedUser);
         setIsLoggedIn(true);
       } else {
-        const currentActive = authService.getCurrentUser();
-        if (currentActive && currentActive.isDemo) {
-          setCurrentUser(currentActive);
-          setIsLoggedIn(true);
-        } else {
-          setCurrentUser(null);
-          setIsLoggedIn(false);
-        }
+        setCurrentUser(null);
+        setIsLoggedIn(false);
+        setCurrentPage((prev) => {
+          if (prev === 'dashboard' || prev === 'onboarding') {
+            setAuthNotification('Please log in with your scholar account to access the private Student Hub.');
+            window.location.hash = '#/login';
+            return 'login';
+          }
+          return prev;
+        });
       }
     });
 
@@ -184,7 +185,7 @@ export default function App() {
     if (id === 'about') {
       handlePlaceholderClick(
         'About Campus Connect',
-        'Campus Connect was created to empower ambitious African students to discover universities, $0 application fees, test waivers, and international scholarships with full clarity and transparent requirements.'
+        'Campus Connect is a global university, admissions, and educational opportunities platform helping students discover accredited institutions, explore undergraduate and postgraduate programs, find fee waivers and test-optional options, locate scholarships, and organize applications with COVA AI.'
       );
       return;
     }
@@ -397,14 +398,27 @@ export default function App() {
         {/* 4. Trust & Transparency Section */}
         <TrustSection />
 
-        {/* 5. Final Call to Action Section */}
+        {/* 5. Frequently Asked Questions (Accordion) */}
+        <FAQSection
+          onOpenAssistant={() => navigateTo('dashboard', 'Opening COVA AI Scholarship Advisor...')}
+          onExploreUniversities={() => navigateTo('dashboard', 'Opening University Directory...')}
+        />
+
+        {/* 6. Final Call to Action Section */}
         <FinalCTA
           onCreateAccountClick={() => navigateTo('signup')}
           onLoginClick={() => navigateTo('login')}
         />
+
+        {/* 6. Opportunity Updates Signup Form */}
+        <NewsletterSection
+          onSubscribed={(email) => {
+            showToast(`Subscribed ${email} to opportunity updates!`);
+          }}
+        />
       </main>
 
-      {/* 6. Comprehensive Professional Footer */}
+      {/* 7. Comprehensive Professional Footer */}
       <Footer
         onNavigateSection={(href, label) => {
           showToast(`Jumped to ${label}`);

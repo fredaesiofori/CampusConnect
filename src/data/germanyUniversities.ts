@@ -134,7 +134,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "HU",
       crestColor: "#003768",
-      logoDescription: "Humboldt-Universität zu Berlin Official Institutional Seal & Monogram"
+      logoDescription: "Humboldt-Universität zu Berlin Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/humboldt-berlin-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -244,7 +245,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "RWTH",
       crestColor: "#00549F",
-      logoDescription: "RWTH Aachen University Official Institutional Seal & Monogram"
+      logoDescription: "RWTH Aachen University Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/rwth-aachen-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -354,7 +356,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "KIT",
       crestColor: "#009682",
-      logoDescription: "Karlsruher Institut für Technologie Official Institutional Seal & Monogram"
+      logoDescription: "Karlsruher Institut für Technologie Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/kit-karlsruhe-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -464,7 +467,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#99CC00",
       monogram: "FUB",
       crestColor: "#003366",
-      logoDescription: "Freie Universität Berlin Official Institutional Seal & Monogram"
+      logoDescription: "Freie Universität Berlin Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/fu-berlin-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -574,7 +578,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "TUB",
       crestColor: "#C50E1F",
-      logoDescription: "Technische Universität Berlin Official Institutional Seal & Monogram"
+      logoDescription: "Technische Universität Berlin Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/tu-berlin-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -904,7 +909,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "EKUT",
       crestColor: "#A51E37",
-      logoDescription: "Eberhard Karls Universität Tübingen Official Institutional Seal & Monogram"
+      logoDescription: "Eberhard Karls Universität Tübingen Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/tuebingen-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -1014,7 +1020,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FBB03B",
       monogram: "UGOE",
       crestColor: "#00325A",
-      logoDescription: "Georg-August-Universität Göttingen Official Institutional Seal & Monogram"
+      logoDescription: "Georg-August-Universität Göttingen Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/goettingen-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -1124,7 +1131,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "GUF",
       crestColor: "#003A63",
-      logoDescription: "Goethe-Universität Frankfurt am Main Official Institutional Seal & Monogram"
+      logoDescription: "Goethe-Universität Frankfurt am Main Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/frankfurt-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -1234,7 +1242,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UHH",
       crestColor: "#0271BB",
-      logoDescription: "Universität Hamburg Official Institutional Seal & Monogram"
+      logoDescription: "Universität Hamburg Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/hamburg-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -1344,7 +1353,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UST",
       crestColor: "#004191",
-      logoDescription: "Universität Stuttgart Official Institutional Seal & Monogram"
+      logoDescription: "Universität Stuttgart Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/stuttgart-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -1454,7 +1464,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#86B817",
       monogram: "TUD",
       crestColor: "#002557",
-      logoDescription: "Technische Universität Dresden Official Institutional Seal & Monogram"
+      logoDescription: "Technische Universität Dresden Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/tu-dresden-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -1674,7 +1685,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "WWU",
       crestColor: "#002B49",
-      logoDescription: "Universität Münster Official Institutional Seal & Monogram"
+      logoDescription: "Universität Münster Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/muenster-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -1784,7 +1796,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#C99700",
       monogram: "FAU",
       crestColor: "#04316A",
-      logoDescription: "Friedrich-Alexander-Universität Erlangen-Nürnberg Official Institutional Seal & Monogram"
+      logoDescription: "Friedrich-Alexander-Universität Erlangen-Nürnberg Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/fau-erlangen-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -2004,7 +2017,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "JGU",
       crestColor: "#C50F3C",
-      logoDescription: "Johannes Gutenberg-Universität Mainz Official Institutional Seal & Monogram"
+      logoDescription: "Johannes Gutenberg-Universität Mainz Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/mainz-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -2114,7 +2128,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "JMU",
       crestColor: "#003A70",
-      logoDescription: "Julius-Maximilians-Universität Würzburg Official Institutional Seal & Monogram"
+      logoDescription: "Julius-Maximilians-Universität Würzburg Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/wuerzburg-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -2224,7 +2239,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "FSU",
       crestColor: "#102F54",
-      logoDescription: "Friedrich-Schiller-Universität Jena Official Institutional Seal & Monogram"
+      logoDescription: "Friedrich-Schiller-Universität Jena Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/jena-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -2334,7 +2350,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "LEIP",
       crestColor: "#004B76",
-      logoDescription: "Universität Leipzig Official Institutional Seal & Monogram"
+      logoDescription: "Universität Leipzig Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/leipzig-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -2554,7 +2571,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "CAU",
       crestColor: "#5C1780",
-      logoDescription: "Christian-Albrechts-Universität zu Kiel Official Institutional Seal & Monogram"
+      logoDescription: "Christian-Albrechts-Universität zu Kiel Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/kiel-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -2664,7 +2682,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UKON",
       crestColor: "#0068B4",
-      logoDescription: "Universität Konstanz Official Institutional Seal & Monogram"
+      logoDescription: "Universität Konstanz Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/konstanz-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -2994,7 +3013,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UPOT",
       crestColor: "#003C71",
-      logoDescription: "Universität Potsdam Official Institutional Seal & Monogram"
+      logoDescription: "Universität Potsdam Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/potsdam-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -3104,7 +3124,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#8DAE10",
       monogram: "RUB",
       crestColor: "#003560",
-      logoDescription: "Ruhr-Universität Bochum Official Institutional Seal & Monogram"
+      logoDescription: "Ruhr-Universität Bochum Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/bochum-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -3324,7 +3345,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#000000",
       monogram: "TUDO",
       crestColor: "#84B817",
-      logoDescription: "Technische Universität Dortmund Official Institutional Seal & Monogram"
+      logoDescription: "Technische Universität Dortmund Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/tu-dortmund-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -3434,7 +3456,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MARB",
       crestColor: "#003A64",
-      logoDescription: "Philipps-Universität Marburg Official Institutional Seal & Monogram"
+      logoDescription: "Philipps-Universität Marburg Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/marburg-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -3544,7 +3567,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "JLU",
       crestColor: "#00417A",
-      logoDescription: "Justus-Liebig-Universität Gießen Official Institutional Seal & Monogram"
+      logoDescription: "Justus-Liebig-Universität Gießen Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/giessen-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -3654,7 +3678,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#000000",
       monogram: "PASS",
       crestColor: "#EA5B0C",
-      logoDescription: "Universität Passau Official Institutional Seal & Monogram"
+      logoDescription: "Universität Passau Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/passau-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -3984,7 +4009,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UAUG",
       crestColor: "#006853",
-      logoDescription: "Universität Augsburg Official Institutional Seal & Monogram"
+      logoDescription: "Universität Augsburg Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/augsburg-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -4094,7 +4120,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#C4A000",
       monogram: "BAMB",
       crestColor: "#004B87",
-      logoDescription: "Otto-Friedrich-Universität Bamberg Official Institutional Seal & Monogram"
+      logoDescription: "Otto-Friedrich-Universität Bamberg Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/bamberg-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -4204,7 +4231,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "USAAR",
       crestColor: "#003B6F",
-      logoDescription: "Universität des Saarlandes Official Institutional Seal & Monogram"
+      logoDescription: "Universität des Saarlandes Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/saarland-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -4314,7 +4342,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "SIEG",
       crestColor: "#003366",
-      logoDescription: "Universität Siegen Official Institutional Seal & Monogram"
+      logoDescription: "Universität Siegen Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/siegen-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -4424,7 +4453,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "KASS",
       crestColor: "#004831",
-      logoDescription: "Universität Kassel Official Institutional Seal & Monogram"
+      logoDescription: "Universität Kassel Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/kassel-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -4644,7 +4674,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UTRI",
       crestColor: "#003A70",
-      logoDescription: "Universität Trier Official Institutional Seal & Monogram"
+      logoDescription: "Universität Trier Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/trier-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -4864,7 +4895,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#E30613",
       monogram: "UROS",
       crestColor: "#004B87",
-      logoDescription: "Universität Rostock Official Institutional Seal & Monogram"
+      logoDescription: "Universität Rostock Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/rostock-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -4974,7 +5006,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#F39200",
       monogram: "OVGU",
       crestColor: "#004B87",
-      logoDescription: "Otto-von-Guericke-Universität Magdeburg Official Institutional Seal & Monogram"
+      logoDescription: "Otto-von-Guericke-Universität Magdeburg Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/magdeburg-germany.png"
     },
     eligibilityCountries: [
       "Germany",
@@ -5194,7 +5227,8 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "TUI",
       crestColor: "#004B76",
-      logoDescription: "Technische Universität Ilmenau Official Institutional Seal & Monogram"
+      logoDescription: "Technische Universität Ilmenau Official Institutional Seal & Monogram",
+      "logoUrl": "/logos/tu-ilmenau-germany.png"
     },
     eligibilityCountries: [
       "Germany",

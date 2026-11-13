@@ -179,13 +179,25 @@ export const UniversityCrestCardImage: React.FC<UniversityCrestCardImageProps> =
       )}
 
       {hasValidCrest ? (
-        <img
-          src={logoUrl}
-          alt={`${officialName} official crest`}
-          className={imgClasses}
-          loading="lazy"
-          onError={() => setHasError(true)}
-        />
+        variant === 'banner' ? (
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-3 sm:p-4 shadow-lg flex items-center justify-center max-w-[280px] max-h-36 border border-white/20">
+            <img
+              src={logoUrl}
+              alt={`${officialName} official crest`}
+              className="max-h-24 sm:max-h-28 max-w-full w-auto h-auto object-contain"
+              loading="lazy"
+              onError={() => setHasError(true)}
+            />
+          </div>
+        ) : (
+          <img
+            src={logoUrl}
+            alt={`${officialName} official crest`}
+            className={imgClasses}
+            loading="lazy"
+            onError={() => setHasError(true)}
+          />
+        )
       ) : (
         /* Neutral Monogram Placeholder with University Initials per Requirement 6 */
         <div

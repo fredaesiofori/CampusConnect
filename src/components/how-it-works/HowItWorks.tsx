@@ -25,25 +25,25 @@ const steps: StepItem[] = [
   {
     number: '01',
     stepLabel: 'STEP 01',
-    title: 'Build Your Profile',
+    title: 'Build Your Academic Profile',
     description:
-      'Tell us about your nationality (Ghana & worldwide), academic background, and degree goals.',
+      'Set your education level, nationality, preferred study destinations, and undergraduate or postgraduate goals.',
     icon: <UserCheck className="w-3.5 h-3.5 text-white" />,
   },
   {
     number: '02',
     stepLabel: 'STEP 02',
-    title: 'Explore Universities & Waivers',
+    title: 'Explore Universities & Opportunities',
     description:
-      'Compare institutions offering $0 application fees, SAT/test waivers, and verified funding.',
+      'Browse verified universities, compare admissions requirements, and filter for scholarships, fee waivers, or test-optional pathways.',
     icon: <Compass className="w-3.5 h-3.5 text-white" />,
   },
   {
     number: '03',
     stepLabel: 'STEP 03',
-    title: 'Prepare With Official Rules',
+    title: 'Plan, Track & Apply',
     description:
-      'Check exact academic requirements, organize document checklists, and apply directly to official portals.',
+      'Save opportunities, organize your target list, track deadlines and tasks with COVA AI guidance, and apply on official portals.',
     icon: <ClipboardCheck className="w-3.5 h-3.5 text-white" />,
   },
 ];
@@ -68,7 +68,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({
             From searching to applying, one step at a time.
           </h2>
           <p className="mt-2.5 sm:mt-3.5 text-sm sm:text-base lg:text-lg text-[#64748B] leading-relaxed [text-wrap:pretty]">
-            A clearer path to discovering and preparing for scholarship opportunities.
+            A clearer path to discovering global universities, comparing admissions options, and preparing strong applications.
           </p>
         </div>
 
@@ -146,7 +146,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({
             Get Started Free
           </Button>
           <p className="text-xs text-[#64748B] mt-2.5 sm:mt-3">
-            Free scholar account · Discover matching opportunities
+            Free student account · Explore universities, scholarships, and application tools
           </p>
         </div>
       </Container>

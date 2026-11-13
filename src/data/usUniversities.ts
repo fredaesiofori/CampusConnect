@@ -24,7 +24,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "STAN",
       "crestColor": "#8C1515",
-      "logoDescription": "Stanford University Official Seal & Colors"
+      "logoDescription": "Stanford University Official Seal & Colors",
+      "logoUrl": "/logos/stanford-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -140,7 +141,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "YALE",
       "crestColor": "#00356B",
-      "logoDescription": "Yale University Official Seal & Colors"
+      "logoDescription": "Yale University Official Seal & Colors",
+      "logoUrl": "/logos/yale-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -256,7 +258,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "COLU",
       "crestColor": "#B9D9EB",
-      "logoDescription": "Columbia University Official Seal & Colors"
+      "logoDescription": "Columbia University Official Seal & Colors",
+      "logoUrl": "/logos/columbia-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -372,7 +375,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "PENN",
       "crestColor": "#990000",
-      "logoDescription": "University of Pennsylvania Official Seal & Colors"
+      "logoDescription": "University of Pennsylvania Official Seal & Colors",
+      "logoUrl": "/logos/upenn-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -487,7 +491,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "BRWN",
       "crestColor": "#ED1C24",
-      "logoDescription": "Brown University Official Seal & Colors"
+      "logoDescription": "Brown University Official Seal & Colors",
+      "logoUrl": "/logos/brown-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -602,7 +607,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "DART",
       "crestColor": "#00693E",
-      "logoDescription": "Dartmouth College Official Seal & Colors"
+      "logoDescription": "Dartmouth College Official Seal & Colors",
+      "logoUrl": "/logos/dartmouth-college-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -717,7 +723,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "CORN",
       "crestColor": "#B31B1B",
-      "logoDescription": "Cornell University Official Seal & Colors"
+      "logoDescription": "Cornell University Official Seal & Colors",
+      "logoUrl": "/logos/cornell-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -832,7 +839,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#000000",
       "monogram": "CALT",
       "crestColor": "#FF6C0C",
-      "logoDescription": "California Institute of Technology Official Seal & Colors"
+      "logoDescription": "California Institute of Technology Official Seal & Colors",
+      "logoUrl": "/logos/caltech-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -947,7 +955,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "UCHI",
       "crestColor": "#800000",
-      "logoDescription": "University of Chicago Official Seal & Colors"
+      "logoDescription": "University of Chicago Official Seal & Colors",
+      "logoUrl": "/logos/uchicago-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1063,7 +1072,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "JHU",
       "crestColor": "#68ACE5",
-      "logoDescription": "Johns Hopkins University Official Seal & Colors"
+      "logoDescription": "Johns Hopkins University Official Seal & Colors",
+      "logoUrl": "/logos/johns-hopkins-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1178,7 +1188,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "NWU",
       "crestColor": "#4E2A84",
-      "logoDescription": "Northwestern University Official Seal & Colors"
+      "logoDescription": "Northwestern University Official Seal & Colors",
+      "logoUrl": "/logos/northwestern-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1293,7 +1304,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "DUKE",
       "crestColor": "#003366",
-      "logoDescription": "Duke University Official Seal & Colors"
+      "logoDescription": "Duke University Official Seal & Colors",
+      "logoUrl": "/logos/duke-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1408,7 +1420,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#000000",
       "monogram": "VAND",
       "crestColor": "#000000",
-      "logoDescription": "Vanderbilt University Official Seal & Colors"
+      "logoDescription": "Vanderbilt University Official Seal & Colors",
+      "logoUrl": "/logos/vanderbilt-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1522,7 +1535,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "RICE",
       "crestColor": "#6CA0DC",
-      "logoDescription": "Rice University Official Seal & Colors"
+      "logoDescription": "Rice University Official Seal & Colors",
+      "logoUrl": "/logos/rice-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1637,7 +1651,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "WASH",
       "crestColor": "#007360",
-      "logoDescription": "Washington University in St. Louis Official Seal & Colors"
+      "logoDescription": "Washington University in St. Louis Official Seal & Colors",
+      "logoUrl": "/logos/wustl-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1751,7 +1766,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "ND",
       "crestColor": "#AE9142",
-      "logoDescription": "University of Notre Dame Official Seal & Colors"
+      "logoDescription": "University of Notre Dame Official Seal & Colors",
+      "logoUrl": "/logos/notre-dame-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1866,7 +1882,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "GTWN",
       "crestColor": "#63666A",
-      "logoDescription": "Georgetown University Official Seal & Colors"
+      "logoDescription": "Georgetown University Official Seal & Colors",
+      "logoUrl": "/logos/georgetown-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1980,7 +1997,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "EMOR",
       "crestColor": "#FFD100",
-      "logoDescription": "Emory University Official Seal & Colors"
+      "logoDescription": "Emory University Official Seal & Colors",
+      "logoUrl": "/logos/emory-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2095,7 +2113,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "CMU",
       "crestColor": "#C41230",
-      "logoDescription": "Carnegie Mellon University Official Seal & Colors"
+      "logoDescription": "Carnegie Mellon University Official Seal & Colors",
+      "logoUrl": "/logos/carnegie-mellon-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2211,7 +2230,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "NYU",
       "crestColor": "#57068C",
-      "logoDescription": "New York University Official Seal & Colors"
+      "logoDescription": "New York University Official Seal & Colors",
+      "logoUrl": "/logos/nyu-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2326,7 +2346,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "BU",
       "crestColor": "#CC0000",
-      "logoDescription": "Boston University Official Seal & Colors"
+      "logoDescription": "Boston University Official Seal & Colors",
+      "logoUrl": "/logos/boston-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2441,7 +2462,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "TUFT",
       "crestColor": "#41748D",
-      "logoDescription": "Tufts University Official Seal & Colors"
+      "logoDescription": "Tufts University Official Seal & Colors",
+      "logoUrl": "/logos/tufts-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2555,7 +2577,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFC72C",
       "monogram": "USC",
       "crestColor": "#990000",
-      "logoDescription": "University of Southern California Official Seal & Colors"
+      "logoDescription": "University of Southern California Official Seal & Colors",
+      "logoUrl": "/logos/usc-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2669,7 +2692,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FDB515",
       "monogram": "CAL",
       "crestColor": "#003262",
-      "logoDescription": "University of California, Berkeley Official Seal & Colors"
+      "logoDescription": "University of California, Berkeley Official Seal & Colors",
+      "logoUrl": "/logos/uc-berkeley-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2785,7 +2809,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFD100",
       "monogram": "UCLA",
       "crestColor": "#2774AE",
-      "logoDescription": "University of California, Los Angeles Official Seal & Colors"
+      "logoDescription": "University of California, Los Angeles Official Seal & Colors",
+      "logoUrl": "/logos/ucla-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2900,7 +2925,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFCB05",
       "monogram": "MICH",
       "crestColor": "#00274C",
-      "logoDescription": "University of Michigan, Ann Arbor Official Seal & Colors"
+      "logoDescription": "University of Michigan, Ann Arbor Official Seal & Colors",
+      "logoUrl": "/logos/umich-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3015,7 +3041,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#E57200",
       "monogram": "UVA",
       "crestColor": "#232D4B",
-      "logoDescription": "University of Virginia Official Seal & Colors"
+      "logoDescription": "University of Virginia Official Seal & Colors",
+      "logoUrl": "/logos/uva-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3129,7 +3156,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "UNC",
       "crestColor": "#4B9CD3",
-      "logoDescription": "University of North Carolina at Chapel Hill Official Seal & Colors"
+      "logoDescription": "University of North Carolina at Chapel Hill Official Seal & Colors",
+      "logoUrl": "/logos/unc-chapel-hill-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3243,7 +3271,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#003057",
       "monogram": "GT",
       "crestColor": "#003057",
-      "logoDescription": "Georgia Institute of Technology Official Seal & Colors"
+      "logoDescription": "Georgia Institute of Technology Official Seal & Colors",
+      "logoUrl": "/logos/georgia-tech-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3358,7 +3387,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "TEX",
       "crestColor": "#BF5700",
-      "logoDescription": "University of Texas at Austin Official Seal & Colors"
+      "logoDescription": "University of Texas at Austin Official Seal & Colors",
+      "logoUrl": "/logos/ut-austin-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3473,7 +3503,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#B7A57A",
       "monogram": "UW",
       "crestColor": "#4B2E83",
-      "logoDescription": "University of Washington Official Seal & Colors"
+      "logoDescription": "University of Washington Official Seal & Colors",
+      "logoUrl": "/logos/uw-seattle-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3588,7 +3619,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "WISC",
       "crestColor": "#C5050C",
-      "logoDescription": "University of Wisconsin–Madison Official Seal & Colors"
+      "logoDescription": "University of Wisconsin–Madison Official Seal & Colors",
+      "logoUrl": "/logos/uw-madison-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3703,7 +3735,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FF5F05",
       "monogram": "UIUC",
       "crestColor": "#FF5F05",
-      "logoDescription": "University of Illinois Urbana-Champaign Official Seal & Colors"
+      "logoDescription": "University of Illinois Urbana-Champaign Official Seal & Colors",
+      "logoUrl": "/logos/uiuc-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3818,7 +3851,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#000000",
       "monogram": "PURD",
       "crestColor": "#000000",
-      "logoDescription": "Purdue University Official Seal & Colors"
+      "logoDescription": "Purdue University Official Seal & Colors",
+      "logoUrl": "/logos/purdue-university-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3933,7 +3967,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#666666",
       "monogram": "OSU",
       "crestColor": "#BB0000",
-      "logoDescription": "Ohio State University Official Seal & Colors"
+      "logoDescription": "Ohio State University Official Seal & Colors",
+      "logoUrl": "/logos/ohio-state-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4048,7 +4083,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "PSU",
       "crestColor": "#041E42",
-      "logoDescription": "Pennsylvania State University Official Seal & Colors"
+      "logoDescription": "Pennsylvania State University Official Seal & Colors",
+      "logoUrl": "/logos/penn-state-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4163,7 +4199,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FA4616",
       "monogram": "UF",
       "crestColor": "#0021A5",
-      "logoDescription": "University of Florida Official Seal & Colors"
+      "logoDescription": "University of Florida Official Seal & Colors",
+      "logoUrl": "/logos/university-of-florida-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4277,7 +4314,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFD520",
       "monogram": "UMD",
       "crestColor": "#E03A3E",
-      "logoDescription": "University of Maryland, College Park Official Seal & Colors"
+      "logoDescription": "University of Maryland, College Park Official Seal & Colors",
+      "logoUrl": "/logos/umd-college-park-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4392,7 +4430,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFCC33",
       "monogram": "UMN",
       "crestColor": "#7A0019",
-      "logoDescription": "University of Minnesota, Twin Cities Official Seal & Colors"
+      "logoDescription": "University of Minnesota, Twin Cities Official Seal & Colors",
+      "logoUrl": "/logos/umn-twin-cities-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4507,7 +4546,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFC72C",
       "monogram": "WILL",
       "crestColor": "#502D79",
-      "logoDescription": "Williams College Official Seal & Colors"
+      "logoDescription": "Williams College Official Seal & Colors",
+      "logoUrl": "/logos/williams-college-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4621,7 +4661,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "AMHE",
       "crestColor": "#4B286D",
-      "logoDescription": "Amherst College Official Seal & Colors"
+      "logoDescription": "Amherst College Official Seal & Colors",
+      "logoUrl": "/logos/amherst-college-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4734,7 +4775,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "SWAR",
       "crestColor": "#5B0613",
-      "logoDescription": "Swarthmore College Official Seal & Colors"
+      "logoDescription": "Swarthmore College Official Seal & Colors",
+      "logoUrl": "/logos/swarthmore-college-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4847,7 +4889,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "WELL",
       "crestColor": "#002B66",
-      "logoDescription": "Wellesley College Official Seal & Colors"
+      "logoDescription": "Wellesley College Official Seal & Colors",
+      "logoUrl": "/logos/wellesley-college-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4960,7 +5003,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "MIDD",
       "crestColor": "#003A70",
-      "logoDescription": "Middlebury College Official Seal & Colors"
+      "logoDescription": "Middlebury College Official Seal & Colors",
+      "logoUrl": "/logos/middlebury-college-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -5073,7 +5117,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "POMO",
       "crestColor": "#FFC72C",
-      "logoDescription": "Pomona College Official Seal & Colors"
+      "logoDescription": "Pomona College Official Seal & Colors",
+      "logoUrl": "/logos/pomona-college-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -5187,7 +5232,8 @@ export const usUniversities: OpportunityItem[] = [
       "text": "#000000",
       "monogram": "DAVI",
       "crestColor": "#AC1A2F",
-      "logoDescription": "Davidson College Official Seal & Colors"
+      "logoDescription": "Davidson College Official Seal & Colors",
+      "logoUrl": "/logos/davidson-college-usa.png"
     },
     "eligibilityCountries": [
       "Ghana",

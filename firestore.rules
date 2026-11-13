@@ -7,6 +7,13 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    // Verified Firebase Auth custom claim (can ONLY be minted server-side via Firebase Admin SDK)
+    function isAdmin() {
+      return isAuthenticated() &&
+        'admin' in request.auth.token &&
+        request.auth.token.admin == true;
+    }
+
     function isOwner(userId) {
       return isAuthenticated() && request.auth.uid == userId;
     }
@@ -17,7 +24,7 @@ service cloud.firestore {
 
     function isValidOpportunity(data, opportunityId) {
       return data.id == opportunityId &&
-        data.isVerified == true &&
+        data.isVerified is bool &&
         data.officialName is string && data.officialName.size() > 0 && data.officialName.size() <= 200 &&
         data.institution is string && data.institution.size() > 0 && data.institution.size() <= 200 &&
         data.country is string && data.country.size() > 0 && data.country.size() <= 100 &&
@@ -25,24 +32,56 @@ service cloud.firestore {
         data.sourceUrl is string && data.sourceUrl.size() > 5 && data.sourceUrl.size() <= 1000;
     }
 
+    function hasNoPrivilegeEscalationFields(data) {
+      return !('isAdmin' in data) &&
+        !('admin' in data) &&
+        !('customClaims' in data) &&
+        (!('role' in data) || data.role == 'student');
+    }
+
     function isValidUserProfile(data, userId) {
       return data.uid == userId &&
         data.email is string &&
         data.email.size() > 3 &&
         data.email.size() <= 254 &&
+        hasNoPrivilegeEscalationFields(data) &&
         (!('fullName' in data) || (data.fullName is string && data.fullName.size() <= 120)) &&
         (!('profile' in data) || data.profile is map) &&
         (!('savedOpportunities' in data) || (data.savedOpportunities is list && data.savedOpportunities.size() <= 200)) &&
-        (!('applicationTracker' in data) || data.applicationTracker is map);
+        (!('applicationTracker' in data) || data.applicationTracker is map) &&
+        (!('targetList' in data) || (data.targetList is map && data.targetList.size() <= 200)) &&
+        (!('activeApplications' in data) || (data.activeApplications is map && data.activeApplications.size() <= 200)) &&
+        (!('scholarshipAlerts' in data) || (
+          data.scholarshipAlerts is map &&
+          data.scholarshipAlerts.keys().hasAll(['subscribed', 'email', 'preferences', 'updatedAt']) &&
+          data.scholarshipAlerts.keys().hasOnly(['subscribed', 'email', 'preferences', 'updatedAt']) &&
+          data.scholarshipAlerts.subscribed is bool &&
+          data.scholarshipAlerts.email is string && data.scholarshipAlerts.email.size() > 3 && data.scholarshipAlerts.email.size() <= 254 &&
+          data.scholarshipAlerts.preferences is list && data.scholarshipAlerts.preferences.size() <= 10 &&
+          (data.scholarshipAlerts.preferences.size() == 0 || data.scholarshipAlerts.preferences[0] is string) &&
+          data.scholarshipAlerts.updatedAt is string && data.scholarshipAlerts.updatedAt.size() <= 64
+        ));
+    }
+
+    function isValidCovaConversation(data, userId, conversationId) {
+      return data.keys().hasAll(['id', 'userId', 'title', 'createdAt', 'updatedAt', 'messages']) &&
+        data.keys().hasOnly(['id', 'userId', 'title', 'createdAt', 'updatedAt', 'messages']) &&
+        data.id == conversationId &&
+        data.userId == userId &&
+        data.title is string && data.title.size() > 0 && data.title.size() <= 160 &&
+        data.createdAt is string && data.createdAt.size() > 0 && data.createdAt.size() <= 64 &&
+        data.updatedAt is string && data.updatedAt.size() > 0 && data.updatedAt.size() <= 64 &&
+        data.messages is list && data.messages.size() <= 100 &&
+        (data.messages.size() == 0 || data.messages[0] is map);
     }
 
     // 1. Public Opportunities Collection
-    // Public directory of verified real university records, official source URLs, and eligibility criteria.
-    // Readable by all visitors, writeable by authenticated clients for verified records, protected from deletion.
+    // Readable by all visitors and ordinary students; creation, editing, and deletion
+    // are strictly restricted to server-verified platform administrators (custom claim) or Admin SDK.
     match /opportunities/{opportunityId} {
-      allow read: if true;
-      allow create, update: if isAuthenticated() && isValidId(opportunityId) && isValidOpportunity(request.resource.data, opportunityId);
-      allow delete: if false;
+      allow get, list: if true;
+      allow create, update: if isAdmin() && isValidId(opportunityId) && isValidOpportunity(request.resource.data, opportunityId);
+      allow delete: if isAdmin() && isValidId(opportunityId);
     }
 
     // 2. Private Student User Profiles Collection
@@ -51,8 +90,30 @@ service cloud.firestore {
       allow get: if isOwner(userId) && isValidId(userId);
       allow list: if false; // Prevent enumerating other student accounts
       allow create: if isOwner(userId) && isValidId(userId) && isValidUserProfile(request.resource.data, userId);
-      allow update: if isOwner(userId) && isValidId(userId) && isValidUserProfile(request.resource.data, userId);
+      allow update: if isOwner(userId) &&
+        isValidId(userId) &&
+        isValidUserProfile(request.resource.data, userId) &&
+        (!('uid' in resource.data) || request.resource.data.uid == resource.data.uid) &&
+        (!('createdAt' in resource.data) || !('createdAt' in request.resource.data) || request.resource.data.createdAt == resource.data.createdAt);
       allow delete: if isOwner(userId) && isValidId(userId);
+
+      // 2a. Private COVA AI Conversation History Subcollection
+      // Students can read, create, update, and delete ONLY their own conversations.
+      match /covaConversations/{conversationId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidId(conversationId);
+        allow list: if isOwner(userId) && isValidId(userId) && resource.data.userId == request.auth.uid;
+        allow create: if isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(conversationId) &&
+          isValidCovaConversation(request.resource.data, userId, conversationId);
+        allow update: if isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(conversationId) &&
+          isValidCovaConversation(request.resource.data, userId, conversationId) &&
+          request.resource.data.userId == resource.data.userId &&
+          request.resource.data.createdAt == resource.data.createdAt;
+        allow delete: if isOwner(userId) && isValidId(userId) && isValidId(conversationId);
+      }
     }
 
     // Default deny all other paths

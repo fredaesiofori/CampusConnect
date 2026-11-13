@@ -1,0 +1,734 @@
+{
+  "totalAudited": 150,
+  "preExistingCrests": 24,
+  "newlyEnrichedCrests": 93,
+  "unverifiedInitialsFallback": 33,
+  "byCountry": {},
+  "unverifiedList": [
+    {
+      "id": "st-andrews-university-uk",
+      "officialName": "University of St Andrews",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "queens-belfast-uk",
+      "officialName": "Queen's University Belfast",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "goldsmiths-london-uk",
+      "officialName": "Goldsmiths, University of London",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "city-university-london-uk",
+      "officialName": "City, University of London",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "birkbeck-london-uk",
+      "officialName": "Birkbeck, University of London",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "uds-tamale-ghana",
+      "officialName": "University for Development Studies",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "cctu-capecoast-ghana",
+      "officialName": "Cape Coast Technical University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "stu-sunyani-ghana",
+      "officialName": "Sunyani Technical University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "btu-bolgatanga-ghana",
+      "officialName": "Bolgatanga Technical University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "wtu-wa-ghana",
+      "officialName": "Wa Technical University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "vvu-valley-view-ghana",
+      "officialName": "Valley View University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "lancaster-university-ghana",
+      "officialName": "Lancaster University Ghana",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "webster-university-ghana",
+      "officialName": "Webster University Ghana",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "presbyterian-university-ghana",
+      "officialName": "Presbyterian University, Ghana",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "all-nations-university-ghana",
+      "officialName": "All Nations University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "wisconsin-university-ghana",
+      "officialName": "Wisconsin International University College, Ghana",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "regent-university-ghana",
+      "officialName": "Regent University College of Science and Technology",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "islamic-university-ghana",
+      "officialName": "Islamic University College, Ghana",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "bluecrest-college-ghana",
+      "officialName": "BlueCrest University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "garden-city-university-ghana",
+      "officialName": "Garden City University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "aucc-accra-ghana",
+      "officialName": "African University College of Communications",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "zenith-college-ghana",
+      "officialName": "Zenith University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "perez-university-ghana",
+      "officialName": "Perez University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "knutsford-college-ghana",
+      "officialName": "Knutsford University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "ghana-christian-college-ghana",
+      "officialName": "Ghana Christian University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "epuc-ho-ghana",
+      "officialName": "Evangelical Presbyterian University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "radford-college-ghana",
+      "officialName": "Radford University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "dominion-college-ghana",
+      "officialName": "Dominion University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "kings-college-ghana",
+      "officialName": "Kings University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "kaaf-university-ghana",
+      "officialName": "KAAF University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "heritage-christian-college-ghana",
+      "officialName": "Heritage Christian University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "marshalls-college-ghana",
+      "officialName": "Marshalls University College",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "gafcsc-armed-forces-ghana",
+      "officialName": "Ghana Armed Forces Command and Staff College",
+      "reason": "No authentic crest verified"
+    }
+  ],
+  "enrichedList": [
+    {
+      "id": "stanford-university-usa",
+      "officialName": "Stanford University",
+      "filename": "stanford-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Seal_of_Leland_Stanford_Junior_University.svg/500px-Seal_of_Leland_Stanford_Junior_University.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "yale-university-usa",
+      "officialName": "Yale University",
+      "filename": "yale-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Yale_University_Shield_1.svg/500px-Yale_University_Shield_1.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "columbia-university-usa",
+      "officialName": "Columbia University",
+      "filename": "columbia-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Coat_of_Arms_of_Columbia_University.svg/500px-Coat_of_Arms_of_Columbia_University.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "upenn-usa",
+      "officialName": "University of Pennsylvania",
+      "filename": "upenn-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/University_of_Pennsylvania_seal_1894.svg/500px-University_of_Pennsylvania_seal_1894.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "brown-university-usa",
+      "officialName": "Brown University",
+      "filename": "brown-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/5/50/Shield_of_Brown_University.svg/500px-Shield_of_Brown_University.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "dartmouth-college-usa",
+      "officialName": "Dartmouth College",
+      "filename": "dartmouth-college-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/e4/Dartmouth_College_shield.svg/500px-Dartmouth_College_shield.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "cornell-university-usa",
+      "officialName": "Cornell University",
+      "filename": "cornell-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/500px-Cornell_University_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "caltech-usa",
+      "officialName": "California Institute of Technology",
+      "filename": "caltech-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/a/a4/Seal_of_the_California_Institute_of_Technology.svg/500px-Seal_of_the_California_Institute_of_Technology.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uchicago-usa",
+      "officialName": "University of Chicago",
+      "filename": "uchicago-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/7/79/University_of_Chicago_shield.svg/500px-University_of_Chicago_shield.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "johns-hopkins-usa",
+      "officialName": "Johns Hopkins University",
+      "filename": "johns-hopkins-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/0/09/Johns_Hopkins_University%27s_Academic_Seal.svg/500px-Johns_Hopkins_University%27s_Academic_Seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "northwestern-university-usa",
+      "officialName": "Northwestern University",
+      "filename": "northwestern-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Northwestern_University_seal.svg/500px-Northwestern_University_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "duke-university-usa",
+      "officialName": "Duke University",
+      "filename": "duke-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/c/ce/Duke_University_seal.svg/500px-Duke_University_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "vanderbilt-university-usa",
+      "officialName": "Vanderbilt University",
+      "filename": "vanderbilt-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/2/29/Vanderbilt_University_seal.svg/500px-Vanderbilt_University_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "rice-university-usa",
+      "officialName": "Rice University",
+      "filename": "rice-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/c/c7/Rice_University_seal.svg/500px-Rice_University_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "wustl-usa",
+      "officialName": "Washington University in St. Louis",
+      "filename": "wustl-usa.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/a/ab/Washington_University_in_St._Louis_seal.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "notre-dame-usa",
+      "officialName": "University of Notre Dame",
+      "filename": "notre-dame-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/University_of_Notre_Dame_coat_of_arms.svg/500px-University_of_Notre_Dame_coat_of_arms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "georgetown-university-usa",
+      "officialName": "Georgetown University",
+      "filename": "georgetown-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Georgetown_University_seal.svg/500px-Georgetown_University_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "emory-university-usa",
+      "officialName": "Emory University",
+      "filename": "emory-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/6/63/Emory_University_Seal.svg/500px-Emory_University_Seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "carnegie-mellon-usa",
+      "officialName": "Carnegie Mellon University",
+      "filename": "carnegie-mellon-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/b/bb/Carnegie_Mellon_University_seal.svg/500px-Carnegie_Mellon_University_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "nyu-usa",
+      "officialName": "New York University",
+      "filename": "nyu-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/New_York_University_Seal.svg/500px-New_York_University_Seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "boston-university-usa",
+      "officialName": "Boston University",
+      "filename": "boston-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Boston_University_seal.svg/500px-Boston_University_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "tufts-university-usa",
+      "officialName": "Tufts University",
+      "filename": "tufts-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/b/b1/Tufts_official_seal.svg/500px-Tufts_official_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "usc-usa",
+      "officialName": "University of Southern California",
+      "filename": "usc-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/University_of_Southern_California_%28USC%29_seal.svg/500px-University_of_Southern_California_%28USC%29_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uc-berkeley-usa",
+      "officialName": "University of California, Berkeley",
+      "filename": "uc-berkeley-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Seal_of_the_University_of_California.svg/500px-Seal_of_the_University_of_California.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ucla-usa",
+      "officialName": "University of California, Los Angeles",
+      "filename": "ucla-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Seal_of_the_University_of_California.svg/500px-Seal_of_the_University_of_California.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "umich-usa",
+      "officialName": "University of Michigan, Ann Arbor",
+      "filename": "umich-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Seal_of_the_University_of_Michigan.svg/500px-Seal_of_the_University_of_Michigan.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uva-usa",
+      "officialName": "University of Virginia",
+      "filename": "uva-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/University_of_Virginia_seal.svg/500px-University_of_Virginia_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "unc-chapel-hill-usa",
+      "officialName": "University of North Carolina at Chapel Hill",
+      "filename": "unc-chapel-hill-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/University_of_North_Carolina_at_Chapel_Hill_seal.svg/500px-University_of_North_Carolina_at_Chapel_Hill_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "georgia-tech-usa",
+      "officialName": "Georgia Institute of Technology",
+      "filename": "georgia-tech-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Georgia_Tech_seal.svg/500px-Georgia_Tech_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ut-austin-usa",
+      "officialName": "University of Texas at Austin",
+      "filename": "ut-austin-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/e1/University_of_Texas_at_Austin_seal.svg/500px-University_of_Texas_at_Austin_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uw-seattle-usa",
+      "officialName": "University of Washington",
+      "filename": "uw-seattle-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/5/58/University_of_Washington_seal.svg/500px-University_of_Washington_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uw-madison-usa",
+      "officialName": "University of Wisconsin–Madison",
+      "filename": "uw-madison-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Seal_of_the_University_of_Wisconsin.svg/500px-Seal_of_the_University_of_Wisconsin.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uiuc-usa",
+      "officialName": "University of Illinois Urbana-Champaign",
+      "filename": "uiuc-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/University_of_Illinois_seal.svg/500px-University_of_Illinois_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "purdue-university-usa",
+      "officialName": "Purdue University",
+      "filename": "purdue-university-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/6/61/Purdue_University_seal.svg/500px-Purdue_University_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ohio-state-usa",
+      "officialName": "Ohio State University",
+      "filename": "ohio-state-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/e1/Ohio_State_University_seal.svg/500px-Ohio_State_University_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "penn-state-usa",
+      "officialName": "Pennsylvania State University",
+      "filename": "penn-state-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/5/5c/Pennsylvania_State_University_seal.svg/500px-Pennsylvania_State_University_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "university-of-florida-usa",
+      "officialName": "University of Florida",
+      "filename": "university-of-florida-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/6/6d/University_of_Florida_seal.svg/500px-University_of_Florida_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "umd-college-park-usa",
+      "officialName": "University of Maryland, College Park",
+      "filename": "umd-college-park-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/3/3e/University_of_Maryland_seal.svg/500px-University_of_Maryland_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "umn-twin-cities-usa",
+      "officialName": "University of Minnesota, Twin Cities",
+      "filename": "umn-twin-cities-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Seal_of_the_University_of_Minnesota.svg/500px-Seal_of_the_University_of_Minnesota.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "williams-college-usa",
+      "officialName": "Williams College",
+      "filename": "williams-college-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/1/19/Williams_College_Seal.svg/500px-Williams_College_Seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "amherst-college-usa",
+      "officialName": "Amherst College",
+      "filename": "amherst-college-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/6/65/Amherst_College_Seal.svg/500px-Amherst_College_Seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "swarthmore-college-usa",
+      "officialName": "Swarthmore College",
+      "filename": "swarthmore-college-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/8/8e/Formal_Seal_of_Swarthmore_College%2C_Swarthmore%2C_PA%2C_USA.svg/500px-Formal_Seal_of_Swarthmore_College%2C_Swarthmore%2C_PA%2C_USA.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "wellesley-college-usa",
+      "officialName": "Wellesley College",
+      "filename": "wellesley-college-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/6/6b/Formal_Seal_of_Wellesley_College%2C_Wellesley%2C_MA%2C_USA.svg/500px-Formal_Seal_of_Wellesley_College%2C_Wellesley%2C_MA%2C_USA.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "middlebury-college-usa",
+      "officialName": "Middlebury College",
+      "filename": "middlebury-college-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/0/01/Middlebury_College_seal.svg/500px-Middlebury_College_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "pomona-college-usa",
+      "officialName": "Pomona College",
+      "filename": "pomona-college-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/f/f9/Pomona_College_seal.svg/500px-Pomona_College_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "davidson-college-usa",
+      "officialName": "Davidson College",
+      "filename": "davidson-college-usa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Davidson_College_Seal.png/500px-Davidson_College_Seal.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "imperial-college-london-uk",
+      "officialName": "Imperial College London",
+      "filename": "imperial-college-london-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Shield_of_Imperial_College_London.svg/500px-Shield_of_Imperial_College_London.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ucl-uk",
+      "officialName": "University College London",
+      "filename": "ucl-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/c/c2/UCL_Logo%2C_plain_background.svg/500px-UCL_Logo%2C_plain_background.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "lse-uk",
+      "officialName": "London School of Economics and Political Science",
+      "filename": "lse-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/London_School_of_Economics_Coat_of_Arms.svg/500px-London_School_of_Economics_Coat_of_Arms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "kcl-uk",
+      "officialName": "King's College London",
+      "filename": "kcl-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Shield_of_King%27s_College_London.svg/500px-Shield_of_King%27s_College_London.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "manchester-university-uk",
+      "officialName": "University of Manchester",
+      "filename": "manchester-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Shield_of_the_University_of_Manchester.svg/500px-Shield_of_the_University_of_Manchester.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "bristol-university-uk",
+      "officialName": "University of Bristol",
+      "filename": "bristol-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Shield_of_the_University_of_Bristol.svg/500px-Shield_of_the_University_of_Bristol.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "warwick-university-uk",
+      "officialName": "University of Warwick",
+      "filename": "warwick-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Warwick_University_Shield.svg/500px-Warwick_University_Shield.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "glasgow-university-uk",
+      "officialName": "University of Glasgow",
+      "filename": "glasgow-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/9/99/University_of_Glasgow_logo.svg/500px-University_of_Glasgow_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "birmingham-university-uk",
+      "officialName": "University of Birmingham",
+      "filename": "birmingham-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/Shield_of_the_University_of_Birmingham.svg/500px-Shield_of_the_University_of_Birmingham.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "southampton-university-uk",
+      "officialName": "University of Southampton",
+      "filename": "southampton-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Shield_of_the_University_of_Southampton.svg/500px-Shield_of_the_University_of_Southampton.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "leeds-university-uk",
+      "officialName": "University of Leeds",
+      "filename": "leeds-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_University_of_Leeds.svg/500px-Coat_of_Arms_of_the_University_of_Leeds.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "sheffield-university-uk",
+      "officialName": "University of Sheffield",
+      "filename": "sheffield-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Coat_of_arms_of_the_University_of_Sheffield.svg/500px-Coat_of_arms_of_the_University_of_Sheffield.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "york-university-uk",
+      "officialName": "University of York",
+      "filename": "york-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/University_of_York_coat_of_arms.svg/500px-University_of_York_coat_of_arms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "nottingham-university-uk",
+      "officialName": "University of Nottingham",
+      "filename": "nottingham-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Shield_of_the_University_of_Nottingham.svg/500px-Shield_of_the_University_of_Nottingham.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "qmul-uk",
+      "officialName": "Queen Mary University of London",
+      "filename": "qmul-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/3/38/Queen_Mary_University_of_London_logo.svg/500px-Queen_Mary_University_of_London_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "lancaster-university-uk",
+      "officialName": "Lancaster University",
+      "filename": "lancaster-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/University_of_Lancaster_shield.svg/500px-University_of_Lancaster_shield.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "newcastle-university-uk",
+      "officialName": "Newcastle University",
+      "filename": "newcastle-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ad/University_of_Newcastle_Coat_of_Arms.svg/500px-University_of_Newcastle_Coat_of_Arms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "exeter-university-uk",
+      "officialName": "University of Exeter",
+      "filename": "exeter-university-uk.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/7/79/University_of_Exeter_logo_2022.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "cardiff-university-uk",
+      "officialName": "Cardiff University",
+      "filename": "cardiff-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Shield_of_the_University_of_Cardiff.svg/500px-Shield_of_the_University_of_Cardiff.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "bath-university-uk",
+      "officialName": "University of Bath",
+      "filename": "bath-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Coat_of_Arms_of_the_University_of_Bath.svg/500px-Coat_of_Arms_of_the_University_of_Bath.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "durham-university-uk",
+      "officialName": "Durham University",
+      "filename": "durham-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Van_Mildert_Coll_Durham_shield.svg/500px-Van_Mildert_Coll_Durham_shield.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "liverpool-university-uk",
+      "officialName": "University of Liverpool",
+      "filename": "liverpool-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/70/Shield_of_the_University_of_Liverpool.svg/500px-Shield_of_the_University_of_Liverpool.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "aberdeen-university-uk",
+      "officialName": "University of Aberdeen",
+      "filename": "aberdeen-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Aberdeen_University_Coat_of_Arms_-_geograph.org.uk_-_258663.jpg/500px-Aberdeen_University_Coat_of_Arms_-_geograph.org.uk_-_258663.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "sussex-university-uk",
+      "officialName": "University of Sussex",
+      "filename": "sussex-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Coat_of_Arms_of_the_University_of_Sussex.svg/500px-Coat_of_Arms_of_the_University_of_Sussex.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "reading-university-uk",
+      "officialName": "University of Reading",
+      "filename": "reading-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Reading_shield.png/500px-Reading_shield.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "strathclyde-university-uk",
+      "officialName": "University of Strathclyde",
+      "filename": "strathclyde-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/2/21/University_of_Strathclyde_Coat_of_Arms.svg/500px-University_of_Strathclyde_Coat_of_Arms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "loughborough-university-uk",
+      "officialName": "Loughborough University",
+      "filename": "loughborough-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Shield_of_Loughborough_University.svg/500px-Shield_of_Loughborough_University.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "leicester-university-uk",
+      "officialName": "University of Leicester",
+      "filename": "leicester-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Coat_of_arms_of_the_University_of_Leicester.svg/500px-Coat_of_arms_of_the_University_of_Leicester.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "surrey-university-uk",
+      "officialName": "University of Surrey",
+      "filename": "surrey-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ee/University_of_Surrey_coat_of_arms.svg/500px-University_of_Surrey_coat_of_arms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uea-uk",
+      "officialName": "University of East Anglia",
+      "filename": "uea-uk.png",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/6/6c/UEA_Standard_Logo_Blue_Glint_PNG_RGB_N_A_41791.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "royal-holloway-uk",
+      "officialName": "Royal Holloway, University of London",
+      "filename": "royal-holloway-uk.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/e/ef/Royal_Holloway%2C_University_of_London_logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "dundee-university-uk",
+      "officialName": "University of Dundee",
+      "filename": "dundee-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/8/83/University_of_Dundee_logo.svg/500px-University_of_Dundee_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "essex-university-uk",
+      "officialName": "University of Essex",
+      "filename": "essex-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/University_of_Essex_logo.svg/500px-University_of_Essex_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "brunel-university-uk",
+      "officialName": "Brunel University London",
+      "filename": "brunel-university-uk.png",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/1/10/Brunel-coatofarms-new.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "swansea-university-uk",
+      "officialName": "Swansea University",
+      "filename": "swansea-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Swansea_University_coat_of_arms.png/500px-Swansea_University_coat_of_arms.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "stirling-university-uk",
+      "officialName": "University of Stirling",
+      "filename": "stirling-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/5/56/University_of_Stirling_logo.svg/500px-University_of_Stirling_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "soas-london-uk",
+      "officialName": "SOAS University of London",
+      "filename": "soas-london-uk.png",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/f/f4/SOAS_Crest.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "oxford-brookes-uk",
+      "officialName": "Oxford Brookes University",
+      "filename": "oxford-brookes-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/Oxford_Brookes_University_logo.svg/500px-Oxford_Brookes_University_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uwe-bristol-uk",
+      "officialName": "University of the West of England",
+      "filename": "uwe-bristol-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/UWE_Bristol_logo.svg/500px-UWE_Bristol_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "mmu-uk",
+      "officialName": "Manchester Metropolitan University",
+      "filename": "mmu-uk.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/0/0f/Manchester_Metropolitan_University_coat_of_arms.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "northumbria-university-uk",
+      "officialName": "Northumbria University",
+      "filename": "northumbria-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Coat_of_Arms_of_Northumbria_University.svg/500px-Coat_of_Arms_of_Northumbria_University.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "coventry-university-uk",
+      "officialName": "Coventry University",
+      "filename": "coventry-university-uk.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/MI130_Coventry_Crest.svg/500px-MI130_Coventry_Crest.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "gimpa-accra-ghana",
+      "officialName": "Ghana Institute of Management and Public Administration",
+      "filename": "gimpa-accra-ghana.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/GIMPA_%28Ghana_Institute_of_Management_and_Public_Administration%29_logo.jpg/500px-GIMPA_%28Ghana_Institute_of_Management_and_Public_Administration%29_logo.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "catholic-university-ghana",
+      "officialName": "Catholic University of Ghana",
+      "filename": "catholic-university-ghana.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/9/96/Catholic_university_college_of_Ghana_logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "methodist-university-ghana",
+      "officialName": "Methodist University Ghana",
+      "filename": "methodist-university-ghana.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Logo_of_the_United_Methodist_Church.svg/500px-Logo_of_the_United_Methodist_Church.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "christian-service-university-ghana",
+      "officialName": "Christian Service University",
+      "filename": "christian-service-university-ghana.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/CSU_logo.png/500px-CSU_logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "rmu-maritime-ghana",
+      "officialName": "Regional Maritime University",
+      "filename": "rmu-maritime-ghana.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/e/ec/Regional_Maritime_University_logo.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    }
+  ]
+}

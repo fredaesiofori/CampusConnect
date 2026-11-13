@@ -22,7 +22,7 @@ import {
 import { Logo } from '../components/brand/Logo';
 import { Button } from '../components/ui/Button';
 import { CountrySelect } from '../components/ui/CountrySelect';
-import { authService, User } from '../services/auth';
+import { authService, User, validatePasswordPolicy } from '../services/auth';
 
 export interface SignUpPageProps {
   onNavigateHome: () => void;
@@ -85,10 +85,9 @@ export const SignUpPage: React.FC<SignUpPageProps> = ({
       newErrors.email = 'Please provide a valid email address.';
     }
 
-    if (!password) {
-      newErrors.password = 'Password is required.';
-    } else if (password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters long.';
+    const pwdCheck = validatePasswordPolicy(password);
+    if (!pwdCheck.valid) {
+      newErrors.password = pwdCheck.error || 'Password does not meet requirements.';
     }
 
     if (password !== confirmPassword) {
@@ -399,7 +398,7 @@ export const SignUpPage: React.FC<SignUpPageProps> = ({
                           setPassword(e.target.value);
                           if (errors.password) setErrors((prev) => ({ ...prev, password: '' }));
                         }}
-                        placeholder="Min. 8 characters"
+                        placeholder="Min. 8 chars (letters & numbers)"
                         className={`w-full h-11 px-3.5 rounded-xl border text-sm transition-all focus:outline-none ${
                           errors.password
                             ? 'border-rose-400 bg-rose-50/40 focus:border-rose-500'

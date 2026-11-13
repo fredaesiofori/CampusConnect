@@ -210,7 +210,8 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "ABU",
       crestColor: "#006400",
-      logoDescription: "ABU Zaria Green and White Official Emblem"
+      logoDescription: "ABU Zaria Green and White Official Emblem",
+      "logoUrl": "/logos/abu-zaria-nigeria.png"
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -853,7 +854,8 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "LASU",
       crestColor: "#002060",
-      logoDescription: "LASU Blue and White Shield"
+      logoDescription: "LASU Blue and White Shield",
+      "logoUrl": "/logos/lasu-nigeria.png"
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1094,7 +1096,8 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#E5A823",
       monogram: "BU",
       crestColor: "#0B2F64",
-      logoDescription: "Babcock University Blue and Gold Crest"
+      logoDescription: "Babcock University Blue and Gold Crest",
+      "logoUrl": "/logos/babcock-university-nigeria.png"
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1174,7 +1177,8 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#00B4D8",
       monogram: "NILE",
       crestColor: "#102A43",
-      logoDescription: "Nile University Modern Academic Seal"
+      logoDescription: "Nile University Modern Academic Seal",
+      "logoUrl": "/logos/nile-university-nigeria.png"
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1335,7 +1339,8 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "BUK",
       crestColor: "#0B6623",
-      logoDescription: "BUK Green & Gold Islamic & Academic Crest"
+      logoDescription: "BUK Green & Gold Islamic & Academic Crest",
+      "logoUrl": "/logos/buk-kano-nigeria.png"
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1415,7 +1420,8 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UNIJOS",
       crestColor: "#1C3F60",
-      logoDescription: "UNIJOS Classical Blue Seal"
+      logoDescription: "UNIJOS Classical Blue Seal",
+      "logoUrl": "/logos/unijos-nigeria.png"
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1655,7 +1661,8 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UofA",
       crestColor: "#004080",
-      logoDescription: "UNIABUJA Capital City Seal"
+      logoDescription: "UNIABUJA Capital City Seal",
+      "logoUrl": "/logos/uniabuja-nigeria.png"
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -3416,7 +3423,8 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "ATBU",
       crestColor: "#8B4513",
-      logoDescription: "ATBU Bronze & Gold Tech Crest"
+      logoDescription: "ATBU Bronze & Gold Tech Crest",
+      "logoUrl": "/logos/atbu-bauchi-nigeria.png"
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -3816,7 +3824,8 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "ABSU",
       crestColor: "#1B4F72",
-      logoDescription: "ABSU Uturu Blue and Gold Shield"
+      logoDescription: "ABSU Uturu Blue and Gold Shield",
+      "logoUrl": "/logos/absu-nigeria.png"
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {

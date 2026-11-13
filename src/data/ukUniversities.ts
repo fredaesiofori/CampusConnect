@@ -24,7 +24,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "ICL",
       "crestColor": "#003E74",
-      "logoDescription": "Imperial College London Official Coat of Arms & Emblems"
+      "logoDescription": "Imperial College London Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/imperial-college-london-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -140,7 +141,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "UCL",
       "crestColor": "#500778",
-      "logoDescription": "University College London Official Coat of Arms & Emblems"
+      "logoDescription": "University College London Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/ucl-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -256,7 +258,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#000000",
       "monogram": "LSE",
       "crestColor": "#EE3224",
-      "logoDescription": "London School of Economics and Political Science Official Coat of Arms & Emblems"
+      "logoDescription": "London School of Economics and Political Science Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/lse-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -372,7 +375,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#ED1B2D",
       "monogram": "KCL",
       "crestColor": "#ED1B2D",
-      "logoDescription": "King's College London Official Coat of Arms & Emblems"
+      "logoDescription": "King's College London Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/kcl-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -487,7 +491,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFCC00",
       "monogram": "UOM",
       "crestColor": "#660099",
-      "logoDescription": "University of Manchester Official Coat of Arms & Emblems"
+      "logoDescription": "University of Manchester Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/manchester-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -602,7 +607,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "BRIS",
       "crestColor": "#B01C2E",
-      "logoDescription": "University of Bristol Official Coat of Arms & Emblems"
+      "logoDescription": "University of Bristol Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/bristol-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -717,7 +723,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "WARW",
       "crestColor": "#5B2C6F",
-      "logoDescription": "University of Warwick Official Coat of Arms & Emblems"
+      "logoDescription": "University of Warwick Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/warwick-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -832,7 +839,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "GLAS",
       "crestColor": "#002D62",
-      "logoDescription": "University of Glasgow Official Coat of Arms & Emblems"
+      "logoDescription": "University of Glasgow Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/glasgow-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -947,7 +955,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#C49A45",
       "monogram": "BHAM",
       "crestColor": "#002B49",
-      "logoDescription": "University of Birmingham Official Coat of Arms & Emblems"
+      "logoDescription": "University of Birmingham Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/birmingham-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1062,7 +1071,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "SOTN",
       "crestColor": "#005C84",
-      "logoDescription": "University of Southampton Official Coat of Arms & Emblems"
+      "logoDescription": "University of Southampton Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/southampton-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1176,7 +1186,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "LEED",
       "crestColor": "#00502F",
-      "logoDescription": "University of Leeds Official Coat of Arms & Emblems"
+      "logoDescription": "University of Leeds Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/leeds-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1291,7 +1302,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "SHEF",
       "crestColor": "#002C6C",
-      "logoDescription": "University of Sheffield Official Coat of Arms & Emblems"
+      "logoDescription": "University of Sheffield Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/sheffield-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1521,7 +1533,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#E7B75C",
       "monogram": "YORK",
       "crestColor": "#0F2C59",
-      "logoDescription": "University of York Official Coat of Arms & Emblems"
+      "logoDescription": "University of York Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/york-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1636,7 +1649,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#00A3E0",
       "monogram": "NOTT",
       "crestColor": "#002B49",
-      "logoDescription": "University of Nottingham Official Coat of Arms & Emblems"
+      "logoDescription": "University of Nottingham Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/nottingham-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1751,7 +1765,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#C49A45",
       "monogram": "QMUL",
       "crestColor": "#002D62",
-      "logoDescription": "Queen Mary University of London Official Coat of Arms & Emblems"
+      "logoDescription": "Queen Mary University of London Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/qmul-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1866,7 +1881,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "LANC",
       "crestColor": "#B5121B",
-      "logoDescription": "Lancaster University Official Coat of Arms & Emblems"
+      "logoDescription": "Lancaster University Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/lancaster-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1981,7 +1997,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#C49A45",
       "monogram": "NCL",
       "crestColor": "#002B49",
-      "logoDescription": "Newcastle University Official Coat of Arms & Emblems"
+      "logoDescription": "Newcastle University Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/newcastle-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2096,7 +2113,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "EXET",
       "crestColor": "#003C3C",
-      "logoDescription": "University of Exeter Official Coat of Arms & Emblems"
+      "logoDescription": "University of Exeter Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/exeter-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2211,7 +2229,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "CARD",
       "crestColor": "#D3072A",
-      "logoDescription": "Cardiff University Official Coat of Arms & Emblems"
+      "logoDescription": "Cardiff University Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/cardiff-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2441,7 +2460,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "BATH",
       "crestColor": "#002E54",
-      "logoDescription": "University of Bath Official Coat of Arms & Emblems"
+      "logoDescription": "University of Bath Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/bath-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2556,7 +2576,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "DURH",
       "crestColor": "#7E317B",
-      "logoDescription": "Durham University Official Coat of Arms & Emblems"
+      "logoDescription": "Durham University Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/durham-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2671,7 +2692,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "LIV",
       "crestColor": "#002855",
-      "logoDescription": "University of Liverpool Official Coat of Arms & Emblems"
+      "logoDescription": "University of Liverpool Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/liverpool-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2786,7 +2808,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "ABDN",
       "crestColor": "#E31B23",
-      "logoDescription": "University of Aberdeen Official Coat of Arms & Emblems"
+      "logoDescription": "University of Aberdeen Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/aberdeen-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2901,7 +2924,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFC72C",
       "monogram": "SUSS",
       "crestColor": "#002B49",
-      "logoDescription": "University of Sussex Official Coat of Arms & Emblems"
+      "logoDescription": "University of Sussex Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/sussex-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3015,7 +3039,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#C49A45",
       "monogram": "READ",
       "crestColor": "#003366",
-      "logoDescription": "University of Reading Official Coat of Arms & Emblems"
+      "logoDescription": "University of Reading Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/reading-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3129,7 +3154,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "STRA",
       "crestColor": "#002B49",
-      "logoDescription": "University of Strathclyde Official Coat of Arms & Emblems"
+      "logoDescription": "University of Strathclyde Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/strathclyde-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3243,7 +3269,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#E57200",
       "monogram": "LBRO",
       "crestColor": "#330066",
-      "logoDescription": "Loughborough University Official Coat of Arms & Emblems"
+      "logoDescription": "Loughborough University Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/loughborough-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3356,7 +3383,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "LEIC",
       "crestColor": "#A51890",
-      "logoDescription": "University of Leicester Official Coat of Arms & Emblems"
+      "logoDescription": "University of Leicester Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/leicester-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3470,7 +3498,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFC72C",
       "monogram": "SURR",
       "crestColor": "#002B49",
-      "logoDescription": "University of Surrey Official Coat of Arms & Emblems"
+      "logoDescription": "University of Surrey Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/surrey-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3584,7 +3613,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "UEA",
       "crestColor": "#003366",
-      "logoDescription": "University of East Anglia Official Coat of Arms & Emblems"
+      "logoDescription": "University of East Anglia Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/uea-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3698,7 +3728,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "RHUL",
       "crestColor": "#E31B23",
-      "logoDescription": "Royal Holloway, University of London Official Coat of Arms & Emblems"
+      "logoDescription": "Royal Holloway, University of London Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/royal-holloway-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3813,7 +3844,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFC72C",
       "monogram": "DUND",
       "crestColor": "#002B49",
-      "logoDescription": "University of Dundee Official Coat of Arms & Emblems"
+      "logoDescription": "University of Dundee Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/dundee-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3928,7 +3960,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#C49A45",
       "monogram": "ESSE",
       "crestColor": "#002D62",
-      "logoDescription": "University of Essex Official Coat of Arms & Emblems"
+      "logoDescription": "University of Essex Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/essex-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4043,7 +4076,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#00A3E0",
       "monogram": "BRUN",
       "crestColor": "#002B49",
-      "logoDescription": "Brunel University London Official Coat of Arms & Emblems"
+      "logoDescription": "Brunel University London Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/brunel-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4157,7 +4191,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "SWAN",
       "crestColor": "#002B49",
-      "logoDescription": "Swansea University Official Coat of Arms & Emblems"
+      "logoDescription": "Swansea University Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/swansea-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4272,7 +4307,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "STIR",
       "crestColor": "#006633",
-      "logoDescription": "University of Stirling Official Coat of Arms & Emblems"
+      "logoDescription": "University of Stirling Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/stirling-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4385,7 +4421,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "SOAS",
       "crestColor": "#800000",
-      "logoDescription": "SOAS University of London Official Coat of Arms & Emblems"
+      "logoDescription": "SOAS University of London Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/soas-london-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4845,7 +4882,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#C49A45",
       "monogram": "OBU",
       "crestColor": "#002B49",
-      "logoDescription": "Oxford Brookes University Official Coat of Arms & Emblems"
+      "logoDescription": "Oxford Brookes University Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/oxford-brookes-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4959,7 +4997,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#000000",
       "monogram": "UWE",
       "crestColor": "#E4002B",
-      "logoDescription": "University of the West of England Official Coat of Arms & Emblems"
+      "logoDescription": "University of the West of England Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/uwe-bristol-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -5073,7 +5112,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "MMU",
       "crestColor": "#002B49",
-      "logoDescription": "Manchester Metropolitan University Official Coat of Arms & Emblems"
+      "logoDescription": "Manchester Metropolitan University Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/mmu-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -5187,7 +5227,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFC72C",
       "monogram": "NORT",
       "crestColor": "#000000",
-      "logoDescription": "Northumbria University Official Coat of Arms & Emblems"
+      "logoDescription": "Northumbria University Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/northumbria-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -5301,7 +5342,8 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFCC00",
       "monogram": "COV",
       "crestColor": "#002B49",
-      "logoDescription": "Coventry University Official Coat of Arms & Emblems"
+      "logoDescription": "Coventry University Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/coventry-university-uk.png"
     },
     "eligibilityCountries": [
       "Ghana",

@@ -29,7 +29,6 @@ export interface NavbarProps {
 }
 
 export const defaultNavLinks: NavLinkItem[] = [
-  { id: 'opportunities', label: 'Universities & Waivers', href: '#opportunities', icon: <Compass className="w-4 h-4" /> },
   { id: 'how-it-works', label: 'How It Works', href: '#how-it-works', icon: <HelpCircle className="w-4 h-4" /> },
   { id: 'benefits', label: 'Why Campus Connect', href: '#benefits', icon: <ShieldCheck className="w-4 h-4" /> },
   { id: 'about', label: 'About', href: '#about', icon: <Info className="w-4 h-4" /> },
@@ -124,7 +123,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Zone 2: Navigation Links Across Top (Desktop & Tablet) */}
           <nav
             aria-label="Main Navigation"
-            className="hidden md:flex items-center gap-4 lg:gap-8"
+            className="hidden md:flex items-center gap-6 lg:gap-10"
           >
             {defaultNavLinks.map((link) => {
               const isActive = activeLinkId === link.id;

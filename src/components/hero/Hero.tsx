@@ -87,18 +87,18 @@ export const Hero: React.FC<HeroProps> = ({ onSearchSubmit, className = '' }) =>
             
             {/* 1. Small violet eyebrow */}
             <div className="text-xs sm:text-[13px] font-semibold tracking-[0.2em] uppercase text-[#8065FF] mb-2.5 sm:mb-3 lg:mb-4">
-              UNIVERSITIES • $0 APP FEES • TEST WAIVERS • SCHOLARSHIPS
+              GLOBAL UNIVERSITIES • ADMISSIONS • FEE WAIVERS • SCHOLARSHIPS
             </div>
 
-            {/* 2. Large, bold headline with "Education." in violet (#8065FF) */}
+            {/* 2. Large, bold headline with violet accent */}
             <h1 className="text-2xl sm:text-3xl md:text-[2.25rem] lg:text-[2.85rem] xl:text-[3.4rem] font-bold font-display tracking-tight text-white leading-[1.12] [text-wrap:balance]">
-              Your Dream<br />
-              <span className="text-[#8065FF]">Education.</span> Within Reach.
+              Your Future<br />
+              <span className="text-[#8065FF]">Has No Borders.</span>
             </h1>
 
-            {/* 3. Supporting paragraph, expanding beyond scholarships */}
+            {/* 3. Supporting paragraph covering global universities, admissions, waivers & aid */}
             <p className="mt-3 sm:mt-4 md:mt-5 text-xs sm:text-sm md:text-base lg:text-lg text-slate-300 leading-relaxed max-w-xl [text-wrap:pretty]">
-              Discover world-class universities, $0 application fee colleges, SAT/test waivers, official admissions criteria, and verified scholarships for African scholars.
+              Discover universities worldwide, explore scholarships and admission opportunities, find application fee waivers, and take the next step toward your educational goals — all in one place.
             </p>
 
             {/* 4. Compact, elegant white search panel */}
@@ -140,7 +140,7 @@ export const Hero: React.FC<HeroProps> = ({ onSearchSubmit, className = '' }) =>
                     type="submit"
                     className="w-full h-11 sm:h-11 lg:h-[50px] min-h-[44px] px-3 lg:px-2 xl:px-4 text-xs xl:text-[13px] font-semibold rounded-lg lg:rounded-xl bg-[#6846F5] hover:bg-[#5835E5] active:bg-[#4A27D6] text-white flex items-center justify-center gap-1.5 transition-all shadow-[0_4px_14px_rgba(104,70,245,0.35)] cursor-pointer hover:shadow-[0_6px_18px_rgba(104,70,245,0.45)] active:scale-[0.99] whitespace-nowrap min-w-0"
                   >
-                    <span className="truncate">Find Opportunities</span>
+                    <span className="truncate">Explore Opportunities</span>
                     <ArrowRight className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                   </button>
                 </div>
@@ -152,9 +152,9 @@ export const Hero: React.FC<HeroProps> = ({ onSearchSubmit, className = '' }) =>
               <span className="text-[11px] font-medium text-slate-400 mr-0.5">Quick Filters:</span>
               {[
                 { label: 'Ghana 🇬🇭', query: '', dest: 'Ghana' },
-                { label: '$0 App Fees', query: 'free', dest: '' },
-                { label: 'SAT / Test Waivers', query: 'optional', dest: '' },
-                { label: 'Full Scholarships', query: 'funded', dest: '' },
+                { label: 'Free App & Waivers', query: 'free', dest: '' },
+                { label: 'Test-Optional / SAT-Free', query: 'optional', dest: '' },
+                { label: 'Scholarships', query: 'funded', dest: '' },
               ].map((tag) => (
                 <button
                   key={tag.label}
@@ -175,21 +175,21 @@ export const Hero: React.FC<HeroProps> = ({ onSearchSubmit, className = '' }) =>
             <div className="mt-4 sm:mt-5 lg:mt-6 flex flex-wrap items-center gap-y-2 gap-x-2.5 sm:gap-x-4 text-xs lg:text-[13px] text-slate-300">
               <div className="flex items-center gap-1.5 shrink-0 whitespace-nowrap">
                 <Globe className="w-3.5 h-3.5 text-[#8065FF] shrink-0" aria-hidden="true" />
-                <span className="font-medium text-slate-200">Global Opportunities</span>
+                <span className="font-medium text-slate-200">Global Education Opportunities</span>
               </div>
 
               <span className="hidden sm:inline-block text-slate-600/70 shrink-0" aria-hidden="true">|</span>
 
               <div className="flex items-center gap-1.5 shrink-0 whitespace-nowrap">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#8065FF] shrink-0" aria-hidden="true" />
-                <span className="font-medium text-slate-200">Trusted Information</span>
+                <span className="font-medium text-slate-200">Verified Admissions Info</span>
               </div>
 
               <span className="hidden sm:inline-block text-slate-600/70 shrink-0" aria-hidden="true">|</span>
 
               <div className="flex items-center gap-1.5 shrink-0 whitespace-nowrap">
                 <User className="w-3.5 h-3.5 text-[#8065FF] shrink-0" aria-hidden="true" />
-                <span className="font-medium text-slate-200">For Students Like You</span>
+                <span className="font-medium text-slate-200">Guided With COVA AI</span>
               </div>
             </div>
 

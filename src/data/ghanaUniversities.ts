@@ -1582,7 +1582,8 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FDE047",
       "monogram": "GI",
       "crestColor": "#EAB308",
-      "logoDescription": "GIMPA Royal Blue & Gold Academic Shield"
+      "logoDescription": "GIMPA Royal Blue & Gold Academic Shield",
+      "logoUrl": "/logos/gimpa-accra-ghana.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3562,7 +3563,8 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "CU",
       "crestColor": "#F59E0B",
-      "logoDescription": "CUG Marian Blue & Gold Cross Crest"
+      "logoDescription": "CUG Marian Blue & Gold Cross Crest",
+      "logoUrl": "/logos/catholic-university-ghana.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3890,7 +3892,8 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "CSU",
       "crestColor": "#38BDF8",
-      "logoDescription": "CSU Navy & Sky Blue Academic Shield"
+      "logoDescription": "CSU Navy & Sky Blue Academic Shield",
+      "logoUrl": "/logos/christian-service-university-ghana.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -5939,7 +5942,8 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "RMU",
       "crestColor": "#38BDF8",
-      "logoDescription": "RMU Deep Maritime Blue & Nautical Compass Crest"
+      "logoDescription": "RMU Deep Maritime Blue & Nautical Compass Crest",
+      "logoUrl": "/logos/rmu-maritime-ghana.png"
     },
     "eligibilityCountries": [
       "Ghana",

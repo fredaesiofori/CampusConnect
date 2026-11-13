@@ -25,6 +25,7 @@ export const australiaUniversities: OpportunityItem[] = [
       monogram: "USYD",
       crestColor: "#E64626",
       logoDescription: "University of Sydney Ochre & Lion Open Book Shield",
+      "logoUrl": "/logos/usyd-australia.png"
           },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -107,6 +108,7 @@ export const australiaUniversities: OpportunityItem[] = [
       monogram: "UNSW",
       crestColor: "#FFD100",
       logoDescription: "UNSW Yellow and Black Lion & Rising Sun Crest",
+      "logoUrl": "/logos/unsw-australia.png"
           },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -189,6 +191,7 @@ export const australiaUniversities: OpportunityItem[] = [
       monogram: "UQ",
       crestColor: "#51247A",
       logoDescription: "UQ Royal Purple & Gold Open Book Crest",
+      "logoUrl": "/logos/uq-australia.png"
           },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -271,6 +274,7 @@ export const australiaUniversities: OpportunityItem[] = [
       monogram: "MONASH",
       crestColor: "#006DAE",
       logoDescription: "Monash Blue & White Sword and Open Book Shield",
+      "logoUrl": "/logos/monash-australia.png"
           },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -352,7 +356,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#DAA520",
       monogram: "UWA",
       crestColor: "#273872",
-      logoDescription: "UWA Navy Blue & Gold Black Swan Crest"
+      logoDescription: "UWA Navy Blue & Gold Black Swan Crest",
+      "logoUrl": "/logos/uwa-australia.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -434,7 +439,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UofA",
       crestColor: "#10253F",
-      logoDescription: "Adelaide Navy Blue & Open Book Southern Cross Crest"
+      logoDescription: "Adelaide Navy Blue & Open Book Southern Cross Crest",
+      "logoUrl": "/logos/adelaide-australia.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -516,7 +522,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#005696",
       monogram: "UTS",
       crestColor: "#005696",
-      logoDescription: "UTS Modern Architectural Seal"
+      logoDescription: "UTS Modern Architectural Seal",
+      "logoUrl": "/logos/uts-australia.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -598,7 +605,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MQ",
       crestColor: "#A6192E",
-      logoDescription: "Macquarie Crimson & Lighthouse Emblem"
+      logoDescription: "Macquarie Crimson & Lighthouse Emblem",
+      "logoUrl": "/logos/macquarie-australia.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -680,7 +688,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#000000",
       monogram: "RMIT",
       crestColor: "#E60000",
-      logoDescription: "RMIT Red Pixel and Bold Typography Seal"
+      logoDescription: "RMIT Red Pixel and Bold Typography Seal",
+      "logoUrl": "/logos/rmit-australia.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -762,7 +771,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "QUT",
       crestColor: "#003366",
-      logoDescription: "QUT Deep Navy Real World Architecture Seal"
+      logoDescription: "QUT Deep Navy Real World Architecture Seal",
+      "logoUrl": "/logos/qut-australia.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -926,7 +936,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#000000",
       monogram: "DEAKIN",
       crestColor: "#00A389",
-      logoDescription: "Deakin Teal & Black Innovation Seal"
+      logoDescription: "Deakin Teal & Black Innovation Seal",
+      "logoUrl": "/logos/deakin-australia.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -1008,7 +1019,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#C41230",
       monogram: "UOW",
       crestColor: "#00205B",
-      logoDescription: "UOW Navy & Red Open Book Wave Shield"
+      logoDescription: "UOW Navy & Red Open Book Wave Shield",
+      "logoUrl": "/logos/uow-australia.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -1172,7 +1184,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "LTU",
       crestColor: "#C41230",
-      logoDescription: "La Trobe Red & White Eagle Crest"
+      logoDescription: "La Trobe Red & White Eagle Crest",
+      "logoUrl": "/logos/latrobe-australia.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -1254,7 +1267,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#000000",
       monogram: "GU",
       crestColor: "#BA0C2F",
-      logoDescription: "Griffith Red & Gold Open Book Crest"
+      logoDescription: "Griffith Red & Gold Open Book Crest",
+      "logoUrl": "/logos/griffith-australia.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Australia", "All International Countries"],
     nationalityEligibility: {
@@ -1607,7 +1621,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "SWIN",
       crestColor: "#DC2626",
-      logoDescription: "Swinburne University Crimson & Black Tech Crest"
+      logoDescription: "Swinburne University Crimson & Black Tech Crest",
+      "logoUrl": "/logos/swinburne-australia.png"
     },
     eligibilityCountries: [
       "Australia",
@@ -1714,7 +1729,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "JCU",
       crestColor: "#002B49",
-      logoDescription: "James Cook University Deep Navy & Marine Blue Crest"
+      logoDescription: "James Cook University Deep Navy & Marine Blue Crest",
+      "logoUrl": "/logos/jcu-australia.png"
     },
     eligibilityCountries: [
       "Australia",
@@ -1821,7 +1837,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UniSA",
       crestColor: "#00205B",
-      logoDescription: "UniSA Royal Navy Blue & Red Emblem"
+      logoDescription: "UniSA Royal Navy Blue & Red Emblem",
+      "logoUrl": "/logos/unisa-australia.png"
     },
     eligibilityCountries: [
       "Australia",
@@ -2034,7 +2051,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "ECU",
       crestColor: "#FF6600",
-      logoDescription: "Edith Cowan University Black & Orange Flame Emblem"
+      logoDescription: "Edith Cowan University Black & Orange Flame Emblem",
+      "logoUrl": "/logos/ecu-australia.png"
     },
     eligibilityCountries: [
       "Australia",
@@ -2140,7 +2158,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "CDU",
       crestColor: "#7B1113",
-      logoDescription: "Charles Darwin University Ochre Red & Sand Emblem"
+      logoDescription: "Charles Darwin University Ochre Red & Sand Emblem",
+      "logoUrl": "/logos/cdu-australia.png"
     },
     eligibilityCountries: [
       "Australia",
@@ -2246,7 +2265,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#000000",
       monogram: "UniSQ",
       crestColor: "#F26522",
-      logoDescription: "UniSQ Sun Orange & Charcoal Geometric Emblem"
+      logoDescription: "UniSQ Sun Orange & Charcoal Geometric Emblem",
+      "logoUrl": "/logos/unisq-australia.png"
     },
     eligibilityCountries: [
       "Australia",
@@ -2670,7 +2690,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "CSU",
       crestColor: "#C41230",
-      logoDescription: "Charles Sturt University Cardinal Red & Black Shield"
+      logoDescription: "Charles Sturt University Cardinal Red & Black Shield",
+      "logoUrl": "/logos/csu-australia.png"
     },
     eligibilityCountries: [
       "Australia",
@@ -2988,7 +3009,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "FED",
       crestColor: "#00205B",
-      logoDescription: "Federation University Navy & Gold Cross Shield"
+      logoDescription: "Federation University Navy & Gold Cross Shield",
+      "logoUrl": "/logos/federation-australia.png"
     },
     eligibilityCountries: [
       "Australia",
@@ -3200,7 +3222,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "BOND",
       crestColor: "#FFC72C",
-      logoDescription: "Bond University Navy & Gold Arch Shield"
+      logoDescription: "Bond University Navy & Gold Arch Shield",
+      "logoUrl": "/logos/bond-australia.png"
     },
     eligibilityCountries: [
       "Australia",
@@ -3307,7 +3330,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UNDA",
       crestColor: "#C99700",
-      logoDescription: "Notre Dame Australia Navy & Gold Open Book Star Shield"
+      logoDescription: "Notre Dame Australia Navy & Gold Open Book Star Shield",
+      "logoUrl": "/logos/notredame-australia.png"
     },
     eligibilityCountries: [
       "Australia",
@@ -3413,7 +3437,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "TORR",
       crestColor: "#FF5C39",
-      logoDescription: "Torrens University Charcoal & Coral Tech Emblem"
+      logoDescription: "Torrens University Charcoal & Coral Tech Emblem",
+      "logoUrl": "/logos/torrens-australia.png"
     },
     eligibilityCountries: [
       "Australia",
@@ -3519,7 +3544,8 @@ export const australiaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "CQU",
       crestColor: "#005587",
-      logoDescription: "CQUniversity Teal Navy & Cyan Radiant Star Emblem"
+      logoDescription: "CQUniversity Teal Navy & Cyan Radiant Star Emblem",
+      "logoUrl": "/logos/cqu-australia.png"
     },
     eligibilityCountries: [
       "Australia",

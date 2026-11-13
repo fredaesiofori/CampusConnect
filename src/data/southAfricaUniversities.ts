@@ -24,7 +24,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#BF996B",
       monogram: "WITS",
       crestColor: "#003B5C",
-      logoDescription: "University of the Witwatersrand Official Coat of Arms & Emblem"
+      logoDescription: "University of the Witwatersrand Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/wits-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -130,7 +131,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#BF9B30",
       monogram: "SUN",
       crestColor: "#6C1D45",
-      logoDescription: "Stellenbosch University Official Coat of Arms & Emblem"
+      logoDescription: "Stellenbosch University Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/stellenbosch-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -236,7 +238,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UP",
       crestColor: "#B22222",
-      logoDescription: "University of Pretoria Official Coat of Arms & Emblem"
+      logoDescription: "University of Pretoria Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/up-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -342,7 +345,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UKZN",
       crestColor: "#990000",
-      logoDescription: "University of KwaZulu-Natal Official Coat of Arms & Emblem"
+      logoDescription: "University of KwaZulu-Natal Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/ukzn-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -448,7 +452,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#000000",
       monogram: "UJ",
       crestColor: "#FF6600",
-      logoDescription: "University of Johannesburg Official Coat of Arms & Emblem"
+      logoDescription: "University of Johannesburg Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/uj-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -554,7 +559,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "RU",
       crestColor: "#551A8B",
-      logoDescription: "Rhodes University Official Coat of Arms & Emblem"
+      logoDescription: "Rhodes University Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/rhodes-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -660,7 +666,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFD700",
       monogram: "UWC",
       crestColor: "#002060",
-      logoDescription: "University of the Western Cape Official Coat of Arms & Emblem"
+      logoDescription: "University of the Western Cape Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/uwc-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -766,7 +773,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "NWU",
       crestColor: "#49265B",
-      logoDescription: "North-West University Official Coat of Arms & Emblem"
+      logoDescription: "North-West University Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/nwu-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -872,7 +880,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#F1B51C",
       monogram: "NMU",
       crestColor: "#002B49",
-      logoDescription: "Nelson Mandela University Official Coat of Arms & Emblem"
+      logoDescription: "Nelson Mandela University Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/mandela-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -978,7 +987,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UFS",
       crestColor: "#8B1E41",
-      logoDescription: "University of the Free State Official Coat of Arms & Emblem"
+      logoDescription: "University of the Free State Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/ufs-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -1084,7 +1094,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UFH",
       crestColor: "#003A70",
-      logoDescription: "University of Fort Hare Official Coat of Arms & Emblem"
+      logoDescription: "University of Fort Hare Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/ufh-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -1190,7 +1201,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFD200",
       monogram: "UNIV",
       crestColor: "#006837",
-      logoDescription: "University of Venda Official Coat of Arms & Emblem"
+      logoDescription: "University of Venda Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/univen-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -1296,7 +1308,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFC20E",
       monogram: "UL",
       crestColor: "#102F54",
-      logoDescription: "University of Limpopo Official Coat of Arms & Emblem"
+      logoDescription: "University of Limpopo Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/ul-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -1402,7 +1415,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "WSU",
       crestColor: "#004B87",
-      logoDescription: "Walter Sisulu University Official Coat of Arms & Emblem"
+      logoDescription: "Walter Sisulu University Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/wsu-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -1508,7 +1522,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFCC00",
       monogram: "UZ",
       crestColor: "#002349",
-      logoDescription: "University of Zululand Official Coat of Arms & Emblem"
+      logoDescription: "University of Zululand Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/unizulu-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -1720,7 +1735,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#F4D03F",
       monogram: "SPU",
       crestColor: "#004B23",
-      logoDescription: "Sol Plaatje University Official Coat of Arms & Emblem"
+      logoDescription: "Sol Plaatje University Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/spu-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -1826,7 +1842,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UMP",
       crestColor: "#1E8449",
-      logoDescription: "University of Mpumalanga Official Coat of Arms & Emblem"
+      logoDescription: "University of Mpumalanga Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/ump-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -1932,7 +1949,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "CPUT",
       crestColor: "#005596",
-      logoDescription: "Cape Peninsula University of Technology Official Coat of Arms & Emblem"
+      logoDescription: "Cape Peninsula University of Technology Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/cput-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -2144,7 +2162,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#D4AF37",
       monogram: "TUT",
       crestColor: "#002D62",
-      logoDescription: "Tshwane University of Technology Official Coat of Arms & Emblem"
+      logoDescription: "Tshwane University of Technology Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/tut-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -2250,7 +2269,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "VUT",
       crestColor: "#8A1538",
-      logoDescription: "Vaal University of Technology Official Coat of Arms & Emblem"
+      logoDescription: "Vaal University of Technology Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/vut-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -2356,7 +2376,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "CUT",
       crestColor: "#003A70",
-      logoDescription: "Central University of Technology Official Coat of Arms & Emblem"
+      logoDescription: "Central University of Technology Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/cut-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -2568,7 +2589,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#BF996B",
       monogram: "UNISA",
       crestColor: "#002B49",
-      logoDescription: "University of South Africa Official Coat of Arms & Emblem"
+      logoDescription: "University of South Africa Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/unisa-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -2674,7 +2696,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "IIE",
       crestColor: "#00205B",
-      logoDescription: "The Independent Institute of Education Official Coat of Arms & Emblem"
+      logoDescription: "The Independent Institute of Education Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/iie-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -2780,7 +2803,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#00A86B",
       monogram: "EDUV",
       crestColor: "#1B2631",
-      logoDescription: "Eduvos Higher Education Official Coat of Arms & Emblem"
+      logoDescription: "Eduvos Higher Education Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/eduvos-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",
@@ -2886,7 +2910,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFD700",
       monogram: "AFDA",
       crestColor: "#000000",
-      logoDescription: "AFDA - The South African School of Motion Picture Medium Official Coat of Arms & Emblem"
+      logoDescription: "AFDA - The South African School of Motion Picture Medium Official Coat of Arms & Emblem",
+      "logoUrl": "/logos/afda-south-africa.png"
     },
     eligibilityCountries: [
       "South Africa",

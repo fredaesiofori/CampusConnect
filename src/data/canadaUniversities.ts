@@ -25,6 +25,7 @@ export const canadaUniversities: OpportunityItem[] = [
       monogram: "UofA",
       crestColor: "#007C41",
       logoDescription: "University of Alberta Evergreen & Gold Crest",
+      "logoUrl": "/logos/ualberta-canada.png"
           },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "United States", "All International Countries"],
     nationalityEligibility: {
@@ -115,6 +116,7 @@ export const canadaUniversities: OpportunityItem[] = [
       monogram: "MAC",
       crestColor: "#7A003C",
       logoDescription: "McMaster Maroon & Heritage Gold Heraldic Seal",
+      "logoUrl": "/logos/mcmaster-university-canada.png"
           },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -197,6 +199,7 @@ export const canadaUniversities: OpportunityItem[] = [
       monogram: "UW",
       crestColor: "#000000",
       logoDescription: "Waterloo Black & Gold Chevron Seal",
+      "logoUrl": "/logos/waterloo-canada.png"
           },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -361,6 +364,7 @@ export const canadaUniversities: OpportunityItem[] = [
       monogram: "UofC",
       crestColor: "#C8102E",
       logoDescription: "UCalgary Red & Gold Bull and Cross Seal",
+      "logoUrl": "/logos/ucalgary-canada.png"
           },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -443,6 +447,7 @@ export const canadaUniversities: OpportunityItem[] = [
       monogram: "uO",
       crestColor: "#8F001A",
       logoDescription: "uOttawa Garnet & Grey Two-Toned Emblem",
+      "logoUrl": "/logos/uottawa-canada.png"
           },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -606,7 +611,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFD400",
       monogram: "DAL",
       crestColor: "#242424",
-      logoDescription: "Dalhousie Black & Gold Eagle and Cross Shield"
+      logoDescription: "Dalhousie Black & Gold Eagle and Cross Shield",
+      "logoUrl": "/logos/dalhousie-university-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -688,7 +694,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "SFU",
       crestColor: "#CC0633",
-      logoDescription: "SFU Clan Red & White Heritage Crest"
+      logoDescription: "SFU Clan Red & White Heritage Crest",
+      "logoUrl": "/logos/sfu-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -770,7 +777,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#0093B2",
       monogram: "UVic",
       crestColor: "#002754",
-      logoDescription: "UVic Coastal Blue & Martlet Bird Crest"
+      logoDescription: "UVic Coastal Blue & Martlet Bird Crest",
+      "logoUrl": "/logos/uvic-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -852,7 +860,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "CU",
       crestColor: "#800020",
-      logoDescription: "Concordia University Burgundy & Sunburst Emblem"
+      logoDescription: "Concordia University Burgundy & Sunburst Emblem",
+      "logoUrl": "/logos/concordia-university-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -935,7 +944,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "YU",
       crestColor: "#E31837",
-      logoDescription: "York University Red & White Bold Shield"
+      logoDescription: "York University Red & White Bold Shield",
+      "logoUrl": "/logos/york-university-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1017,7 +1027,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#C41230",
       monogram: "CU",
       crestColor: "#000000",
-      logoDescription: "Carleton Black & Red Maple Beaver Seal"
+      logoDescription: "Carleton Black & Red Maple Beaver Seal",
+      "logoUrl": "/logos/carleton-university-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1099,7 +1110,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MUN",
       crestColor: "#800000",
-      logoDescription: "MUN Claret & White Marine Cross Seal"
+      logoDescription: "MUN Claret & White Marine Cross Seal",
+      "logoUrl": "/logos/memorial-university-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1181,7 +1193,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFC72C",
       monogram: "UoG",
       crestColor: "#C20430",
-      logoDescription: "Guelph Gryphon Red & Gold Crest"
+      logoDescription: "Guelph Gryphon Red & Gold Crest",
+      "logoUrl": "/logos/university-of-guelph-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1263,7 +1276,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFD100",
       monogram: "TMU",
       crestColor: "#004B87",
-      logoDescription: "TMU Metropolitan Blue and Gold Emblem"
+      logoDescription: "TMU Metropolitan Blue and Gold Emblem",
+      "logoUrl": "/logos/tmu-toronto-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1345,7 +1359,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#C49A45",
       monogram: "UM",
       crestColor: "#4F2683",
-      logoDescription: "UManitoba Brown & Gold Bison Crest"
+      logoDescription: "UManitoba Brown & Gold Bison Crest",
+      "logoUrl": "/logos/umanitoba-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1427,7 +1442,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "USask",
       crestColor: "#004731",
-      logoDescription: "USask Prairie Green & Gold Crest"
+      logoDescription: "USask Prairie Green & Gold Crest",
+      "logoUrl": "/logos/usask-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1509,7 +1525,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFD100",
       monogram: "UW",
       crestColor: "#002D62",
-      logoDescription: "UWindsor Blue & Gold Shield"
+      logoDescription: "UWindsor Blue & Gold Shield",
+      "logoUrl": "/logos/uwindsor-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1591,7 +1608,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "BROCK",
       crestColor: "#CC0000",
-      logoDescription: "Brock Badger Red & White Crest"
+      logoDescription: "Brock Badger Red & White Crest",
+      "logoUrl": "/logos/brock-university-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1673,7 +1691,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#000000",
       monogram: "UNB",
       crestColor: "#C8102E",
-      logoDescription: "UNB Red, Black & Ship Heraldic Shield"
+      logoDescription: "UNB Red, Black & Ship Heraldic Shield",
+      "logoUrl": "/logos/unb-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1837,7 +1856,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFD100",
       monogram: "UL",
       crestColor: "#C8102E",
-      logoDescription: "Université Laval Historic Red, Gold & Cross Royal Crest"
+      logoDescription: "Université Laval Historic Red, Gold & Cross Royal Crest",
+      "logoUrl": "/logos/ulaval-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1919,7 +1939,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UdeS",
       crestColor: "#006400",
-      logoDescription: "UdeS Forest Green & Silver Emblem"
+      logoDescription: "UdeS Forest Green & Silver Emblem",
+      "logoUrl": "/logos/usherbrooke-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2001,7 +2022,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#00A850",
       monogram: "UQAM",
       crestColor: "#003366",
-      logoDescription: "UQAM Blue and Green Hexagon Shield"
+      logoDescription: "UQAM Blue and Green Hexagon Shield",
+      "logoUrl": "/logos/uqam-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2165,7 +2187,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "POLY",
       crestColor: "#C41230",
-      logoDescription: "Polytechnique Montréal Red & White Compass Seal"
+      logoDescription: "Polytechnique Montréal Red & White Compass Seal",
+      "logoUrl": "/logos/polytechnique-montreal-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2247,7 +2270,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFD100",
       monogram: "WLU",
       crestColor: "#330066",
-      logoDescription: "Laurier Golden Hawk Purple & Gold Shield"
+      logoDescription: "Laurier Golden Hawk Purple & Gold Shield",
+      "logoUrl": "/logos/wlu-waterloo-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2329,7 +2353,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "TRENT",
       crestColor: "#004731",
-      logoDescription: "Trent Green & Gold Crest and River Waves"
+      logoDescription: "Trent Green & Gold Crest and River Waves",
+      "logoUrl": "/logos/trent-university-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2411,7 +2436,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#0093B2",
       monogram: "uLeth",
       crestColor: "#002B49",
-      logoDescription: "ULethbridge Blue & Sunburst Coulee Seal"
+      logoDescription: "ULethbridge Blue & Sunburst Coulee Seal",
+      "logoUrl": "/logos/ulethbridge-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2493,7 +2519,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#DAA520",
       monogram: "UofR",
       crestColor: "#004731",
-      logoDescription: "URegina Green & Gold Crown Shield"
+      logoDescription: "URegina Green & Gold Crown Shield",
+      "logoUrl": "/logos/uregina-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2985,7 +3012,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#DAA520",
       monogram: "UPEI",
       crestColor: "#004731",
-      logoDescription: "UPEI Forest Green & Gold Oak Tree Shield"
+      logoDescription: "UPEI Forest Green & Gold Oak Tree Shield",
+      "logoUrl": "/logos/upei-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -3067,7 +3095,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#00205B",
       monogram: "ACAD",
       crestColor: "#A6192E",
-      logoDescription: "Acadia Red & Navy Axemen Shield"
+      logoDescription: "Acadia Red & Navy Axemen Shield",
+      "logoUrl": "/logos/acadia-university-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -3231,7 +3260,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "StFX",
       crestColor: "#00205B",
-      logoDescription: "StFX Blue & White Cross Shield"
+      logoDescription: "StFX Blue & White Cross Shield",
+      "logoUrl": "/logos/stfx-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -3313,7 +3343,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#DAA520",
       monogram: "MtA",
       crestColor: "#7B1113",
-      logoDescription: "Mount Allison Garnet & Gold Open Book Crest"
+      logoDescription: "Mount Allison Garnet & Gold Open Book Crest",
+      "logoUrl": "/logos/mta-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -3395,7 +3426,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "BU",
       crestColor: "#551A8B",
-      logoDescription: "Bishop's Purple & Silver Mitre Shield"
+      logoDescription: "Bishop's Purple & Silver Mitre Shield",
+      "logoUrl": "/logos/ubishops-canada.png"
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -3477,7 +3509,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#008080",
       monogram: "NIP",
       crestColor: "#003366",
-      logoDescription: "Nipissing University Blue & Teal Shield"
+      logoDescription: "Nipissing University Blue & Teal Shield",
+      "logoUrl": "/logos/nipissing-canada.png"
     },
     eligibilityCountries: [
       "Canada",
@@ -3687,7 +3720,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MRU",
       crestColor: "#B5A16A",
-      logoDescription: "Mount Royal University Navy & Gold Open Book Crest"
+      logoDescription: "Mount Royal University Navy & Gold Open Book Crest",
+      "logoUrl": "/logos/mru-canada.png"
     },
     eligibilityCountries: [
       "Canada",
@@ -3896,7 +3930,8 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#009681",
       monogram: "VIU",
       crestColor: "#003A63",
-      logoDescription: "Vancouver Island University Pacific Blue & Coastal Teal Emblem"
+      logoDescription: "Vancouver Island University Pacific Blue & Coastal Teal Emblem",
+      "logoUrl": "/logos/viu-canada.png"
     },
     eligibilityCountries: [
       "Canada",

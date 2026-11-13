@@ -15,7 +15,6 @@ import {
   ShieldCheck,
   CheckCircle2,
   KeyRound,
-  UserCheck,
 } from 'lucide-react';
 import { Logo } from '../components/brand/Logo';
 import { Button } from '../components/ui/Button';
@@ -71,9 +70,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
     setIsSubmitting(true);
     try {
-      // Ensure default demo account exists if testing with demo
-      await authService.initDefaultDemoUser();
-
       const result = await authService.login(email, password);
 
       if (!result.success || !result.user) {
@@ -90,13 +86,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({
       setLoginError('An unexpected authentication error occurred. Please try again.');
       setIsSubmitting(false);
     }
-  };
-
-  const handleFillDemoScholar = () => {
-    setEmail('scholar.ghana@campusconnect.edu');
-    setPassword('Scholar2026!');
-    setErrors({});
-    setLoginError(null);
   };
 
   return (
@@ -266,30 +255,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                 </Button>
               </div>
             </form>
-
-            {/* Quick Demo Scholar Account Fill */}
-            <div className="mt-6 pt-5 border-t border-[#E2E8F0]">
-              <div className="p-3.5 rounded-xl bg-[#F8F9FD] border border-[#E2E8F0] space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#6846F5] flex items-center gap-1">
-                    <UserCheck className="w-3.5 h-3.5" />
-                    Demo Scholar Account
-                  </span>
-                  <button
-                    type="button"
-                    onClick={handleFillDemoScholar}
-                    className="text-xs font-semibold text-[#6846F5] hover:underline cursor-pointer bg-white px-2.5 py-1 rounded-lg border border-[#DDD6FE]"
-                  >
-                    1-Click Auto Fill
-                  </button>
-                </div>
-                <div className="text-[11px] text-[#64748B] space-y-0.5">
-                  <p><strong className="text-[#10132D]">Scholar:</strong> Kwame Mensah (Ghana 🇬🇭)</p>
-                  <p><strong className="text-[#10132D]">Email:</strong> scholar.ghana@campusconnect.edu</p>
-                  <p><strong className="text-[#10132D]">Password:</strong> Scholar2026!</p>
-                </div>
-              </div>
-            </div>
 
             {/* Bottom Sign-Up Link */}
             <div className="mt-5 text-center text-xs text-[#64748B]">

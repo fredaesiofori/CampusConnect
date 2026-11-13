@@ -34,6 +34,8 @@ import {
   collection,
   getDocs,
   writeBatch,
+  query,
+  where,
 } from 'firebase/firestore';
 import firebaseConfigData from '../../firebase-applet-config.json';
 import { authenticOpportunities, OpportunityItem } from '../data/opportunities';
@@ -115,12 +117,12 @@ export const db: Firestore = (() => {
       ? initializeFirestore(
           app,
           {
-            experimentalForceLongPolling: true,
+            experimentalAutoDetectLongPolling: true,
           },
           firebaseConfigData.firestoreDatabaseId
         )
       : initializeFirestore(app, {
-          experimentalForceLongPolling: true,
+          experimentalAutoDetectLongPolling: true,
         });
   } catch {
     // If initializeFirestore was already called on this app instance during HMR
@@ -137,7 +139,6 @@ let connectionTested = false;
 let isDbOnline = false;
 
 // 3. Test Connection with Guarded Timeout
-// 3. Test Connection
 export async function testFirestoreConnection(): Promise<FirebaseConnectionStatus> {
   if (connectionTested) {
     return {
@@ -148,8 +149,12 @@ export async function testFirestoreConnection(): Promise<FirebaseConnectionStatu
   }
 
   try {
-    // Probe connection using getDoc on opportunities collection
-    await getDoc(doc(db, 'opportunities', 'probe-connection'));
+    // Probe connection using getDoc on opportunities collection with 5s timeout
+    const probePromise = getDoc(doc(db, 'opportunities', 'probe-connection'));
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('Connection probe timed out')), 5000)
+    );
+    await Promise.race([probePromise, timeoutPromise]);
     connectionTested = true;
     isDbOnline = true;
     return {
@@ -231,6 +236,24 @@ export async function sendFirebasePasswordReset(
 
 export function getCurrentFirebaseUser(): FirebaseUser | null {
   return auth.currentUser;
+}
+
+/**
+ * Verifies whether the currently authenticated user holds a server-minted
+ * Firebase Auth custom claim (`admin === true`). Never checks email strings
+ * or client-side mutable flags.
+ */
+export async function checkCurrentUserIsAdmin(forceRefresh = false): Promise<boolean> {
+  try {
+    const user = auth.currentUser;
+    if (!user || user.isAnonymous) {
+      return false;
+    }
+    const tokenResult = await user.getIdTokenResult(forceRefresh);
+    return tokenResult?.claims?.admin === true;
+  } catch {
+    return false;
+  }
 }
 
 export function subscribeToFirebaseAuthState(
@@ -330,7 +353,7 @@ export async function changeFirebasePassword(
     if (code === 'auth/weak-password') {
       return {
         success: false,
-        error: 'The new password must be at least 6 characters long.',
+        error: 'The new password must be at least 8 characters long and include both letters and numbers.',
       };
     }
     return {
@@ -380,14 +403,22 @@ export async function refreshFirebaseSessionToken(): Promise<{ success: boolean;
   }
 }
 
-// 6. Seed Verified Real Opportunities into Cloud Firestore
+// 6. Seed Verified Real Opportunities into Cloud Firestore (Admin Custom Claim Required)
 // Uses writeBatch for high-speed atomic upload (single HTTP request per batch)
 export async function seedVerifiedOpportunitiesToFirestore(): Promise<number> {
+  const fbUser = await ensureFirebaseAuth();
+  if (!fbUser) {
+    throw new Error('Authentication required to synchronize university directory records.');
+  }
+
+  const hasAdminClaim = await checkCurrentUserIsAdmin(true);
+  if (!hasAdminClaim) {
+    throw new Error(
+      'Administrator privileges (verified Firebase custom claim) are required to modify university and opportunity records.'
+    );
+  }
+
   try {
-    const fbUser = await ensureFirebaseAuth();
-    if (!fbUser) {
-      return 0;
-    }
     let seededCount = 0;
     const BATCH_SIZE = 50;
 
@@ -447,21 +478,21 @@ export async function seedVerifiedOpportunitiesToFirestore(): Promise<number> {
     return seededCount;
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, 'opportunities');
-    return 0;
+    throw error;
   }
 }
 
-// 7. Fetch Verified Opportunities from Cloud Firestore
+// 7. Fetch Verified Opportunities from Cloud Firestore (Read-Only for Students)
 export async function fetchVerifiedOpportunitiesFromFirestore(): Promise<OpportunityItem[]> {
   try {
     const oppCol = collection(db, 'opportunities');
-    const snapshot = await getDocs(oppCol);
+    const fetchPromise = getDocs(oppCol);
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('Firestore fetch timeout - falling back to verified registry')), 6000)
+    );
+    const snapshot = await Promise.race([fetchPromise, timeoutPromise]);
 
     if (snapshot.empty) {
-      // Seed asynchronously in background without blocking initial rendering
-      seedVerifiedOpportunitiesToFirestore().catch((err) => {
-        console.info('Background opportunities seed status:', err);
-      });
       return authenticOpportunities;
     }
 
@@ -558,6 +589,12 @@ export async function fetchVerifiedOpportunitiesFromFirestore(): Promise<Opportu
   }
 }
 
+export interface FirestoreMutationResult {
+  success: boolean;
+  persistedToCloud: boolean;
+  error?: string;
+}
+
 // 8. Student Profile Firestore Operations (Private & Secure per User)
 export async function saveStudentProfileToFirestore(
   userId: string,
@@ -565,44 +602,77 @@ export async function saveStudentProfileToFirestore(
   profile: StudentProfile,
   fullName?: string
 ): Promise<boolean> {
+  const res = await saveStudentProfileWithStatusToFirestore(userId, userEmail, profile, fullName);
+  return res.persistedToCloud;
+}
+
+export async function saveStudentProfileWithStatusToFirestore(
+  userId: string,
+  userEmail: string,
+  profile: StudentProfile,
+  fullName?: string
+): Promise<FirestoreMutationResult> {
   const fbUser = auth.currentUser;
-  if (!fbUser || userId.startsWith('kwame-') || userId === 'demo-scholar') {
-    return false;
+  if (!fbUser || !userId || fbUser.uid !== userId) {
+    return {
+      success: false,
+      persistedToCloud: false,
+      error: 'No active Firebase authentication session.',
+    };
   }
   const targetUid = fbUser.uid;
   const path = `users/${targetUid}`;
   try {
     const userDocRef = doc(db, 'users', targetUid);
+    const cleanProfile = Object.fromEntries(
+      Object.entries(profile).filter(([, val]) => val !== undefined)
+    );
     await setDoc(
       userDocRef,
       {
         uid: targetUid,
         email: userEmail || fbUser.email || '',
-        ...(fullName ? { fullName } : {}),
-        profile,
+        ...(fullName ? { fullName: fullName.slice(0, 120) } : {}),
+        profile: cleanProfile,
         updatedAt: new Date().toISOString(),
       },
       { merge: true }
     );
-    return true;
+    return { success: true, persistedToCloud: true };
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);
-    return false;
+    return {
+      success: false,
+      persistedToCloud: false,
+      error: error instanceof Error ? error.message : 'Failed to save profile to Firestore.',
+    };
   }
 }
 
 export async function fetchStudentProfileFromFirestore(
   userId: string
-): Promise<{ profile?: StudentProfile; savedOpportunities?: string[]; applicationTracker?: Record<string, any> } | null> {
+): Promise<{
+  fullName?: string;
+  profile?: StudentProfile;
+  savedOpportunities?: string[];
+  applicationTracker?: Record<string, any>;
+  targetList?: Record<string, any>;
+  activeApplications?: Record<string, any>;
+} | null> {
   const fbUser = auth.currentUser;
-  if (!fbUser || userId.startsWith('kwame-') || userId === 'demo-scholar') {
+  if (!fbUser || !userId || fbUser.uid !== userId) {
     return null;
   }
   const targetUid = fbUser.uid;
   const path = `users/${targetUid}`;
   try {
     const userDocRef = doc(db, 'users', targetUid);
-    const docSnap = await getDoc(userDocRef);
+    let docSnap;
+    try {
+      docSnap = await getDocFromServer(userDocRef);
+    } catch {
+      docSnap = await getDoc(userDocRef);
+    }
     if (docSnap.exists()) {
       return docSnap.data() as any;
     }
@@ -613,36 +683,70 @@ export async function fetchStudentProfileFromFirestore(
   }
 }
 
-// 9. Saved Opportunities and Application Tracker Firestore Persistence
+// 9. Saved Opportunities, Target List, and Active Applications Firestore Persistence
 export async function syncSavedOpportunitiesToFirestore(
   userId: string,
   userEmail: string,
   savedOpportunities: string[],
   applicationTracker: Record<string, string>
 ): Promise<boolean> {
+  const res = await syncStudentDashboardListsToFirestore(userId, userEmail, {
+    savedOpportunities,
+    applicationTracker,
+  });
+  return res.persistedToCloud;
+}
+
+export async function syncStudentDashboardListsToFirestore(
+  userId: string,
+  userEmail: string,
+  payload: {
+    savedOpportunities?: string[];
+    applicationTracker?: Record<string, string>;
+    targetList?: Record<string, any>;
+    activeApplications?: Record<string, any>;
+  }
+): Promise<FirestoreMutationResult> {
   const fbUser = auth.currentUser;
-  if (!fbUser || userId.startsWith('kwame-') || userId === 'demo-scholar') {
-    return false;
+  if (!fbUser || !userId || fbUser.uid !== userId) {
+    return {
+      success: false,
+      persistedToCloud: false,
+      error: 'No active Firebase authentication session.',
+    };
   }
   const targetUid = fbUser.uid;
   const path = `users/${targetUid}`;
   try {
     const userDocRef = doc(db, 'users', targetUid);
-    await setDoc(
-      userDocRef,
-      {
-        uid: targetUid,
-        email: userEmail || fbUser.email || '',
-        savedOpportunities,
-        applicationTracker,
-        updatedAt: new Date().toISOString(),
-      },
-      { merge: true }
-    );
-    return true;
+    const updateData: Record<string, any> = {
+      uid: targetUid,
+      email: userEmail || fbUser.email || '',
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (payload.savedOpportunities !== undefined) {
+      updateData.savedOpportunities = Array.from(new Set(payload.savedOpportunities)).slice(0, 200);
+    }
+    if (payload.applicationTracker !== undefined) {
+      updateData.applicationTracker = payload.applicationTracker;
+    }
+    if (payload.targetList !== undefined) {
+      updateData.targetList = payload.targetList;
+    }
+    if (payload.activeApplications !== undefined) {
+      updateData.activeApplications = payload.activeApplications;
+    }
+
+    await setDoc(userDocRef, updateData, { merge: true });
+    return { success: true, persistedToCloud: true };
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);
-    return false;
+    return {
+      success: false,
+      persistedToCloud: false,
+      error: error instanceof Error ? error.message : 'Failed to sync records to Firestore.',
+    };
   }
 }
 
@@ -691,3 +795,309 @@ export async function deleteStudentAccountFromFirebase(
     return { success: false, error: 'Failed to complete student account deletion.' };
   }
 }
+
+// 11. Scholarship Alert Subscription Firestore Sync (Authenticated Students)
+export interface ScholarshipAlertRecord {
+  subscribed: boolean;
+  email: string;
+  preferences: string[];
+  updatedAt: string;
+}
+
+export async function syncScholarshipAlertToFirestore(payload: {
+  subscribed: boolean;
+  email: string;
+  preferences: string[];
+}): Promise<FirestoreMutationResult> {
+  const fbUser = auth.currentUser;
+  if (!fbUser || fbUser.isAnonymous) {
+    return { success: true, persistedToCloud: false };
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}`;
+  const cleanEmail = payload.email.trim().toLowerCase().slice(0, 254);
+  const cleanPrefs = Array.from(new Set(payload.preferences)).slice(0, 10);
+  const updatedAt = new Date().toISOString();
+
+  try {
+    const userDocRef = doc(db, 'users', targetUid);
+    await setDoc(
+      userDocRef,
+      {
+        uid: targetUid,
+        email: fbUser.email || cleanEmail,
+        scholarshipAlerts: {
+          subscribed: Boolean(payload.subscribed),
+          email: cleanEmail,
+          preferences: cleanPrefs,
+          updatedAt,
+        },
+        updatedAt,
+      },
+      { merge: true }
+    );
+    return { success: true, persistedToCloud: true };
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+    return {
+      success: false,
+      persistedToCloud: false,
+      error: error instanceof Error ? error.message : 'Failed to save scholarship alerts to Firestore.',
+    };
+  }
+}
+
+export async function fetchScholarshipAlertFromFirestore(): Promise<ScholarshipAlertRecord | null> {
+  const fbUser = auth.currentUser;
+  if (!fbUser || fbUser.isAnonymous) {
+    return null;
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}`;
+  try {
+    const userDocRef = doc(db, 'users', targetUid);
+    let docSnap;
+    try {
+      docSnap = await getDocFromServer(userDocRef);
+    } catch {
+      docSnap = await getDoc(userDocRef);
+    }
+    if (!docSnap.exists()) return null;
+    const data = docSnap.data();
+    const alerts = data?.scholarshipAlerts;
+    if (
+      alerts &&
+      typeof alerts === 'object' &&
+      typeof alerts.subscribed === 'boolean' &&
+      typeof alerts.email === 'string' &&
+      Array.isArray(alerts.preferences)
+    ) {
+      return {
+        subscribed: alerts.subscribed,
+        email: alerts.email,
+        preferences: alerts.preferences.filter((p: unknown): p is string => typeof p === 'string'),
+        updatedAt: typeof alerts.updatedAt === 'string' ? alerts.updatedAt : '',
+      };
+    }
+    return null;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.GET, path);
+    return null;
+  }
+}
+
+// 12. COVA AI Conversation History Firestore Persistence (Private per Authenticated Student)
+export interface FirestoreCovaMessage {
+  id: string;
+  role: 'user' | 'model';
+  content: string;
+  timestamp: string;
+  error?: boolean;
+  errorMessage?: string;
+  opportunityIds?: string[];
+  trackerOpportunityIds?: string[];
+  followUps?: string[];
+}
+
+export interface FirestoreCovaConversation {
+  id: string;
+  userId: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  messages: FirestoreCovaMessage[];
+}
+
+function isValidFirestoreDocId(id: string): boolean {
+  return typeof id === 'string' && id.length > 0 && id.length <= 128 && /^[a-zA-Z0-9_-]+$/.test(id);
+}
+
+export async function fetchCovaConversationsFromFirestore(
+  userId: string
+): Promise<FirestoreCovaConversation[]> {
+  const fbUser = auth.currentUser;
+  if (!fbUser || fbUser.isAnonymous || !userId || fbUser.uid !== userId || !isValidFirestoreDocId(fbUser.uid)) {
+    return [];
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}/covaConversations`;
+  try {
+    const convCol = collection(db, 'users', targetUid, 'covaConversations');
+    const q = query(convCol, where('userId', '==', targetUid));
+    const fetchPromise = getDocs(q);
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('COVA history Firestore fetch timed out')), 6000)
+    );
+    const snapshot = await Promise.race([fetchPromise, timeoutPromise]);
+
+    const items: FirestoreCovaConversation[] = [];
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data() as Partial<FirestoreCovaConversation>;
+      if (data && data.id && data.userId === targetUid && Array.isArray(data.messages)) {
+        items.push({
+          id: data.id,
+          userId: data.userId,
+          title: typeof data.title === 'string' && data.title.trim() ? data.title : 'Conversation',
+          createdAt: typeof data.createdAt === 'string' ? data.createdAt : new Date().toISOString(),
+          updatedAt: typeof data.updatedAt === 'string' ? data.updatedAt : new Date().toISOString(),
+          messages: data.messages.filter(
+            (m): m is FirestoreCovaMessage =>
+              Boolean(m && typeof m.id === 'string' && (m.role === 'user' || m.role === 'model'))
+          ),
+        });
+      }
+    });
+
+    items.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+    return items;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.LIST, path);
+    return [];
+  }
+}
+
+export async function saveCovaConversationToFirestore(
+  userId: string,
+  conversation: {
+    id: string;
+    userId?: string;
+    title: string;
+    createdAt: string;
+    updatedAt: string;
+    messages: Array<{
+      id: string;
+      role: 'user' | 'model';
+      content: string;
+      timestamp: string;
+      error?: boolean;
+      errorMessage?: string;
+      opportunityIds?: string[];
+      trackerOpportunityIds?: string[];
+      opportunities?: Array<{ id: string }>;
+      trackerOpportunities?: Array<{ id: string }>;
+      followUps?: string[];
+    }>;
+  }
+): Promise<boolean> {
+  const fbUser = auth.currentUser;
+  if (!fbUser || fbUser.isAnonymous || !userId || fbUser.uid !== userId) {
+    return false;
+  }
+
+  const targetUid = fbUser.uid;
+  const convId = conversation.id;
+  if (!isValidFirestoreDocId(targetUid) || !isValidFirestoreDocId(convId)) {
+    return false;
+  }
+
+  const path = `users/${targetUid}/covaConversations/${convId}`;
+  try {
+    const compactMessages: FirestoreCovaMessage[] = conversation.messages
+      .slice(-100)
+      .map((m) => {
+        const oppIds = Array.isArray(m.opportunityIds)
+          ? m.opportunityIds.slice(0, 8)
+          : Array.isArray(m.opportunities)
+          ? m.opportunities.map((o) => o.id).filter(Boolean).slice(0, 8)
+          : [];
+        const trkIds = Array.isArray(m.trackerOpportunityIds)
+          ? m.trackerOpportunityIds.slice(0, 8)
+          : Array.isArray(m.trackerOpportunities)
+          ? m.trackerOpportunities.map((o) => o.id).filter(Boolean).slice(0, 8)
+          : [];
+
+        const entry: FirestoreCovaMessage = {
+          id: String(m.id || `msg_${Date.now()}`).slice(0, 80),
+          role: m.role === 'user' ? 'user' : 'model',
+          content: String(m.content || '').slice(0, 12000),
+          timestamp: String(m.timestamp || new Date().toISOString()).slice(0, 64),
+        };
+        if (m.error) entry.error = true;
+        if (m.errorMessage) entry.errorMessage = String(m.errorMessage).slice(0, 500);
+        if (oppIds.length > 0) entry.opportunityIds = oppIds;
+        if (trkIds.length > 0) entry.trackerOpportunityIds = trkIds;
+        if (Array.isArray(m.followUps) && m.followUps.length > 0) {
+          entry.followUps = m.followUps.filter((f) => typeof f === 'string').slice(0, 6);
+        }
+        return entry;
+      });
+
+    const cleanTitle = (conversation.title || 'New Conversation').trim().slice(0, 160) || 'New Conversation';
+    const createdAt = String(conversation.createdAt || new Date().toISOString()).slice(0, 64);
+    const updatedAt = String(conversation.updatedAt || new Date().toISOString()).slice(0, 64);
+
+    const payload: FirestoreCovaConversation = {
+      id: convId,
+      userId: targetUid,
+      title: cleanTitle,
+      createdAt,
+      updatedAt,
+      messages: compactMessages,
+    };
+
+    await setDoc(doc(db, 'users', targetUid, 'covaConversations', convId), payload);
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+    return false;
+  }
+}
+
+export async function deleteCovaConversationFromFirestore(
+  userId: string,
+  conversationId: string
+): Promise<boolean> {
+  const fbUser = auth.currentUser;
+  if (
+    !fbUser ||
+    fbUser.isAnonymous ||
+    !userId ||
+    fbUser.uid !== userId ||
+    !isValidFirestoreDocId(fbUser.uid) ||
+    !isValidFirestoreDocId(conversationId)
+  ) {
+    return false;
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}/covaConversations/${conversationId}`;
+  try {
+    await deleteDoc(doc(db, 'users', targetUid, 'covaConversations', conversationId));
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+    return false;
+  }
+}
+
+export async function clearAllCovaConversationsInFirestore(userId: string): Promise<boolean> {
+  const fbUser = auth.currentUser;
+  if (!fbUser || fbUser.isAnonymous || !userId || fbUser.uid !== userId || !isValidFirestoreDocId(fbUser.uid)) {
+    return false;
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}/covaConversations`;
+  try {
+    const convCol = collection(db, 'users', targetUid, 'covaConversations');
+    const q = query(convCol, where('userId', '==', targetUid));
+    const snapshot = await getDocs(q);
+    if (snapshot.empty) return true;
+
+    const docs = snapshot.docs;
+    for (let i = 0; i < docs.length; i += 100) {
+      const batch = writeBatch(db);
+      docs.slice(i, i + 100).forEach((d) => batch.delete(d.ref));
+      await batch.commit();
+    }
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+    return false;
+  }
+}
+
+

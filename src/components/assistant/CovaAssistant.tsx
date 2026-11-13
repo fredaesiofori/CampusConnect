@@ -34,7 +34,13 @@ import {
   Maximize2,
   Minimize2,
 } from 'lucide-react';
-import { authService, StudentProfile } from '../../services/auth';
+import {
+  authService,
+  StudentProfile,
+  TargetListItem,
+  ActiveApplicationItem,
+} from '../../services/auth';
+import { auth, subscribeToFirebaseAuthState } from '../../services/firebase';
 import { OpportunityItem, authenticOpportunities } from '../../data/opportunities';
 import { CovaOpportunityCard } from './CovaOpportunityCard';
 import { CovaTrackerCard } from './CovaTrackerCard';
@@ -45,9 +51,12 @@ import { covaStorage, CovaConversation, StoredMessage } from '../../services/cov
 
 export interface CovaAssistantProps {
   className?: string;
+  userId?: string;
   userName?: string;
   studentProfile?: StudentProfile;
   savedOpportunities?: Set<string>;
+  targetList?: Record<string, TargetListItem>;
+  activeApplications?: Record<string, ActiveApplicationItem>;
   applicationTracker?: Record<string, ApplicationStage>;
   onToggleSave?: (opportunityId: string, title: string) => void;
   onUpdateApplicationStatus?: (opportunityId: string, stage: ApplicationStage) => void;
@@ -147,9 +156,12 @@ function renderFormattedContent(text: string) {
 
 export const CovaAssistant: React.FC<CovaAssistantProps> = ({
   className = '',
+  userId: propUserId,
   userName,
   studentProfile: propProfile,
   savedOpportunities: propSavedOpportunities,
+  targetList: propTargetList,
+  activeApplications: propActiveApplications,
   applicationTracker: propApplicationTracker,
   onToggleSave,
   onUpdateApplicationStatus,
@@ -170,12 +182,44 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
   // Modal opportunity state for "View Details"
   const [modalOpportunity, setModalOpportunity] = useState<OpportunityItem | null>(null);
 
-  // Current authenticated user ID for scoped conversation isolation
-  const activeUser = authService.getCurrentUser();
-  const currentUserId = activeUser?.id || activeUser?.email || 'authenticated_scholar';
+  // Current authenticated user ID (reactively tracked across Firebase Auth hydration)
+  const initialActiveUser = authService.getCurrentUser();
+  const [currentUserId, setCurrentUserId] = useState<string>(() => {
+    return (
+      propUserId ||
+      auth.currentUser?.uid ||
+      initialActiveUser?.id ||
+      initialActiveUser?.email ||
+      'authenticated_scholar'
+    );
+  });
+
+  useEffect(() => {
+    const resolved =
+      propUserId ||
+      auth.currentUser?.uid ||
+      authService.getCurrentUser()?.id ||
+      authService.getCurrentUser()?.email ||
+      'authenticated_scholar';
+    if (resolved !== currentUserId) {
+      setCurrentUserId(resolved);
+    }
+  }, [propUserId, currentUserId]);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToFirebaseAuthState((fbUser) => {
+      if (fbUser && !fbUser.isAnonymous) {
+        setCurrentUserId(propUserId || fbUser.uid);
+      } else {
+        const cached = authService.getCurrentUser();
+        setCurrentUserId(propUserId || cached?.id || cached?.email || 'authenticated_scholar');
+      }
+    });
+    return () => unsubscribe();
+  }, [propUserId]);
 
   const initialWelcome =
-    "Hi! I'm COVA, your Campus Connect AI advisor. 🎓 I'm here to guide your university applications, track your admission progress, review deadlines, and help craft winning personal statements. What would you like to work on today?";
+    "Hi! I'm COVA, your Campus Connect AI advisor. 🎓 I'm here to guide your university discovery, review Saved Opportunities, organize your Target List, track Active Applications, and help draft strong personal statements. What would you like to work on today?";
 
   // Conversation list & active conversation ID
   const [conversations, setConversations] = useState<CovaConversation[]>(() => {
@@ -184,7 +228,14 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
 
   const [activeConvId, setActiveConvId] = useState<string>(() => {
     const existing = covaStorage.getActiveConversationId(currentUserId);
-    if (existing) return existing;
+    if (existing && covaStorage.getConversation(currentUserId, existing)) {
+      return existing;
+    }
+    const existingList = covaStorage.getConversations(currentUserId);
+    if (existingList.length > 0) {
+      covaStorage.setActiveConversationId(currentUserId, existingList[0].id);
+      return existingList[0].id;
+    }
     const initial = covaStorage.createConversation(currentUserId, initialWelcome);
     return initial.id;
   });
@@ -196,6 +247,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
       return active.messages.map((m) => ({
         ...m,
         timestamp: new Date(m.timestamp),
+        isStreaming: false,
       }));
     }
     return [
@@ -208,28 +260,49 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
     ];
   });
 
-  // Synchronized saved opportunities Set
+  // Synchronized 4-Pillar Student Data State
   const [savedIds, setSavedIds] = useState<Set<string>>(() => {
     if (propSavedOpportunities) return propSavedOpportunities;
-    const userSaved = activeUser?.savedOpportunities || [];
+    const userSaved = initialActiveUser?.savedOpportunities || [];
     return new Set(userSaved);
   });
 
-  // Synchronized Application Tracker Map
+  const [targetListMap, setTargetListMap] = useState<Record<string, TargetListItem>>(() => {
+    if (propTargetList) return propTargetList;
+    return initialActiveUser?.targetList || {};
+  });
+
+  const [activeApplicationsMap, setActiveApplicationsMap] = useState<
+    Record<string, ActiveApplicationItem>
+  >(() => {
+    if (propActiveApplications) return propActiveApplications;
+    return initialActiveUser?.activeApplications || {};
+  });
+
   const [trackerMap, setTrackerMap] = useState<Record<string, ApplicationStage>>(() => {
     if (propApplicationTracker) return propApplicationTracker;
-    const userTracker = activeUser?.applicationTracker || {};
+    const userTracker = initialActiveUser?.applicationTracker || {};
     return userTracker as Record<string, ApplicationStage>;
   });
 
-  // Keep savedIds in sync when prop changes
   useEffect(() => {
     if (propSavedOpportunities) {
       setSavedIds(propSavedOpportunities);
     }
   }, [propSavedOpportunities]);
 
-  // Keep trackerMap in sync when prop changes
+  useEffect(() => {
+    if (propTargetList) {
+      setTargetListMap(propTargetList);
+    }
+  }, [propTargetList]);
+
+  useEffect(() => {
+    if (propActiveApplications) {
+      setActiveApplicationsMap(propActiveApplications);
+    }
+  }, [propActiveApplications]);
+
   useEffect(() => {
     if (propApplicationTracker) {
       setTrackerMap(propApplicationTracker);
@@ -239,9 +312,99 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
   const chatBottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const abortReasonRef = useRef<'stop' | 'timeout' | 'reset' | null>(null);
+  const clientTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isSendingRef = useRef<boolean>(false);
+  const currentUserIdRef = useRef<string>(currentUserId);
+  const activeConvIdRef = useRef<string>(activeConvId);
 
-  // Active student profile (from prop or local user session)
-  const activeProfile = propProfile || activeUser?.profile;
+  useEffect(() => {
+    currentUserIdRef.current = currentUserId;
+  }, [currentUserId]);
+
+  useEffect(() => {
+    activeConvIdRef.current = activeConvId;
+  }, [activeConvId]);
+
+  // Active student profile (from prop or current user session)
+  const latestCachedUser = authService.getCurrentUser();
+  const activeProfile = propProfile || latestCachedUser?.profile;
+
+  // Hydrate and merge conversations from Firestore whenever authenticated student changes
+  useEffect(() => {
+    let cancelled = false;
+    const userCache = authService.getCurrentUser();
+    const legacyKeys = [
+      'authenticated_scholar',
+      'anonymous_scholar',
+      userCache?.email || '',
+    ].filter((k) => Boolean(k) && k !== currentUserId);
+
+    // Immediately show local conversations for this uid
+    const localList = covaStorage.getConversations(currentUserId);
+    if (localList.length > 0 && !isSendingRef.current) {
+      const preferredId = covaStorage.getActiveConversationId(currentUserId);
+      const chosen =
+        (preferredId ? localList.find((c) => c.id === preferredId) : null) || localList[0];
+      setConversations(localList);
+      setActiveConvId(chosen.id);
+      setMessages(
+        chosen.messages.map((m) => ({
+          ...m,
+          timestamp: new Date(m.timestamp),
+          isStreaming: false,
+        }))
+      );
+    }
+
+    covaStorage
+      .loadConversationsSynced(currentUserId, legacyKeys)
+      .then((syncedList) => {
+        if (cancelled) return;
+        if (syncedList.length > 0) {
+          setConversations(syncedList);
+          if (!isSendingRef.current) {
+            const preferredId = covaStorage.getActiveConversationId(currentUserId);
+            const currentInSynced = syncedList.find((c) => c.id === activeConvIdRef.current);
+            const currentHasUserTurns = currentInSynced?.messages.some((m) => m.role === 'user');
+            const chosen =
+              (preferredId ? syncedList.find((c) => c.id === preferredId) : null) ||
+              (currentHasUserTurns ? currentInSynced : null) ||
+              syncedList.find((c) => c.messages.some((m) => m.role === 'user')) ||
+              syncedList[0];
+            if (chosen) {
+              setActiveConvId(chosen.id);
+              covaStorage.setActiveConversationId(currentUserId, chosen.id);
+              setMessages(
+                chosen.messages.map((m) => ({
+                  ...m,
+                  timestamp: new Date(m.timestamp),
+                  isStreaming: false,
+                }))
+              );
+            }
+          }
+        } else if (!isSendingRef.current && localList.length === 0) {
+          const fresh = covaStorage.createConversation(currentUserId, initialWelcome);
+          setConversations([fresh]);
+          setActiveConvId(fresh.id);
+          setMessages(
+            fresh.messages.map((m) => ({
+              ...m,
+              timestamp: new Date(m.timestamp),
+              isStreaming: false,
+            }))
+          );
+        }
+      })
+      .catch(() => {
+        // Fallback already handled via local cache
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentUserId]);
 
   // Check health and GEMINI_API_KEY status
   const checkHealth = useCallback(async () => {
@@ -260,44 +423,89 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
     checkHealth();
   }, [checkHealth]);
 
-  // Synchronize active conversation messages to persistent storage
+  // Cleanup active request/timers on unmount
+  useEffect(() => {
+    return () => {
+      if (clientTimeoutRef.current) {
+        clearTimeout(clientTimeoutRef.current);
+      }
+      if (abortControllerRef.current) {
+        abortReasonRef.current = 'reset';
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
+
+  // Synchronize active conversation messages to local cache AND Firestore account
   const syncActiveConversationToStorage = useCallback(
-    (currentMessages: Message[], titleOverride?: string) => {
+    (
+      currentMessages: Message[],
+      titleOverride?: string,
+      targetConvIdOverride?: string,
+      targetUserIdOverride?: string
+    ) => {
+      const uid = targetUserIdOverride || currentUserIdRef.current;
+      const convId = targetConvIdOverride || activeConvIdRef.current;
+
       const storedMsgs: StoredMessage[] = currentMessages.map((m) => ({
         id: m.id,
         role: m.role,
         content: m.content,
-        timestamp: m.timestamp.toISOString(),
-        opportunities: m.opportunities,
-        trackerOpportunities: m.trackerOpportunities,
-        followUps: m.followUps,
+        timestamp: m.timestamp instanceof Date ? m.timestamp.toISOString() : String(m.timestamp),
+        ...(m.error ? { error: true } : {}),
+        ...(m.errorMessage ? { errorMessage: m.errorMessage } : {}),
+        ...(m.opportunities && m.opportunities.length > 0
+          ? {
+              opportunities: m.opportunities,
+              opportunityIds: m.opportunities.map((o) => o.id),
+            }
+          : {}),
+        ...(m.trackerOpportunities && m.trackerOpportunities.length > 0
+          ? {
+              trackerOpportunities: m.trackerOpportunities,
+              trackerOpportunityIds: m.trackerOpportunities.map((o) => o.id),
+            }
+          : {}),
+        ...(m.followUps && m.followUps.length > 0 ? { followUps: m.followUps } : {}),
       }));
 
-      const activeConv = covaStorage.getConversation(currentUserId, activeConvId);
-      let title = titleOverride || activeConv?.title || 'Conversation';
+      const activeConv = covaStorage.getConversation(uid, convId);
+      let title = titleOverride || activeConv?.title || 'New Conversation';
 
-      // Auto-generate title from first user inquiry if still titled "New Conversation"
+      // Auto-generate title from first user inquiry if still default
       if (title === 'New Conversation' || title === 'Conversation') {
-        const firstUserMsg = currentMessages.find((m) => m.role === 'user');
+        const firstUserMsg = currentMessages.find((m) => m.role === 'user' && m.content.trim() !== '');
         if (firstUserMsg) {
           title =
-            firstUserMsg.content.slice(0, 36) + (firstUserMsg.content.length > 36 ? '...' : '');
+            firstUserMsg.content.slice(0, 42) + (firstUserMsg.content.length > 42 ? '...' : '');
         }
       }
 
+      const now = new Date().toISOString();
       const updated: CovaConversation = {
-        id: activeConvId,
-        userId: currentUserId,
+        id: convId,
+        userId: uid,
         title,
-        createdAt: activeConv?.createdAt || new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        createdAt: activeConv?.createdAt || now,
+        updatedAt: now,
         messages: storedMsgs,
       };
 
-      covaStorage.saveConversation(currentUserId, updated);
-      setConversations(covaStorage.getConversations(currentUserId));
+      const hasRealUserTurns = currentMessages.some(
+        (m) => m.role === 'user' && m.content.trim() !== ''
+      );
+
+      if (hasRealUserTurns) {
+        void covaStorage.saveConversationSynced(uid, updated);
+      } else {
+        covaStorage.saveConversation(uid, updated);
+      }
+
+      if (uid === currentUserIdRef.current) {
+        setConversations(covaStorage.getConversations(uid));
+      }
     },
-    [currentUserId, activeConvId]
+    []
   );
 
   // Close on Escape key
@@ -344,7 +552,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
     if (onToggleSave) {
       onToggleSave(opportunityId, title);
     } else {
-      authService.toggleSavedOpportunity(opportunityId);
+      void authService.toggleSavedOpportunitySynced(opportunityId);
     }
   };
 
@@ -355,6 +563,22 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
       [opportunityId]: stage,
     };
     setTrackerMap(updated);
+
+    if (stage === 'preparing' || stage === 'submitted' || stage === 'accepted') {
+      const existing = activeApplicationsMap[opportunityId];
+      const now = new Date().toISOString();
+      setActiveApplicationsMap((prev) => ({
+        ...prev,
+        [opportunityId]: {
+          opportunityId,
+          stage,
+          completedTasks: existing?.completedTasks || [],
+          notes: existing?.notes,
+          startedAt: existing?.startedAt || now,
+          updatedAt: now,
+        },
+      }));
+    }
 
     if (onUpdateApplicationStatus) {
       onUpdateApplicationStatus(opportunityId, stage);
@@ -371,34 +595,82 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
     setModalOpportunity(opportunity);
   };
 
-  // Copy message text to clipboard
+  // Copy message text to clipboard (with iframe-safe fallback)
   const handleCopyMessage = async (msgId: string, text: string) => {
+    if (!text) return;
+    let copied = false;
     try {
-      await navigator.clipboard.writeText(text);
-      setCopiedId(msgId);
-      setTimeout(() => setCopiedId(null), 2000);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        copied = true;
+      }
     } catch {
-      // Fallback
+      copied = false;
+    }
+
+    if (!copied && typeof document !== 'undefined') {
+      try {
+        const helper = document.createElement('textarea');
+        helper.value = text;
+        helper.setAttribute('readonly', '');
+        helper.style.position = 'fixed';
+        helper.style.opacity = '0';
+        document.body.appendChild(helper);
+        helper.select();
+        copied = document.execCommand('copy');
+        document.body.removeChild(helper);
+      } catch {
+        copied = false;
+      }
+    }
+
+    if (copied) {
+      setCopiedId(msgId);
+      setTimeout(() => setCopiedId((prev) => (prev === msgId ? null : prev)), 2000);
     }
   };
 
   // Stop active AI generation
-  const handleStopGenerating = () => {
+  const handleStopGenerating = useCallback(() => {
+    if (clientTimeoutRef.current) {
+      clearTimeout(clientTimeoutRef.current);
+      clientTimeoutRef.current = null;
+    }
+
     if (abortControllerRef.current) {
+      abortReasonRef.current = 'stop';
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
+
+    isSendingRef.current = false;
     setIsLoading(false);
-    setMessages((prev) =>
-      prev.map((msg) => (msg.isStreaming ? { ...msg, isStreaming: false } : msg))
-    );
-  };
+
+    setMessages((prev) => {
+      const hasStreaming = prev.some((m) => m.isStreaming);
+      if (!hasStreaming) return prev;
+      const stopped = prev.map((msg) =>
+        msg.isStreaming
+          ? {
+              ...msg,
+              isStreaming: false,
+              content: msg.content.trim()
+                ? msg.content
+                : 'Response generation was stopped before text finished.',
+            }
+          : msg
+      );
+      syncActiveConversationToStorage(stopped);
+      return stopped;
+    });
+  }, [syncActiveConversationToStorage]);
 
   // New Chat action
   const handleNewChat = () => {
     handleStopGenerating();
     const newConv = covaStorage.createConversation(currentUserId, initialWelcome);
     setActiveConvId(newConv.id);
+    activeConvIdRef.current = newConv.id;
     setConversations(covaStorage.getConversations(currentUserId));
     setMessages([
       {
@@ -416,6 +688,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
     const conv = covaStorage.getConversation(currentUserId, convId);
     if (conv) {
       setActiveConvId(conv.id);
+      activeConvIdRef.current = conv.id;
       covaStorage.setActiveConversationId(currentUserId, conv.id);
       setMessages(
         conv.messages.map((m) => ({
@@ -429,13 +702,13 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
 
   // Rename conversation
   const handleRenameConversation = (convId: string, newTitle: string) => {
-    covaStorage.renameConversation(currentUserId, convId, newTitle);
+    void covaStorage.renameConversationSynced(currentUserId, convId, newTitle);
     setConversations(covaStorage.getConversations(currentUserId));
   };
 
   // Delete conversation
   const handleDeleteConversation = (convId: string) => {
-    covaStorage.deleteConversation(currentUserId, convId);
+    void covaStorage.deleteConversationSynced(currentUserId, convId);
     const updatedList = covaStorage.getConversations(currentUserId);
     setConversations(updatedList);
 
@@ -450,84 +723,130 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
 
   // Clear all conversations
   const handleClearAllConversations = () => {
-    covaStorage.clearAllConversations(currentUserId);
+    void covaStorage.clearAllConversationsSynced(currentUserId);
     setConversations([]);
     handleNewChat();
   };
 
   const starterPrompts = [
     {
-      label: 'My Application Tracker',
-      prompt: 'What universities and scholarships are currently in my application tracker, and what are their statuses?',
+      label: 'My Application Status',
+      prompt:
+        'Review my Active Applications, Target List goals, and Saved Opportunities separately without mixing them up.',
       icon: <Trophy className="w-3.5 h-3.5 text-amber-500" />,
     },
     {
       label: 'Personal Statement Outline',
-      prompt: 'Help me draft a compelling personal statement outline tailored to my degree and field of study.',
+      prompt:
+        'Help me draft a compelling personal statement outline tailored to my degree and field of study.',
       icon: <FileCheck className="w-3.5 h-3.5 text-[#6846F5]" />,
     },
     {
       label: 'International Checklist',
-      prompt: 'What documents and steps do I need to prepare for international university admissions (transcripts, English waiver, letters)?',
+      prompt:
+        'What documents and steps do I need to prepare for international university admissions (transcripts, English waiver, letters)?',
       icon: <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />,
     },
     {
       label: 'Upcoming Deadlines',
-      prompt: 'Prioritize upcoming deadlines for my saved universities and explain which ones require immediate action.',
+      prompt:
+        'Prioritize upcoming deadlines across my Active Applications and Target List goals and explain which ones need action first.',
       icon: <Clock className="w-3.5 h-3.5 text-blue-500" />,
     },
   ];
 
-  const handleSendMessage = async (userText?: string) => {
-    const textToSend = (userText || inputMessage).trim();
-    if (!textToSend || isLoading) return;
+  const OPPORTUNITY_LOOKUP = useRef(
+    new Map<string, OpportunityItem>(authenticOpportunities.map((o) => [o.id, o]))
+  );
 
-    setInputMessage('');
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-    }
-
-    const userMessageId = `user-${Date.now()}`;
-    const botMessageId = `model-${Date.now()}`;
-
-    const newMessages: Message[] = [
-      ...messages,
-      {
-        id: userMessageId,
-        role: 'user',
-        content: textToSend,
-        timestamp: new Date(),
-      },
-      {
-        id: botMessageId,
-        role: 'model',
-        content: '',
-        timestamp: new Date(),
-        isStreaming: true,
-      },
-    ];
-
-    setMessages(newMessages);
+  // Core streaming/request executor shared by Send, Regenerate, and Retry (prevents duplicate messages)
+  const executeChatRequest = async ({
+    textToSend,
+    priorMessages,
+    nextMessages,
+    botMessageId,
+    targetConvId,
+    targetUid,
+  }: {
+    textToSend: string;
+    priorMessages: Message[];
+    nextMessages: Message[];
+    botMessageId: string;
+    targetConvId: string;
+    targetUid: string;
+  }) => {
+    if (isSendingRef.current) return;
+    isSendingRef.current = true;
+    setMessages(nextMessages);
     setIsLoading(true);
 
-    abortControllerRef.current?.abort();
-    abortControllerRef.current = new AbortController();
+    if (clientTimeoutRef.current) {
+      clearTimeout(clientTimeoutRef.current);
+      clientTimeoutRef.current = null;
+    }
+    if (abortControllerRef.current) {
+      abortReasonRef.current = 'reset';
+      abortControllerRef.current.abort();
+    }
 
-    const conversationHistory = messages
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+    abortReasonRef.current = null;
+
+    clientTimeoutRef.current = setTimeout(() => {
+      abortReasonRef.current = 'timeout';
+      controller.abort();
+    }, 50_000);
+
+    const conversationHistory = priorMessages
       .filter((m) => !m.error && m.content.trim() !== '')
       .map((m) => ({
         role: m.role,
         content: m.content,
       }));
 
-    // Build real student tracker payload from authentic saved IDs
-    const studentTrackerPayload = Array.from(savedIds).map((id) => {
-      const opp = authenticOpportunities.find((o) => o.id === id);
+    // Build synchronized 4-pillar payloads cleanly separated
+    const studentSavedPayload = Array.from(savedIds).map((id) => {
+      const opp = OPPORTUNITY_LOOKUP.current.get(id);
       return {
         id,
         officialName: opp?.officialName || opp?.title || id,
         country: opp?.country || 'Global',
-        stage: trackerMap[id] || ('saved' as ApplicationStage),
+        category: opp?.category || 'university',
+        deadlineText: opp?.deadlines?.deadlineText || 'Rolling Admissions',
+        feeStatus: opp?.applicationFees?.status || 'Standard',
+        testStatus: opp?.testWaiverRules?.status || 'Standard',
+        fundingType: opp?.fundingDetails?.type || 'Standard',
+      };
+    });
+
+    const studentTargetListPayload = Object.values(targetListMap).map((target) => {
+      const opp = OPPORTUNITY_LOOKUP.current.get(target.opportunityId);
+      return {
+        id: target.opportunityId,
+        officialName: opp?.officialName || opp?.title || target.opportunityId,
+        country: opp?.country || 'Global',
+        priority: target.priority,
+        intakeYear: target.intakeYear,
+        personalGoal: target.personalGoal,
+        deadlineText: opp?.deadlines?.deadlineText || 'Rolling Admissions',
+        feeStatus: opp?.applicationFees?.status || 'Standard',
+        fundingType: opp?.fundingDetails?.type || 'Standard',
+      };
+    });
+
+    const studentActiveAppsPayload = Object.values(activeApplicationsMap).map((app) => {
+      const opp = OPPORTUNITY_LOOKUP.current.get(app.opportunityId);
+      const completedTasks = Array.isArray(app.completedTasks) ? app.completedTasks : [];
+      return {
+        id: app.opportunityId,
+        officialName: opp?.officialName || opp?.title || app.opportunityId,
+        country: opp?.country || 'Global',
+        stage: app.stage,
+        completedTasksCount: completedTasks.length,
+        totalTasksCount: 6,
+        completedTasks,
+        notes: app.notes,
         deadlineText: opp?.deadlines?.deadlineText || 'Rolling Admissions',
         feeStatus: opp?.applicationFees?.status || 'Standard',
         testStatus: opp?.testWaiverRules?.status || 'Standard',
@@ -553,14 +872,21 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
                 intendedDegree: activeProfile.intendedDegree,
                 educationLevel: activeProfile.educationLevel,
                 fieldOfStudy: activeProfile.fieldOfStudy,
+                preferredFieldsOfStudy: activeProfile.preferredFieldsOfStudy,
+                graduationYear: activeProfile.graduationYear,
+                currentSchool: activeProfile.currentSchool,
                 fundingPreference: activeProfile.fundingPreference,
+                fundingTypePreference: activeProfile.fundingTypePreference,
+                studyModePreference: activeProfile.studyModePreference,
                 testPreference: activeProfile.testPreference,
               }
             : undefined,
-          studentTracker: studentTrackerPayload,
+          studentSavedOpportunities: studentSavedPayload,
+          studentTargetList: studentTargetListPayload,
+          studentActiveApplications: studentActiveAppsPayload,
           stream: true,
         }),
-        signal: abortControllerRef.current.signal,
+        signal: controller.signal,
       });
 
       if (!response.ok) {
@@ -575,20 +901,21 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
             ? 'Rate limit reached. Please wait a moment before sending another message.'
             : 'Unable to connect to COVA AI service. Please try again.');
 
-        const finalMsgs: Message[] = newMessages.map((msg) =>
-          msg.id === botMessageId
-            ? {
-                ...msg,
-                isStreaming: false,
-                error: true,
-                errorMessage: errMsg,
-                content: errMsg,
-              }
-            : msg
-        );
-        setMessages(finalMsgs);
-        syncActiveConversationToStorage(finalMsgs);
-        setIsLoading(false);
+        setMessages((prev) => {
+          const finalMsgs = prev.map((msg) =>
+            msg.id === botMessageId
+              ? {
+                  ...msg,
+                  isStreaming: false,
+                  error: true,
+                  errorMessage: errMsg,
+                  content: errMsg,
+                }
+              : msg
+          );
+          syncActiveConversationToStorage(finalMsgs, undefined, targetConvId, targetUid);
+          return finalMsgs;
+        });
         return;
       }
 
@@ -603,86 +930,126 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
       let matchedOpportunities: OpportunityItem[] | undefined;
       let trackerOpportunities: OpportunityItem[] | undefined;
       let followUps: string[] | undefined;
+      let receivedStreamError = false;
+      let streamErrorMessage = '';
+
+      const processSseFrame = (rawFrame: string) => {
+        const trimmed = rawFrame.trim();
+        if (!trimmed) return;
+
+        if (trimmed.startsWith('event: error')) {
+          const dataLine = trimmed.split(/\r?\n/).find((l) => l.startsWith('data:'));
+          let parsedErrMsg = 'Unable to generate a response right now. Please try again.';
+          if (dataLine) {
+            try {
+              const parsed = JSON.parse(dataLine.replace(/^data:\s*/, ''));
+              if (parsed?.error) parsedErrMsg = parsed.error;
+            } catch {}
+          }
+          receivedStreamError = true;
+          streamErrorMessage = parsedErrMsg;
+          return;
+        }
+
+        const dataLines = trimmed.split(/\r?\n/).filter((l) => l.startsWith('data:'));
+        for (const dl of dataLines) {
+          const rawData = dl.replace(/^data:\s*/, '').trim();
+          if (!rawData || rawData === '[DONE]') continue;
+
+          try {
+            const parsed = JSON.parse(rawData);
+            if (typeof parsed.chunk === 'string' && parsed.chunk.length > 0) {
+              accumulatedText += parsed.chunk;
+              setMessages((prev) =>
+                prev.map((msg) =>
+                  msg.id === botMessageId
+                    ? {
+                        ...msg,
+                        content: accumulatedText,
+                      }
+                    : msg
+                )
+              );
+            }
+            if (parsed.matchedOpportunities || parsed.trackerOpportunities || parsed.followUps) {
+              matchedOpportunities = parsed.matchedOpportunities || matchedOpportunities;
+              trackerOpportunities = parsed.trackerOpportunities || trackerOpportunities;
+              followUps = parsed.followUps || followUps;
+
+              setMessages((prev) =>
+                prev.map((msg) =>
+                  msg.id === botMessageId
+                    ? {
+                        ...msg,
+                        opportunities: matchedOpportunities || msg.opportunities,
+                        trackerOpportunities: trackerOpportunities || msg.trackerOpportunities,
+                        followUps: followUps || msg.followUps,
+                      }
+                    : msg
+                )
+              );
+            }
+          } catch {}
+        }
+      };
 
       while (true) {
         const { value, done } = await reader.read();
         if (done) break;
 
         buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n\n');
-        buffer = lines.pop() || '';
+        const frames = buffer.split(/\r?\n\r?\n/);
+        buffer = frames.pop() || '';
 
-        for (const line of lines) {
-          const trimmed = line.trim();
-          if (!trimmed) continue;
-
-          if (trimmed.startsWith('event: error')) {
-            const dataLine = trimmed.split('\n').find((l) => l.startsWith('data:'));
-            if (dataLine) {
-              try {
-                const parsed = JSON.parse(dataLine.replace(/^data:\s*/, ''));
-                accumulatedText = parsed.error || accumulatedText;
-                const errMsgs: Message[] = newMessages.map((msg) =>
-                  msg.id === botMessageId
-                    ? {
-                        ...msg,
-                        isStreaming: false,
-                        error: true,
-                        errorMessage: parsed.error,
-                        content: parsed.error,
-                      }
-                    : msg
-                );
-                setMessages(errMsgs);
-                syncActiveConversationToStorage(errMsgs);
-              } catch {}
-            }
-            setIsLoading(false);
-            return;
-          }
-
-          if (trimmed.startsWith('data:')) {
-            const rawData = trimmed.replace(/^data:\s*/, '');
-            if (rawData === '[DONE]') {
-              break;
-            }
-
-            try {
-              const parsed = JSON.parse(rawData);
-              if (parsed.chunk) {
-                accumulatedText += parsed.chunk;
-                setMessages((prev) =>
-                  prev.map((msg) =>
-                    msg.id === botMessageId
-                      ? {
-                          ...msg,
-                          content: accumulatedText,
-                        }
-                      : msg
-                  )
-                );
-              }
-              if (parsed.matchedOpportunities || parsed.trackerOpportunities || parsed.followUps) {
-                matchedOpportunities = parsed.matchedOpportunities || matchedOpportunities;
-                trackerOpportunities = parsed.trackerOpportunities || trackerOpportunities;
-                followUps = parsed.followUps || followUps;
-
-                setMessages((prev) =>
-                  prev.map((msg) =>
-                    msg.id === botMessageId
-                      ? {
-                          ...msg,
-                          opportunities: matchedOpportunities || msg.opportunities,
-                          trackerOpportunities: trackerOpportunities || msg.trackerOpportunities,
-                          followUps: followUps || msg.followUps,
-                        }
-                      : msg
-                  )
-                );
-              }
-            } catch {}
-          }
+        for (const frame of frames) {
+          processSseFrame(frame);
+          if (receivedStreamError) break;
         }
+        if (receivedStreamError) break;
+      }
+
+      // Flush any trailing SSE frame left in buffer after stream end
+      if (!receivedStreamError && buffer.trim()) {
+        processSseFrame(buffer);
+      }
+
+      if (receivedStreamError) {
+        setMessages((prev) => {
+          const errMsgs = prev.map((msg) =>
+            msg.id === botMessageId
+              ? {
+                  ...msg,
+                  isStreaming: false,
+                  error: true,
+                  errorMessage: streamErrorMessage,
+                  content: streamErrorMessage,
+                }
+              : msg
+          );
+          syncActiveConversationToStorage(errMsgs, undefined, targetConvId, targetUid);
+          return errMsgs;
+        });
+        return;
+      }
+
+      if (!accumulatedText.trim() && abortReasonRef.current !== 'stop') {
+        const emptyErr = 'COVA received an empty response from Gemini. Please retry.';
+        setMessages((prev) => {
+          const errMsgs = prev.map((msg) =>
+            msg.id === botMessageId
+              ? {
+                  ...msg,
+                  isStreaming: false,
+                  error: true,
+                  errorMessage: emptyErr,
+                  content: emptyErr,
+                }
+              : msg
+          );
+          syncActiveConversationToStorage(errMsgs, undefined, targetConvId, targetUid);
+          return errMsgs;
+        });
+        return;
       }
 
       // Finalize streaming message state and sync to persistent storage
@@ -698,12 +1065,33 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
               }
             : msg
         );
-        syncActiveConversationToStorage(finalized);
+        syncActiveConversationToStorage(finalized, undefined, targetConvId, targetUid);
         return finalized;
       });
       setApiConfigured(true);
     } catch (err: any) {
-      if (err.name === 'AbortError') return;
+      if (err?.name === 'AbortError') {
+        if (abortReasonRef.current === 'timeout') {
+          const timeoutMsg =
+            'The AI request timed out while waiting for Gemini. Please click Retry to try again.';
+          setMessages((prev) => {
+            const errMsgs = prev.map((msg) =>
+              msg.id === botMessageId
+                ? {
+                    ...msg,
+                    isStreaming: false,
+                    error: true,
+                    errorMessage: timeoutMsg,
+                    content: timeoutMsg,
+                  }
+                : msg
+            );
+            syncActiveConversationToStorage(errMsgs, undefined, targetConvId, targetUid);
+            return errMsgs;
+          });
+        }
+        return;
+      }
 
       const errorMessage =
         err?.message || 'A network error occurred while communicating with COVA. Please try again.';
@@ -720,18 +1108,66 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
               }
             : msg
         );
-        syncActiveConversationToStorage(errorList);
+        syncActiveConversationToStorage(errorList, undefined, targetConvId, targetUid);
         return errorList;
       });
     } finally {
+      if (clientTimeoutRef.current) {
+        clearTimeout(clientTimeoutRef.current);
+        clientTimeoutRef.current = null;
+      }
+      if (abortControllerRef.current === controller) {
+        abortControllerRef.current = null;
+      }
+      isSendingRef.current = false;
       setIsLoading(false);
     }
+  };
+
+  const handleSendMessage = async (userText?: string) => {
+    const textToSend = (userText ?? inputMessage).trim();
+    if (!textToSend || isSendingRef.current || isLoading) return;
+
+    setInputMessage('');
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+    }
+
+    const userMessageId = `user-${Date.now()}`;
+    const botMessageId = `model-${Date.now()}`;
+
+    const priorMessages = [...messages];
+    const nextMessages: Message[] = [
+      ...priorMessages,
+      {
+        id: userMessageId,
+        role: 'user',
+        content: textToSend,
+        timestamp: new Date(),
+      },
+      {
+        id: botMessageId,
+        role: 'model',
+        content: '',
+        timestamp: new Date(),
+        isStreaming: true,
+      },
+    ];
+
+    await executeChatRequest({
+      textToSend,
+      priorMessages,
+      nextMessages,
+      botMessageId,
+      targetConvId: activeConvIdRef.current,
+      targetUid: currentUserIdRef.current,
+    });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSendMessage();
+      void handleSendMessage();
     }
   };
 
@@ -741,11 +1177,48 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
     e.target.style.height = `${Math.min(e.target.scrollHeight, 120)}px`;
   };
 
-  const regenerateResponse = (userPromptIndex: number) => {
+  // Regenerate response IN-PLACE for a user turn without appending duplicate user messages
+  const regenerateResponse = async (userPromptIndex: number) => {
+    if (isSendingRef.current || isLoading) return;
     const userMsg = messages[userPromptIndex];
-    if (userMsg && userMsg.role === 'user') {
-      handleSendMessage(userMsg.content);
+    if (!userMsg || userMsg.role !== 'user') return;
+
+    const priorMessages = messages.slice(0, userPromptIndex);
+    const botMessageId = `model-${Date.now()}`;
+    const nextMessages: Message[] = [
+      ...priorMessages,
+      userMsg,
+      {
+        id: botMessageId,
+        role: 'model',
+        content: '',
+        timestamp: new Date(),
+        isStreaming: true,
+      },
+    ];
+
+    await executeChatRequest({
+      textToSend: userMsg.content,
+      priorMessages,
+      nextMessages,
+      botMessageId,
+      targetConvId: activeConvIdRef.current,
+      targetUid: currentUserIdRef.current,
+    });
+  };
+
+  // Retry failed AI message IN-PLACE without appending a duplicate user prompt
+  const retryFailedMessage = async (errorMsgIndex: number) => {
+    if (isSendingRef.current || isLoading) return;
+    let userPromptIndex = -1;
+    for (let i = errorMsgIndex - 1; i >= 0; i--) {
+      if (messages[i]?.role === 'user') {
+        userPromptIndex = i;
+        break;
+      }
     }
+    if (userPromptIndex === -1) return;
+    await regenerateResponse(userPromptIndex);
   };
 
   return (
@@ -873,8 +1346,11 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
                 </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <span className="text-[10px] font-semibold text-[#6846F5] bg-violet-100/70 px-2 py-0.5 rounded-full">
-                  {savedIds.size} Tracked
+                <span
+                  className="text-[10px] font-semibold text-[#6846F5] bg-violet-100/70 px-2 py-0.5 rounded-full whitespace-nowrap"
+                  title="Synchronized with Active Applications, Target List, and Saved Opportunities"
+                >
+                  {Object.keys(activeApplicationsMap).length} Active · {Object.keys(targetListMap).length} Targets · {savedIds.size} Saved
                 </span>
               </div>
             </div>
@@ -885,7 +1361,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
               <div className="text-center">
                 <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 bg-white border border-slate-200 rounded-full px-3 py-0.5 shadow-2xs">
                   <Sparkles className="w-3 h-3 text-[#E7B75C]" />
-                  Authorized Tracker Sync &amp; Gemini 3.8 Flash
+                  Account Sync &amp; Gemini 4 Hydrogen
                 </span>
               </div>
 
@@ -931,11 +1407,9 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
                           <div className="pt-1 flex items-center gap-2">
                             <button
                               type="button"
-                              onClick={() => {
-                                const lastUser = [...messages].reverse().find((m) => m.role === 'user');
-                                if (lastUser) handleSendMessage(lastUser.content);
-                              }}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white border border-rose-300 text-rose-700 hover:bg-rose-100 font-medium text-[11px] cursor-pointer transition-colors shadow-2xs"
+                              disabled={isLoading}
+                              onClick={() => void retryFailedMessage(index)}
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white border border-rose-300 text-rose-700 hover:bg-rose-100 disabled:opacity-50 font-medium text-[11px] cursor-pointer transition-colors shadow-2xs"
                             >
                               <RotateCcw className="w-3 h-3" />
                               Retry
@@ -977,7 +1451,11 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
                                   <CovaTrackerCard
                                     key={opp.id}
                                     item={opp}
-                                    currentStage={trackerMap[opp.id] || 'saved'}
+                                    currentStage={
+                                      activeApplicationsMap[opp.id]?.stage ||
+                                      trackerMap[opp.id] ||
+                                      'saved'
+                                    }
                                     onUpdateStage={handleUpdateStage}
                                     onViewDetails={handleViewDetails}
                                     onNavigateToTracker={onNavigateToTracker}
@@ -1054,11 +1532,11 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
                       </span>
 
                       {msg.role === 'model' && !msg.isStreaming && msg.content && (
-                        <div className="flex items-center gap-1 opacity-0 group-hover/msg:opacity-100 transition-opacity">
+                        <div className="flex items-center gap-1 opacity-90 sm:opacity-0 sm:group-hover/msg:opacity-100 focus-within:opacity-100 transition-opacity">
                           {/* Copy Button */}
                           <button
                             type="button"
-                            onClick={() => handleCopyMessage(msg.id, msg.content)}
+                            onClick={() => void handleCopyMessage(msg.id, msg.content)}
                             className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
                             title="Copy response"
                             aria-label="Copy response"
@@ -1074,7 +1552,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
                           {index > 0 && messages[index - 1]?.role === 'user' && (
                             <button
                               type="button"
-                              onClick={() => regenerateResponse(index - 1)}
+                              onClick={() => void regenerateResponse(index - 1)}
                               disabled={isLoading}
                               className="p-1 rounded text-slate-400 hover:text-[#6846F5] hover:bg-slate-200/60 transition-colors cursor-pointer disabled:opacity-40"
                               title="Regenerate response"
@@ -1135,7 +1613,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
                   <div className="space-y-1">
                     <p className="font-bold text-amber-900 text-[11px]">Gemini API Key Required</p>
                     <p className="text-[11px] text-amber-800 leading-snug">
-                      To activate live AI responses, add your <code>GEMINI_API_KEY</code> in AI Studio project secrets. The server will automatically connect to Gemini 3.8 Flash.
+                      To activate live AI responses, add your <code>GEMINI_API_KEY</code> in AI Studio project secrets. The server will automatically connect to Gemini 4 Hydrogen.
                     </p>
                   </div>
                 </div>

@@ -1,0 +1,1469 @@
+{
+  "totalAudited": 263,
+  "preExistingCrests": 0,
+  "newlyEnrichedCrests": 143,
+  "unverifiedInitialsFallback": 120,
+  "byCountry": {},
+  "unverifiedList": [
+    {
+      "id": "western-university-canada",
+      "officialName": "Western University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "queens-university-canada",
+      "officialName": "Queen's University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "umontreal-canada",
+      "officialName": "Université de Montréal",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "hec-montreal-canada",
+      "officialName": "HEC Montréal",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "lakehead-university-canada",
+      "officialName": "Lakehead University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "ontariotech-canada",
+      "officialName": "Ontario Tech University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "laurentian-university-canada",
+      "officialName": "Laurentian University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "unbc-canada",
+      "officialName": "University of Northern British Columbia",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "tru-kamloops-canada",
+      "officialName": "Thompson Rivers University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "smu-halifax-canada",
+      "officialName": "Saint Mary's University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "macewan-canada",
+      "officialName": "MacEwan University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "ufv-canada",
+      "officialName": "University of the Fraser Valley",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "curtin-australia",
+      "officialName": "Curtin University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "newcastle-australia",
+      "officialName": "The University of Newcastle",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "utas-australia",
+      "officialName": "University of Tasmania",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "wsu-australia",
+      "officialName": "Western Sydney University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "flinders-australia",
+      "officialName": "Flinders University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "murdoch-australia",
+      "officialName": "Murdoch University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "usc-australia",
+      "officialName": "University of the Sunshine Coast",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "scu-australia",
+      "officialName": "Southern Cross University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "canberra-australia",
+      "officialName": "University of Canberra",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "une-australia",
+      "officialName": "University of New England",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "vu-australia",
+      "officialName": "Victoria University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "acu-australia",
+      "officialName": "Australian Catholic University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "lmu-munich-germany",
+      "officialName": "Ludwig-Maximilians-Universität München",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "bonn-germany",
+      "officialName": "Rheinische Friedrich-Wilhelms-Universität Bonn",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "freiburg-germany",
+      "officialName": "Albert-Ludwigs-Universität Freiburg",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "cologne-germany",
+      "officialName": "Universität zu Köln",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "tu-darmstadt-germany",
+      "officialName": "Technische Universität Darmstadt",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "bremen-germany",
+      "officialName": "Universität Bremen",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "ulm-germany",
+      "officialName": "Universität Ulm",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "hannover-germany",
+      "officialName": "Gottfried Wilhelm Leibniz Universität Hannover",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "duisburg-essen-germany",
+      "officialName": "Universität Duisburg-Essen",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "bayreuth-germany",
+      "officialName": "Universität Bayreuth",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "regensburg-germany",
+      "officialName": "Universität Regensburg",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "paderborn-germany",
+      "officialName": "Universität Paderborn",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "greifswald-germany",
+      "officialName": "Universität Greifswald",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "halle-germany",
+      "officialName": "Martin-Luther-Universität Halle-Wittenberg",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "smu-south-africa",
+      "officialName": "Sefako Makgatho Health Sciences University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "dut-south-africa",
+      "officialName": "Durban University of Technology",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "mut-south-africa",
+      "officialName": "Mangosuthu University of Technology",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "mancosa-south-africa",
+      "officialName": "Management College of Southern Africa",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "unilag-nigeria",
+      "officialName": "University of Lagos",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "oau-nigeria",
+      "officialName": "Obafemi Awolowo University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "unn-nigeria",
+      "officialName": "University of Nigeria, Nsukka",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "uniben-nigeria",
+      "officialName": "University of Benin",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "unilorin-nigeria",
+      "officialName": "University of Ilorin",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "futa-nigeria",
+      "officialName": "Federal University of Technology, Akure",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "covenant-university-nigeria",
+      "officialName": "Covenant University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "futo-nigeria",
+      "officialName": "Federal University of Technology, Owerri",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "funaab-nigeria",
+      "officialName": "Federal University of Agriculture, Abeokuta",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "pan-atlantic-university-nigeria",
+      "officialName": "Pan-Atlantic University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "abuad-nigeria",
+      "officialName": "Afe Babalola University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "aun-nigeria",
+      "officialName": "American University of Nigeria",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "uniport-nigeria",
+      "officialName": "University of Port Harcourt",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "unical-nigeria",
+      "officialName": "University of Calabar",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "unizik-nigeria",
+      "officialName": "Nnamdi Azikiwe University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "uniuyo-nigeria",
+      "officialName": "University of Uyo",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "futminna-nigeria",
+      "officialName": "Federal University of Technology, Minna",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "landmark-university-nigeria",
+      "officialName": "Landmark University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "lautech-nigeria",
+      "officialName": "Ladoke Akintola University of Technology",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "bowen-university-nigeria",
+      "officialName": "Bowen University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "baze-university-nigeria",
+      "officialName": "Baze University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "rsu-nigeria",
+      "officialName": "Rivers State University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "oou-nigeria",
+      "officialName": "Olabisi Onabanjo University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "eksu-nigeria",
+      "officialName": "Ekiti State University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "delsu-nigeria",
+      "officialName": "Delta State University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "aau-ekpoma-nigeria",
+      "officialName": "Ambrose Alli University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "aaua-nigeria",
+      "officialName": "Adekunle Ajasin University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "uniosun-nigeria",
+      "officialName": "Osun State University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "kwasu-nigeria",
+      "officialName": "Kwara State University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "kasu-nigeria",
+      "officialName": "Kaduna State University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "bsu-makurdi-nigeria",
+      "officialName": "Benue State University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "redeemers-university-nigeria",
+      "officialName": "Redeemer's University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "fuoye-nigeria",
+      "officialName": "Federal University, Oye-Ekiti",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "fupre-nigeria",
+      "officialName": "Federal University of Petroleum Resources, Effurun",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "udus-sokoto-nigeria",
+      "officialName": "Usmanu Danfodiyo University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "lead-city-university-nigeria",
+      "officialName": "Lead City University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "fuam-makurdi-nigeria",
+      "officialName": "Joseph Sarwuan Tarka University (Federal University of Agriculture, Makurdi)",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "unimaid-nigeria",
+      "officialName": "University of Maiduguri",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "mau-yola-nigeria",
+      "officialName": "Modibbo Adama University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "esut-nigeria",
+      "officialName": "Enugu State University of Science and Technology",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "nsuk-nigeria",
+      "officialName": "Nasarawa State University, Keffi",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "egerton-kenya",
+      "officialName": "Egerton University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "maseno-kenya",
+      "officialName": "Maseno University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "mmust-kenya",
+      "officialName": "Masinde Muliro University of Science and Technology",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "dekut-kenya",
+      "officialName": "Dedan Kimathi University of Technology",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "chuka-kenya",
+      "officialName": "Chuka University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "tuk-kenya",
+      "officialName": "Technical University of Kenya",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "kisii-kenya",
+      "officialName": "Kisii University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "uoe-kenya",
+      "officialName": "University of Eldoret",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "pwani-kenya",
+      "officialName": "Pwani University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "maasaimara-kenya",
+      "officialName": "Maasai Mara University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "jooust-kenya",
+      "officialName": "Jaramogi Oginga Odinga University of Science and Technology",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "seku-kenya",
+      "officialName": "South Eastern Kenya University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "laikipia-kenya",
+      "officialName": "Laikipia University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "machakos-kenya",
+      "officialName": "Machakos University",
+      "reason": "Image download failed"
+    },
+    {
+      "id": "uok-kenya",
+      "officialName": "University of Kabianga",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "karatina-kenya",
+      "officialName": "Karatina University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "must-kenya",
+      "officialName": "Meru University of Science and Technology",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "kibabii-kenya",
+      "officialName": "Kibabii University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "rongo-kenya",
+      "officialName": "Rongo University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "ttu-kenya",
+      "officialName": "Taita Taveta University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "muranga-kenya",
+      "officialName": "Murang'a University of Technology",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "kyau-kenya",
+      "officialName": "Kirinyaga University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "cuk-kenya",
+      "officialName": "The Co-operative University of Kenya",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "uoem-kenya",
+      "officialName": "University of Embu",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "garissa-kenya",
+      "officialName": "Garissa University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "alupe-kenya",
+      "officialName": "Alupe University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "tharaka-kenya",
+      "officialName": "Tharaka University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "tmuc-kenya",
+      "officialName": "Tom Mboya University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "kaimosi-kenya",
+      "officialName": "Kaimosi Friends University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "cuea-kenya",
+      "officialName": "The Catholic University of Eastern Africa",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "mku-kenya",
+      "officialName": "Mount Kenya University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "anu-kenya",
+      "officialName": "Africa Nazarene University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "uoab-kenya",
+      "officialName": "University of Eastern Africa, Baraton",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "pac-kenya",
+      "officialName": "Pan Africa Christian University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "kemu-kenya",
+      "officialName": "Kenya Methodist University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "riara-kenya",
+      "officialName": "Riara University",
+      "reason": "No authentic crest verified"
+    },
+    {
+      "id": "gluk-kenya",
+      "officialName": "Great Lakes University of Kisumu",
+      "reason": "Image download failed"
+    }
+  ],
+  "enrichedList": [
+    {
+      "id": "ualberta-canada",
+      "officialName": "University of Alberta",
+      "filename": "ualberta-canada.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/9/92/University_of_Alberta_Coat_of_Arms.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "mcmaster-university-canada",
+      "officialName": "McMaster University",
+      "filename": "mcmaster-university-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/5/53/McMaster_University_logo.svg/500px-McMaster_University_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "waterloo-canada",
+      "officialName": "University of Waterloo",
+      "filename": "waterloo-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/6/6e/University_of_Waterloo_seal.svg/500px-University_of_Waterloo_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ucalgary-canada",
+      "officialName": "University of Calgary",
+      "filename": "ucalgary-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/University_of_Calgary_coat_of_arms_without_motto_scroll.svg/500px-University_of_Calgary_coat_of_arms_without_motto_scroll.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uottawa-canada",
+      "officialName": "University of Ottawa",
+      "filename": "uottawa-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/7/7f/University_of_Ottawa_Logo.svg/500px-University_of_Ottawa_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "dalhousie-university-canada",
+      "officialName": "Dalhousie University",
+      "filename": "dalhousie-university-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/c/c3/Dalhousie_University_Seal.svg/500px-Dalhousie_University_Seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "sfu-canada",
+      "officialName": "Simon Fraser University",
+      "filename": "sfu-canada.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/0/0b/Simon_Fraser_University_coat_of_arms.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "uvic-canada",
+      "officialName": "University of Victoria",
+      "filename": "uvic-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Univ_of_victoria_logo.png/500px-Univ_of_victoria_logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "concordia-university-canada",
+      "officialName": "Concordia University",
+      "filename": "concordia-university-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/a/a7/Concordia_University_logo.svg/500px-Concordia_University_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "york-university-canada",
+      "officialName": "York University",
+      "filename": "york-university-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Logo_York_University.svg/500px-Logo_York_University.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "carleton-university-canada",
+      "officialName": "Carleton University",
+      "filename": "carleton-university-canada.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/3/30/Carelton_University_Coat_of_Arms.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "memorial-university-canada",
+      "officialName": "Memorial University of Newfoundland",
+      "filename": "memorial-university-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/Memorial_University_of_Newfoundland_Logo.svg/500px-Memorial_University_of_Newfoundland_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "university-of-guelph-canada",
+      "officialName": "University of Guelph",
+      "filename": "university-of-guelph-canada.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/f/f6/UofGshield.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "tmu-toronto-canada",
+      "officialName": "Toronto Metropolitan University",
+      "filename": "tmu-toronto-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/TMU_logo.svg/500px-TMU_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "umanitoba-canada",
+      "officialName": "University of Manitoba",
+      "filename": "umanitoba-canada.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/6/6b/University_of_Manitoba_coat_of_arms.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "usask-canada",
+      "officialName": "University of Saskatchewan",
+      "filename": "usask-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/USask_Coat_of_Arms.svg/500px-USask_Coat_of_Arms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uwindsor-canada",
+      "officialName": "University of Windsor",
+      "filename": "uwindsor-canada.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/8/8a/Coat_of_Arms_of_the_University_of_Windsor.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "brock-university-canada",
+      "officialName": "Brock University",
+      "filename": "brock-university-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Brock_University_Logo_2022.svg/500px-Brock_University_Logo_2022.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "unb-canada",
+      "officialName": "University of New Brunswick",
+      "filename": "unb-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/Coat_of_Arms_of_the_University_of_New_Brunswick.png/500px-Coat_of_Arms_of_the_University_of_New_Brunswick.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ulaval-canada",
+      "officialName": "Université Laval",
+      "filename": "ulaval-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/9/90/Ulaval_Shield.svg/500px-Ulaval_Shield.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "usherbrooke-canada",
+      "officialName": "Université de Sherbrooke",
+      "filename": "usherbrooke-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Universit%C3%A9_de_Sherbrooke_%28logo%29.svg/500px-Universit%C3%A9_de_Sherbrooke_%28logo%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uqam-canada",
+      "officialName": "Université du Québec à Montréal",
+      "filename": "uqam-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Montr%C3%A9al_Logo.svg/500px-Universit%C3%A9_du_Qu%C3%A9bec_%C3%A0_Montr%C3%A9al_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "polytechnique-montreal-canada",
+      "officialName": "Polytechnique Montréal",
+      "filename": "polytechnique-montreal-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/4/4f/%C3%89cole_Polytechnique_de_Montr%C3%A9al_Logo.svg/500px-%C3%89cole_Polytechnique_de_Montr%C3%A9al_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "wlu-waterloo-canada",
+      "officialName": "Wilfrid Laurier University",
+      "filename": "wlu-waterloo-canada.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/a/ab/Laurier_univ_ca_seal.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "trent-university-canada",
+      "officialName": "Trent University",
+      "filename": "trent-university-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/0/0a/Trent_University_Logo.svg/500px-Trent_University_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ulethbridge-canada",
+      "officialName": "University of Lethbridge",
+      "filename": "ulethbridge-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/9/9f/ULethbridge_Horizontal_Logo.png/500px-ULethbridge_Horizontal_Logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uregina-canada",
+      "officialName": "University of Regina",
+      "filename": "uregina-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/URegina_Coat_of_Arms.svg/500px-URegina_Coat_of_Arms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "upei-canada",
+      "officialName": "University of Prince Edward Island",
+      "filename": "upei-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ec/University_of_Prince_Edward_Island_Logo.svg/500px-University_of_Prince_Edward_Island_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "acadia-university-canada",
+      "officialName": "Acadia University",
+      "filename": "acadia-university-canada.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/0/06/Acadia_University_Coat_of_Arms_2017.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "stfx-canada",
+      "officialName": "St. Francis Xavier University",
+      "filename": "stfx-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/f/f7/StFXCoatofArms.svg/500px-StFXCoatofArms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "mta-canada",
+      "officialName": "Mount Allison University",
+      "filename": "mta-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/7/79/Mount_Allison_University_Seal.svg/500px-Mount_Allison_University_Seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ubishops-canada",
+      "officialName": "Bishop's University",
+      "filename": "ubishops-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/b/b4/BishopsUniversityCoatOfArms.svg/500px-BishopsUniversityCoatOfArms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "nipissing-canada",
+      "officialName": "Nipissing University",
+      "filename": "nipissing-canada.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/4/4e/Nipissing_University_Coat_of_Arms.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "mru-canada",
+      "officialName": "Mount Royal University",
+      "filename": "mru-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Mount_Royal_University_Logo.svg/500px-Mount_Royal_University_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "viu-canada",
+      "officialName": "Vancouver Island University",
+      "filename": "viu-canada.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Coat_of_Arms_of_Vancouver_Island_University.png/500px-Coat_of_Arms_of_Vancouver_Island_University.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "usyd-australia",
+      "officialName": "The University of Sydney",
+      "filename": "usyd-australia.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/9/9a/University_of_Sydney_coat_of_arms.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "unsw-australia",
+      "officialName": "University of New South Wales",
+      "filename": "unsw-australia.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/6/6e/University_of_New_South_Wales_Crest_Variant_2022.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "uq-australia",
+      "officialName": "The University of Queensland",
+      "filename": "uq-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/7/76/University_of_Queensland_%28crest%29.svg/500px-University_of_Queensland_%28crest%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "monash-australia",
+      "officialName": "Monash University",
+      "filename": "monash-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/7/74/Monash_University_logo-en.svg/500px-Monash_University_logo-en.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uwa-australia",
+      "officialName": "The University of Western Australia",
+      "filename": "uwa-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/c/c7/UWA_crest.svg/500px-UWA_crest.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "adelaide-australia",
+      "officialName": "The University of Adelaide",
+      "filename": "adelaide-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/5/51/University-of-Adelaide-Crest.svg/500px-University-of-Adelaide-Crest.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uts-australia",
+      "officialName": "University of Technology Sydney",
+      "filename": "uts-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/6/64/University_of_Technology_Sydney_emblem.svg/500px-University_of_Technology_Sydney_emblem.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "macquarie-australia",
+      "officialName": "Macquarie University",
+      "filename": "macquarie-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/7/71/Logotype_of_Macquarie_University.svg/500px-Logotype_of_Macquarie_University.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "rmit-australia",
+      "officialName": "RMIT University",
+      "filename": "rmit-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/RMIT_University_Logo.svg/500px-RMIT_University_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "qut-australia",
+      "officialName": "Queensland University of Technology",
+      "filename": "qut-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/e7/Queensland_University_of_Technology_logo.svg/500px-Queensland_University_of_Technology_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "deakin-australia",
+      "officialName": "Deakin University",
+      "filename": "deakin-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/7/74/Deakin_University_Logo_2017.svg/500px-Deakin_University_Logo_2017.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uow-australia",
+      "officialName": "University of Wollongong",
+      "filename": "uow-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/f/fa/Shield_of_the_University_of_Wollongong.svg/500px-Shield_of_the_University_of_Wollongong.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "latrobe-australia",
+      "officialName": "La Trobe University",
+      "filename": "latrobe-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/b/be/La_Trobe_University_logo.svg/500px-La_Trobe_University_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "griffith-australia",
+      "officialName": "Griffith University",
+      "filename": "griffith-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/e3/Griffith_University_Coat_of_Arms.svg/500px-Griffith_University_Coat_of_Arms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "swinburne-australia",
+      "officialName": "Swinburne University of Technology",
+      "filename": "swinburne-australia.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/4/43/Swinburne_University_of_Technology_Coat_of_Arms.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "jcu-australia",
+      "officialName": "James Cook University",
+      "filename": "jcu-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/9/9b/Logotype_of_James_Cook_University.svg/500px-Logotype_of_James_Cook_University.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "unisa-australia",
+      "officialName": "University of South Australia",
+      "filename": "unisa-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/e0/Logo_of_the_University_of_South_Australia.svg/500px-Logo_of_the_University_of_South_Australia.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ecu-australia",
+      "officialName": "Edith Cowan University",
+      "filename": "ecu-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/3/37/Edith_Cowan_University_Coat_of_Arms.svg/500px-Edith_Cowan_University_Coat_of_Arms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "cdu-australia",
+      "officialName": "Charles Darwin University",
+      "filename": "cdu-australia.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/4/40/Charles_Darwin_University_Crest.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "unisq-australia",
+      "officialName": "University of Southern Queensland",
+      "filename": "unisq-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/4/41/University_of_Southern_Queensland_Coat_of_Arms.svg/500px-University_of_Southern_Queensland_Coat_of_Arms.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "csu-australia",
+      "officialName": "Charles Sturt University",
+      "filename": "csu-australia.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/f/f8/CSU_crest.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "federation-australia",
+      "officialName": "Federation University Australia",
+      "filename": "federation-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/e4/Shield_and_crest_of_Federation_University_Australia.svg/500px-Shield_and_crest_of_Federation_University_Australia.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "bond-australia",
+      "officialName": "Bond University",
+      "filename": "bond-australia.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/3/3a/Bond_University_Coat_of_Arms.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "notredame-australia",
+      "officialName": "The University of Notre Dame Australia",
+      "filename": "notredame-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/a/ab/The_University_of_Notre_Dame_Australia_Crest.svg/500px-The_University_of_Notre_Dame_Australia_Crest.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "torrens-australia",
+      "officialName": "Torrens University Australia",
+      "filename": "torrens-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/TORRENS_UNIVERSITY_AUSTRALIA_PRIMARY_LOGO_ORANGE_GREY_RGB.png/500px-TORRENS_UNIVERSITY_AUSTRALIA_PRIMARY_LOGO_ORANGE_GREY_RGB.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "cqu-australia",
+      "officialName": "CQUniversity Australia",
+      "filename": "cqu-australia.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/c/cc/CQUniversity_Australia_logo.svg/500px-CQUniversity_Australia_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "humboldt-berlin-germany",
+      "officialName": "Humboldt-Universität zu Berlin",
+      "filename": "humboldt-berlin-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Huberlin-logo.svg/500px-Huberlin-logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "rwth-aachen-germany",
+      "officialName": "RWTH Aachen University",
+      "filename": "rwth-aachen-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/RWTH_Logo_3.svg/500px-RWTH_Logo_3.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "kit-karlsruhe-germany",
+      "officialName": "Karlsruher Institut für Technologie",
+      "filename": "kit-karlsruhe-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Logo_KIT.svg/500px-Logo_KIT.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "fu-berlin-germany",
+      "officialName": "Freie Universität Berlin",
+      "filename": "fu-berlin-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Freie_Universit%C3%A4t_Berlin_Logo_05.2024.svg/500px-Freie_Universit%C3%A4t_Berlin_Logo_05.2024.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "tu-berlin-germany",
+      "officialName": "Technische Universität Berlin",
+      "filename": "tu-berlin-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/LogoDerTechnischenUniversit%C3%A4tBerlin2020.svg/500px-LogoDerTechnischenUniversit%C3%A4tBerlin2020.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "tuebingen-germany",
+      "officialName": "Eberhard Karls Universität Tübingen",
+      "filename": "tuebingen-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/9/92/University_of_T%C3%BCbingen_logo.svg/500px-University_of_T%C3%BCbingen_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "goettingen-germany",
+      "officialName": "Georg-August-Universität Göttingen",
+      "filename": "goettingen-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Logo_Uni_G%C3%B6ttingen.svg/500px-Logo_Uni_G%C3%B6ttingen.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "frankfurt-germany",
+      "officialName": "Goethe-Universität Frankfurt am Main",
+      "filename": "frankfurt-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Logo-Goethe-University-Frankfurt-am-Main.svg/500px-Logo-Goethe-University-Frankfurt-am-Main.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "hamburg-germany",
+      "officialName": "Universität Hamburg",
+      "filename": "hamburg-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/UHH_Universit%C3%A4t_Hamburg_Logo_mit_Schrift_2010_Farbe_CMYK.svg/500px-UHH_Universit%C3%A4t_Hamburg_Logo_mit_Schrift_2010_Farbe_CMYK.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "stuttgart-germany",
+      "officialName": "Universität Stuttgart",
+      "filename": "stuttgart-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Uni_stuttgart_logo.svg/500px-Uni_stuttgart_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "tu-dresden-germany",
+      "officialName": "Technische Universität Dresden",
+      "filename": "tu-dresden-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Logo_TU_Dresden_en_2025.svg/500px-Logo_TU_Dresden_en_2025.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "muenster-germany",
+      "officialName": "Universität Münster",
+      "filename": "muenster-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Logo_Universit%C3%A4t_M%C3%BCnster.svg/500px-Logo_Universit%C3%A4t_M%C3%BCnster.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "fau-erlangen-germany",
+      "officialName": "Friedrich-Alexander-Universität Erlangen-Nürnberg",
+      "filename": "fau-erlangen-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/FAU_logo_zugeschnitten_2024.png/500px-FAU_logo_zugeschnitten_2024.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "mainz-germany",
+      "officialName": "Johannes Gutenberg-Universität Mainz",
+      "filename": "mainz-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Johannes_Gutenberg-Universit%C3%A4t_Mainz_logo.svg/500px-Johannes_Gutenberg-Universit%C3%A4t_Mainz_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "wuerzburg-germany",
+      "officialName": "Julius-Maximilians-Universität Würzburg",
+      "filename": "wuerzburg-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/University_of_W%C3%BCrzburg_seal.svg/500px-University_of_W%C3%BCrzburg_seal.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "jena-germany",
+      "officialName": "Friedrich-Schiller-Universität Jena",
+      "filename": "jena-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Uni-Jena-logo.svg/500px-Uni-Jena-logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "leipzig-germany",
+      "officialName": "Universität Leipzig",
+      "filename": "leipzig-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Universit%C3%A4t_Leipzig_crest.svg/500px-Universit%C3%A4t_Leipzig_crest.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "kiel-germany",
+      "officialName": "Christian-Albrechts-Universität zu Kiel",
+      "filename": "kiel-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Logo_Kiel_University.svg/500px-Logo_Kiel_University.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "konstanz-germany",
+      "officialName": "Universität Konstanz",
+      "filename": "konstanz-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Universitat_Konstanz_logo.svg/500px-Universitat_Konstanz_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "potsdam-germany",
+      "officialName": "Universität Potsdam",
+      "filename": "potsdam-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Universit%C3%A4t_Potsdam_logo.svg/500px-Universit%C3%A4t_Potsdam_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "bochum-germany",
+      "officialName": "Ruhr-Universität Bochum",
+      "filename": "bochum-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Ruhr-Universit%C3%A4t_Bochum_logo.svg/500px-Ruhr-Universit%C3%A4t_Bochum_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "tu-dortmund-germany",
+      "officialName": "Technische Universität Dortmund",
+      "filename": "tu-dortmund-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Technische_Universit%C3%A4t_Dortmund_Logo.svg/500px-Technische_Universit%C3%A4t_Dortmund_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "marburg-germany",
+      "officialName": "Philipps-Universität Marburg",
+      "filename": "marburg-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Universit%C3%A4t_Marburg_Logo_Querformat.svg/500px-Universit%C3%A4t_Marburg_Logo_Querformat.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "giessen-germany",
+      "officialName": "Justus-Liebig-Universität Gießen",
+      "filename": "giessen-germany.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/1/19/Logo-justus-liebig-universit%C3%A4t-giessen.gif?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "passau-germany",
+      "officialName": "Universität Passau",
+      "filename": "passau-germany.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/4/45/Logouniversit%C3%A4tpassau.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "augsburg-germany",
+      "officialName": "Universität Augsburg",
+      "filename": "augsburg-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Universit%C3%A4t_Augsburg_logo.svg/500px-Universit%C3%A4t_Augsburg_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "bamberg-germany",
+      "officialName": "Otto-Friedrich-Universität Bamberg",
+      "filename": "bamberg-germany.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/4/48/Logo_uni_bamberg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "saarland-germany",
+      "officialName": "Universität des Saarlandes",
+      "filename": "saarland-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/b/b3/Logo_of_Saarland_University.svg/500px-Logo_of_Saarland_University.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "siegen-germany",
+      "officialName": "Universität Siegen",
+      "filename": "siegen-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6b/Logo_Uni_Siegen.svg/500px-Logo_Uni_Siegen.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "kassel-germany",
+      "officialName": "Universität Kassel",
+      "filename": "kassel-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Logo_Uni-Kassel.svg/500px-Logo_Uni-Kassel.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "trier-germany",
+      "officialName": "Universität Trier",
+      "filename": "trier-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Seal_of_the_University_of_Trier.svg/500px-Seal_of_the_University_of_Trier.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "rostock-germany",
+      "officialName": "Universität Rostock",
+      "filename": "rostock-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/d/df/Rostock_University_Logo_2009.png/500px-Rostock_University_Logo_2009.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "magdeburg-germany",
+      "officialName": "Otto-von-Guericke-Universität Magdeburg",
+      "filename": "magdeburg-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/4/47/Seal_Otto_von_Guericke_University_Magdeburg.svg/500px-Seal_Otto_von_Guericke_University_Magdeburg.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "tu-ilmenau-germany",
+      "officialName": "Technische Universität Ilmenau",
+      "filename": "tu-ilmenau-germany.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/TU_Ilmenau_Logo_black_green.svg/500px-TU_Ilmenau_Logo_black_green.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "wits-south-africa",
+      "officialName": "University of the Witwatersrand",
+      "filename": "wits-south-africa.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/c/c7/Logo_for_the_University_of_the_Witwatersrand%2C_Johannesburg_%28new_logo_as_of_2015%29.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "stellenbosch-south-africa",
+      "officialName": "Stellenbosch University",
+      "filename": "stellenbosch-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Stellenbosch_University_Crest.png/500px-Stellenbosch_University_Crest.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "up-south-africa",
+      "officialName": "University of Pretoria",
+      "filename": "up-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/University_of_Pretoria_Coat_of_Arms.png/500px-University_of_Pretoria_Coat_of_Arms.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ukzn-south-africa",
+      "officialName": "University of KwaZulu-Natal",
+      "filename": "ukzn-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/b/be/UKZN_logo.svg/500px-UKZN_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "uj-south-africa",
+      "officialName": "University of Johannesburg",
+      "filename": "uj-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/a/af/University_of_Johannesburg_Logo.svg/500px-University_of_Johannesburg_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "rhodes-south-africa",
+      "officialName": "Rhodes University",
+      "filename": "rhodes-south-africa.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/2/26/Rhodes_University_logo-no_background.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "uwc-south-africa",
+      "officialName": "University of the Western Cape",
+      "filename": "uwc-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/UWC_Logo.svg/500px-UWC_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "nwu-south-africa",
+      "officialName": "North-West University",
+      "filename": "nwu-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ec/North-West_University_logo.svg/500px-North-West_University_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "mandela-south-africa",
+      "officialName": "Nelson Mandela University",
+      "filename": "mandela-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/e5/Nelson_Mandela_University_logo.svg/500px-Nelson_Mandela_University_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ufs-south-africa",
+      "officialName": "University of the Free State",
+      "filename": "ufs-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/8/8f/University_of_the_Free_State_shield.svg/500px-University_of_the_Free_State_shield.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ufh-south-africa",
+      "officialName": "University of Fort Hare",
+      "filename": "ufh-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/f/fc/University_of_Fort_Hare_logo.svg/500px-University_of_Fort_Hare_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "univen-south-africa",
+      "officialName": "University of Venda",
+      "filename": "univen-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/9/9e/University_of_Venda_logo.svg/500px-University_of_Venda_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ul-south-africa",
+      "officialName": "University of Limpopo",
+      "filename": "ul-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/0/02/University_of_Limpopo_logo.svg/500px-University_of_Limpopo_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "wsu-south-africa",
+      "officialName": "Walter Sisulu University",
+      "filename": "wsu-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/3/3b/Walter_Sisulu_University_logo.svg/500px-Walter_Sisulu_University_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "unizulu-south-africa",
+      "officialName": "University of Zululand",
+      "filename": "unizulu-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/1/14/University_of_Zululand_logo.svg/500px-University_of_Zululand_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "spu-south-africa",
+      "officialName": "Sol Plaatje University",
+      "filename": "spu-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/9/98/Sol_Plaatje_University_logo.svg/500px-Sol_Plaatje_University_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ump-south-africa",
+      "officialName": "University of Mpumalanga",
+      "filename": "ump-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/0/00/University_of_Mpumalanga_logo.svg/500px-University_of_Mpumalanga_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "cput-south-africa",
+      "officialName": "Cape Peninsula University of Technology",
+      "filename": "cput-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/b/ba/CPUT_logo.svg/500px-CPUT_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "tut-south-africa",
+      "officialName": "Tshwane University of Technology",
+      "filename": "tut-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/4/49/Tshwane_University_of_Technology_logo.svg/500px-Tshwane_University_of_Technology_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "vut-south-africa",
+      "officialName": "Vaal University of Technology",
+      "filename": "vut-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/VUT_logo-TM.png/500px-VUT_logo-TM.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "cut-south-africa",
+      "officialName": "Central University of Technology",
+      "filename": "cut-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/b/bb/Central_University_of_Technology_logo.svg/500px-Central_University_of_Technology_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "unisa-south-africa",
+      "officialName": "University of South Africa",
+      "filename": "unisa-south-africa.png",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/3/3e/UNISA_Crest_1986.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "iie-south-africa",
+      "officialName": "The Independent Institute of Education",
+      "filename": "iie-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/c/c7/The_Independent_Institute_of_Education_Logo.png/500px-The_Independent_Institute_of_Education_Logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "eduvos-south-africa",
+      "officialName": "Eduvos Higher Education",
+      "filename": "eduvos-south-africa.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/1/10/Eduvos_Logo.png/500px-Eduvos_Logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "afda-south-africa",
+      "officialName": "AFDA - The South African School of Motion Picture Medium",
+      "filename": "afda-south-africa.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/c/c5/AFDA_South_Africa_Logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "abu-zaria-nigeria",
+      "officialName": "Ahmadu Bello University",
+      "filename": "abu-zaria-nigeria.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/ABU_Zaria_logo.jpg/500px-ABU_Zaria_logo.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "lasu-nigeria",
+      "officialName": "Lagos State University",
+      "filename": "lasu-nigeria.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Lagos_State_University_logo.png/500px-Lagos_State_University_logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "babcock-university-nigeria",
+      "officialName": "Babcock University",
+      "filename": "babcock-university-nigeria.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/e/ea/Babcock_University_Logo.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "nile-university-nigeria",
+      "officialName": "Nile University of Nigeria",
+      "filename": "nile-university-nigeria.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/2/2a/Logo_of_Nile_University_Abuja_Nigeria.svg/500px-Logo_of_Nile_University_Abuja_Nigeria.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "buk-kano-nigeria",
+      "officialName": "Bayero University Kano",
+      "filename": "buk-kano-nigeria.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/0/04/Bayerouniversitylogo.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "unijos-nigeria",
+      "officialName": "University of Jos",
+      "filename": "unijos-nigeria.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/e/ef/University_of_Jos_logo.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "uniabuja-nigeria",
+      "officialName": "University of Abuja",
+      "filename": "uniabuja-nigeria.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/e/ec/Logo_of_the_University_of_Abuja%2C_Nigeria.png/500px-Logo_of_the_University_of_Abuja%2C_Nigeria.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "atbu-bauchi-nigeria",
+      "officialName": "Abubakar Tafawa Balewa University",
+      "filename": "atbu-bauchi-nigeria.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/6/6e/Abubakar_Tafawa_Balewa_University_%28crest%29.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "absu-nigeria",
+      "officialName": "Abia State University",
+      "filename": "absu-nigeria.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/a/a9/Abia_State_University_logo.svg/500px-Abia_State_University_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "ku-kenya",
+      "officialName": "Kenyatta University",
+      "filename": "ku-kenya.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/Coat_of_Arms_of_Nairobi.svg/500px-Coat_of_Arms_of_Nairobi.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "strathmore-kenya",
+      "officialName": "Strathmore University",
+      "filename": "strathmore-kenya.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/6/6f/Strathmore_university_updated_logo.jpg/500px-Strathmore_university_updated_logo.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "jkuat-kenya",
+      "officialName": "Jomo Kenyatta University of Agriculture and Technology",
+      "filename": "jkuat-kenya.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/4/45/Jomo_Kenyatta_University_Logo.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "moi-kenya",
+      "officialName": "Moi University",
+      "filename": "moi-kenya.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/9/95/Moi_University_logo.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "tum-kenya",
+      "officialName": "Technical University of Mombasa",
+      "filename": "tum-kenya.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/a/a5/Technical_University_of_Mombasa.logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "usiu-africa-kenya",
+      "officialName": "United States International University Africa",
+      "filename": "usiu-africa-kenya.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/Coat_of_Arms_of_Nairobi.svg/500px-Coat_of_Arms_of_Nairobi.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "daystar-kenya",
+      "officialName": "Daystar University",
+      "filename": "daystar-kenya.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/Coat_of_Arms_of_Nairobi.svg/500px-Coat_of_Arms_of_Nairobi.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "scott-kenya",
+      "officialName": "Scott Christian University",
+      "filename": "scott-kenya.png",
+      "source": "https://upload.wikimedia.org/wikipedia/en/d/de/Scott_Christian_University_logo.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+    },
+    {
+      "id": "kabarak-kenya",
+      "officialName": "Kabarak University",
+      "filename": "kabarak-kenya.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/Kabarak_University_Logo.png/500px-Kabarak_University_Logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "stpauls-kenya",
+      "officialName": "St. Paul's University",
+      "filename": "stpauls-kenya.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/9/9b/St_Paul%27s_Cathedral_Logo.png/500px-St_Paul%27s_Cathedral_Logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "kca-kenya",
+      "officialName": "KCA University",
+      "filename": "kca-kenya.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/KCAU_logo.svg/500px-KCAU_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "zetech-kenya",
+      "officialName": "Zetech University",
+      "filename": "zetech-kenya.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Zetech_University_Logo_Vert_w-tag_RGB-1.png/500px-Zetech_University_Logo_Vert_w-tag_RGB-1.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "iisc-bangalore-india",
+      "officialName": "Indian Institute of Science",
+      "filename": "iisc-bangalore-india.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/3/3b/Indian_Institute_of_Science_2019_logo.svg/500px-Indian_Institute_of_Science_2019_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    },
+    {
+      "id": "iit-bombay-india",
+      "officialName": "Indian Institute of Technology Bombay",
+      "filename": "iit-bombay-india.png",
+      "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/1/1d/Indian_Institute_of_Technology_Bombay_Logo.svg/500px-Indian_Institute_of_Technology_Bombay_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+    }
+  ]
+}

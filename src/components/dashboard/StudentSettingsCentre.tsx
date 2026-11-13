@@ -46,7 +46,10 @@ import {
   StudentProfile,
   NotificationPreferences,
   DEFAULT_NOTIFICATION_PREFERENCES,
+  PASSWORD_MIN_LENGTH,
+  validatePasswordPolicy,
 } from '../../services/auth';
+import { checkCurrentUserIsAdmin } from '../../services/firebase';
 import { CountrySelect, CountryMultiSelect } from '../ui/CountrySelect';
 import { Button } from '../ui/Button';
 
@@ -87,11 +90,33 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<SettingsTab>('account');
 
-  // Check admin authorization: fredaesiofori905@gmail.com or role === 'admin'
-  const isAuthorizedAdmin =
-    user?.email === 'fredaesiofori905@gmail.com' ||
-    user?.role === 'admin' ||
-    (user?.email?.endsWith('@campusconnect.edu') && !user?.isDemo);
+  // Check admin authorization strictly via server-verified Firebase Auth custom claims (`admin === true`)
+  const [isAuthorizedAdmin, setIsAuthorizedAdmin] = useState<boolean>(false);
+
+  useEffect(() => {
+    let active = true;
+    if (!user?.id) {
+      setIsAuthorizedAdmin(false);
+      return;
+    }
+    checkCurrentUserIsAdmin(false)
+      .then((verifiedAdmin) => {
+        if (active) {
+          setIsAuthorizedAdmin(verifiedAdmin);
+          if (!verifiedAdmin && activeTab === 'admin') {
+            setActiveTab('account');
+          }
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setIsAuthorizedAdmin(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
+  }, [user?.id, activeTab]);
 
   // =========================================================================
   // TAB 1: ACCOUNT & PROFILE STATE
@@ -124,9 +149,6 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
   // Clean student reference identifier (non-technical format for student view)
   const getFormattedStudentId = (id?: string) => {
     if (!id) return 'CC-2026-STU';
-    if (id.startsWith('usr_demo')) {
-      return 'CC-2026-KM82';
-    }
     const clean = id.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
     return `CC-${clean.slice(0, 8)}`;
   };
@@ -434,38 +456,30 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
     setPasswordChangeError(null);
     setPasswordChangeSuccess(null);
 
-    const trimmedCurrent = currentPassword.trim();
-    const trimmedNew = newPassword.trim();
-    const trimmedConfirm = confirmPassword.trim();
-
-    if (!trimmedCurrent) {
+    if (!currentPassword) {
       setPasswordChangeError('Please enter your current password.');
       return;
     }
 
-    if (!trimmedNew) {
-      setPasswordChangeError('Please enter a new password.');
+    const pwdCheck = validatePasswordPolicy(newPassword);
+    if (!pwdCheck.valid) {
+      setPasswordChangeError(pwdCheck.error || 'New password does not meet security requirements.');
       return;
     }
 
-    if (trimmedNew.length < 6) {
-      setPasswordChangeError('Your new password must be at least 6 characters long.');
-      return;
-    }
-
-    if (trimmedNew !== trimmedConfirm) {
+    if (newPassword !== confirmPassword) {
       setPasswordChangeError('New password and password confirmation do not match.');
       return;
     }
 
-    if (trimmedNew === trimmedCurrent) {
+    if (newPassword === currentPassword) {
       setPasswordChangeError('Your new password must be different from your current password.');
       return;
     }
 
     setIsChangingPassword(true);
     try {
-      const res = await authService.changePassword(trimmedCurrent, trimmedNew);
+      const res = await authService.changePassword(currentPassword, newPassword);
       if (!res.success) {
         setPasswordChangeError(res.error || 'Failed to update password. Please check your credentials.');
         return;
@@ -728,7 +742,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
           legalName: user?.fullName || 'Scholar',
           email: user?.email || '',
           accountCreatedAt: user?.createdAt || null,
-          role: user?.role || 'student',
+          role: isAuthorizedAdmin ? 'admin' : 'student',
         },
         academicProfile: {
           nationality: user?.profile?.nationality || 'Ghanaian',
@@ -1265,9 +1279,9 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                         type={showNewPassword ? 'text' : 'password'}
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        placeholder="At least 6 characters"
+                        placeholder="Min. 8 chars (letters & numbers)"
                         required
-                        minLength={6}
+                        minLength={PASSWORD_MIN_LENGTH}
                         autoComplete="new-password"
                         className="w-full h-11 pl-3.5 pr-10 rounded-xl border border-[#CBD5E1] bg-white text-xs sm:text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none transition-colors"
                       />
@@ -1281,7 +1295,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                       </button>
                     </div>
                     <span className="text-[11px] text-slate-400 mt-1 block">
-                      Minimum 6 characters. Must differ from current password.
+                      Minimum 8 characters, including letters and numbers. Must differ from current password.
                     </span>
                   </div>
 
@@ -1296,7 +1310,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="Re-enter new password"
                         required
-                        minLength={6}
+                        minLength={PASSWORD_MIN_LENGTH}
                         autoComplete="new-password"
                         className="w-full h-11 pl-3.5 pr-10 rounded-xl border border-[#CBD5E1] bg-white text-xs sm:text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none transition-colors"
                       />
@@ -1381,7 +1395,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                       type="email"
                       value={resetEmail}
                       onChange={(e) => setResetEmail(e.target.value)}
-                      placeholder="scholar@campusconnect.edu"
+                      placeholder="you@domain.edu"
                       required
                       className="w-full h-11 pl-9 pr-3.5 rounded-xl border border-[#CBD5E1] bg-white text-xs sm:text-sm text-[#10132D] focus:border-[#6846F5] focus:outline-none transition-colors"
                     />

@@ -51,7 +51,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
 
         {/* Supporting Text */}
         <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-[#DDD6FE] max-w-2xl mx-auto leading-relaxed [text-wrap:pretty]">
-          Create your free account to unlock accredited universities, $0 application fee pathways, SAT/test waivers, and verified scholarships.
+          Create your free student account to explore universities worldwide, compare undergraduate and postgraduate admissions, discover scholarships and waiver options, and track your applications with COVA AI.
         </p>
 
         {/* Action Controls */}
@@ -73,7 +73,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
             leftIcon={<LogIn className="w-4 h-4" />}
             className="w-full sm:w-auto bg-transparent border-white/30 text-white hover:bg-white/10 hover:border-white focus-visible:ring-white"
           >
-            Log In to Scholar Account
+            Log In to Your Account
           </Button>
         </div>
 
@@ -81,17 +81,17 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
         <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-3.5 sm:gap-6 text-xs text-[#94A3B8]">
           <div className="flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
-            <span>Accredited Ghana &amp; Global Institutions</span>
+            <span>Universities Worldwide</span>
           </div>
           <span className="hidden sm:inline text-white/20">·</span>
           <div className="flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
-            <span>$0 App Fees &amp; SAT Waivers</span>
+            <span>Fee Waiver &amp; Test-Optional Filters</span>
           </div>
           <span className="hidden sm:inline text-white/20">·</span>
           <div className="flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
-            <span>Official Admissions Rules</span>
+            <span>Application Planning &amp; COVA AI</span>
           </div>
         </div>
       </Container>

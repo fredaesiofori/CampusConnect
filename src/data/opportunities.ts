@@ -918,7 +918,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     verificationSource: 'DAAD (German Academic Exchange Service) & Bavarian Higher Education Directorate',
     verifiedAt: 'Academic Year 2026/2027',
     logo: {
-      logoUrl: '/logos/tum-germany-daad.svg',
+      logoUrl: '/logos/tum-germany-daad.png',
       bg: '#3070B3',
       text: '#FFFFFF',
       monogram: 'TUM',
@@ -2002,7 +2002,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     verificationSource: 'MIT Student Financial Services & Office of Admissions Bulletin (SEVP Certified)',
     verifiedAt: 'October 2026 Academic Audit',
     logo: {
-      logoUrl: '/logos/mit-usa.svg',
+      logoUrl: '/logos/mit-usa.png',
       bg: '#A31F34',
       text: '#FFFFFF',
       monogram: 'MIT',

@@ -13,12 +13,15 @@ import {
   getFirebaseActiveSessionInfo,
   refreshFirebaseSessionToken,
   saveStudentProfileToFirestore,
+  saveStudentProfileWithStatusToFirestore,
   syncSavedOpportunitiesToFirestore,
+  syncStudentDashboardListsToFirestore,
   fetchStudentProfileFromFirestore,
   subscribeToFirebaseAuthState,
   updateFirebaseUserEmail,
   updateFirebaseDisplayName,
   deleteStudentAccountFromFirebase,
+  checkCurrentUserIsAdmin,
 } from './firebase';
 import { getCountryByName } from '../data/countries';
 import { User as FirebaseUser } from 'firebase/auth';
@@ -62,6 +65,28 @@ export interface StudentProfile {
   notificationPreferences?: NotificationPreferences;
 }
 
+export type TargetPriority = 'High' | 'Medium' | 'Low';
+
+export interface TargetListItem {
+  opportunityId: string;
+  priority: TargetPriority;
+  intakeYear: string;
+  personalGoal: string;
+  addedAt: string;
+  updatedAt: string;
+}
+
+export type ActiveApplicationStage = 'preparing' | 'submitted' | 'accepted';
+
+export interface ActiveApplicationItem {
+  opportunityId: string;
+  stage: ActiveApplicationStage;
+  completedTasks: string[];
+  notes?: string;
+  startedAt: string;
+  updatedAt: string;
+}
+
 export interface User {
   id: string; // Firebase Auth UID
   fullName: string;
@@ -73,9 +98,10 @@ export interface User {
   createdAt: string;
   savedOpportunities: string[];
   applicationTracker: Record<string, 'saved' | 'preparing' | 'submitted' | 'accepted'>;
+  targetList?: Record<string, TargetListItem>;
+  activeApplications?: Record<string, ActiveApplicationItem>;
   profile?: StudentProfile;
-  isDemo?: boolean;
-  role?: 'student' | 'admin';
+  isAdmin?: boolean;
 }
 
 export interface RegisterInput {
@@ -87,21 +113,55 @@ export interface RegisterInput {
   studyField: string;
 }
 
-export interface PasswordResetToken {
-  email: string;
-  code: string;
-  expiresAt: number;
+export const PASSWORD_MIN_LENGTH = 8;
+
+export function validatePasswordPolicy(password: string): { valid: boolean; error?: string } {
+  if (!password) {
+    return { valid: false, error: 'Password is required.' };
+  }
+  if (password.length < PASSWORD_MIN_LENGTH) {
+    return {
+      valid: false,
+      error: `Password must be at least ${PASSWORD_MIN_LENGTH} characters long.`,
+    };
+  }
+  if (password.length > 128) {
+    return { valid: false, error: 'Password cannot exceed 128 characters.' };
+  }
+  if (!/[A-Za-z]/.test(password) || !/[0-9]/.test(password)) {
+    return {
+      valid: false,
+      error: 'Password must include both letters and numbers.',
+    };
+  }
+  return { valid: true };
 }
 
 const CACHED_USER_KEY = 'campus_connect_cached_active_user';
 const SESSION_STORAGE_KEY = 'campus_connect_active_session_user_id';
 const LEGACY_STORAGE_KEY = 'campus_connect_registered_users';
-const RESET_TOKENS_STORAGE_KEY = 'campus_connect_pwd_reset_tokens';
+const LEGACY_RESET_TOKENS_STORAGE_KEY = 'campus_connect_pwd_reset_tokens';
 
-// Security: Strip legacy password hashes and salts from local storage
+// Security: Strip legacy password hashes, reset tokens, and deprecated demo sessions from local storage
 export function cleanupLegacyLocalStorage(): void {
   if (typeof window === 'undefined' || typeof localStorage === 'undefined') return;
   try {
+    localStorage.removeItem(LEGACY_RESET_TOKENS_STORAGE_KEY);
+
+    const cachedRaw = localStorage.getItem(CACHED_USER_KEY);
+    if (cachedRaw) {
+      const parsedCached = JSON.parse(cachedRaw);
+      if (
+        !parsedCached ||
+        parsedCached.isDemo === true ||
+        parsedCached.id === 'usr_demo_kwame_mensah' ||
+        parsedCached.email === 'scholar.ghana@campusconnect.edu'
+      ) {
+        localStorage.removeItem(CACHED_USER_KEY);
+        localStorage.removeItem(SESSION_STORAGE_KEY);
+      }
+    }
+
     const raw = localStorage.getItem(LEGACY_STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
@@ -126,7 +186,21 @@ function getCachedUser(): User | null {
   if (typeof window === 'undefined' || typeof localStorage === 'undefined') return null;
   try {
     const raw = localStorage.getItem(CACHED_USER_KEY);
-    return raw ? JSON.parse(raw) : null;
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (
+      !parsed ||
+      parsed.isDemo === true ||
+      parsed.id === 'usr_demo_kwame_mensah' ||
+      parsed.email === 'scholar.ghana@campusconnect.edu'
+    ) {
+      localStorage.removeItem(CACHED_USER_KEY);
+      localStorage.removeItem(SESSION_STORAGE_KEY);
+      return null;
+    }
+    // Never trust cached admin flags from localStorage; always derive from verified Firebase custom claims
+    const { isAdmin: _ignoredAdmin, role: _ignoredRole, isDemo: _ignoredDemo, ...safeUser } = parsed;
+    return safeUser as User;
   } catch {
     return null;
   }
@@ -136,7 +210,9 @@ function setCachedUser(user: User | null): void {
   if (typeof window === 'undefined' || typeof localStorage === 'undefined') return;
   try {
     if (user) {
-      localStorage.setItem(CACHED_USER_KEY, JSON.stringify(user));
+      // Never persist privilege flags to localStorage
+      const { isAdmin: _ignoredAdmin, ...cacheableUser } = user;
+      localStorage.setItem(CACHED_USER_KEY, JSON.stringify(cacheableUser));
       localStorage.setItem(SESSION_STORAGE_KEY, user.id);
     } else {
       localStorage.removeItem(CACHED_USER_KEY);
@@ -147,60 +223,74 @@ function setCachedUser(user: User | null): void {
   }
 }
 
-function getStoredResetTokens(): PasswordResetToken[] {
-  if (typeof window === 'undefined' || typeof localStorage === 'undefined') return [];
-  try {
-    const raw = localStorage.getItem(RESET_TOKENS_STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
+function hydrateTargetList(rawTargets?: Record<string, any>): Record<string, TargetListItem> {
+  const result: Record<string, TargetListItem> = {};
+  if (!rawTargets || typeof rawTargets !== 'object') return result;
+
+  Object.entries(rawTargets).forEach(([oppId, val]) => {
+    if (!oppId || !val || typeof val !== 'object') return;
+    const priority: TargetPriority =
+      val.priority === 'High' || val.priority === 'Medium' || val.priority === 'Low'
+        ? val.priority
+        : 'Medium';
+    result[oppId] = {
+      opportunityId: val.opportunityId || oppId,
+      priority,
+      intakeYear: typeof val.intakeYear === 'string' && val.intakeYear.trim() ? val.intakeYear.trim() : '2026',
+      personalGoal: typeof val.personalGoal === 'string' ? val.personalGoal : '',
+      addedAt: typeof val.addedAt === 'string' ? val.addedAt : new Date().toISOString(),
+      updatedAt: typeof val.updatedAt === 'string' ? val.updatedAt : new Date().toISOString(),
+    };
+  });
+
+  return result;
+}
+
+function hydrateActiveApplications(
+  rawActive?: Record<string, any>,
+  legacyTracker?: Record<string, any>
+): Record<string, ActiveApplicationItem> {
+  const result: Record<string, ActiveApplicationItem> = {};
+
+  if (rawActive && typeof rawActive === 'object') {
+    Object.entries(rawActive).forEach(([oppId, val]) => {
+      if (!oppId || !val || typeof val !== 'object') return;
+      const stage: ActiveApplicationStage =
+        val.stage === 'submitted' || val.stage === 'accepted' ? val.stage : 'preparing';
+      result[oppId] = {
+        opportunityId: val.opportunityId || oppId,
+        stage,
+        completedTasks: Array.isArray(val.completedTasks)
+          ? val.completedTasks.filter((t: unknown): t is string => typeof t === 'string')
+          : [],
+        notes: typeof val.notes === 'string' ? val.notes : undefined,
+        startedAt: typeof val.startedAt === 'string' ? val.startedAt : new Date().toISOString(),
+        updatedAt: typeof val.updatedAt === 'string' ? val.updatedAt : new Date().toISOString(),
+      };
+    });
   }
-}
 
-function saveStoredResetTokens(tokens: PasswordResetToken[]): void {
-  if (typeof window === 'undefined' || typeof localStorage === 'undefined') return;
-  try {
-    localStorage.setItem(RESET_TOKENS_STORAGE_KEY, JSON.stringify(tokens));
-  } catch (e) {
-    console.error('Failed to save reset tokens', e);
+  // Preserve existing started applications stored in legacy applicationTracker
+  // Strictly exclude 'saved' bookmarks!
+  if (legacyTracker && typeof legacyTracker === 'object') {
+    Object.entries(legacyTracker).forEach(([oppId, stage]) => {
+      if (!oppId || result[oppId]) return;
+      if (stage === 'preparing' || stage === 'submitted' || stage === 'accepted') {
+        const now = new Date().toISOString();
+        result[oppId] = {
+          opportunityId: oppId,
+          stage,
+          completedTasks: [],
+          startedAt: now,
+          updatedAt: now,
+        };
+      }
+    });
   }
+
+  return result;
 }
 
-const DEMO_USER_ID = 'usr_demo_kwame_mensah';
-const DEMO_EMAIL = 'scholar.ghana@campusconnect.edu';
-
-export function getDemoScholar(): User {
-  return {
-    id: DEMO_USER_ID,
-    fullName: 'Kwame Mensah',
-    email: DEMO_EMAIL,
-    country: 'Ghana',
-    countryCode: 'GH',
-    degreeLevel: 'Undergraduate',
-    studyField: 'Computer Science & Engineering',
-    createdAt: '2026-01-15T09:00:00.000Z',
-    savedOpportunities: ['ashesi-ghana', 'berea-college-usa'],
-    applicationTracker: {
-      'ashesi-ghana': 'preparing',
-      'berea-college-usa': 'saved',
-    },
-    profile: {
-      nationality: 'Ghanaian',
-      countryOfResidence: 'Ghana',
-      preferredDestinations: ['Ghana', 'United States', 'United Kingdom', 'Canada', 'Germany'],
-      educationLevel: 'Senior High School / WASSCE',
-      intendedDegree: 'Undergraduate',
-      fieldOfStudy: 'Computer Science & Engineering',
-      graduationYear: '2026',
-      onboardingCompleted: true,
-      studyModePreference: 'on-campus',
-      fundingTypePreference: 'fully_funded',
-      preferredFieldsOfStudy: ['Computer Science & Engineering', 'Software Engineering', 'Artificial Intelligence'],
-      notificationPreferences: { ...DEFAULT_NOTIFICATION_PREFERENCES },
-    },
-    isDemo: true,
-  };
-}
 
 let activeInMemoryUser: User | null = null;
 
@@ -216,6 +306,14 @@ export const authService = {
     const normalizedEmail = input.email.trim().toLowerCase();
     const fullName = input.fullName.trim();
 
+    const pwdCheck = validatePasswordPolicy(input.password);
+    if (!pwdCheck.valid) {
+      return {
+        success: false,
+        error: pwdCheck.error || 'Password does not meet security requirements.',
+      };
+    }
+
     // Call real Firebase Auth API
     const { userCredential, error: fbError } = await registerWithFirebase(
       normalizedEmail,
@@ -230,7 +328,7 @@ export const authService = {
           success: false,
           isConsoleSetupRequired: true,
           error:
-            'Email and password registration is temporarily unavailable. Please try again shortly or use the demo scholar preview.',
+            'Email and password registration is temporarily unavailable. Please contact the platform administrator.',
         };
       }
       if (code === 'auth/email-already-in-use') {
@@ -242,7 +340,7 @@ export const authService = {
       if (code === 'auth/weak-password') {
         return {
           success: false,
-          error: 'Password is too weak. Please use at least 6 characters (mix of uppercase, numbers, and symbols).',
+          error: 'Password is too weak. Please use at least 8 characters including both letters and numbers.',
         };
       }
       if (code === 'auth/invalid-email') {
@@ -259,6 +357,7 @@ export const authService = {
 
     const fbUser = userCredential.user;
     const uid = fbUser.uid;
+    const isAdminClaim = await checkCurrentUserIsAdmin(false);
 
     const matchedCountry = getCountryByName(input.country);
     const countryCode = matchedCountry?.code || 'GH';
@@ -290,7 +389,10 @@ export const authService = {
       createdAt: new Date().toISOString(),
       savedOpportunities: [],
       applicationTracker: {},
+      targetList: {},
+      activeApplications: {},
       profile: newProfile,
+      isAdmin: isAdminClaim,
     };
 
     // Link and persist Firestore user data strictly to authenticated user's UID
@@ -315,14 +417,13 @@ export const authService = {
     isConsoleSetupRequired?: boolean;
   }> {
     cleanupLegacyLocalStorage();
-    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedEmail = (email || '').trim().toLowerCase();
 
-    // Dedicated Demo Scholar One-Click Handler
-    if (normalizedEmail === DEMO_EMAIL && (password === 'Scholar2026!' || !password)) {
-      const demo = getDemoScholar();
-      activeInMemoryUser = demo;
-      setCachedUser(demo);
-      return { success: true, user: demo };
+    if (!normalizedEmail || !password) {
+      return {
+        success: false,
+        error: 'Please enter both your email address and password.',
+      };
     }
 
     // Call real Firebase Auth API
@@ -336,7 +437,7 @@ export const authService = {
           success: false,
           isConsoleSetupRequired: true,
           error:
-            'Email and password sign-in is temporarily unavailable. Please try again shortly or use the demo scholar preview.',
+            'Email and password sign-in is temporarily unavailable. Please try again shortly or contact support.',
         };
       }
       if (code === 'auth/user-not-found' || code === 'auth/invalid-credential') {
@@ -374,8 +475,12 @@ export const authService = {
     let resolvedProfile: StudentProfile;
     let resolvedSaved: string[] = [];
     let resolvedTracker: Record<string, 'saved' | 'preparing' | 'submitted' | 'accepted'> = {};
+    let resolvedTargets: Record<string, TargetListItem> = {};
+    let resolvedActiveApps: Record<string, ActiveApplicationItem> = {};
+    let resolvedFullName = fbUser.displayName || 'Scholar';
 
     if (firestoreData && firestoreData.profile) {
+      resolvedFullName = firestoreData.fullName || fbUser.displayName || 'Scholar';
       resolvedProfile = {
         ...firestoreData.profile,
         notificationPreferences: {
@@ -383,8 +488,10 @@ export const authService = {
           ...(firestoreData.profile.notificationPreferences || {}),
         },
       };
-      resolvedSaved = firestoreData.savedOpportunities || [];
+      resolvedSaved = Array.from(new Set(firestoreData.savedOpportunities || []));
       resolvedTracker = firestoreData.applicationTracker || {};
+      resolvedTargets = hydrateTargetList(firestoreData.targetList);
+      resolvedActiveApps = hydrateActiveApplications(firestoreData.activeApplications, resolvedTracker);
     } else {
       // First-time sync for newly created Firebase user
       resolvedProfile = {
@@ -402,22 +509,27 @@ export const authService = {
         uid,
         normalizedEmail,
         resolvedProfile,
-        fbUser.displayName || 'Scholar'
+        resolvedFullName
       ).catch(() => {});
     }
 
+    const isAdminClaim = await checkCurrentUserIsAdmin(true);
+
     const loggedInUser: User = {
       id: uid,
-      fullName: fbUser.displayName || 'Scholar',
+      fullName: resolvedFullName,
       email: normalizedEmail,
       country: resolvedProfile.countryOfResidence || 'Ghana',
-      countryCode: 'GH',
+      countryCode: getCountryByName(resolvedProfile.countryOfResidence || '')?.code || 'GH',
       degreeLevel: resolvedProfile.intendedDegree || 'Undergraduate',
       studyField: resolvedProfile.fieldOfStudy || 'Computer Science & Engineering',
       createdAt: fbUser.metadata.creationTime || new Date().toISOString(),
       savedOpportunities: resolvedSaved,
       applicationTracker: resolvedTracker,
+      targetList: resolvedTargets,
+      activeApplications: resolvedActiveApps,
       profile: resolvedProfile,
+      isAdmin: isAdminClaim,
     };
 
     activeInMemoryUser = loggedInUser;
@@ -448,8 +560,6 @@ export const authService = {
   async requestPasswordReset(email: string): Promise<{
     success: boolean;
     sentEmail?: boolean;
-    isDemo?: boolean;
-    code?: string;
     message?: string;
     error?: string;
   }> {
@@ -462,15 +572,6 @@ export const authService = {
       };
     }
 
-    // Demo Account Special Handler
-    if (normalizedEmail === DEMO_EMAIL) {
-      return {
-        success: true,
-        isDemo: true,
-        message: 'Demo Scholar Kwame Mensah: Your account is for evaluation. The current password is "Scholar2026!".',
-      };
-    }
-
     // Call real Firebase sendPasswordResetEmail
     const { success, error } = await sendFirebasePasswordReset(normalizedEmail);
 
@@ -478,7 +579,7 @@ export const authService = {
       return {
         success: true,
         sentEmail: true,
-        message: `An official password reset link has been dispatched to ${normalizedEmail}. Please check your inbox and spam folders to set a new password.`,
+        message: `An official password reset link has been sent to ${normalizedEmail}. Please check your inbox and spam folder to set a new password.`,
       };
     }
 
@@ -528,22 +629,19 @@ export const authService = {
     currentPassword: string,
     newPassword: string
   ): Promise<{ success: boolean; error?: string; requiresReauth?: boolean }> {
-    const trimmedCurrent = (currentPassword || '').trim();
-    const trimmedNew = (newPassword || '').trim();
-
-    if (!trimmedCurrent) {
+    if (!currentPassword) {
       return { success: false, error: 'Please enter your current password.' };
     }
 
-    if (!trimmedNew) {
-      return { success: false, error: 'Please enter your new password.' };
+    const pwdCheck = validatePasswordPolicy(newPassword);
+    if (!pwdCheck.valid) {
+      return {
+        success: false,
+        error: pwdCheck.error || 'New password does not meet security requirements.',
+      };
     }
 
-    if (trimmedNew.length < 6) {
-      return { success: false, error: 'Your new password must be at least 6 characters long.' };
-    }
-
-    if (trimmedNew === trimmedCurrent) {
+    if (newPassword === currentPassword) {
       return {
         success: false,
         error: 'The new password must be different from your current password.',
@@ -551,23 +649,12 @@ export const authService = {
     }
 
     const currentUser = this.getCurrentUser();
-    if (!currentUser) {
+    if (!currentUser || !auth.currentUser) {
       return { success: false, error: 'No active authenticated session found. Please sign in.' };
     }
 
-    // Demo account handling (never store passwords or hashes in localStorage or Firestore)
-    if (currentUser.isDemo || currentUser.email === DEMO_EMAIL) {
-      if (trimmedCurrent !== 'Scholar2026!') {
-        return {
-          success: false,
-          error: 'Current password for demo scholar account is incorrect (default is "Scholar2026!").',
-        };
-      }
-      return { success: true };
-    }
-
     // Call real Firebase Authentication API
-    return await changeFirebasePassword(trimmedCurrent, trimmedNew);
+    return await changeFirebasePassword(currentPassword, newPassword);
   },
 
   // 5c. Retrieve Active Session Details
@@ -628,38 +715,7 @@ export const authService = {
     return await refreshFirebaseSessionToken();
   },
 
-  // 6. Reset Password with Verification Code (for testing/demo fallback)
-  async resetPassword(
-    email: string,
-    code: string,
-    _newPassword: string
-  ): Promise<{ success: boolean; error?: string }> {
-    const normalizedEmail = email.trim().toLowerCase();
-
-    if (normalizedEmail === DEMO_EMAIL) {
-      return { success: true };
-    }
-
-    const tokens = getStoredResetTokens();
-    const validToken = tokens.find(
-      (t) => t.email === normalizedEmail && t.code === code.trim() && t.expiresAt > Date.now()
-    );
-
-    if (!validToken) {
-      return {
-        success: false,
-        error: 'Invalid or expired recovery code. Please request a new verification code.',
-      };
-    }
-
-    // Invalidate token
-    const remainingTokens = tokens.filter((t) => t.email !== normalizedEmail);
-    saveStoredResetTokens(remainingTokens);
-
-    return { success: true };
-  },
-
-  // 7. Toggle Saved Opportunity
+  // 7. Toggle Saved Opportunity (Personal Bookmark ONLY — never modifies Target List or Applications)
   toggleSavedOpportunity(opportunityId: string): User | null {
     const currentUser = this.getCurrentUser();
     if (!currentUser) return null;
@@ -676,17 +732,68 @@ export const authService = {
     setCachedUser(currentUser);
 
     // Sync saved opportunities to Cloud Firestore under authenticated user's UID
-    syncSavedOpportunitiesToFirestore(
-      currentUser.id,
-      currentUser.email,
-      currentUser.savedOpportunities,
-      currentUser.applicationTracker || {}
-    ).catch(() => {});
+    syncStudentDashboardListsToFirestore(currentUser.id, currentUser.email, {
+      savedOpportunities: currentUser.savedOpportunities,
+    }).catch(() => {});
 
     return currentUser;
   },
 
-  // 8. Update Application Tracker status
+  async toggleSavedOpportunitySynced(opportunityId: string): Promise<{
+    success: boolean;
+    persistedToCloud: boolean;
+    isSaved: boolean;
+    user?: User;
+    error?: string;
+  }> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      return { success: false, persistedToCloud: false, isSaved: false, error: 'No active student session.' };
+    }
+
+    const prevSaved = [...(currentUser.savedOpportunities || [])];
+    const saved = new Set(prevSaved);
+    let nowSaved: boolean;
+    if (saved.has(opportunityId)) {
+      saved.delete(opportunityId);
+      nowSaved = false;
+    } else {
+      saved.add(opportunityId);
+      nowSaved = true;
+    }
+
+    const nextSaved = Array.from(saved);
+    currentUser.savedOpportunities = nextSaved;
+    activeInMemoryUser = { ...currentUser };
+    setCachedUser(activeInMemoryUser);
+
+    const syncRes = await syncStudentDashboardListsToFirestore(currentUser.id, currentUser.email, {
+      savedOpportunities: nextSaved,
+    });
+
+    if (!syncRes.success) {
+      // Revert optimistic update on Firestore error
+      currentUser.savedOpportunities = prevSaved;
+      activeInMemoryUser = { ...currentUser };
+      setCachedUser(activeInMemoryUser);
+      return {
+        success: false,
+        persistedToCloud: false,
+        isSaved: !nowSaved,
+        user: activeInMemoryUser,
+        error: syncRes.error || 'Could not update bookmark in cloud database.',
+      };
+    }
+
+    return {
+      success: true,
+      persistedToCloud: syncRes.persistedToCloud,
+      isSaved: nowSaved,
+      user: activeInMemoryUser,
+    };
+  },
+
+  // 8. Update Application Tracker status (legacy / COVA compatibility)
   updateApplicationStatus(
     opportunityId: string,
     status: 'saved' | 'preparing' | 'submitted' | 'accepted'
@@ -698,30 +805,459 @@ export const authService = {
       currentUser.applicationTracker = {};
     }
     currentUser.applicationTracker[opportunityId] = status;
+
+    if (status === 'preparing' || status === 'submitted' || status === 'accepted') {
+      const now = new Date().toISOString();
+      const existing = currentUser.activeApplications?.[opportunityId];
+      currentUser.activeApplications = {
+        ...(currentUser.activeApplications || {}),
+        [opportunityId]: {
+          opportunityId,
+          stage: status,
+          completedTasks: existing?.completedTasks || [],
+          notes: existing?.notes,
+          startedAt: existing?.startedAt || now,
+          updatedAt: now,
+        },
+      };
+    }
+
     activeInMemoryUser = currentUser;
     setCachedUser(currentUser);
 
-    // Sync tracker stage to Cloud Firestore under authenticated user's UID
-    syncSavedOpportunitiesToFirestore(
-      currentUser.id,
-      currentUser.email,
-      currentUser.savedOpportunities || [],
-      currentUser.applicationTracker
-    ).catch(() => {});
+    syncStudentDashboardListsToFirestore(currentUser.id, currentUser.email, {
+      applicationTracker: currentUser.applicationTracker,
+      activeApplications: currentUser.activeApplications || {},
+    }).catch(() => {});
 
     return currentUser;
   },
 
-  // 9. Initialize Default Authentic Demo Account
-  async initDefaultDemoUser(): Promise<void> {
-    cleanupLegacyLocalStorage();
-    const cached = getCachedUser();
-    if (!cached) {
-      const demo = getDemoScholar();
-      activeInMemoryUser = demo;
-      setCachedUser(demo);
+  // 8b. Refresh hydrated user state directly from Firestore
+  async refreshCurrentUserFromFirestore(): Promise<User | null> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser || !auth.currentUser) {
+      return currentUser;
     }
+
+    const [firestoreData, isAdminClaim] = await Promise.all([
+      fetchStudentProfileFromFirestore(auth.currentUser.uid),
+      checkCurrentUserIsAdmin(false),
+    ]);
+    if (!firestoreData) {
+      return { ...currentUser, isAdmin: isAdminClaim };
+    }
+
+    const mergedProfile: StudentProfile = {
+      ...(currentUser.profile || {
+        nationality: 'Ghanaian',
+        countryOfResidence: 'Ghana',
+        preferredDestinations: ['Ghana', 'United States', 'United Kingdom', 'Canada'],
+        educationLevel: 'Senior High School / WASSCE',
+        intendedDegree: 'Undergraduate',
+        fieldOfStudy: 'Computer Science & Engineering',
+        graduationYear: '2026',
+        onboardingCompleted: false,
+      }),
+      ...(firestoreData.profile || {}),
+      notificationPreferences: {
+        ...DEFAULT_NOTIFICATION_PREFERENCES,
+        ...(currentUser.profile?.notificationPreferences || {}),
+        ...(firestoreData.profile?.notificationPreferences || {}),
+      },
+    };
+
+    const hydrated: User = {
+      ...currentUser,
+      fullName: firestoreData.fullName || auth.currentUser.displayName || currentUser.fullName,
+      country: mergedProfile.countryOfResidence || currentUser.country,
+      degreeLevel: mergedProfile.intendedDegree || currentUser.degreeLevel,
+      studyField: mergedProfile.fieldOfStudy || currentUser.studyField,
+      savedOpportunities: Array.from(new Set(firestoreData.savedOpportunities || [])),
+      applicationTracker: firestoreData.applicationTracker || {},
+      targetList: hydrateTargetList(firestoreData.targetList),
+      activeApplications: hydrateActiveApplications(
+        firestoreData.activeApplications,
+        firestoreData.applicationTracker
+      ),
+      profile: mergedProfile,
+      isAdmin: isAdminClaim,
+    };
+
+    activeInMemoryUser = hydrated;
+    setCachedUser(hydrated);
+    return hydrated;
   },
+
+  // 8c. Dashboard Profile Save (awaits Firestore and reports exact persistence outcome)
+  async saveDashboardProfile(params: {
+    fullName: string;
+    profileData: Partial<StudentProfile>;
+  }): Promise<{ success: boolean; persistedToCloud: boolean; user?: User; error?: string }> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      return { success: false, persistedToCloud: false, error: 'No active student session found.' };
+    }
+
+    const trimmedName = (params.fullName || '').trim();
+    if (!trimmedName || trimmedName.length < 2) {
+      return {
+        success: false,
+        persistedToCloud: false,
+        error: 'Please enter your full name (at least 2 characters).',
+      };
+    }
+
+    const existingProfile: StudentProfile = currentUser.profile || {
+      nationality: '',
+      countryOfResidence: '',
+      preferredDestinations: [],
+      educationLevel: '',
+      intendedDegree: '',
+      fieldOfStudy: '',
+      graduationYear: '',
+      onboardingCompleted: false,
+    };
+
+    const updatedProfile: StudentProfile = {
+      ...existingProfile,
+      ...params.profileData,
+      onboardingCompleted: true,
+    };
+
+    const prevUser = { ...currentUser, profile: currentUser.profile ? { ...currentUser.profile } : undefined };
+
+    currentUser.fullName = trimmedName;
+    currentUser.profile = updatedProfile;
+    if (updatedProfile.countryOfResidence) currentUser.country = updatedProfile.countryOfResidence;
+    if (updatedProfile.intendedDegree) currentUser.degreeLevel = updatedProfile.intendedDegree;
+    if (updatedProfile.fieldOfStudy) currentUser.studyField = updatedProfile.fieldOfStudy;
+
+    activeInMemoryUser = { ...currentUser };
+    setCachedUser(activeInMemoryUser);
+
+    if (auth.currentUser && trimmedName !== prevUser.fullName) {
+      await updateFirebaseDisplayName(trimmedName).catch(() => {});
+    }
+
+    const fsRes = await saveStudentProfileWithStatusToFirestore(
+      currentUser.id,
+      currentUser.email,
+      updatedProfile,
+      trimmedName
+    );
+
+    if (!fsRes.success) {
+      activeInMemoryUser = prevUser;
+      setCachedUser(prevUser);
+      return {
+        success: false,
+        persistedToCloud: false,
+        user: prevUser,
+        error: fsRes.error || 'Failed to save profile to Firestore.',
+      };
+    }
+
+    return {
+      success: true,
+      persistedToCloud: fsRes.persistedToCloud,
+      user: activeInMemoryUser,
+    };
+  },
+
+  // 8d. Target List CRUD (Future Study Goals — completely independent from Saved & Applications)
+  async upsertTargetListItem(input: {
+    opportunityId: string;
+    priority: TargetPriority;
+    intakeYear: string;
+    personalGoal: string;
+  }): Promise<{ success: boolean; persistedToCloud: boolean; user?: User; error?: string }> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      return { success: false, persistedToCloud: false, error: 'No active student session found.' };
+    }
+
+    const prevTargets = { ...(currentUser.targetList || {}) };
+    const existing = prevTargets[input.opportunityId];
+    const now = new Date().toISOString();
+
+    const nextTargets: Record<string, TargetListItem> = {
+      ...prevTargets,
+      [input.opportunityId]: {
+        opportunityId: input.opportunityId,
+        priority: input.priority,
+        intakeYear: input.intakeYear.trim() || '2026',
+        personalGoal: input.personalGoal.trim().slice(0, 500),
+        addedAt: existing?.addedAt || now,
+        updatedAt: now,
+      },
+    };
+
+    currentUser.targetList = nextTargets;
+    activeInMemoryUser = { ...currentUser };
+    setCachedUser(activeInMemoryUser);
+
+    const syncRes = await syncStudentDashboardListsToFirestore(currentUser.id, currentUser.email, {
+      targetList: nextTargets,
+    });
+
+    if (!syncRes.success) {
+      currentUser.targetList = prevTargets;
+      activeInMemoryUser = { ...currentUser };
+      setCachedUser(activeInMemoryUser);
+      return {
+        success: false,
+        persistedToCloud: false,
+        user: activeInMemoryUser,
+        error: syncRes.error || 'Could not save Target List item to Firestore.',
+      };
+    }
+
+    return {
+      success: true,
+      persistedToCloud: syncRes.persistedToCloud,
+      user: activeInMemoryUser,
+    };
+  },
+
+  async removeTargetListItem(opportunityId: string): Promise<{
+    success: boolean;
+    persistedToCloud: boolean;
+    user?: User;
+    error?: string;
+  }> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      return { success: false, persistedToCloud: false, error: 'No active student session found.' };
+    }
+
+    const prevTargets = { ...(currentUser.targetList || {}) };
+    const nextTargets = { ...prevTargets };
+    delete nextTargets[opportunityId];
+
+    currentUser.targetList = nextTargets;
+    activeInMemoryUser = { ...currentUser };
+    setCachedUser(activeInMemoryUser);
+
+    const syncRes = await syncStudentDashboardListsToFirestore(currentUser.id, currentUser.email, {
+      targetList: nextTargets,
+    });
+
+    if (!syncRes.success) {
+      currentUser.targetList = prevTargets;
+      activeInMemoryUser = { ...currentUser };
+      setCachedUser(activeInMemoryUser);
+      return {
+        success: false,
+        persistedToCloud: false,
+        user: activeInMemoryUser,
+        error: syncRes.error || 'Could not remove target from Firestore.',
+      };
+    }
+
+    return {
+      success: true,
+      persistedToCloud: syncRes.persistedToCloud,
+      user: activeInMemoryUser,
+    };
+  },
+
+  // 8e. Active Applications CRUD (Started Applications ONLY — excludes bookmarks & unstarted targets)
+  async startActiveApplication(
+    opportunityId: string,
+    initialStage: ActiveApplicationStage = 'preparing'
+  ): Promise<{
+    success: boolean;
+    persistedToCloud: boolean;
+    alreadyExists?: boolean;
+    user?: User;
+    error?: string;
+  }> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      return { success: false, persistedToCloud: false, error: 'No active student session found.' };
+    }
+
+    const prevApps = { ...(currentUser.activeApplications || {}) };
+    const prevTracker = { ...(currentUser.applicationTracker || {}) };
+
+    // Prevent duplicates
+    if (prevApps[opportunityId]) {
+      return {
+        success: true,
+        persistedToCloud: true,
+        alreadyExists: true,
+        user: currentUser,
+      };
+    }
+
+    const now = new Date().toISOString();
+    const nextApps: Record<string, ActiveApplicationItem> = {
+      ...prevApps,
+      [opportunityId]: {
+        opportunityId,
+        stage: initialStage,
+        completedTasks: [],
+        startedAt: now,
+        updatedAt: now,
+      },
+    };
+    const nextTracker: Record<string, 'saved' | 'preparing' | 'submitted' | 'accepted'> = {
+      ...prevTracker,
+      [opportunityId]: initialStage,
+    };
+
+    currentUser.activeApplications = nextApps;
+    currentUser.applicationTracker = nextTracker;
+    activeInMemoryUser = { ...currentUser };
+    setCachedUser(activeInMemoryUser);
+
+    const syncRes = await syncStudentDashboardListsToFirestore(currentUser.id, currentUser.email, {
+      activeApplications: nextApps,
+      applicationTracker: nextTracker,
+    });
+
+    if (!syncRes.success) {
+      currentUser.activeApplications = prevApps;
+      currentUser.applicationTracker = prevTracker;
+      activeInMemoryUser = { ...currentUser };
+      setCachedUser(activeInMemoryUser);
+      return {
+        success: false,
+        persistedToCloud: false,
+        user: activeInMemoryUser,
+        error: syncRes.error || 'Could not start application in Firestore.',
+      };
+    }
+
+    return {
+      success: true,
+      persistedToCloud: syncRes.persistedToCloud,
+      alreadyExists: false,
+      user: activeInMemoryUser,
+    };
+  },
+
+  async updateActiveApplication(
+    opportunityId: string,
+    patch: { stage?: ActiveApplicationStage; completedTasks?: string[]; notes?: string }
+  ): Promise<{ success: boolean; persistedToCloud: boolean; user?: User; error?: string }> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      return { success: false, persistedToCloud: false, error: 'No active student session found.' };
+    }
+
+    const prevApps = { ...(currentUser.activeApplications || {}) };
+    const prevTracker = { ...(currentUser.applicationTracker || {}) };
+    const existing = prevApps[opportunityId];
+    const now = new Date().toISOString();
+
+    const nextStage: ActiveApplicationStage = patch.stage || existing?.stage || 'preparing';
+    const nextItem: ActiveApplicationItem = {
+      opportunityId,
+      stage: nextStage,
+      completedTasks:
+        patch.completedTasks !== undefined
+          ? Array.from(new Set(patch.completedTasks))
+          : existing?.completedTasks || [],
+      ...(patch.notes !== undefined
+        ? { notes: patch.notes }
+        : existing?.notes !== undefined
+        ? { notes: existing.notes }
+        : {}),
+      startedAt: existing?.startedAt || now,
+      updatedAt: now,
+    };
+
+    const nextApps = { ...prevApps, [opportunityId]: nextItem };
+    const nextTracker = { ...prevTracker, [opportunityId]: nextStage };
+
+    currentUser.activeApplications = nextApps;
+    currentUser.applicationTracker = nextTracker;
+    activeInMemoryUser = { ...currentUser };
+    setCachedUser(activeInMemoryUser);
+
+    const syncRes = await syncStudentDashboardListsToFirestore(currentUser.id, currentUser.email, {
+      activeApplications: nextApps,
+      applicationTracker: nextTracker,
+    });
+
+    if (!syncRes.success) {
+      currentUser.activeApplications = prevApps;
+      currentUser.applicationTracker = prevTracker;
+      activeInMemoryUser = { ...currentUser };
+      setCachedUser(activeInMemoryUser);
+      return {
+        success: false,
+        persistedToCloud: false,
+        user: activeInMemoryUser,
+        error: syncRes.error || 'Could not update application in Firestore.',
+      };
+    }
+
+    return {
+      success: true,
+      persistedToCloud: syncRes.persistedToCloud,
+      user: activeInMemoryUser,
+    };
+  },
+
+  async removeActiveApplication(opportunityId: string): Promise<{
+    success: boolean;
+    persistedToCloud: boolean;
+    user?: User;
+    error?: string;
+  }> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      return { success: false, persistedToCloud: false, error: 'No active student session found.' };
+    }
+
+    const prevApps = { ...(currentUser.activeApplications || {}) };
+    const prevTracker = { ...(currentUser.applicationTracker || {}) };
+
+    const nextApps = { ...prevApps };
+    delete nextApps[opportunityId];
+
+    const nextTracker = { ...prevTracker };
+    if (
+      nextTracker[opportunityId] === 'preparing' ||
+      nextTracker[opportunityId] === 'submitted' ||
+      nextTracker[opportunityId] === 'accepted'
+    ) {
+      delete nextTracker[opportunityId];
+    }
+
+    currentUser.activeApplications = nextApps;
+    currentUser.applicationTracker = nextTracker;
+    activeInMemoryUser = { ...currentUser };
+    setCachedUser(activeInMemoryUser);
+
+    const syncRes = await syncStudentDashboardListsToFirestore(currentUser.id, currentUser.email, {
+      activeApplications: nextApps,
+      applicationTracker: nextTracker,
+    });
+
+    if (!syncRes.success) {
+      currentUser.activeApplications = prevApps;
+      currentUser.applicationTracker = prevTracker;
+      activeInMemoryUser = { ...currentUser };
+      setCachedUser(activeInMemoryUser);
+      return {
+        success: false,
+        persistedToCloud: false,
+        user: activeInMemoryUser,
+        error: syncRes.error || 'Could not remove application from Firestore.',
+      };
+    }
+
+    return {
+      success: true,
+      persistedToCloud: syncRes.persistedToCloud,
+      user: activeInMemoryUser,
+    };
+  },
+
 
   // 10. Update Student Profile & Preferences
   updateProfile(profileData: Partial<StudentProfile>, fullName?: string): User | null {
@@ -1076,19 +1612,8 @@ export const authService = {
   // 12. Delete Student Account & All Associated Records (Right to Erasure)
   async deleteAccount(): Promise<{ success: boolean; error?: string; requiresReauth?: boolean }> {
     const currentUser = this.getCurrentUser();
-    if (!currentUser) {
+    if (!currentUser || !auth.currentUser) {
       return { success: false, error: 'No active student session found.' };
-    }
-
-    // Handle Demo scholar account reset
-    if (currentUser.isDemo || currentUser.id === DEMO_USER_ID) {
-      activeInMemoryUser = null;
-      setCachedUser(null);
-      if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-        localStorage.removeItem(CACHED_USER_KEY);
-        sessionStorage.removeItem(SESSION_STORAGE_KEY);
-      }
-      return { success: true };
     }
 
     // Real Firebase student account and Firestore record deletion
@@ -1126,10 +1651,13 @@ export const authService = {
     return subscribeToFirebaseAuthState(async (fbUser: FirebaseUser | null) => {
       if (fbUser) {
         const uid = fbUser.uid;
-        // Fetch fresh Firestore user data
-        const firestoreData = await fetchStudentProfileFromFirestore(uid);
+        // Fetch fresh Firestore user data and server-minted admin custom claim
+        const [firestoreData, isAdminClaim] = await Promise.all([
+          fetchStudentProfileFromFirestore(uid),
+          checkCurrentUserIsAdmin(false),
+        ]);
 
-        let profile: StudentProfile = firestoreData?.profile || {
+        const profile: StudentProfile = firestoreData?.profile || {
           nationality: 'Ghanaian',
           countryOfResidence: 'Ghana',
           preferredDestinations: ['Ghana', 'United States', 'United Kingdom', 'Canada'],
@@ -1142,32 +1670,31 @@ export const authService = {
 
         const syncedUser: User = {
           id: uid,
-          fullName: fbUser.displayName || 'Scholar',
+          fullName: firestoreData?.fullName || fbUser.displayName || 'Scholar',
           email: fbUser.email || '',
           country: profile.countryOfResidence || 'Ghana',
-          countryCode: 'GH',
+          countryCode: getCountryByName(profile.countryOfResidence || '')?.code || 'GH',
           degreeLevel: profile.intendedDegree || 'Undergraduate',
           studyField: profile.fieldOfStudy || 'Computer Science & Engineering',
           createdAt: fbUser.metadata.creationTime || new Date().toISOString(),
-          savedOpportunities: firestoreData?.savedOpportunities || [],
+          savedOpportunities: Array.from(new Set(firestoreData?.savedOpportunities || [])),
           applicationTracker: firestoreData?.applicationTracker || {},
+          targetList: hydrateTargetList(firestoreData?.targetList),
+          activeApplications: hydrateActiveApplications(
+            firestoreData?.activeApplications,
+            firestoreData?.applicationTracker
+          ),
           profile,
+          isAdmin: isAdminClaim,
         };
 
         activeInMemoryUser = syncedUser;
         setCachedUser(syncedUser);
         onUserChanged(syncedUser);
       } else {
-        // If not in Firebase Auth, check if currently in demo mode
-        const cached = getCachedUser();
-        if (cached && cached.isDemo) {
-          activeInMemoryUser = cached;
-          onUserChanged(cached);
-        } else {
-          activeInMemoryUser = null;
-          setCachedUser(null);
-          onUserChanged(null);
-        }
+        activeInMemoryUser = null;
+        setCachedUser(null);
+        onUserChanged(null);
       }
     });
   },

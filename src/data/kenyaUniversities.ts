@@ -130,7 +130,8 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#C49A45",
       monogram: "SU",
       crestColor: "#002147",
-      logoDescription: "Strathmore University Official Seal & Emblem"
+      logoDescription: "Strathmore University Official Seal & Emblem",
+      "logoUrl": "/logos/strathmore-kenya.png"
     },
     eligibilityCountries: [
       "Kenya",
@@ -236,7 +237,8 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#F7931E",
       monogram: "JKUAT",
       crestColor: "#006837",
-      logoDescription: "Jomo Kenyatta University of Agriculture and Technology Official Seal & Emblem"
+      logoDescription: "Jomo Kenyatta University of Agriculture and Technology Official Seal & Emblem",
+      "logoUrl": "/logos/jkuat-kenya.png"
     },
     eligibilityCountries: [
       "Kenya",
@@ -342,7 +344,8 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFD200",
       monogram: "MOI",
       crestColor: "#00552B",
-      logoDescription: "Moi University Official Seal & Emblem"
+      logoDescription: "Moi University Official Seal & Emblem",
+      "logoUrl": "/logos/moi-kenya.png"
     },
     eligibilityCountries: [
       "Kenya",
@@ -1084,7 +1087,8 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "TUM",
       crestColor: "#005596",
-      logoDescription: "Technical University of Mombasa Official Seal & Emblem"
+      logoDescription: "Technical University of Mombasa Official Seal & Emblem",
+      "logoUrl": "/logos/tum-kenya.png"
     },
     eligibilityCountries: [
       "Kenya",
@@ -4264,7 +4268,8 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "SCU",
       crestColor: "#1B2631",
-      logoDescription: "Scott Christian University Official Seal & Emblem"
+      logoDescription: "Scott Christian University Official Seal & Emblem",
+      "logoUrl": "/logos/scott-kenya.png"
     },
     eligibilityCountries: [
       "Kenya",
@@ -4370,7 +4375,8 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#F1C40F",
       monogram: "KABU",
       crestColor: "#4A235A",
-      logoDescription: "Kabarak University Official Seal & Emblem"
+      logoDescription: "Kabarak University Official Seal & Emblem",
+      "logoUrl": "/logos/kabarak-kenya.png"
     },
     eligibilityCountries: [
       "Kenya",
@@ -4794,7 +4800,8 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#E67E22",
       monogram: "KCAU",
       crestColor: "#154360",
-      logoDescription: "KCA University Official Seal & Emblem"
+      logoDescription: "KCA University Official Seal & Emblem",
+      "logoUrl": "/logos/kca-kenya.png"
     },
     eligibilityCountries: [
       "Kenya",
@@ -5006,7 +5013,8 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#F39C12",
       monogram: "ZET",
       crestColor: "#117864",
-      logoDescription: "Zetech University Official Seal & Emblem"
+      logoDescription: "Zetech University Official Seal & Emblem",
+      "logoUrl": "/logos/zetech-kenya.png"
     },
     eligibilityCountries: [
       "Kenya",

@@ -25,7 +25,8 @@ export const moreGlobalUniversities: OpportunityItem[] = [
       text: "#F49342",
       monogram: "IISc",
       crestColor: "#102A43",
-      logoDescription: "IISc Bengaluru Heritage Research Seal"
+      logoDescription: "IISc Bengaluru Heritage Research Seal",
+      "logoUrl": "/logos/iisc-bangalore-india.png"
     },
     eligibilityCountries: ["India", "Ghana", "Nigeria", "Kenya", "United States", "All International Countries"],
     nationalityEligibility: {
@@ -108,7 +109,8 @@ export const moreGlobalUniversities: OpportunityItem[] = [
       text: "#E5A823",
       monogram: "IITB",
       crestColor: "#003366",
-      logoDescription: "IIT Bombay Gear, Cog & Sanskrit Motto Seal"
+      logoDescription: "IIT Bombay Gear, Cog & Sanskrit Motto Seal",
+      "logoUrl": "/logos/iit-bombay-india.png"
     },
     eligibilityCountries: ["India", "Ghana", "Nigeria", "Kenya", "All International Countries"],
     nationalityEligibility: {

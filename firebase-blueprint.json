@@ -91,11 +91,23 @@
         },
         "savedOpportunities": {
           "type": "array",
-          "description": "List of saved opportunity IDs in student's target list"
+          "description": "List of bookmarked opportunity IDs in student's Saved Opportunities"
+        },
+        "targetList": {
+          "type": "object",
+          "description": "Map of opportunity IDs to future study goal metadata (priority, intakeYear, personalGoal)"
+        },
+        "activeApplications": {
+          "type": "object",
+          "description": "Map of opportunity IDs to started application progress, stage, and task checklists"
         },
         "applicationTracker": {
           "type": "object",
-          "description": "Mapping of opportunity IDs to application progress stages"
+          "description": "Legacy mapping of opportunity IDs to application progress stages"
+        },
+        "scholarshipAlerts": {
+          "type": "object",
+          "description": "Scholarship alert subscription preferences and status for this student"
         },
         "createdAt": {
           "type": "string",
@@ -107,6 +119,38 @@
         }
       },
       "required": ["uid", "email"]
+    },
+    "CovaConversation": {
+      "title": "CovaConversation",
+      "description": "Private COVA AI advisor conversation thread scoped to an authenticated student account.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique conversation identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Authentication user ID"
+        },
+        "title": {
+          "type": "string",
+          "description": "Conversation title"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of conversation creation"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last message or rename"
+        },
+        "messages": {
+          "type": "array",
+          "description": "Ordered list of conversation messages with compact opportunity ID references"
+        }
+      },
+      "required": ["id", "userId", "title", "createdAt", "updatedAt", "messages"]
     }
   },
   "firestore": {
@@ -121,6 +165,12 @@
         "$ref": "#/entities/UserProfile"
       },
       "description": "Private student user account and academic profile data."
+    },
+    "/users/{userId}/covaConversations/{conversationId}": {
+      "schema": {
+        "$ref": "#/entities/CovaConversation"
+      },
+      "description": "Private COVA AI assistant conversation threads owned by the authenticated student."
     }
   }
 }

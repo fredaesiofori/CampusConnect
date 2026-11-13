@@ -582,8 +582,14 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({
 
       {/* COVA AI Virtual Assistant */}
       <CovaAssistant
+        userId={currentUser?.id}
         userName={currentUser?.fullName}
         studentProfile={currentUser?.profile}
+        savedOpportunities={
+          currentUser?.savedOpportunities ? new Set(currentUser.savedOpportunities) : undefined
+        }
+        targetList={currentUser?.targetList}
+        activeApplications={currentUser?.activeApplications}
       />
     </div>
   );
