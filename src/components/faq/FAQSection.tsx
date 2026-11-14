@@ -5,7 +5,8 @@
 
 import React, { useState, useId } from 'react';
 import {
-  ChevronDown,
+  Plus,
+  Minus,
   Sparkles,
   CheckCircle2,
   MessageCircle,
@@ -78,37 +79,20 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
   onOpenAssistant,
   onExploreUniversities,
 }) => {
-  const [expandedIds, setExpandedIds] = useState<Set<string>>(
-    new Set(['faq-what-is-campus-connect'])
-  );
+  // All FAQ answers are closed by default; only one question expands at a time
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const baseId = useId();
 
   const toggleAccordion = (id: string) => {
-    setExpandedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
-  };
-
-  const expandAll = () => {
-    setExpandedIds(new Set(FAQ_DATA.map((item) => item.id)));
-  };
-
-  const collapseAll = () => {
-    setExpandedIds(new Set());
+    setExpandedId((prev) => (prev === id ? null : id));
   };
 
   return (
     <section
       id="faq"
       aria-labelledby="faq-main-heading"
-      className={`relative w-full overflow-hidden bg-white py-16 sm:py-20 lg:py-24 text-[#15152F] border-t border-slate-100 ${className}`}
+      className={`relative w-full overflow-hidden bg-white py-14 sm:py-16 lg:py-20 text-[#15152F] border-t border-slate-100 ${className}`}
     >
       {/* Subtle geometric background accents */}
       <div className="absolute inset-0 pointer-events-none opacity-40 overflow-hidden" aria-hidden="true">
@@ -119,49 +103,27 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
 
       <Container size="lg" className="relative z-10">
         {/* Header Section */}
-        <div className="mx-auto max-w-3xl text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#6846F5]/10 border border-[#6846F5]/20 text-xs font-semibold tracking-wider uppercase text-[#6846F5] shadow-2xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#E7B75C]" />
-            <span>COMMON ADMISSIONS QUESTIONS</span>
-          </div>
+        <div className="mx-auto max-w-2xl text-center space-y-3">
+          <p className="text-xs font-semibold tracking-wider uppercase text-[#6846F5]">
+            Common Admissions Questions
+          </p>
 
           <h2
             id="faq-main-heading"
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-extrabold font-display tracking-tight text-[#10132D] [text-wrap:balance]"
+            className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-display tracking-tight text-[#10132D] [text-wrap:balance]"
           >
             Frequently Asked Questions
           </h2>
 
-          <p className="text-sm sm:text-base lg:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed [text-wrap:pretty]">
+          <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed [text-wrap:pretty]">
             Clear answers to help you explore universities worldwide, admissions requirements, fee waivers, test-optional pathways, and scholarships.
           </p>
-
-          {/* Action Row: Expand / Collapse All */}
-          <div className="pt-2 flex items-center justify-end text-xs text-slate-500 max-w-3xl mx-auto">
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={expandAll}
-                className="text-[#6846F5] hover:underline font-medium cursor-pointer"
-              >
-                Expand all
-              </button>
-              <span className="text-slate-300">•</span>
-              <button
-                type="button"
-                onClick={collapseAll}
-                className="text-slate-500 hover:underline font-medium cursor-pointer"
-              >
-                Collapse all
-              </button>
-            </div>
-          </div>
         </div>
 
-        {/* Accordion List Container */}
-        <div className="mt-4 mx-auto max-w-3xl space-y-3">
+        {/* Single-Open Accessible Accordion Container */}
+        <div className="mt-8 sm:mt-10 mx-auto max-w-3xl space-y-3">
           {FAQ_DATA.map((item, index) => {
-            const isExpanded = expandedIds.has(item.id);
+            const isExpanded = expandedId === item.id;
             const headerId = `${baseId}-header-${item.id}`;
             const panelId = `${baseId}-panel-${item.id}`;
 
@@ -181,11 +143,11 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
                     aria-controls={panelId}
                     aria-expanded={isExpanded}
                     onClick={() => toggleAccordion(item.id)}
-                    className="w-full text-left py-4 px-4 sm:px-6 flex items-start justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] select-none"
+                    className="w-full min-h-[56px] text-left py-4 px-4 sm:px-6 flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#6846F5] select-none"
                   >
-                    <span className="flex items-start gap-3 min-w-0">
+                    <span className="flex items-center gap-3 min-w-0">
                       <span
-                        className={`mt-0.5 w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold transition-colors ${
+                        className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold tabular-nums transition-colors ${
                           isExpanded
                             ? 'bg-[#6846F5] text-white'
                             : 'bg-slate-100 text-slate-600'
@@ -199,53 +161,60 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
                     </span>
 
                     <span
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-200 ${
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors duration-200 ${
                         isExpanded
-                          ? 'rotate-180 bg-[#6846F5]/10 text-[#6846F5]'
-                          : 'bg-slate-50 text-slate-400 group-hover:text-slate-600'
+                          ? 'bg-[#6846F5]/10 text-[#6846F5]'
+                          : 'bg-slate-50 text-slate-500'
                       }`}
                       aria-hidden="true"
                     >
-                      <ChevronDown className="w-4 h-4" />
+                      {isExpanded ? (
+                        <Minus className="w-4 h-4" />
+                      ) : (
+                        <Plus className="w-4 h-4" />
+                      )}
                     </span>
                   </button>
                 </h3>
 
-                {/* Accordion Content Panel */}
+                {/* Accessible Smooth Accordion Panel */}
                 <div
                   id={panelId}
                   role="region"
                   aria-labelledby={headerId}
-                  className={`transition-all duration-200 ease-in-out ${
+                  aria-hidden={!isExpanded}
+                  className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${
                     isExpanded
-                      ? 'max-h-[600px] opacity-100 border-t border-slate-100'
-                      : 'max-h-0 opacity-0 overflow-hidden border-t-0 pointer-events-none'
+                      ? 'grid-rows-[1fr] opacity-100 border-t border-slate-100'
+                      : 'grid-rows-[0fr] opacity-0 invisible'
                   }`}
                 >
-                  <div className="p-4 sm:p-6 bg-slate-50/50 space-y-3.5">
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed [text-wrap:pretty]">
-                      {item.answer}
-                    </p>
+                  <div className="overflow-hidden">
+                    <div className="p-4 sm:p-6 bg-slate-50/50 space-y-3.5">
+                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed [text-wrap:pretty]">
+                        {item.answer}
+                      </p>
 
-                    {/* Bullet Highlights */}
-                    {item.highlights && item.highlights.length > 0 && (
-                      <div className="bg-white border border-slate-200/80 rounded-xl p-3.5 space-y-2">
-                        <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                          Key Takeaways:
-                        </p>
-                        <ul className="space-y-1.5">
-                          {item.highlights.map((h, i) => (
-                            <li
-                              key={i}
-                              className="text-xs text-slate-600 flex items-start gap-2 leading-snug"
-                            >
-                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                              <span>{h}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                      {/* Bullet Highlights */}
+                      {item.highlights && item.highlights.length > 0 && (
+                        <div className="bg-white border border-slate-200/80 rounded-xl p-3.5 space-y-2">
+                          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                            Key Takeaways:
+                          </p>
+                          <ul className="space-y-1.5">
+                            {item.highlights.map((h, i) => (
+                              <li
+                                key={i}
+                                className="text-xs text-slate-600 flex items-start gap-2 leading-snug"
+                              >
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                                <span>{h}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

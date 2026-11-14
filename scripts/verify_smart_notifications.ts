@@ -470,7 +470,7 @@ async function runTests() {
     'Must NEVER invent admission outcome messages'
   );
 
-  console.log('6. Testing inAppEnabled preference opt-out...');
+  console.log('6. Testing inAppEnabled opt-out, explicit empty intervals [], empty-country guard & cross-device profile dismissal sync...');
   const optedOutStudent = makeTestStudent(
     {
       savedOpportunities: savedIds,
@@ -489,6 +489,66 @@ async function runTests() {
   assert(
     optedOutRun.newNotifications.length === 0,
     'Disabling inAppEnabled must suppress new in-app notifications'
+  );
+
+  // Explicit empty intervals array must NOT fall back to ALL_REMINDER_INTERVALS
+  const emptyIntervalsStudent = makeTestStudent(
+    { savedOpportunities: ['opp-day-7'] },
+    { reminderIntervals: [] }
+  );
+  const emptyIntervalsRun = generateSmartNotifications({
+    user: emptyIntervalsStudent,
+    opportunities: oppMap,
+    existingNotifications: [],
+    baseline: baseline1,
+    now,
+  });
+  assert(
+    emptyIntervalsRun.newNotifications.filter((n) => n.category === 'deadline').length === 0,
+    'Explicit empty reminderIntervals [] must suppress deadline alerts'
+  );
+
+  // Empty country must NEVER falsely match preferredDestinations
+  const blankCountryOpp = makeTestOpportunity({
+    id: 'opp-blank-country',
+    country: '',
+    countryCode: '',
+    degreeLevels: [],
+    studyFields: [],
+    fundingDetails: { type: 'Paid', amount: 'Paid', details: 'Paid' },
+    funding: { type: 'Paid', amount: 'Paid', details: 'Paid' },
+    applicationFees: { status: 'Standard Fee', details: 'Fee required' },
+    applicationFee: { status: 'Standard Fee', details: 'Fee required' },
+    testWaiverRules: { status: 'SAT Required', details: 'Required' },
+    testPolicy: { status: 'SAT Required', details: 'Required' },
+  });
+  const blankCountryMatch = matchOpportunityToStudent(
+    blankCountryOpp,
+    studentFresh,
+    DEFAULT_NOTIFICATION_PREFERENCES,
+    now
+  );
+  assert(blankCountryMatch.matched === false, 'Blank country must NEVER false-match destination');
+
+  // Cross-device dismissal persisted inside user.profile.dismissedNotificationIds
+  const dismissedInProfileStudent = makeTestStudent({
+    savedOpportunities: ['opp-day-7'],
+    profile: {
+      ...studentFresh.profile!,
+      dismissedNotificationIds: [run1.newNotifications.find((n) => n.opportunityId === 'opp-day-7')!.id],
+    },
+  });
+  const crossDeviceRun = generateSmartNotifications({
+    user: dismissedInProfileStudent,
+    opportunities: oppMap,
+    existingNotifications: [],
+    dismissedIds: new Set(), // simulates clean browser / empty localStorage
+    baseline: baseline1,
+    now,
+  });
+  assert(
+    !crossDeviceRun.newNotifications.some((n) => n.opportunityId === 'opp-day-7'),
+    'Firestore profile.dismissedNotificationIds must prevent notification resurrection across devices'
   );
 
   console.log('7. Testing Firestore schema compliance parity with firestore.rules...');

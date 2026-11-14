@@ -193,13 +193,14 @@ export function recordDismissedNotificationIds(userId: string, ids: string[]): S
 export function matchOpportunityToStudent(
   opp: OpportunityItem,
   user: User,
-  prefs: NotificationPreferences
+  prefs: NotificationPreferences,
+  now: Date = new Date()
 ): { matched: boolean; reasons: string[]; score: number } {
   if (!opp.isVerified || opp.linkStatus === 'needs-review') {
     return { matched: false, reasons: [], score: 0 };
   }
 
-  const evalDeadline = evaluateOpportunityDeadline(opp.deadlines);
+  const evalDeadline = evaluateOpportunityDeadline(opp.deadlines, now);
   if (evalDeadline.isExpired) {
     return { matched: false, reasons: [], score: 0 };
   }
@@ -244,9 +245,9 @@ export function matchOpportunityToStudent(
       .map((d) => d.trim().toLowerCase())
       .filter(Boolean);
 
-    const oppCountry = (opp.country || '').toLowerCase();
-    const oppCode = (opp.countryCode || '').toLowerCase();
-    const destHit = destinations.some(
+    const oppCountry = (opp.country || '').trim().toLowerCase();
+    const oppCode = (opp.countryCode || '').trim().toLowerCase();
+    const destHit = Boolean(oppCountry) && destinations.some(
       (d) =>
         oppCountry === d ||
         oppCountry.includes(d) ||
@@ -363,7 +364,12 @@ export function generateSmartNotifications(
   input: NotificationGenerationInput
 ): NotificationGenerationOutput {
   const { user, opportunities, existingNotifications, now = new Date() } = input;
-  const dismissedIds = input.dismissedIds || new Set<string>();
+  const dismissedIds = new Set<string>([
+    ...(input.dismissedIds || []),
+    ...(Array.isArray(user.profile?.dismissedNotificationIds)
+      ? user.profile!.dismissedNotificationIds
+      : []),
+  ]);
   const prefs = normalizeNotificationPreferences(user.profile?.notificationPreferences);
 
   const nextBaseline = buildBaselineFromCatalog(opportunities, now);
@@ -409,7 +415,7 @@ export function generateSmartNotifications(
   // =========================================================================
   if (prefs.deadlineAlerts) {
     const enabledIntervals =
-      prefs.reminderIntervals && prefs.reminderIntervals.length > 0
+      prefs.reminderIntervals !== undefined
         ? prefs.reminderIntervals
         : ALL_REMINDER_INTERVALS;
 
@@ -693,7 +699,7 @@ export function generateSmartNotifications(
         if (!isNew && !isUpdated) continue;
         if (requirementAlertedOppIds.has(opp.id)) continue;
 
-        const match = matchOpportunityToStudent(opp, user, prefs);
+        const match = matchOpportunityToStudent(opp, user, prefs, now);
         if (match.matched) {
           candidates.push({
             opp,

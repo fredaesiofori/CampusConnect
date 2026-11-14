@@ -8,13 +8,11 @@ import {
   LayoutDashboard,
   Building2,
   Award,
-  Target,
   UserRound,
   BookOpen,
   Settings,
   LogOut,
   X,
-  Sparkles,
 } from 'lucide-react';
 import { Logo } from '../brand/Logo';
 
@@ -36,7 +34,7 @@ export interface DashboardSidebarProps {
   counts?: {
     universities: number;
     scholarships: number;
-    saved: number;
+    saved?: number;
   };
 }
 
@@ -95,12 +93,6 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       badge: counts?.scholarships,
     },
     {
-      id: 'tracker',
-      label: 'Target Tracker',
-      icon: <Target className="w-4 h-4" />,
-      badge: counts?.saved,
-    },
-    {
       id: 'profile',
       label: 'My Profile',
       icon: <UserRound className="w-4 h-4" />,
@@ -129,7 +121,14 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       {/* Top Brand Logo */}
       <div className="space-y-5">
         <div className="flex items-center justify-between pb-3.5 border-b border-[#E2E8F0]">
-          <Logo size="md" variant="light" showWordmark={true} />
+          <button
+            type="button"
+            onClick={() => handleItemClick('overview')}
+            aria-label="Go to Campus Connect Dashboard"
+            className="text-left rounded-xl p-1 -m-1 transition-opacity duration-150 hover:opacity-85 active:scale-[0.99] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+          >
+            <Logo size="md" variant="light" showWordmark={true} />
+          </button>
           {onCloseMobile && (
             <button
               type="button"

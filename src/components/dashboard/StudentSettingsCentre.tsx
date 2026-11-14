@@ -68,6 +68,7 @@ import {
 } from '../../services/pushNotifications';
 import { CountrySelect, CountryMultiSelect } from '../ui/CountrySelect';
 import { Button } from '../ui/Button';
+import { StudentInitialsAvatar } from '../ui/StudentInitialsAvatar';
 
 export type SettingsTab = 'account' | 'security' | 'notifications' | 'study' | 'privacy' | 'admin';
 
@@ -90,6 +91,7 @@ export interface StudentSettingsCentreProps {
   savedOpportunitiesCount: number;
   onClearSavedOpportunities?: () => void;
   initialTab?: SettingsTab;
+  tabNonce?: number;
 }
 
 export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
@@ -105,6 +107,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
   savedOpportunitiesCount,
   onClearSavedOpportunities,
   initialTab,
+  tabNonce,
 }) => {
   const [activeTab, setActiveTab] = useState<SettingsTab>(initialTab || 'account');
 
@@ -112,7 +115,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
     if (initialTab) {
       setActiveTab(initialTab);
     }
-  }, [initialTab]);
+  }, [initialTab, tabNonce]);
 
   // Check admin authorization strictly via server-verified Firebase Auth custom claims (`admin === true`)
   const [isAuthorizedAdmin, setIsAuthorizedAdmin] = useState<boolean>(false);
@@ -1273,9 +1276,11 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
             {/* Scholar Identity Summary Card */}
             <div className="p-4 sm:p-5 rounded-2xl bg-[#F8F9FD] border border-[#E2E8F0] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-[#6846F5] text-white flex items-center justify-center font-bold text-lg shadow-sm">
-                  {fullName ? fullName.substring(0, 2).toUpperCase() : 'SC'}
-                </div>
+                <StudentInitialsAvatar
+                  fullName={fullName || user?.fullName}
+                  email={email || user?.email}
+                  size="lg"
+                />
                 <div>
                   <div className="flex items-center gap-2">
                     <h3 className="text-base font-bold text-[#10132D]">{fullName || 'Campus Connect Scholar'}</h3>

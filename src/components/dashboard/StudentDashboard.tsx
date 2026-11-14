@@ -5,7 +5,6 @@
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
-  Search,
   Globe,
   Award,
   GraduationCap,
@@ -32,10 +31,6 @@ import {
   Trophy,
   Save,
   AlertCircle,
-  SlidersHorizontal,
-  RotateCcw,
-  ChevronDown,
-  ChevronUp,
   Database,
   Server,
   Lock,
@@ -97,7 +92,11 @@ import { ApplicationsView } from './ApplicationsView';
 import { OpportunityDetailModal } from './OpportunityDetailModal';
 import { StudentSettingsCentre, SettingsTab } from './StudentSettingsCentre';
 import { NotificationBellCenter } from './NotificationBellCenter';
+import { UniversitySearchFilters } from './UniversitySearchFilters';
+import { MobileDashboardOverview } from './MobileDashboardOverview';
+import { Logo } from '../brand/Logo';
 import { UniversityLogo } from '../ui/UniversityLogo';
+import { StudentInitialsAvatar } from '../ui/StudentInitialsAvatar';
 import { CovaAssistant } from '../assistant/CovaAssistant';
 
 export interface InstitutionBadgeProps {
@@ -162,6 +161,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   // Dedicated sub-view inside Overview for Saved Opportunities & Applications
   const [overviewSection, setOverviewSection] = useState<'home' | 'saved' | 'applications'>('home');
   const [settingsInitialTab, setSettingsInitialTab] = useState<SettingsTab>('account');
+  const [settingsTabNonce, setSettingsTabNonce] = useState<number>(0);
 
   // Mobile sidebar drawer state
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -187,6 +187,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const [selectedAppFee, setSelectedAppFee] = useState<string>('all');
   const [selectedTestPolicy, setSelectedTestPolicy] = useState<string>('all');
   const [selectedInstitutionType, setSelectedInstitutionType] = useState<string>('all');
+  const [selectedDeadlineStatus, setSelectedDeadlineStatus] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'relevant' | 'name-asc' | 'free-fee' | 'funded'>('relevant');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(12);
@@ -339,6 +340,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
   const handleOpenNotificationSettings = () => {
     setSettingsInitialTab('notifications');
+    setSettingsTabNonce((n) => n + 1);
     navigateToDashboardView('settings', 'home');
   };
 
@@ -753,6 +755,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
     if (activeUser?.id && firebaseUid === activeUser.id) {
       await deleteUserNotificationInFirestore(activeUser.id, notificationId);
+      const updatedUser = await authService.recordDismissedNotificationIdsSynced([notificationId]);
+      if (updatedUser) {
+        setActiveUser({ ...updatedUser });
+      }
     }
   };
 
@@ -765,6 +771,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     setNotifications([]);
     if (activeUser?.id && firebaseUid === activeUser.id) {
       await clearAllUserNotificationsInFirestore(activeUser.id, allIds);
+      if (allIds.length > 0) {
+        const updatedUser = await authService.recordDismissedNotificationIdsSynced(allIds);
+        if (updatedUser) {
+          setActiveUser({ ...updatedUser });
+        }
+      }
     }
   };
 
@@ -924,6 +936,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     setSelectedAppFee('all');
     setSelectedTestPolicy('all');
     setSelectedInstitutionType('all');
+    setSelectedDeadlineStatus('all');
     setCurrentPage(1);
     showNotification('All search and filter criteria reset.');
   };
@@ -935,7 +948,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
       const fundingType = item.funding?.type || item.fundingDetails?.type || '';
       const appFeeStatus = item.applicationFee?.status || item.applicationFees?.status || '';
-      const testStatus = item.testPolicy?.status || item.testWaiverRules?.status || '';
+      const testObj = item.testPolicy || item.testWaiverRules;
+      const testStatus = testObj?.status || '';
 
       // 1. Navigation Section Filter
       if (activeTab === 'scholarships') {
@@ -949,49 +963,62 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       }
 
       // 2. Study Destination filter
-      if (selectedDestination && selectedDestination !== 'All Destinations 🌐') {
+      if (selectedDestination && !selectedDestination.toLowerCase().includes('all destination')) {
         const countryName = (item.country || '').toLowerCase();
         const dest = selectedDestination.toLowerCase();
         const matchesCountry = countryName === dest || countryName.includes(dest);
         if (!matchesCountry) return false;
       }
 
-      // 3. Nationality Eligibility filter
+      // 3. Nationality Eligibility filter (respect verified data; never exclude on missing eligibility info)
       if (selectedNationality !== 'all') {
         const natCat = item.nationalityEligibility?.category || '';
         const regions = item.nationalityEligibility?.eligibleRegions || [];
+        const hasEligibilityData = Boolean(natCat) || regions.length > 0;
 
-        if (selectedNationality === 'ghanaian') {
-          const isEligible =
-            regions.some((r) => r.toLowerCase().includes('ghana')) ||
-            natCat === 'Ghanaian Citizens' ||
-            natCat === 'African Citizens' ||
-            natCat === 'All Nationalities' ||
-            natCat === 'All International Citizens';
-          if (!isEligible) return false;
-        } else if (selectedNationality === 'african') {
-          const isEligible =
-            natCat === 'African Citizens' ||
-            natCat === 'All Nationalities' ||
-            natCat === 'All International Citizens' ||
-            regions.some(
-              (r) => r.toLowerCase().includes('africa') || r.toLowerCase().includes('ghana')
-            );
-          if (!isEligible) return false;
-        } else if (selectedNationality === 'international') {
-          const isEligible =
-            natCat === 'All International Citizens' ||
-            natCat === 'All Nationalities';
-          if (!isEligible) return false;
+        if (hasEligibilityData) {
+          if (selectedNationality === 'ghanaian') {
+            const isEligible =
+              regions.some((r) => r.toLowerCase().includes('ghana')) ||
+              natCat === 'Ghanaian Citizens' ||
+              natCat === 'African Citizens' ||
+              natCat === 'All Nationalities' ||
+              natCat === 'All International Citizens';
+            if (!isEligible) return false;
+          } else if (selectedNationality === 'african') {
+            const isEligible =
+              natCat === 'African Citizens' ||
+              natCat === 'All Nationalities' ||
+              natCat === 'All International Citizens' ||
+              regions.some(
+                (r) => r.toLowerCase().includes('africa') || r.toLowerCase().includes('ghana')
+              );
+            if (!isEligible) return false;
+          } else if (selectedNationality === 'international') {
+            const isEligible =
+              natCat === 'All International Citizens' ||
+              natCat === 'All Nationalities';
+            if (!isEligible) return false;
+          }
         }
       }
 
       // 4. Degree Level filter
       if (selectedLevel !== 'all') {
         const levels = item.degreeLevels || [];
-        const hasLevel = levels.some((l) =>
-          l.toLowerCase().includes(selectedLevel.toLowerCase())
-        );
+        const hasLevel = levels.some((lvl) => {
+          const l = lvl.toLowerCase();
+          if (selectedLevel === 'undergraduate') {
+            return l.includes('undergrad') || l.includes('bachelor');
+          }
+          if (selectedLevel === 'master') {
+            return l.includes('master') || l.includes('postgrad');
+          }
+          if (selectedLevel === 'phd') {
+            return l.includes('phd') || l.includes('doctor');
+          }
+          return l.includes(selectedLevel.toLowerCase());
+        });
         if (!hasLevel) return false;
       }
 
@@ -1006,23 +1033,74 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               l.includes('software') ||
               l.includes('data') ||
               l.includes('artificial intelligence') ||
-              l.includes('informatics')
+              l.includes('informatics') ||
+              l.includes('information tech') ||
+              l.includes('cyber') ||
+              /\bai\b/.test(l)
             );
           });
           if (!matches) return false;
         } else if (selectedField === 'engineering') {
-          const matches = fields.some((f) => f.toLowerCase().includes('engineer'));
+          const matches = fields.some((f) => {
+            const l = f.toLowerCase();
+            return (
+              l.includes('engineer') ||
+              l.includes('architect') ||
+              l.includes('robotics') ||
+              l.includes('mechatronic')
+            );
+          });
           if (!matches) return false;
         } else if (selectedField === 'business') {
           const matches = fields.some((f) => {
             const l = f.toLowerCase();
-            return l.includes('business') || l.includes('economics') || l.includes('management');
+            return (
+              l.includes('business') ||
+              l.includes('economic') ||
+              l.includes('management') ||
+              l.includes('finance') ||
+              l.includes('account') ||
+              l.includes('marketing')
+            );
           });
           if (!matches) return false;
         } else if (selectedField === 'health') {
           const matches = fields.some((f) => {
             const l = f.toLowerCase();
-            return l.includes('health') || l.includes('medicine') || l.includes('nursing');
+            return (
+              l.includes('health') ||
+              l.includes('medicine') ||
+              l.includes('medical') ||
+              l.includes('nursing') ||
+              l.includes('pharmacy') ||
+              l.includes('biomed') ||
+              l.includes('dentistry')
+            );
+          });
+          if (!matches) return false;
+        } else if (selectedField === 'law') {
+          const matches = fields.some((f) => {
+            const l = f.toLowerCase();
+            return (
+              l.includes('law') ||
+              l.includes('legal') ||
+              l.includes('international relations') ||
+              l.includes('public policy') ||
+              l.includes('diplomacy')
+            );
+          });
+          if (!matches) return false;
+        } else if (selectedField === 'education') {
+          const matches = fields.some((f) => {
+            const l = f.toLowerCase();
+            return (
+              l.includes('education') ||
+              l.includes('teaching') ||
+              l.includes('social science') ||
+              l.includes('sociology') ||
+              l.includes('psychology') ||
+              l.includes('humanities')
+            );
           });
           if (!matches) return false;
         }
@@ -1030,10 +1108,17 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
       // 6. Funding Type filter
       if (selectedFunding !== 'all') {
+        const ft = fundingType.toLowerCase();
         if (selectedFunding === 'fully-funded') {
-          if (fundingType !== 'Fully Funded') return false;
+          if (ft !== 'fully funded') return false;
         } else if (selectedFunding === 'need-met') {
-          if (fundingType !== '100% Need-Met') return false;
+          if (ft !== '100% need-met') return false;
+        } else if (selectedFunding === 'tuition-free') {
+          if (!ft.includes('tuition-free') && !ft.includes('tuition waiver')) return false;
+        } else if (selectedFunding === 'merit-aid') {
+          if (!ft.includes('partial') && !ft.includes('merit') && !ft.includes('government')) {
+            return false;
+          }
         }
       }
 
@@ -1043,13 +1128,31 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           if (appFeeStatus !== 'Free ($0 Fee)') return false;
         } else if (selectedAppFee === 'waiver') {
           if (appFeeStatus !== 'Fee Waiver Available') return false;
+        } else if (selectedAppFee === 'free-or-waiver') {
+          if (appFeeStatus !== 'Free ($0 Fee)' && appFeeStatus !== 'Fee Waiver Available') {
+            return false;
+          }
         }
       }
 
       // 8. SAT / Test Policy filter
       if (selectedTestPolicy !== 'all') {
         if (selectedTestPolicy === 'test-optional') {
-          if (!testStatus.includes('Test-Optional')) return false;
+          const statusLower = testStatus.toLowerCase();
+          if (statusLower === 'test required') return false;
+          const combined = `${testStatus} ${testObj?.satPolicy || ''} ${testObj?.details || ''}`.toLowerCase();
+          const isSatFreeOrOptional =
+            combined.includes('test-free') ||
+            combined.includes('test-optional') ||
+            combined.includes('not required') ||
+            combined.includes('no sat') ||
+            combined.includes('sat optional') ||
+            combined.includes('sat-optional') ||
+            combined.includes('sat-free');
+          if (!isSatFreeOrOptional) return false;
+        } else if (selectedTestPolicy === 'waec-accepted') {
+          const combined = `${testStatus} ${testObj?.englishProficiencyPolicy || ''} ${testObj?.wassceExemptionDetails || ''} ${testObj?.details || ''}`.toLowerCase();
+          if (!combined.includes('waec') && !combined.includes('wassce')) return false;
         }
       }
 
@@ -1058,7 +1161,17 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         if (item.institutionType !== selectedInstitutionType) return false;
       }
 
-      // 10. Search query
+      // 10. Intake / Deadline Status filter
+      if (selectedDeadlineStatus !== 'all') {
+        const deadlineEval = evaluateOpportunityDeadline(item.deadlines);
+        if (selectedDeadlineStatus === 'open' && deadlineEval.status !== 'open') return false;
+        if (selectedDeadlineStatus === 'rolling' && deadlineEval.status !== 'rolling') return false;
+        if (selectedDeadlineStatus === 'open-or-rolling' && deadlineEval.status === 'expired') {
+          return false;
+        }
+      }
+
+      // 11. Search query
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase().trim();
         const matchesTitle = (item.title || '').toLowerCase().includes(q);
@@ -1087,6 +1200,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     selectedAppFee,
     selectedTestPolicy,
     selectedInstitutionType,
+    selectedDeadlineStatus,
     searchQuery,
     opportunities,
   ]);
@@ -1371,6 +1485,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     selectedAppFee !== 'all',
     selectedTestPolicy !== 'all',
     selectedInstitutionType !== 'all',
+    selectedDeadlineStatus !== 'all',
   ].filter(Boolean).length;
 
   return (
@@ -1411,26 +1526,39 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
       {/* 2. Main Dashboard Content Column */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Header Bar with Mobile Hamburger & Scholar Profile Pill */}
-        <header className="sticky top-0 z-20 bg-white border-b border-[#E2E8F0] px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-3 shadow-xs">
-          {/* Left: Mobile hamburger & breadcrumbs */}
-          <div className="flex items-center gap-3">
+        {/* Top Header Bar: Mobile Brand Header (<640px) & Tablet/Desktop Header (>=640px) */}
+        <header className="sticky top-0 z-20 bg-white border-b border-[#E2E8F0] px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 sm:gap-3 shadow-xs">
+          {/* Left: Hamburger + Mobile Logo (<sm) or Desktop Breadcrumb (>=sm) */}
+          <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 flex-1">
             <button
               type="button"
               onClick={() => setIsMobileSidebarOpen(true)}
-              className="p-2 sm:px-2.5 sm:py-2 rounded-xl border border-slate-200 text-slate-700 hover:text-[#10132D] hover:bg-slate-100 transition-colors flex items-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] -ml-1 sm:ml-0 sm:w-auto sm:h-auto sm:min-w-0 sm:min-h-0 sm:px-2.5 sm:py-2 rounded-xl sm:border sm:border-slate-200 text-slate-700 hover:text-[#10132D] hover:bg-slate-100 transition-colors flex items-center justify-center gap-2 cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
               aria-label="Open navigation menu"
             >
-              <Menu className="w-5 h-5 text-slate-700" />
+              <Menu className="w-5 h-5 text-[#10132D] sm:text-slate-700" />
               <span className="hidden sm:inline text-xs font-semibold text-slate-700">Menu</span>
             </button>
 
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#6846F5] hidden sm:inline">
+            {/* Mobile Header Brand Lockup (Clickable to Dashboard) */}
+            <div className="sm:hidden min-w-0 flex-1 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => navigateToDashboardView('overview', 'home')}
+                aria-label="Go to Campus Connect Dashboard"
+                className="min-w-0 max-w-full inline-flex items-center text-left rounded-xl py-0.5 pr-1 transition-opacity duration-150 hover:opacity-85 active:scale-[0.99] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              >
+                <Logo size="sm" variant="light" showWordmark={true} />
+              </button>
+            </div>
+
+            {/* Tablet & Desktop Breadcrumb Title (Unchanged) */}
+            <div className="hidden sm:flex items-center gap-2 min-w-0">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#6846F5] shrink-0">
                 Student Portal
               </span>
-              <span className="text-slate-300 hidden sm:inline">/</span>
-              <h1 className="text-sm sm:text-base font-bold text-[#10132D] capitalize">
+              <span className="text-slate-300 shrink-0">/</span>
+              <h1 className="text-sm sm:text-base font-bold text-[#10132D] capitalize truncate">
                 {activeTab === 'overview' && overviewSection === 'saved'
                   ? 'Saved Opportunities'
                   : activeTab === 'overview' && overviewSection === 'applications'
@@ -1452,8 +1580,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             </div>
           </div>
 
-          {/* Right: Notification Bell Centre, View Landing & User Avatar Pill */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Right: Notification Bell Centre, View Landing & User Avatar Badge */}
+          <div className="flex items-center gap-1 sm:gap-3 shrink-0">
             {onClose && (
               <button
                 type="button"
@@ -1475,22 +1603,27 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               onOpenNotificationSettings={handleOpenNotificationSettings}
             />
 
-            {/* Student Profile Pill matching mockup screen 4 */}
-            <div className="flex items-center gap-2.5 p-1 sm:pr-3 rounded-full bg-slate-50 border border-slate-200">
-              <div className="w-8 h-8 rounded-full bg-[#10132D] text-white overflow-hidden flex items-center justify-center text-xs font-bold shrink-0">
-                <img
-                  src="/images/african_student_scholar.jpg"
-                  alt="Student Avatar"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            {/* Student Profile Badge (Initials Circle on Mobile, Pill with Name on Tablet/Desktop) */}
+            <button
+              type="button"
+              onClick={() => navigateToDashboardView('profile', 'home')}
+              title="Open My Profile"
+              aria-label="Open My Profile"
+              className="min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center sm:gap-2.5 sm:p-1 sm:pr-3 rounded-full sm:bg-slate-50 sm:hover:bg-slate-100 sm:border sm:border-slate-200 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+            >
+              <StudentInitialsAvatar
+                fullName={activeUser?.fullName}
+                email={activeUser?.email}
+                size="md"
+                className="w-9 h-9 sm:w-8 sm:h-8 text-xs"
+              />
               <div className="text-left hidden sm:block">
                 <p className="text-xs font-bold text-[#10132D] leading-tight truncate max-w-[130px]">
-                  {activeUser?.fullName || 'Kwame Mensah'}
+                  {activeUser?.fullName || activeUser?.email?.split('@')[0] || 'Student'}
                 </p>
                 <p className="text-[10px] text-slate-500 font-medium leading-none">Student</p>
               </div>
-            </div>
+            </button>
           </div>
         </header>
 
@@ -1527,22 +1660,45 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           )}
 
           {activeTab === 'overview' && overviewSection === 'home' && (
-            <div className="space-y-6 animate-in fade-in duration-150">
+            <>
+              {/* Mobile Student Dashboard Redesign (< 640px) */}
+              <div className="sm:hidden">
+                <MobileDashboardOverview
+                  firstName={activeUser?.fullName?.trim().split(/\s+/)[0] || activeUser?.email?.split('@')[0] || 'Scholar'}
+                  profileCompletion={profileCompletion}
+                  opportunities={opportunities}
+                  recommendedOpportunities={recommendedUniversities}
+                  savedOpportunities={savedOpportunities}
+                  savedItemsList={savedItemsList}
+                  activeApplications={activeApplications}
+                  targetList={targetList}
+                  onNavigate={navigateToDashboardView}
+                  onToggleSave={toggleSave}
+                  onOpenOpportunity={setSelectedOpportunity}
+                />
+              </div>
+
+              {/* Tablet & Desktop Dashboard Overview (>= 640px, preserved unchanged) */}
+              <div className="hidden sm:block space-y-6 animate-in fade-in duration-150">
               {/* Greeting Header */}
               <div className="space-y-1">
                 <h2 className="text-2xl sm:text-3xl font-bold font-display text-[#10132D] tracking-tight">
-                  Good morning, {activeUser?.fullName?.split(' ')[0] || 'Kwame'} 👋
+                  Good morning, {activeUser?.fullName?.split(' ')[0] || 'Scholar'} 👋
                 </h2>
                 <p className="text-xs sm:text-sm text-[#64748B]">
                   Here&apos;s your education journey at a glance.
                 </p>
               </div>
 
-              {/* 4 Stat & Action Cards Grid — Each Card Performs a Distinct Function */}
+              {/* 4 Stat & Action Cards Grid — Entire Card Clickable */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* Card 1: MY PROFILE — Personal & Academic Identity */}
-                <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-3">
-                  <div>
+                <button
+                  type="button"
+                  onClick={() => navigateToDashboardView('profile', 'home')}
+                  className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md hover:border-[#6846F5]/35 active:scale-[0.985] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out flex flex-col justify-between space-y-3 text-left w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] group"
+                >
+                  <div className="w-full">
                     <div className="w-10 h-10 rounded-xl bg-[#F0EDFF] text-[#6846F5] flex items-center justify-center mb-3">
                       <UserRound className="w-5 h-5" />
                     </div>
@@ -1571,19 +1727,19 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                         : 'Personal, academic & study details complete.'}
                     </p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => navigateToDashboardView('profile', 'home')}
-                    className="text-xs font-bold text-[#6846F5] hover:underline flex items-center gap-1 pt-1 cursor-pointer"
-                  >
+                  <span className="text-xs font-bold text-[#6846F5] group-hover:underline flex items-center gap-1 pt-1">
                     <span>View Profile</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                  </span>
+                </button>
 
                 {/* Card 2: SAVED OPPORTUNITIES — Personal Bookmarks */}
-                <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-3">
-                  <div>
+                <button
+                  type="button"
+                  onClick={() => navigateToDashboardView('overview', 'saved')}
+                  className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md hover:border-[#6846F5]/35 active:scale-[0.985] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out flex flex-col justify-between space-y-3 text-left w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] group"
+                >
+                  <div className="w-full">
                     <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-3">
                       <Heart className="w-5 h-5" />
                     </div>
@@ -1599,19 +1755,19 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                         : `${counts.savedUnis} ${counts.savedUnis === 1 ? 'university' : 'universities'} · ${counts.savedScholarships} ${counts.savedScholarships === 1 ? 'scholarship' : 'scholarships'} bookmarked.`}
                     </p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => navigateToDashboardView('overview', 'saved')}
-                    className="text-xs font-bold text-[#6846F5] hover:underline flex items-center gap-1 pt-1 cursor-pointer"
-                  >
+                  <span className="text-xs font-bold text-[#6846F5] group-hover:underline flex items-center gap-1 pt-1">
                     <span>View Saved</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                  </span>
+                </button>
 
                 {/* Card 3: APPLICATIONS — Active Application Management */}
-                <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-3">
-                  <div>
+                <button
+                  type="button"
+                  onClick={() => navigateToDashboardView('overview', 'applications')}
+                  className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md hover:border-[#6846F5]/35 active:scale-[0.985] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out flex flex-col justify-between space-y-3 text-left w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] group"
+                >
+                  <div className="w-full">
                     <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
                       <FolderCheck className="w-5 h-5" />
                     </div>
@@ -1627,19 +1783,19 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                         : `${counts.preparingApps} preparing · ${counts.submittedApps} submitted${counts.acceptedApps > 0 ? ` · ${counts.acceptedApps} accepted` : ''}.`}
                     </p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => navigateToDashboardView('overview', 'applications')}
-                    className="text-xs font-bold text-[#6846F5] hover:underline flex items-center gap-1 pt-1 cursor-pointer"
-                  >
+                  <span className="text-xs font-bold text-[#6846F5] group-hover:underline flex items-center gap-1 pt-1">
                     <span>Track Progress</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                  </span>
+                </button>
 
                 {/* Card 4: TARGET LIST — Future Study Goals */}
-                <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-3">
-                  <div>
+                <button
+                  type="button"
+                  onClick={() => navigateToDashboardView('tracker', 'home')}
+                  className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md hover:border-[#6846F5]/35 active:scale-[0.985] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out flex flex-col justify-between space-y-3 text-left w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] group"
+                >
+                  <div className="w-full">
                     <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
                       <Target className="w-5 h-5" />
                     </div>
@@ -1655,15 +1811,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                         : `${counts.highPriorityTargets} high priority · ${counts.targets} future study ${counts.targets === 1 ? 'goal' : 'goals'}.`}
                     </p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => navigateToDashboardView('tracker', 'home')}
-                    className="text-xs font-bold text-[#6846F5] hover:underline flex items-center gap-1 pt-1 cursor-pointer"
-                  >
+                  <span className="text-xs font-bold text-[#6846F5] group-hover:underline flex items-center gap-1 pt-1">
                     <span>Manage Goals</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                  </span>
+                </button>
               </div>
 
               {/* Recommended for You Section matching mockup screen 4 */}
@@ -1702,7 +1854,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   ))}
                 </div>
               </div>
-            </div>
+              </div>
+            </>
           )}
 
           {/* ========================================================================= */}
@@ -1722,192 +1875,72 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 </p>
               </div>
 
-              {/* Search Bar matching mockup screen 2 */}
-              <div className="bg-white rounded-2xl border border-[#E2E8F0] p-4 sm:p-5 shadow-sm space-y-4">
-                <div className="flex flex-col sm:flex-row items-center gap-2">
-                  <div className="relative flex-1 w-full">
-                    <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => {
-                        setSearchQuery(e.target.value);
-                        setCurrentPage(1);
-                      }}
-                      placeholder="Search by name, city, country, or field of study..."
-                      className="w-full h-11 pl-10 pr-10 text-xs sm:text-sm font-medium rounded-xl border border-[#CBD5E1] bg-slate-50/70 focus:bg-white focus:border-[#6846F5] focus:outline-none transition-all placeholder:text-slate-400 text-[#15152F]"
-                    />
-                    {searchQuery && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSearchQuery('');
-                          setCurrentPage(1);
-                        }}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs p-1"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-                  </div>
+              {/* Clean, spacious Search & Filter Panel */}
+              <UniversitySearchFilters
+                searchQuery={searchQuery}
+                onSearchQueryChange={(val) => {
+                  setSearchQuery(val);
+                  setCurrentPage(1);
+                }}
+                selectedDestination={selectedDestination}
+                onDestinationChange={(val) => {
+                  setSelectedDestination(val);
+                  setCurrentPage(1);
+                }}
+                selectedLevel={selectedLevel}
+                onLevelChange={(val) => {
+                  setSelectedLevel(val);
+                  setCurrentPage(1);
+                }}
+                selectedField={selectedField}
+                onFieldChange={(val) => {
+                  setSelectedField(val);
+                  setCurrentPage(1);
+                }}
+                selectedInstitutionType={selectedInstitutionType}
+                onInstitutionTypeChange={(val) => {
+                  setSelectedInstitutionType(val);
+                  setCurrentPage(1);
+                }}
+                selectedTestPolicy={selectedTestPolicy}
+                onTestPolicyChange={(val) => {
+                  setSelectedTestPolicy(val);
+                  setCurrentPage(1);
+                }}
+                selectedAppFee={selectedAppFee}
+                onAppFeeChange={(val) => {
+                  setSelectedAppFee(val);
+                  setCurrentPage(1);
+                }}
+                selectedFunding={selectedFunding}
+                onFundingChange={(val) => {
+                  setSelectedFunding(val);
+                  setCurrentPage(1);
+                }}
+                selectedDeadlineStatus={selectedDeadlineStatus}
+                onDeadlineStatusChange={(val) => {
+                  setSelectedDeadlineStatus(val);
+                  setCurrentPage(1);
+                }}
+                showAdvancedFilters={showAdvancedFilters}
+                onToggleAdvancedFilters={() => setShowAdvancedFilters((prev) => !prev)}
+                onResetAll={resetAllFilters}
+                onSearchSubmit={() => setCurrentPage(1)}
+                isScholarshipsTab={activeTab === 'scholarships'}
+              />
 
-                  <Button
-                    type="button"
-                    variant="primary"
-                    size="md"
-                    className="w-full sm:w-auto px-6 bg-[#6846F5] hover:bg-[#5835E5] text-white shadow-sm text-xs font-bold"
-                  >
-                    Search
-                  </Button>
-                </div>
-
-                {/* Filter Controls Row matching mockup screen 2 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 pt-1">
-                  {/* 1. Country */}
-                  <CountrySelect
-                    id="dash-country-select"
-                    value={selectedDestination}
-                    onChange={(val) => {
-                      setSelectedDestination(val);
-                      setCurrentPage(1);
-                    }}
-                    allowAll={true}
-                    allLabel="All Destinations 🌐"
-                    allValue=""
-                    placeholder="Country 🌐"
-                    buttonClassName="h-10 bg-slate-50/70 focus:bg-white text-xs font-medium"
-                  />
-
-                  {/* 2. Degree Level */}
-                  <select
-                    value={selectedLevel}
-                    onChange={(e) => {
-                      setSelectedLevel(e.target.value);
-                      setCurrentPage(1);
-                    }}
-                    aria-label="Filter by degree level"
-                    className="w-full h-10 px-3 text-xs font-medium rounded-xl border border-[#CBD5E1] bg-slate-50/70 focus:bg-white focus:border-[#6846F5] focus:outline-none text-[#15152F]"
-                  >
-                    <option value="all">Degree Level 🎓</option>
-                    <option value="undergraduate">Undergraduate</option>
-                    <option value="master">Master&apos;s</option>
-                    <option value="phd">Doctorate / PhD</option>
-                  </select>
-
-                  {/* 3. Field of Study */}
-                  <select
-                    value={selectedField}
-                    onChange={(e) => {
-                      setSelectedField(e.target.value);
-                      setCurrentPage(1);
-                    }}
-                    aria-label="Filter by field of study"
-                    className="w-full h-10 px-3 text-xs font-medium rounded-xl border border-[#CBD5E1] bg-slate-50/70 focus:bg-white focus:border-[#6846F5] focus:outline-none text-[#15152F]"
-                  >
-                    <option value="all">Field of Study 📚</option>
-                    <option value="cs-tech">Computer Science &amp; AI</option>
-                    <option value="engineering">Engineering</option>
-                    <option value="business">Business &amp; Economics</option>
-                    <option value="health">Health &amp; Medicine</option>
-                  </select>
-
-                  {/* 4. International Eligibility */}
-                  <select
-                    value={selectedNationality}
-                    onChange={(e) => {
-                      setSelectedNationality(e.target.value);
-                      setCurrentPage(1);
-                    }}
-                    aria-label="Filter by eligibility"
-                    className="w-full h-10 px-3 text-xs font-medium rounded-xl border border-[#CBD5E1] bg-slate-50/70 focus:bg-white focus:border-[#6846F5] focus:outline-none text-[#15152F]"
-                  >
-                    <option value="all">International Eligibility 🌍</option>
-                    <option value="ghanaian">Ghanaian Citizens 🇬🇭</option>
-                    <option value="african">African Citizens 🌍</option>
-                    <option value="international">All International 🌐</option>
-                  </select>
-
-                  {/* 5. More Filters Toggle */}
-                  <button
-                    type="button"
-                    onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-                    className={`h-10 px-3.5 rounded-xl border text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
-                      showAdvancedFilters || (selectedFunding !== 'all' || selectedAppFee !== 'all')
-                        ? 'bg-[#F0EDFF] border-[#6846F5] text-[#6846F5]'
-                        : 'bg-slate-50/70 hover:bg-slate-100 border-[#CBD5E1] text-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center gap-1.5 min-w-0">
-                      <SlidersHorizontal className="w-3.5 h-3.5 shrink-0" />
-                      <span className="truncate">More Filters</span>
-                    </div>
-                    {showAdvancedFilters ? (
-                      <ChevronUp className="w-3.5 h-3.5 shrink-0" />
-                    ) : (
-                      <ChevronDown className="w-3.5 h-3.5 shrink-0" />
-                    )}
-                  </button>
-                </div>
-
-                {/* Expanded Advanced Criteria */}
-                {showAdvancedFilters && (
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3 animate-in fade-in duration-150">
-                    <div>
-                      <label className="block text-[11px] font-semibold text-slate-500 mb-1">
-                        Funding Coverage
-                      </label>
-                      <select
-                        value={selectedFunding}
-                        onChange={(e) => {
-                          setSelectedFunding(e.target.value);
-                          setCurrentPage(1);
-                        }}
-                        className="w-full h-9 px-3 text-xs bg-white border border-slate-200 rounded-lg text-[#10132D] focus:outline-none focus:border-[#6846F5]"
-                      >
-                        <option value="all">All Funding Types</option>
-                        <option value="fully-funded">Fully Funded</option>
-                        <option value="need-met">100% Need-Met</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-[11px] font-semibold text-slate-500 mb-1">
-                        Application Fee
-                      </label>
-                      <select
-                        value={selectedAppFee}
-                        onChange={(e) => {
-                          setSelectedAppFee(e.target.value);
-                          setCurrentPage(1);
-                        }}
-                        className="w-full h-9 px-3 text-xs bg-white border border-slate-200 rounded-lg text-[#10132D] focus:outline-none focus:border-[#6846F5]"
-                      >
-                        <option value="all">All Fee Policies</option>
-                        <option value="free">Free ($0 Fee)</option>
-                        <option value="waiver">Waiver Available</option>
-                      </select>
-                    </div>
-
-                    <div className="flex items-end">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={resetAllFilters}
-                        leftIcon={<RotateCcw className="w-3.5 h-3.5" />}
-                        className="w-full h-9 text-xs"
-                      >
-                        Reset Filters
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Results Count & Sort Bar matching mockup screen 2 */}
+              {/* Results Count & Sort Bar */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 px-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="font-semibold text-slate-700">
-                    <strong className="text-[#10132D] font-bold">{totalItems}</strong> universities found
+                    <strong className="text-[#10132D] font-bold tabular-nums">{totalItems}</strong>{' '}
+                    {activeTab === 'scholarships'
+                      ? totalItems === 1
+                        ? 'scholarship & funding option found'
+                        : 'scholarships & funding options found'
+                      : totalItems === 1
+                        ? 'university found'
+                        : 'universities found'}
                   </span>
                   <span className="text-slate-300">·</span>
                   <div className="flex items-center gap-1.5 text-xs">
@@ -1960,13 +1993,17 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 </div>
               </div>
 
-              {/* Horizontal University Cards List matching mockup screen 2 */}
+              {/* Horizontal University Cards List */}
               {paginatedOpportunities.length === 0 ? (
                 <div className="bg-white rounded-2xl border border-[#E2E8F0] p-10 text-center space-y-3">
                   <Building2 className="w-10 h-10 text-slate-300 mx-auto" />
-                  <h3 className="text-base font-bold text-[#10132D]">No matching universities found</h3>
+                  <h3 className="text-base font-bold text-[#10132D]">
+                    {activeTab === 'scholarships'
+                      ? 'No matching scholarships found'
+                      : 'No matching universities found'}
+                  </h3>
                   <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                    Try relaxing your filters or searching for &ldquo;Ghana&rdquo;, &ldquo;Engineering&rdquo;, or &ldquo;Free&rdquo;.
+                    Try adjusting or resetting your filters, or search for &ldquo;Ghana&rdquo;, &ldquo;Computer Science&rdquo;, or &ldquo;Free&rdquo;.
                   </p>
                   <Button variant="outline" size="sm" onClick={resetAllFilters}>
                     Reset Search &amp; Filters
@@ -2063,16 +2100,23 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               {/* Profile Completion & Missing Information Card */}
               <div className="bg-white rounded-2xl border border-[#E2E8F0] p-5 sm:p-6 shadow-xs space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-[#6846F5]">
-                      Personal &amp; Academic Identity
-                    </span>
-                    <h2 className="text-2xl font-bold font-display text-[#10132D] mt-0.5">
-                      My Profile
-                    </h2>
-                    <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                      Manage your personal details, academic background, and study preferences.
-                    </p>
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <StudentInitialsAvatar
+                      fullName={profFullName || activeUser?.fullName}
+                      email={activeUser?.email}
+                      size="lg"
+                    />
+                    <div className="min-w-0">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#6846F5] block">
+                        Personal &amp; Academic Identity
+                      </span>
+                      <h2 className="text-xl sm:text-2xl font-bold font-display text-[#10132D] mt-0.5 truncate">
+                        {profFullName.trim() || activeUser?.fullName || 'My Profile'}
+                      </h2>
+                      <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                        Manage your personal details, academic background, and study preferences.
+                      </p>
+                    </div>
                   </div>
 
                   <div className="sm:text-right shrink-0">
@@ -2513,6 +2557,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               }}
               savedOpportunitiesCount={savedOpportunities.size}
               initialTab={settingsInitialTab}
+              tabNonce={settingsTabNonce}
               onClearSavedOpportunities={() => {
                 setSavedOpportunities(new Set());
                 const updated = authService.clearSavedOpportunities();

@@ -48,7 +48,18 @@ export const UniversityCard: React.FC<UniversityCardProps> = ({
   // =========================================================================
   if (variant === 'grid') {
     return (
-      <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group">
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={() => onOpenDetails(item)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onOpenDetails(item);
+          }
+        }}
+        className="bg-white rounded-2xl border border-[#E2E8F0] shadow-xs hover:shadow-md hover:border-[#6846F5]/35 active:scale-[0.988] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out flex flex-col justify-between overflow-hidden group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+      >
         <div>
           {/* Authentic Official University Crest / Seal */}
           <UniversityCrestCardImage
@@ -125,8 +136,11 @@ export const UniversityCard: React.FC<UniversityCardProps> = ({
             variant="outline"
             size="sm"
             fullWidth
-            onClick={() => onOpenDetails(item)}
-            className="border-[#CBD5E1] hover:bg-slate-50 text-xs font-semibold justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenDetails(item);
+            }}
+            className="border-[#CBD5E1] group-hover:border-[#6846F5]/40 group-hover:text-[#6846F5] hover:bg-slate-50 text-xs font-semibold justify-center transition-colors"
           >
             View Opportunity Details
           </Button>
@@ -141,8 +155,16 @@ export const UniversityCard: React.FC<UniversityCardProps> = ({
   // =========================================================================
   return (
     <div
+      role="button"
+      tabIndex={0}
       onClick={() => onOpenDetails(item)}
-      className="bg-white rounded-2xl border border-[#E2E8F0] hover:border-[#6846F5]/50 shadow-xs hover:shadow-md transition-all p-4 sm:p-5 flex flex-col sm:flex-row gap-4 sm:gap-5 items-start sm:items-center justify-between group cursor-pointer"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onOpenDetails(item);
+        }
+      }}
+      className="bg-white rounded-2xl border border-[#E2E8F0] hover:border-[#6846F5]/40 shadow-xs hover:shadow-md active:scale-[0.992] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out p-4 sm:p-5 flex flex-col sm:flex-row gap-4 sm:gap-5 items-start sm:items-center justify-between group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
     >
       {/* Left: Authentic Official University Crest / Seal */}
       <UniversityCrestCardImage

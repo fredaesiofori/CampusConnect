@@ -166,17 +166,17 @@ export const NotificationBellCenter: React.FC<NotificationBellCenterProps> = ({
         onClick={() => setIsOpen((prev) => !prev)}
         aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ''}`}
         aria-expanded={isOpen}
-        className={`relative w-10 h-10 rounded-xl border flex items-center justify-center transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] ${
+        className={`relative w-11 h-11 min-w-[44px] min-h-[44px] sm:w-10 sm:h-10 sm:min-w-0 sm:min-h-0 rounded-full sm:rounded-xl border flex items-center justify-center transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] ${
           isOpen
             ? 'bg-[#F0EDFF] border-[#6846F5] text-[#6846F5]'
-            : 'bg-white border-slate-200 text-slate-600 hover:text-[#10132D] hover:bg-slate-50'
+            : 'bg-transparent sm:bg-white border-transparent sm:border-slate-200 text-[#10132D] sm:text-slate-600 hover:text-[#10132D] hover:bg-slate-100 sm:hover:bg-slate-50'
         }`}
       >
-        <Bell className="w-[18px] h-[18px]" />
+        <Bell className="w-[20px] h-[20px] sm:w-[18px] sm:h-[18px]" />
         {unreadCount > 0 && (
           <span
             data-testid="notification-unread-badge"
-            className="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full bg-[#6846F5] text-white text-[10px] font-bold flex items-center justify-center shadow-xs tabular-nums border-2 border-white"
+            className="absolute top-1 right-1 sm:-top-1.5 sm:-right-1.5 min-w-[18px] sm:min-w-[20px] h-[18px] sm:h-5 px-1 rounded-full bg-[#6846F5] text-white text-[10px] font-bold flex items-center justify-center shadow-xs tabular-nums border-2 border-white"
           >
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
@@ -197,7 +197,7 @@ export const NotificationBellCenter: React.FC<NotificationBellCenterProps> = ({
         <div
           role="dialog"
           aria-label="Notification Centre"
-          className="fixed inset-x-3 top-16 max-h-[80vh] sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-2 sm:w-[420px] sm:max-h-[560px] z-40 bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150"
+          className="fixed inset-x-3 top-[72px] max-h-[calc(100vh-88px)] sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-2 sm:w-[420px] sm:max-h-[min(560px,calc(100vh-96px))] z-40 bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150"
         >
           {/* Header */}
           <div className="px-4 py-3.5 border-b border-[#E2E8F0] bg-[#F8F9FD] flex items-center justify-between gap-2">

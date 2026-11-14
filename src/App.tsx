@@ -426,6 +426,7 @@ export default function App() {
         onPlaceholderClick={handlePlaceholderClick}
         onLoginClick={() => navigateTo('login')}
         onSignUpClick={() => navigateTo('signup')}
+        onLogoClick={isLoggedIn ? () => navigateTo('dashboard') : undefined}
       />
     </div>
   );

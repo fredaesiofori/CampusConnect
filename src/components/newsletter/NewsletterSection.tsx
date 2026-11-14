@@ -18,6 +18,7 @@ import {
   Info,
   GraduationCap,
   RefreshCw,
+  ChevronDown,
 } from 'lucide-react';
 import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
@@ -126,6 +127,7 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
   const [justConfirmed, setJustConfirmed] = useState(false);
   const [confirmationEmailSent, setConfirmationEmailSent] = useState(false);
   const [isEditingPreferences, setIsEditingPreferences] = useState(false);
+  const [isInterestsExpanded, setIsInterestsExpanded] = useState(false);
   const [actionLoading, setActionLoading] = useState<'preferences' | 'unsubscribe' | 'resend' | null>(null);
   const [emailDeliveryConfigured, setEmailDeliveryConfigured] = useState<boolean>(false);
   const [firestoreConfigured, setFirestoreConfigured] = useState<boolean>(true);
@@ -589,83 +591,59 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
     ? formatPreferenceLabels(activeSubscription.preferences)
     : [];
 
+  const specificSelectedCount = selectedPreferences.filter((id) => id !== 'all').length;
+  const allSpecificSelected =
+    selectedPreferences.includes('all') ||
+    specificSelectedCount === SPECIFIC_PREFERENCE_IDS.length;
+  const selectedInterestsSummary = allSpecificSelected
+    ? 'All interests selected'
+    : specificSelectedCount === 0
+    ? 'No interests selected'
+    : `${specificSelectedCount} ${specificSelectedCount === 1 ? 'interest' : 'interests'} selected`;
+
   const isConfirmed = activeSubscription?.consentStatus === 'confirmed';
 
   return (
     <section
       id="newsletter"
       aria-labelledby="newsletter-heading"
-      className={`relative w-full overflow-hidden bg-gradient-to-b from-[#15152F] via-[#10132D] to-[#0F0F23] py-14 sm:py-18 lg:py-22 text-white border-t border-[#232348] ${className}`}
+      className={`relative w-full overflow-hidden bg-gradient-to-b from-[#15152F] via-[#10132D] to-[#0F0F23] py-10 sm:py-12 lg:py-14 text-white border-t border-[#232348] ${className}`}
     >
-      {/* Decorative ambient background glows */}
-      <div className="absolute inset-0 pointer-events-none opacity-40 overflow-hidden" aria-hidden="true">
-        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 rounded-full bg-[#6846F5]/20 blur-[100px]" />
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 rounded-full bg-[#E7B75C]/15 blur-[100px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
+      {/* Subtle ambient background accents */}
+      <div className="absolute inset-0 pointer-events-none opacity-35 overflow-hidden" aria-hidden="true">
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-80 h-80 rounded-full bg-[#6846F5]/20 blur-[90px]" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 rounded-full bg-[#E7B75C]/12 blur-[90px]" />
       </div>
 
       <Container size="lg" className="relative z-10">
-        <div className="mx-auto max-w-3xl text-center">
-          {/* Eyebrow Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold tracking-wider uppercase text-[#DDD6FE] mb-4 shadow-2xs backdrop-blur-sm">
-            <BellRing className="w-3.5 h-3.5 text-[#E7B75C]" />
-            <span>OPPORTUNITY UPDATES</span>
+        <div className="mx-auto max-w-2xl text-center">
+          {/* Compact Eyebrow */}
+          <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-wider uppercase text-[#DDD6FE] mb-2.5">
+            <BellRing className="w-3.5 h-3.5 text-[#E7B75C]" aria-hidden="true" />
+            <span>Opportunity Updates</span>
           </div>
 
           {/* Heading */}
           <h2
             id="newsletter-heading"
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-extrabold font-display tracking-tight text-white leading-tight [text-wrap:balance]"
+            className="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-white leading-tight [text-wrap:balance]"
           >
-            Stay informed on university and opportunity updates.
+            Never Miss an Opportunity
           </h2>
 
-          {/* Subtitle */}
-          <p className="mt-3.5 sm:mt-4 text-sm sm:text-base lg:text-lg text-[#CBD5E1] max-w-2xl mx-auto leading-relaxed [text-wrap:pretty]">
-            Save your email and opportunity preferences to join our update list for global
-            universities, admission cycles, fee waivers, and scholarships.
+          {/* Single concise supporting sentence */}
+          <p className="mt-2.5 text-xs sm:text-sm text-[#CBD5E1] max-w-lg mx-auto leading-relaxed [text-wrap:pretty]">
+            Choose your study interests to get timely updates on admissions, fee waivers, and verified scholarships.
           </p>
 
-          {/* Preference Interest Filter Pills */}
-          <div className="mt-6 sm:mt-7">
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8] mb-2.5">
-              {activeSubscription && isEditingPreferences
-                ? 'Update your opportunity preferences:'
-                : 'Select your opportunity preferences:'}
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-2 max-w-2xl mx-auto">
-              {PREFERENCE_OPTIONS.map((pref) => {
-                const isSelected = selectedPreferences.includes(pref.id);
-                return (
-                  <button
-                    key={pref.id}
-                    type="button"
-                    onClick={() => togglePreference(pref.id)}
-                    aria-pressed={isSelected}
-                    disabled={status === 'loading' || actionLoading !== null}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer border select-none disabled:opacity-60 ${
-                      isSelected
-                        ? 'bg-[#6846F5] text-white border-[#8B5CF6] shadow-xs ring-1 ring-[#A78BFA]/30'
-                        : 'bg-white/5 text-[#94A3B8] border-white/10 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    <span aria-hidden="true">{pref.icon}</span>
-                    <span>{pref.label}</span>
-                    {isSelected && <Check className="w-3 h-3 text-white ml-0.5" />}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Signup / Active Subscription Container */}
-          <div className="mt-7 sm:mt-8 bg-white/5 backdrop-blur-md border border-white/15 rounded-2xl p-4 sm:p-5 shadow-xl max-w-xl mx-auto">
+          {/* Compact Signup / Active Subscription Card */}
+          <div className="mt-5 sm:mt-6 bg-white/[0.06] backdrop-blur-md border border-white/15 rounded-2xl p-4 sm:p-5 shadow-xl text-left">
             {activeSubscription ? (
-              /* Compact, Professional Confirmation / Saved Subscription Card */
+              /* Compact Saved Subscription Card */
               <div
                 role="status"
                 aria-live="polite"
-                className="text-left space-y-3"
+                className="space-y-3"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-start gap-3 min-w-0">
@@ -685,16 +663,16 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
                       )}
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-base sm:text-lg font-bold text-white leading-tight">
+                      <h3 className="text-sm sm:text-base font-bold text-white leading-tight">
                         {isConfirmed
                           ? justConfirmed
                             ? "You're all set!"
                             : 'Opportunity Alerts Active'
                           : confirmationEmailSent
                           ? 'Confirm Your Email Address'
-                          : 'Preferences Saved (Confirmation Pending)'}
+                          : 'Preferences Saved'}
                       </h3>
-                      <p className="text-xs sm:text-sm text-[#CBD5E1] mt-0.5 truncate">
+                      <p className="text-xs text-[#CBD5E1] mt-0.5 truncate">
                         {isConfirmed ? 'Active for ' : 'Saved for '}
                         <span className="font-semibold text-white">{activeSubscription.email}</span>
                       </p>
@@ -702,30 +680,67 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
                   </div>
                 </div>
 
-                {/* Saved Preference Tags */}
-                <div className="flex flex-wrap items-center gap-1.5">
-                  {preferenceSummaryLabels.map((label) => (
-                    <span
-                      key={label}
-                      className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-white/10 border border-white/10 text-[11px] font-medium text-[#E2E8F0]"
-                    >
-                      <Check className="w-3 h-3 text-emerald-400" />
-                      <span>{label}</span>
-                    </span>
-                  ))}
-                </div>
+                {/* Saved Preference Summary */}
+                {!isEditingPreferences && (
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#E2E8F0]">
+                    <span className="text-[#94A3B8]">Interests:</span>
+                    {preferenceSummaryLabels.map((label, idx) => (
+                      <React.Fragment key={label}>
+                        <span className="inline-flex items-center gap-1 font-medium text-white">
+                          <Check className="w-3 h-3 text-emerald-400 shrink-0" />
+                          <span>{label}</span>
+                        </span>
+                        {idx < preferenceSummaryLabels.length - 1 && (
+                          <span aria-hidden="true" className="text-white/25">·</span>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                )}
+
+                {/* Expandable Interest Editor when updating preferences */}
+                {isEditingPreferences && (
+                  <div className="rounded-xl bg-white/[0.04] border border-white/10 p-3 space-y-2.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-semibold text-white">Choose your interests</span>
+                      <span className="text-[11px] text-[#CBD5E1] tabular-nums">{selectedInterestsSummary}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {PREFERENCE_OPTIONS.map((pref) => {
+                        const isSelected = selectedPreferences.includes(pref.id);
+                        return (
+                          <button
+                            key={pref.id}
+                            type="button"
+                            onClick={() => togglePreference(pref.id)}
+                            aria-pressed={isSelected}
+                            disabled={status === 'loading' || actionLoading !== null}
+                            className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer border select-none disabled:opacity-60 ${
+                              isSelected
+                                ? 'bg-[#6846F5] text-white border-[#8B5CF6]'
+                                : 'bg-white/5 text-[#CBD5E1] border-white/10 hover:bg-white/10 hover:text-white'
+                            }`}
+                          >
+                            <span>{pref.label}</span>
+                            {isSelected && <Check className="w-3 h-3 text-white shrink-0" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
                 {/* Honest Delivery Status Note */}
                 <div className="flex items-start gap-2 rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-xs text-[#CBD5E1]">
                   <Info className="w-3.5 h-3.5 text-[#E7B75C] shrink-0 mt-0.5" />
                   <span>
                     {!emailDeliveryConfigured
-                      ? 'Your email and preferences are saved in our database, but outbound email delivery is not yet configured on the server.'
+                      ? 'Your email and interests are saved. Outbound email alerts are temporarily paused until delivery is enabled.'
                       : isConfirmed
                       ? 'Your subscription is confirmed. You will receive matched verified opportunities and upcoming deadline reminders.'
                       : confirmationEmailSent
                       ? 'We sent a confirmation link to your email. Click that link to activate opportunity digests and deadline reminders.'
-                      : 'Confirmation email could not be delivered yet. Click Resend Confirmation once email delivery is ready.'}
+                      : 'Confirmation emails are temporarily paused. Use Resend Confirmation once email delivery is available.'}
                   </span>
                 </div>
 
@@ -824,15 +839,16 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
                 </div>
               </div>
             ) : (
-              /* Default Subscription Form for Unsubscribed Visitors */
-              <form onSubmit={handleSubmit} noValidate className="space-y-3 text-left">
-                <div className="flex flex-col sm:flex-row gap-2.5">
-                  <div className="relative flex-1">
+              /* Compact Subscription Form */
+              <form onSubmit={handleSubmit} noValidate className="space-y-3">
+                {/* Clean Email + Get Updates Row */}
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="relative flex-1 min-w-0">
                     <label htmlFor="newsletter-email" className="sr-only">
                       Email address for opportunity updates
                     </label>
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                      <Mail className="w-4 h-4" />
+                      <Mail className="w-4 h-4" aria-hidden="true" />
                     </div>
                     <input
                       id="newsletter-email"
@@ -848,11 +864,11 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
                           setNoticeMessage('');
                         }
                       }}
-                      placeholder="Enter your student email..."
+                      placeholder="Enter your email address..."
                       autoComplete="email"
                       required
                       disabled={status === 'loading' || !firestoreConfigured}
-                      className={`w-full pl-10 pr-4 py-3 rounded-xl bg-white text-slate-900 placeholder-slate-400 text-sm sm:text-base font-medium border shadow-inner transition-all outline-none focus:ring-2 disabled:opacity-60 disabled:cursor-not-allowed ${
+                      className={`w-full h-11 pl-10 pr-3.5 rounded-xl bg-white text-slate-900 placeholder-slate-400 text-sm font-medium border shadow-inner transition-all outline-none focus:ring-2 disabled:opacity-65 disabled:cursor-not-allowed ${
                         status === 'error'
                           ? 'border-red-400 focus:ring-red-400'
                           : 'border-slate-200 focus:border-[#6846F5] focus:ring-[#6846F5]/40'
@@ -865,7 +881,7 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
                     variant="primary"
                     size="md"
                     disabled={status === 'loading' || !firestoreConfigured}
-                    className="sm:w-auto w-full py-3 px-5 sm:px-6 bg-[#6846F5] hover:bg-[#5b3adb] text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full sm:w-auto h-11 px-5 bg-[#6846F5] hover:bg-[#5b3adb] text-white text-sm font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 shrink-0 whitespace-nowrap cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {status === 'loading' ? (
                       <>
@@ -875,10 +891,75 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
                     ) : (
                       <>
                         <span>Get Updates</span>
-                        <Send className="w-4 h-4" />
+                        <Send className="w-3.5 h-3.5" aria-hidden="true" />
                       </>
                     )}
                   </Button>
+                </div>
+
+                {/* Compact Expandable Interests Control (Collapsed by Default) */}
+                <div className="rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => setIsInterestsExpanded((prev) => !prev)}
+                    aria-expanded={isInterestsExpanded}
+                    aria-controls="newsletter-interests-panel"
+                    className="w-full min-h-[44px] px-3.5 py-2.5 flex items-center justify-between gap-3 text-left hover:bg-white/[0.04] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8B5CF6]"
+                  >
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold text-white min-w-0">
+                      <SlidersHorizontal className="w-3.5 h-3.5 text-[#E7B75C] shrink-0" aria-hidden="true" />
+                      <span className="truncate">Choose your interests</span>
+                    </span>
+
+                    <span className="inline-flex items-center gap-2 shrink-0">
+                      <span className="text-[11px] font-medium text-[#CBD5E1] tabular-nums">
+                        {selectedInterestsSummary}
+                      </span>
+                      <ChevronDown
+                        className={`w-4 h-4 text-[#CBD5E1] transition-transform duration-200 ${
+                          isInterestsExpanded ? 'rotate-180' : ''
+                        }`}
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </button>
+
+                  {/* Smooth Expandable Preferences Panel */}
+                  <div
+                    id="newsletter-interests-panel"
+                    className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${
+                      isInterestsExpanded
+                        ? 'grid-rows-[1fr] opacity-100 border-t border-white/10'
+                        : 'grid-rows-[0fr] opacity-0 invisible'
+                    }`}
+                    aria-hidden={!isInterestsExpanded}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="p-3 pt-2.5 flex flex-wrap gap-1.5">
+                        {PREFERENCE_OPTIONS.map((pref) => {
+                          const isSelected = selectedPreferences.includes(pref.id);
+                          return (
+                            <button
+                              key={pref.id}
+                              type="button"
+                              tabIndex={isInterestsExpanded ? 0 : -1}
+                              onClick={() => togglePreference(pref.id)}
+                              aria-pressed={isSelected}
+                              disabled={status === 'loading' || actionLoading !== null}
+                              className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors duration-150 cursor-pointer border select-none disabled:opacity-60 ${
+                                isSelected
+                                  ? 'bg-[#6846F5] text-white border-[#8B5CF6] shadow-2xs'
+                                  : 'bg-white/5 text-[#CBD5E1] border-white/10 hover:bg-white/10 hover:text-white'
+                              }`}
+                            >
+                              <span>{pref.label}</span>
+                              {isSelected && <Check className="w-3 h-3 text-white shrink-0" aria-hidden="true" />}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Inline Error Announcement */}
@@ -886,7 +967,7 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
                   <div
                     role="alert"
                     aria-live="assertive"
-                    className="flex items-center gap-2 text-xs sm:text-sm text-red-300 bg-red-950/40 border border-red-800/60 rounded-lg px-3 py-2"
+                    className="flex items-center gap-2 text-xs text-red-300 bg-red-950/40 border border-red-800/60 rounded-lg px-3 py-2"
                   >
                     <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
                     <span>{errorMessage}</span>
@@ -898,38 +979,42 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
                   <div
                     role="status"
                     aria-live="polite"
-                    className="flex items-center gap-2 text-xs sm:text-sm text-emerald-300 bg-emerald-950/40 border border-emerald-700/50 rounded-lg px-3 py-2"
+                    className="flex items-center gap-2 text-xs text-emerald-300 bg-emerald-950/40 border border-emerald-700/50 rounded-lg px-3 py-2"
                   >
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                     <span>{noticeMessage}</span>
                   </div>
                 )}
 
+                {/* Friendly Disabled / Paused Notice (No technical details exposed) */}
                 {(!emailDeliveryConfigured || !firestoreConfigured) && (
-                  <p className="text-[11px] text-[#94A3B8] text-center sm:text-left pt-0.5">
-                    {!firestoreConfigured
-                      ? 'Email opportunity alerts are temporarily disabled until server-side Firebase credentials are configured for deployment.'
-                      : 'Email delivery is not yet configured, so confirmation emails are not active yet.'}
+                  <p className="text-[11px] text-[#CBD5E1]/80 flex items-center gap-1.5 pt-0.5 leading-snug">
+                    <Info className="w-3.5 h-3.5 text-[#E7B75C] shrink-0" aria-hidden="true" />
+                    <span>
+                      {!firestoreConfigured
+                        ? 'Email updates are temporarily paused while we finish setting up delivery. Check back soon or explore opportunities in the portal.'
+                        : 'Email alerts are currently paused while delivery is being finalized.'}
+                    </span>
                   </p>
                 )}
               </form>
             )}
           </div>
 
-          {/* Trust Guarantees */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-y-2 gap-x-6 text-xs text-[#94A3B8]">
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          {/* Quiet Trust Row */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-y-1.5 gap-x-5 text-[11px] text-[#94A3B8]">
+            <span className="inline-flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" aria-hidden="true" />
               <span>Strict No-Spam Policy</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-blue-400" />
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 shrink-0" aria-hidden="true" />
               <span>Official University &amp; Scholarship Links</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4 text-[#E7B75C]" />
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-[#E7B75C] shrink-0" aria-hidden="true" />
               <span>Update or Unsubscribe Anytime</span>
-            </div>
+            </span>
           </div>
         </div>
       </Container>

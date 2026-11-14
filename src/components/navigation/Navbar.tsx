@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight, Compass, HelpCircle, Info, LogIn, ShieldCheck } from 'lucide-react';
 import { Logo } from '../brand/Logo';
 import { Button } from '../ui/Button';
+import { StudentInitialsAvatar } from '../ui/StudentInitialsAvatar';
 
 export interface NavLinkItem {
   id: string;
@@ -92,6 +93,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
+    if (isLoggedIn && onExploreHubClick) {
+      onExploreHubClick();
+      return;
+    }
     if (onNavigate) {
       onNavigate('home');
     }
@@ -111,10 +116,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Zone 1: Brand Wordmark on Far Left */}
           <div className="flex items-center shrink-0">
             <a
-              href="#home"
+              href={isLoggedIn ? '#/dashboard' : '#home'}
               onClick={handleLogoClick}
-              aria-label="Campus Connect Home"
-              className="inline-flex items-center rounded-xl p-1 -m-1 transition-opacity duration-150 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8065FF]"
+              aria-label={isLoggedIn ? 'Go to Campus Connect Student Dashboard' : 'Campus Connect Home'}
+              className="inline-flex items-center rounded-xl p-1 -m-1 transition-opacity duration-150 hover:opacity-90 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8065FF] cursor-pointer"
             >
               <Logo size="md" variant="dark" showWordmark={true} />
             </a>
@@ -165,7 +170,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </button>
                 )}
 
-                <div className="flex items-center gap-2 pl-1 border-l border-[#20254D]">
+                <div className="flex items-center gap-2 pl-2 border-l border-[#20254D]">
+                  <StudentInitialsAvatar fullName={userName} email={userEmail} size="sm" />
                   <span className="text-xs text-slate-300 font-medium truncate max-w-[130px]">
                     {userName || userEmail}
                   </span>

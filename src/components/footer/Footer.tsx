@@ -12,6 +12,7 @@ export interface FooterProps {
   onPlaceholderClick?: (title: string, description: string) => void;
   onLoginClick?: () => void;
   onSignUpClick?: () => void;
+  onLogoClick?: () => void;
   className?: string;
 }
 
@@ -20,6 +21,7 @@ export const Footer: React.FC<FooterProps> = ({
   onPlaceholderClick,
   onLoginClick,
   onSignUpClick,
+  onLogoClick,
   className = '',
 }) => {
   const currentYear = new Date().getFullYear();
@@ -55,13 +57,17 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Brand & Mission Column (Full on mobile/tablet, 5 cols on lg) */}
           <div className="sm:col-span-2 lg:col-span-5 space-y-4">
             <a
-              href="#home"
+              href={onLogoClick ? '#/dashboard' : '#home'}
               onClick={(e) => {
                 e.preventDefault();
+                if (onLogoClick) {
+                  onLogoClick();
+                  return;
+                }
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              aria-label="Campus Connect Home"
-              className="inline-block transition-opacity hover:opacity-90"
+              aria-label={onLogoClick ? 'Go to Campus Connect Student Dashboard' : 'Campus Connect Home'}
+              className="inline-block transition-opacity hover:opacity-90 cursor-pointer"
             >
               <Logo size="md" variant="dark" showWordmark={true} />
             </a>

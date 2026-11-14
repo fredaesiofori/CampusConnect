@@ -138,6 +138,7 @@ export interface StudentProfile {
   fundingTypePreference?: 'fully_funded' | 'partially_funded' | 'self_funded' | 'all' | string;
   preferredFieldsOfStudy?: string[];
   notificationPreferences?: NotificationPreferences;
+  dismissedNotificationIds?: string[];
 }
 
 export type TargetPriority = 'High' | 'Medium' | 'Low';
@@ -563,6 +564,17 @@ export const authService = {
       resolvedProfile = {
         ...firestoreData.profile,
         notificationPreferences: normalizeNotificationPreferences(firestoreData.profile.notificationPreferences),
+        ...(Array.isArray(firestoreData.profile.dismissedNotificationIds)
+          ? {
+              dismissedNotificationIds: Array.from(
+                new Set(
+                  firestoreData.profile.dismissedNotificationIds.filter(
+                    (id): id is string => typeof id === 'string' && id.length > 0
+                  )
+                )
+              ).slice(-150),
+            }
+          : {}),
       };
       resolvedSaved = Array.from(new Set(firestoreData.savedOpportunities || []));
       resolvedTracker = firestoreData.applicationTracker || {};
@@ -940,6 +952,14 @@ export const authService = {
         ...(currentUser.profile?.notificationPreferences || {}),
         ...(firestoreData.profile?.notificationPreferences || {}),
       }),
+      dismissedNotificationIds: Array.from(
+        new Set([
+          ...(currentUser.profile?.dismissedNotificationIds || []),
+          ...(Array.isArray(firestoreData.profile?.dismissedNotificationIds)
+            ? firestoreData.profile.dismissedNotificationIds
+            : []),
+        ].filter((id): id is string => typeof id === 'string' && id.length > 0))
+      ).slice(-150),
     };
 
     const hydrated: User = {
@@ -1571,23 +1591,74 @@ export const authService = {
       notificationPreferences: mergedPreferences,
     };
 
+    const prevProfile = currentUser.profile;
     currentUser.profile = updatedProfile;
     activeInMemoryUser = currentUser;
     setCachedUser(currentUser);
 
-    // Persist to Cloud Firestore under authenticated user's UID
-    try {
-      await saveStudentProfileToFirestore(
+    // Persist to Cloud Firestore under authenticated user's UID when Firebase session is active
+    if (auth.currentUser && auth.currentUser.uid === currentUser.id) {
+      const saveRes = await saveStudentProfileWithStatusToFirestore(
         currentUser.id,
         currentUser.email,
         updatedProfile,
         currentUser.fullName
       );
-    } catch (fsErr) {
-      console.warn('Firestore notification preferences save notice:', fsErr);
+      if (!saveRes.success) {
+        currentUser.profile = prevProfile;
+        activeInMemoryUser = currentUser;
+        setCachedUser(currentUser);
+        return {
+          success: false,
+          error: saveRes.error || 'Could not save notification preferences to Firestore.',
+        };
+      }
     }
 
     return { success: true, user: currentUser };
+  },
+
+  async recordDismissedNotificationIdsSynced(ids: string[]): Promise<User | null> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser || ids.length === 0) return currentUser;
+
+    const currentProfile: StudentProfile = currentUser.profile || {
+      nationality: currentUser.country === 'Ghana' ? 'Ghanaian' : `${currentUser.country} Citizen`,
+      countryOfResidence: currentUser.country || 'Ghana',
+      preferredDestinations: ['Ghana', 'United States', 'United Kingdom', 'Canada'],
+      educationLevel: 'Senior High School / WASSCE',
+      intendedDegree: currentUser.degreeLevel || "Undergraduate (Bachelor's)",
+      fieldOfStudy: currentUser.studyField || 'Computer Science & Engineering',
+      graduationYear: '2026',
+      onboardingCompleted: true,
+    };
+
+    const nextDismissed = Array.from(
+      new Set([
+        ...(currentProfile.dismissedNotificationIds || []),
+        ...ids.filter((id) => typeof id === 'string' && id.length > 0),
+      ])
+    ).slice(-150);
+
+    const updatedProfile: StudentProfile = {
+      ...currentProfile,
+      dismissedNotificationIds: nextDismissed,
+    };
+
+    currentUser.profile = updatedProfile;
+    activeInMemoryUser = { ...currentUser };
+    setCachedUser(activeInMemoryUser);
+
+    if (auth.currentUser && auth.currentUser.uid === currentUser.id) {
+      await saveStudentProfileWithStatusToFirestore(
+        currentUser.id,
+        currentUser.email,
+        updatedProfile,
+        currentUser.fullName
+      ).catch(() => {});
+    }
+
+    return activeInMemoryUser;
   },
 
   // 10d. Update Student Study Preferences with validation and Firestore synchronization
@@ -1769,6 +1840,17 @@ export const authService = {
         const profile: StudentProfile = {
           ...rawProfile,
           notificationPreferences: normalizeNotificationPreferences(rawProfile.notificationPreferences),
+          ...(Array.isArray(rawProfile.dismissedNotificationIds)
+            ? {
+                dismissedNotificationIds: Array.from(
+                  new Set(
+                    rawProfile.dismissedNotificationIds.filter(
+                      (id): id is string => typeof id === 'string' && id.length > 0
+                    )
+                  )
+                ).slice(-150),
+              }
+            : {}),
         };
 
         const syncedUser: User = {

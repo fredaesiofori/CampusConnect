@@ -791,9 +791,18 @@ export async function deleteStudentAccountFromFirebase(
   try {
     const user = auth.currentUser;
 
-    // 1. Delete student Firestore record under users/{userId} if authenticated
+    // 1. Delete student Firestore subcollections & profile doc under users/{userId} if authenticated
     if (user && user.uid === userId) {
       try {
+        await clearAllUserNotificationsInFirestore(userId).catch(() => {});
+        const tokensSnap = await getDocs(
+          query(collection(db, 'users', userId, 'pushTokens'), where('userId', '==', userId))
+        ).catch(() => null);
+        if (tokensSnap && !tokensSnap.empty) {
+          const tokenBatch = writeBatch(db);
+          tokensSnap.forEach((docSnap) => tokenBatch.delete(docSnap.ref));
+          await tokenBatch.commit().catch(() => {});
+        }
         const userDocRef = doc(db, 'users', userId);
         await deleteDoc(userDocRef);
       } catch (fsErr) {
@@ -1358,8 +1367,21 @@ export async function batchCreateUserNotificationsInFirestore(
 
   let written = 0;
   try {
-    for (let i = 0; i < validItems.length; i += 50) {
-      const chunk = validItems.slice(i, i + 50);
+    // Check existing server/cache notification IDs for this owner so we never call `create` (`set`)
+    // on an already-existing document and trigger an immutable `createdAt` update rule rejection.
+    const existingSnap = await getDocs(
+      query(collection(db, 'users', targetUid, 'notifications'), where('userId', '==', targetUid))
+    ).catch(() => null);
+    const existingIds = new Set<string>();
+    if (existingSnap) {
+      existingSnap.forEach((d) => existingIds.add(d.id));
+    }
+
+    const toInsert = validItems.filter((item) => !existingIds.has(item.id));
+    if (toInsert.length === 0) return 0;
+
+    for (let i = 0; i < toInsert.length; i += 50) {
+      const chunk = toInsert.slice(i, i + 50);
       const batch = writeBatch(db);
       for (const item of chunk) {
         batch.set(doc(db, 'users', targetUid, 'notifications', item.id), item);

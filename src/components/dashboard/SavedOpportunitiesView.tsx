@@ -289,7 +289,16 @@ export const SavedOpportunitiesView: React.FC<SavedOpportunitiesViewProps> = ({
             return (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-4"
+                role="button"
+                tabIndex={0}
+                onClick={() => onOpenDetails(item)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onOpenDetails(item);
+                  }
+                }}
+                className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md hover:border-[#6846F5]/35 active:scale-[0.99] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out flex flex-col justify-between space-y-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] group"
               >
                 <div className="space-y-3">
                   {/* Top Row: Logo + Title + Category */}
@@ -316,7 +325,7 @@ export const SavedOpportunitiesView: React.FC<SavedOpportunitiesViewProps> = ({
                             {fundingLabel}
                           </span>
                         </div>
-                        <h3 className="text-sm sm:text-base font-bold text-[#10132D] leading-snug">
+                        <h3 className="text-sm sm:text-base font-bold text-[#10132D] group-hover:text-[#6846F5] transition-colors leading-snug">
                           {displayName}
                         </h3>
                         <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
@@ -330,7 +339,10 @@ export const SavedOpportunitiesView: React.FC<SavedOpportunitiesViewProps> = ({
 
                     <button
                       type="button"
-                      onClick={() => onRemoveBookmark(item.id, displayName)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onRemoveBookmark(item.id, displayName);
+                      }}
                       className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer shrink-0"
                       title="Remove bookmark"
                       aria-label={`Remove ${displayName} from Saved Opportunities`}
@@ -355,7 +367,10 @@ export const SavedOpportunitiesView: React.FC<SavedOpportunitiesViewProps> = ({
                 </div>
 
                 {/* Action Row */}
-                <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                <div
+                  className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <div className="flex items-center gap-2">
                     <button
                       type="button"

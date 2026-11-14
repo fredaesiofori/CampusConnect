@@ -32,8 +32,10 @@ export const Logo: React.FC<LogoProps> = ({
 
   const isDark = variant === 'dark';
 
+  const isSmall = size === 'sm';
+
   return (
-    <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
+    <div className={`inline-flex items-center ${isSmall ? 'gap-2 min-w-0 max-w-full' : 'gap-2.5'} select-none ${className}`}>
       {/* Brand Icon Mark */}
       <div
         className={`${iconSizes[size]} rounded-xl bg-[#15152F] flex items-center justify-center p-1.5 shadow-[0_2px_8px_rgba(21,21,47,0.15)] ring-1 ring-[#6846F5]/20 shrink-0`}
@@ -73,20 +75,24 @@ export const Logo: React.FC<LogoProps> = ({
 
       {/* Wordmark */}
       {showWordmark && (
-        <div className="flex flex-col leading-none">
+        <div className="flex flex-col leading-none min-w-0">
           <span
-            className={`font-display font-bold tracking-tight ${textSizes[size]} ${
+            className={`font-display font-bold tracking-tight truncate ${textSizes[size]} ${
               isDark ? 'text-white' : 'text-[#15152F]'
             }`}
           >
             Campus<span className="text-[#6846F5]">Connect</span>
           </span>
           <span
-            className={`text-[10px] tracking-widest uppercase font-medium mt-0.5 ${
+            className={`${
+              isSmall
+                ? 'text-[7.5px] min-[360px]:text-[8.5px] tracking-[0.03em] min-[360px]:tracking-[0.05em]'
+                : 'text-[8.5px] sm:text-[9.5px] tracking-[0.06em] sm:tracking-[0.08em]'
+            } uppercase font-medium mt-0.5 whitespace-nowrap truncate ${
               isDark ? 'text-slate-400' : 'text-[#64748B]'
             }`}
           >
-            Global Scholarships
+            Global Education Opportunities
           </span>
         </div>
       )}
