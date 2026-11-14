@@ -54,12 +54,23 @@ service cloud.firestore {
         (!('scholarshipAlerts' in data) || (
           data.scholarshipAlerts is map &&
           data.scholarshipAlerts.keys().hasAll(['subscribed', 'email', 'preferences', 'updatedAt']) &&
-          data.scholarshipAlerts.keys().hasOnly(['subscribed', 'email', 'preferences', 'updatedAt']) &&
+          data.scholarshipAlerts.keys().hasOnly([
+            'subscribed',
+            'email',
+            'preferences',
+            'updatedAt',
+            'consentStatus',
+            'confirmedAt',
+            'unsubscribedAt',
+            'frequency'
+          ]) &&
           data.scholarshipAlerts.subscribed is bool &&
           data.scholarshipAlerts.email is string && data.scholarshipAlerts.email.size() > 3 && data.scholarshipAlerts.email.size() <= 254 &&
-          data.scholarshipAlerts.preferences is list && data.scholarshipAlerts.preferences.size() <= 10 &&
+          data.scholarshipAlerts.preferences is list && data.scholarshipAlerts.preferences.size() <= 12 &&
           (data.scholarshipAlerts.preferences.size() == 0 || data.scholarshipAlerts.preferences[0] is string) &&
-          data.scholarshipAlerts.updatedAt is string && data.scholarshipAlerts.updatedAt.size() <= 64
+          data.scholarshipAlerts.updatedAt is string && data.scholarshipAlerts.updatedAt.size() <= 64 &&
+          (!('consentStatus' in data.scholarshipAlerts) || data.scholarshipAlerts.consentStatus in ['pending', 'confirmed', 'unsubscribed']) &&
+          (!('frequency' in data.scholarshipAlerts) || data.scholarshipAlerts.frequency in ['immediate', 'weekly'])
         ));
     }
 
@@ -114,6 +125,17 @@ service cloud.firestore {
           request.resource.data.createdAt == resource.data.createdAt;
         allow delete: if isOwner(userId) && isValidId(userId) && isValidId(conversationId);
       }
+    }
+
+    // 3. Server-Only Opportunity Subscribers Collection (Firebase Admin SDK access only)
+    // Strictly denies all client-side reads and writes so subscriber emails and tokens are never exposed.
+    match /opportunitySubscribers/{subscriberId} {
+      allow read, write: if false;
+    }
+
+    // 4. Server-Only Alert Delivery Logs & Deadline Deduplication Collection
+    match /alertDeliveryLogs/{logId} {
+      allow read, write: if false;
     }
 
     // Default deny all other paths

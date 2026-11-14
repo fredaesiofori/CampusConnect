@@ -294,7 +294,10 @@ export const OpportunityDetailModal: React.FC<OpportunityDetailModalProps> = ({
                       <div>
                         <span className="text-slate-500">Language Policy:</span>{' '}
                         <span className="font-semibold text-slate-700">
-                          {item.admissionsRequirements.language || 'English proficiency (WAEC / IELTS / TOEFL)'}
+                          {item.admissionsRequirements?.language ||
+                            item.admissionsRequirements?.englishProficiency ||
+                            item.testWaiverRules?.englishProficiencyPolicy ||
+                            'Confirm language requirements on the official admissions portal'}
                         </span>
                       </div>
                     </div>
@@ -303,8 +306,8 @@ export const OpportunityDetailModal: React.FC<OpportunityDetailModalProps> = ({
                       <Calendar className="w-4 h-4 text-[#6846F5] shrink-0 mt-0.5" />
                       <div>
                         <span className="text-slate-500">Application Deadlines:</span>{' '}
-                        <span className="font-semibold text-[#10132D]">
-                          {item.deadlines.term} — {item.deadlines.deadlineText}
+                        <span className={`font-semibold ${evalDeadline.isExpired ? 'text-amber-700' : 'text-[#10132D]'}`}>
+                          {item.deadlines.term} — {evalDeadline.displayText}
                         </span>
                       </div>
                     </div>
@@ -338,31 +341,57 @@ export const OpportunityDetailModal: React.FC<OpportunityDetailModalProps> = ({
                       Academic Standard
                     </span>
                     <p className="text-slate-800 font-medium">
-                      {item.admissionsRequirements?.academic || 'Verified academic standard required for this program.'}
+                      {item.admissionsRequirements?.academic ||
+                        item.admissionsRequirements?.minGpa ||
+                        'Specific academic cutoffs vary by faculty — verify on the official admissions portal.'}
                     </p>
                   </div>
 
                   <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
                     <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                      SAT / Standardized Testing
+                      Language &amp; Standardized Testing
                     </span>
                     <p className="text-slate-800 font-medium">
-                      {item.testWaiverRules?.details || item.testPolicy?.details || 'Standard admission policy applies.'}
+                      {item.admissionsRequirements?.language ||
+                        item.admissionsRequirements?.englishProficiency ||
+                        item.testWaiverRules?.englishProficiencyPolicy ||
+                        'Confirm language rules on official admissions portal.'}
+                    </p>
+                    <p className="text-slate-600">
+                      {item.admissionsRequirements?.standardizedTests ||
+                        item.testWaiverRules?.details ||
+                        item.testPolicy?.details ||
+                        'Confirm testing policy on the official admissions portal.'}
                     </p>
                   </div>
 
-                  {item.admissionsRequirements?.documents && (
-                    <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                      <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                        Required Documents
-                      </span>
-                      <ul className="list-disc pl-4 space-y-1 text-slate-700 pt-1">
-                        {item.admissionsRequirements.documents.map((doc, idx) => (
-                          <li key={idx}>{doc}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  {(() => {
+                    const requiredDocs =
+                      item.admissionsRequirements?.documents?.length
+                        ? item.admissionsRequirements.documents
+                        : item.admissionsRequirements?.documentsRequired;
+                    return requiredDocs && requiredDocs.length > 0 ? (
+                      <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                          Required Documents
+                        </span>
+                        <ul className="list-disc pl-4 space-y-1 text-slate-700 pt-1">
+                          {requiredDocs.map((doc, idx) => (
+                            <li key={idx}>{doc}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : (
+                      <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                          Required Documents
+                        </span>
+                        <p className="text-slate-600">
+                          Document checklist varies by degree track — confirm directly on the official institutional portal.
+                        </p>
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
 

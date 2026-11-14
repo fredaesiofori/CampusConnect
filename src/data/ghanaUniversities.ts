@@ -447,7 +447,9 @@ export const ghanaUniversities: OpportunityItem[] = [
     "intakeTerm": "August/September 2026",
     "verifiedBadge": "Verified Official Data",
     "summary": "Ghana’s flagship university dedicated to educational research, curriculum design, creative arts, and higher education instruction.",
-    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC) under University of Education, Winneba Act, 2004 (Act 672)."
+    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC) under University of Education, Winneba Act, 2004 (Act 672).",
+    "linkStatus": "needs-review",
+    "reviewNote": "Server TLS certificate chain incomplete during automated check; verify HTTPS certificate and admissions URL."
   },
   {
     "id": "uds-tamale-ghana",
@@ -1348,8 +1350,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Tanoso-Kumasi, Ashanti Region",
     "officialWebsite": "https://aamusted.edu.gh",
-    "sourceUrl": "https://admissions.aamusted.edu.gh",
-    "officialUrl": "https://admissions.aamusted.edu.gh",
+    "sourceUrl": "https://usted.edu.gh/apply/",
+    "officialUrl": "https://usted.edu.gh/apply/",
     "category": "university",
     "institutionType": "Public University",
     "title": "TVET, Technical Education & Entrepreneurial Training Degrees",
@@ -1459,8 +1461,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Kanda / South Legon, Accra",
     "officialWebsite": "https://unimac.edu.gh",
-    "sourceUrl": "https://apply.unimac.edu.gh",
-    "officialUrl": "https://apply.unimac.edu.gh",
+    "sourceUrl": "https://admissions.unimac.edu.gh/",
+    "officialUrl": "https://admissions.unimac.edu.gh/",
     "category": "university",
     "institutionType": "Public University",
     "title": "Journalism, Film, Television & Language Sciences Degrees",
@@ -1902,8 +1904,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Cape Coast, Central Region",
     "officialWebsite": "https://cctu.edu.gh",
-    "sourceUrl": "https://portal.cctu.edu.gh/admissions",
-    "officialUrl": "https://portal.cctu.edu.gh/admissions",
+    "sourceUrl": "https://cctu.online/admissions/",
+    "officialUrl": "https://cctu.online/admissions/",
     "category": "university",
     "institutionType": "Technical University",
     "title": "Applied Arts, Tourism & Engineering Technology Degrees",
@@ -1915,7 +1917,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "CCTU",
       "crestColor": "#38BDF8",
-      "logoDescription": "CCTU Ocean Blue & White Crest"
+      "logoDescription": "CCTU Ocean Blue & White Crest",
+      "logoUrl": "/logos/cctu-capecoast-ghana.png",
+      "logoSourceUrl": "https://cctu.edu.gh/site/index"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2011,8 +2015,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Effia, Takoradi, Western Region",
     "officialWebsite": "https://ttu.edu.gh",
-    "sourceUrl": "https://admissions.ttu.edu.gh",
-    "officialUrl": "https://admissions.ttu.edu.gh",
+    "sourceUrl": "https://ttu.edu.gh/admission-requirements/",
+    "officialUrl": "https://ttu.edu.gh/admission-requirements/",
     "category": "university",
     "institutionType": "Technical University",
     "title": "Petroleum, Maritime & Applied Industrial Technology Degrees",
@@ -2121,8 +2125,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Ho, Volta Region",
     "officialWebsite": "https://htu.edu.gh",
-    "sourceUrl": "https://admissions.htu.edu.gh",
-    "officialUrl": "https://admissions.htu.edu.gh",
+    "sourceUrl": "https://app.htu.edu.gh/admissions/applicant",
+    "officialUrl": "https://app.htu.edu.gh/admissions/applicant",
     "category": "university",
     "institutionType": "Technical University",
     "title": "Hospitality, Agribusiness & Engineering Technology Degrees",
@@ -2231,8 +2235,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Koforidua, Eastern Region",
     "officialWebsite": "https://ktu.edu.gh",
-    "sourceUrl": "https://apply.ktu.edu.gh",
-    "officialUrl": "https://apply.ktu.edu.gh",
+    "sourceUrl": "https://applyonline.ktu.edu.gh/login",
+    "officialUrl": "https://applyonline.ktu.edu.gh/login",
     "category": "university",
     "institutionType": "Technical University",
     "title": "Biomedical Engineering, Mechatronics & Computing Degrees",
@@ -2341,8 +2345,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Sunyani, Bono Region",
     "officialWebsite": "https://stu.edu.gh",
-    "sourceUrl": "https://admissions.stu.edu.gh",
-    "officialUrl": "https://admissions.stu.edu.gh",
+    "sourceUrl": "https://stu.edu.gh/admissions",
+    "officialUrl": "https://stu.edu.gh/admissions",
     "category": "university",
     "institutionType": "Technical University",
     "title": "Civil, Electrical & Materials Engineering Technology Degrees",
@@ -2354,7 +2358,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFEDD5",
       "monogram": "STU",
       "crestColor": "#FB923C",
-      "logoDescription": "STU Terracotta & Gold Technical Emblem"
+      "logoDescription": "STU Terracotta & Gold Technical Emblem",
+      "logoUrl": "/logos/stu-sunyani-ghana.png",
+      "logoSourceUrl": "https://stu.edu.gh/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2450,8 +2456,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Tamale, Northern Region",
     "officialWebsite": "https://tatu.edu.gh",
-    "sourceUrl": "https://admissions.tatu.edu.gh",
-    "officialUrl": "https://admissions.tatu.edu.gh",
+    "sourceUrl": "https://tatu.edu.gh/admission-entry-requirement/",
+    "officialUrl": "https://tatu.edu.gh/admission-entry-requirement/",
     "category": "university",
     "institutionType": "Technical University",
     "title": "Water, Agriculture & Mechanical Engineering Degrees",
@@ -2559,9 +2565,9 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryCode": "GH",
     "countryFlag": "🇬🇭",
     "city": "Sumbrungu, Bolgatanga, Upper East Region",
-    "officialWebsite": "https://btu.edu.gh",
-    "sourceUrl": "https://admissions.btu.edu.gh",
-    "officialUrl": "https://admissions.btu.edu.gh",
+    "officialWebsite": "https://bolgatu.edu.gh",
+    "sourceUrl": "https://bolgatu.edu.gh/how-to-apply/",
+    "officialUrl": "https://bolgatu.edu.gh/how-to-apply/",
     "category": "university",
     "institutionType": "Technical University",
     "title": "Ecological Agriculture & Applied Engineering Degrees",
@@ -2573,7 +2579,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FEF08A",
       "monogram": "BTU",
       "crestColor": "#EAB308",
-      "logoDescription": "BTU Ochre & Gold Technical Crest"
+      "logoDescription": "BTU Ochre & Gold Technical Crest",
+      "logoUrl": "/logos/btu-bolgatanga-ghana.png",
+      "logoSourceUrl": "https://btu.edu.gh/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2668,9 +2676,9 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryCode": "GH",
     "countryFlag": "🇬🇭",
     "city": "Wa, Upper West Region",
-    "officialWebsite": "https://wtu.edu.gh",
-    "sourceUrl": "https://admissions.wtu.edu.gh",
-    "officialUrl": "https://admissions.wtu.edu.gh",
+    "officialWebsite": "https://www.dhltu.edu.gh",
+    "sourceUrl": "https://admissions.dhltu.edu.gh/",
+    "officialUrl": "https://admissions.dhltu.edu.gh/",
     "category": "university",
     "institutionType": "Technical University",
     "title": "Industrial Technology & Applied Science Degrees",
@@ -2682,7 +2690,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#F3F4F6",
       "monogram": "WTU",
       "crestColor": "#60A5FA",
-      "logoDescription": "WTU Slate & Blue Technical Crest"
+      "logoDescription": "WTU Slate & Blue Technical Crest",
+      "logoUrl": "/logos/wtu-wa-ghana.png",
+      "logoSourceUrl": "https://www.dhltu.edu.gh/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2989,7 +2999,9 @@ export const ghanaUniversities: OpportunityItem[] = [
     "intakeTerm": "August/September 2026",
     "verifiedBadge": "Verified Official Data",
     "summary": "One of Ghana’s largest private chartered universities, founded by Dr. Mensa Otabil, renowned for its Law Faculty, Pharmacy School, and modern Miotso campus.",
-    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC) with Presidential Charter awarded in 2016."
+    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC) with Presidential Charter awarded in 2016.",
+    "linkStatus": "needs-review",
+    "reviewNote": "Server TLS certificate hostname mismatch during automated check; verify HTTPS configuration."
   },
   {
     "id": "vvu-valley-view-ghana",
@@ -3014,7 +3026,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "VVU",
       "crestColor": "#34D399",
-      "logoDescription": "Valley View Forest Green & Gold Shield"
+      "logoDescription": "Valley View Forest Green & Gold Shield",
+      "logoUrl": "/logos/vvu-valley-view-ghana.png",
+      "logoSourceUrl": "https://en.wikipedia.org/wiki/File:Valley_View_University_logo.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3223,8 +3237,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Haatso, Accra, Greater Accra",
     "officialWebsite": "https://acity.edu.gh",
-    "sourceUrl": "https://apply.acity.edu.gh",
-    "officialUrl": "https://apply.acity.edu.gh",
+    "sourceUrl": "https://acity.edu.gh/start-your-application/",
+    "officialUrl": "https://acity.edu.gh/start-your-application/",
     "category": "university",
     "institutionType": "Private University",
     "title": "Artificial Intelligence, Robotics & Modern Engineering Degrees",
@@ -3345,7 +3359,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "LU",
       "crestColor": "#F59E0B",
-      "logoDescription": "Lancaster Red Rose & Shield Crest"
+      "logoDescription": "Lancaster Red Rose & Shield Crest",
+      "logoUrl": "/logos/lancaster-university-ghana.png",
+      "logoSourceUrl": "https://lancaster.edu.gh/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3538,7 +3554,9 @@ export const ghanaUniversities: OpportunityItem[] = [
     "intakeTerm": "August/September 2026",
     "verifiedBadge": "Verified Official Data",
     "summary": "American-accredited international university branch campus in East Legon, offering US degree credentials with study abroad mobility to Webster campuses in the US and Europe.",
-    "officialRuleSummary": "Accredited by the Higher Learning Commission (HLC) in the United States and the Ghana Tertiary Education Commission (GTEC)."
+    "officialRuleSummary": "Accredited by the Higher Learning Commission (HLC) in the United States and the Ghana Tertiary Education Commission (GTEC).",
+    "linkStatus": "needs-review",
+    "reviewNote": "Official domain (webster.edu.gh) failed DNS resolution during automated check; verify current institutional status and URL."
   },
   {
     "id": "catholic-university-ghana",
@@ -3661,8 +3679,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Abetifi-Kwahu & Asante Akyem",
     "officialWebsite": "https://presbyuniversity.edu.gh",
-    "sourceUrl": "https://admissions.presbyuniversity.edu.gh",
-    "officialUrl": "https://admissions.presbyuniversity.edu.gh",
+    "sourceUrl": "https://www.presbyuniversity.edu.gh/site/admissions/how-to-apply/",
+    "officialUrl": "https://www.presbyuniversity.edu.gh/site/admissions/how-to-apply/",
     "category": "university",
     "institutionType": "Private University",
     "title": "Nursing, Physician Assistantship & Environmental Degrees",
@@ -3674,7 +3692,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "PUG",
       "crestColor": "#86EFAC",
-      "logoDescription": "Presbyterian University Green & White Cross Shield"
+      "logoDescription": "Presbyterian University Green & White Cross Shield",
+      "logoUrl": "/logos/presbyterian-university-ghana.png",
+      "logoSourceUrl": "https://en.wikipedia.org/wiki/File:Presbyterian_university_college_logo.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3770,8 +3790,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Dansoman, Accra, Greater Accra",
     "officialWebsite": "https://mug.edu.gh",
-    "sourceUrl": "https://admissions.mug.edu.gh",
-    "officialUrl": "https://admissions.mug.edu.gh",
+    "sourceUrl": "https://mug.edu.gh/how-to-apply-online/",
+    "officialUrl": "https://mug.edu.gh/how-to-apply-online/",
     "category": "university",
     "institutionType": "Private University",
     "title": "Business, Nursing, Social Sciences & Agriculture Degrees",
@@ -3783,7 +3803,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "MUG",
       "crestColor": "#F59E0B",
-      "logoDescription": "Methodist University Rust & Gold Academic Crest"
+      "logoDescription": "Methodist University Rust & Gold Academic Crest",
+      "logoUrl": "/logos/methodist-university-ghana.png",
+      "logoSourceUrl": "https://mug.edu.gh/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -3879,8 +3901,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Santasi, Kumasi, Ashanti Region",
     "officialWebsite": "https://csuc.edu.gh",
-    "sourceUrl": "https://admissions.csuc.edu.gh",
-    "officialUrl": "https://admissions.csuc.edu.gh",
+    "sourceUrl": "https://www.csuc.edu.gh/admission/",
+    "officialUrl": "https://www.csuc.edu.gh/admission/",
     "category": "university",
     "institutionType": "Private University",
     "title": "Nursing, Physician Assistantship, Business & Theology Degrees",
@@ -3989,8 +4011,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Koforidua, Eastern Region",
     "officialWebsite": "https://anu.edu.gh",
-    "sourceUrl": "https://admissions.anu.edu.gh",
-    "officialUrl": "https://admissions.anu.edu.gh",
+    "sourceUrl": "https://anu.edu.gh/apply-to-anu",
+    "officialUrl": "https://anu.edu.gh/apply-to-anu",
     "category": "university",
     "institutionType": "Private University",
     "title": "Space Science, Biomedical & Engineering Degrees",
@@ -4098,8 +4120,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "North Legon, Accra, Greater Accra",
     "officialWebsite": "https://wiuc-ghana.edu.gh",
-    "sourceUrl": "https://wiuc-ghana.edu.gh/admissions/",
-    "officialUrl": "https://wiuc-ghana.edu.gh/admissions/",
+    "sourceUrl": "https://wiuc-ghana.edu.gh/how-to-apply/",
+    "officialUrl": "https://wiuc-ghana.edu.gh/how-to-apply/",
     "category": "university",
     "institutionType": "Private University",
     "title": "Law, Nursing, Cybersecurity & Business Degrees",
@@ -4111,7 +4133,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "WIUC",
       "crestColor": "#FBBF24",
-      "logoDescription": "Wisconsin Crimson & Gold Crest"
+      "logoDescription": "Wisconsin Crimson & Gold Crest",
+      "logoUrl": "/logos/wisconsin-university-ghana.png",
+      "logoSourceUrl": "https://wiuc-ghana.edu.gh/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4207,8 +4231,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "McCarthy Hill, Accra, Greater Accra",
     "officialWebsite": "https://regent.edu.gh",
-    "sourceUrl": "https://admissions.regent.edu.gh",
-    "officialUrl": "https://admissions.regent.edu.gh",
+    "sourceUrl": "https://regent.edu.gh/page.php?slug=admissions",
+    "officialUrl": "https://regent.edu.gh/page.php?slug=admissions",
     "category": "university",
     "institutionType": "Private University",
     "title": "Informatics, Telecommunications & Business Degrees",
@@ -4220,7 +4244,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#38BDF8",
       "monogram": "RUC",
       "crestColor": "#38BDF8",
-      "logoDescription": "Regent Slate & Blue Academic Shield"
+      "logoDescription": "Regent Slate & Blue Academic Shield",
+      "logoUrl": "/logos/regent-university-ghana.jpg",
+      "logoSourceUrl": "https://en.wikipedia.org/wiki/File:RUCST_logo.jpg"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4329,7 +4355,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "IUCG",
       "crestColor": "#34D399",
-      "logoDescription": "Islamic University Green & Gold Crescent Shield"
+      "logoDescription": "Islamic University Green & Gold Crescent Shield",
+      "logoUrl": "/logos/islamic-university-ghana.jpg",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Islamic_University_College,_Ghana_Emblem.jpg"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4425,8 +4453,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Kokomlemle, Accra, Greater Accra",
     "officialWebsite": "https://bluecrest.edu.gh",
-    "sourceUrl": "https://bluecrest.edu.gh/admissions/",
-    "officialUrl": "https://bluecrest.edu.gh/admissions/",
+    "sourceUrl": "https://bluecrest.edu.gh/admissions.php",
+    "officialUrl": "https://bluecrest.edu.gh/admissions.php",
     "category": "university",
     "institutionType": "Private University",
     "title": "Technology, Fashion Design, Media & Business Degrees",
@@ -4438,7 +4466,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "BC",
       "crestColor": "#60A5FA",
-      "logoDescription": "BlueCrest Royal Blue & White Digital Crest"
+      "logoDescription": "BlueCrest Royal Blue & White Digital Crest",
+      "logoUrl": "/logos/bluecrest-college-ghana.jpg",
+      "logoSourceUrl": "https://bluecrest.edu.gh/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4533,8 +4563,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Kenyase-Kumasi, Ashanti Region",
     "officialWebsite": "https://gcuc.edu.gh",
-    "sourceUrl": "https://admissions.gcuc.edu.gh",
-    "officialUrl": "https://admissions.gcuc.edu.gh",
+    "sourceUrl": "https://gcu.edu.gh/",
+    "officialUrl": "https://gcu.edu.gh/",
     "category": "university",
     "institutionType": "Private University",
     "title": "Nursing, Physician Assistantship & Health Sciences Degrees",
@@ -4546,7 +4576,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "GCUC",
       "crestColor": "#A7F3D0",
-      "logoDescription": "Garden City Green & White Medical Emblem"
+      "logoDescription": "Garden City Green & White Medical Emblem",
+      "logoUrl": "/logos/garden-city-university-ghana.jpg",
+      "logoSourceUrl": "https://en.wikipedia.org/wiki/File:GCU_Logomark.jpg"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4739,7 +4771,9 @@ export const ghanaUniversities: OpportunityItem[] = [
     "intakeTerm": "August/September 2026",
     "verifiedBadge": "Verified Official Data",
     "summary": "Founded by Hon. Kojo Yankah, AUCC is a UNESCO-recognized pioneer in media studies, strategic public relations, and entrepreneurial business education.",
-    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC)."
+    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC).",
+    "linkStatus": "needs-review",
+    "reviewNote": "Official domain (aucc.edu.gh) failed DNS resolution during automated check; verify current institutional URL."
   },
   {
     "id": "zenith-college-ghana",
@@ -4751,8 +4785,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "La, Accra, Greater Accra",
     "officialWebsite": "https://zenithuniversitycollege.org",
-    "sourceUrl": "https://zenithuniversitycollege.org/admissions/",
-    "officialUrl": "https://zenithuniversitycollege.org/admissions/",
+    "sourceUrl": "http://zenithuniversitycollege.org/we_have_evolved/",
+    "officialUrl": "http://zenithuniversitycollege.org/we_have_evolved/",
     "category": "university",
     "institutionType": "Private University",
     "title": "Business, Tourism & Information Technology Degrees",
@@ -4764,7 +4798,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "ZUC",
       "crestColor": "#60A5FA",
-      "logoDescription": "Zenith Blue & White Academic Crest"
+      "logoDescription": "Zenith Blue & White Academic Crest",
+      "logoUrl": "/logos/zenith-college-ghana.jpg",
+      "logoSourceUrl": "https://en.wikipedia.org/wiki/File:Zenith_University_College_Logo.jpg"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4871,7 +4907,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#F59E0B",
       "monogram": "PUC",
       "crestColor": "#F59E0B",
-      "logoDescription": "Perez Gold Flame on Dark Slate Crest"
+      "logoDescription": "Perez Gold Flame on Dark Slate Crest",
+      "logoUrl": "/logos/perez-university-ghana.png",
+      "logoSourceUrl": "https://www.perez.edu.gh/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4978,7 +5016,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#EDE9FE",
       "monogram": "KUC",
       "crestColor": "#A78BFA",
-      "logoDescription": "Knutsford Deep Violet & Gold Crest"
+      "logoDescription": "Knutsford Deep Violet & Gold Crest",
+      "logoUrl": "/logos/knutsford-college-ghana.png",
+      "logoSourceUrl": "https://knutsford.edu.gh/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -5072,8 +5112,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Amrahia, Accra, Greater Accra",
     "officialWebsite": "https://ghanacu.edu.gh",
-    "sourceUrl": "https://ghanacu.edu.gh/admissions/",
-    "officialUrl": "https://ghanacu.edu.gh/admissions/",
+    "sourceUrl": "https://apply.ghanacu.edu.gh/",
+    "officialUrl": "https://apply.ghanacu.edu.gh/",
     "category": "university",
     "institutionType": "Private University",
     "title": "Nursing, Community Development & Theology Degrees",
@@ -5085,7 +5125,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "GCUC",
       "crestColor": "#4ADE80",
-      "logoDescription": "Ghana Christian Green & Gold Academic Shield"
+      "logoDescription": "Ghana Christian Green & Gold Academic Shield",
+      "logoUrl": "/logos/ghana-christian-college-ghana.png",
+      "logoSourceUrl": "https://ghanacu.edu.gh/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -5179,8 +5221,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Ho, Volta Region",
     "officialWebsite": "https://epuc.edu.gh",
-    "sourceUrl": "https://epuc.edu.gh/admissions/",
-    "officialUrl": "https://epuc.edu.gh/admissions/",
+    "sourceUrl": "https://epuc.edu.gh/pages/admission-requirements",
+    "officialUrl": "https://epuc.edu.gh/pages/admission-requirements",
     "category": "university",
     "institutionType": "Private University",
     "title": "Agribusiness, Education, Business & IT Degrees",
@@ -5381,7 +5423,9 @@ export const ghanaUniversities: OpportunityItem[] = [
     "intakeTerm": "August/September 2026",
     "verifiedBadge": "Verified Official Data",
     "summary": "Pioneering private college in East Legon famed for its prominent fashion design degree department, digital graphic communication, and business management.",
-    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC)."
+    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC).",
+    "linkStatus": "needs-review",
+    "reviewNote": "Official domain (radforduc.edu.gh) failed DNS resolution during automated check; verify current institutional URL."
   },
   {
     "id": "dominion-college-ghana",
@@ -5488,7 +5532,9 @@ export const ghanaUniversities: OpportunityItem[] = [
     "intakeTerm": "August/September 2026",
     "verifiedBadge": "Verified Official Data",
     "summary": "Christian university college located on Spintex Road, Accra, offering degrees in computer science, business administration, and theological leadership.",
-    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC)."
+    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC).",
+    "linkStatus": "needs-review",
+    "reviewNote": "Institutional website (duc.edu.gh) timed out during automated verification; verify portal availability."
   },
   {
     "id": "kings-college-ghana",
@@ -5607,8 +5653,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Buduburam / Kasoa, Central Region",
     "officialWebsite": "https://kaafuni.edu.gh",
-    "sourceUrl": "https://kaafuni.edu.gh/admissions/",
-    "officialUrl": "https://kaafuni.edu.gh/admissions/",
+    "sourceUrl": "https://kaafuni.edu.gh/admissions/portal",
+    "officialUrl": "https://kaafuni.edu.gh/admissions/portal",
     "category": "university",
     "institutionType": "Private University",
     "title": "Civil, Geotechnical & Mechanical Engineering Degrees",
@@ -5620,7 +5666,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "KAAF",
       "crestColor": "#5EEAD4",
-      "logoDescription": "KAAF Teal & White Engineering Gear Crest"
+      "logoDescription": "KAAF Teal & White Engineering Gear Crest",
+      "logoUrl": "/logos/kaaf-university-ghana.png",
+      "logoSourceUrl": "https://kaafuni.edu.gh/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -5823,8 +5871,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Odorkor, Accra, Greater Accra",
     "officialWebsite": "https://marshalls.edu.gh",
-    "sourceUrl": "https://marshalls.edu.gh/admissions/",
-    "officialUrl": "https://marshalls.edu.gh/admissions/",
+    "sourceUrl": "https://marshalls.edu.gh/test/admissions.php",
+    "officialUrl": "https://marshalls.edu.gh/test/admissions.php",
     "category": "university",
     "institutionType": "Private University",
     "title": "Technology, Modern Business & Hospitality Degrees",
@@ -5836,7 +5884,9 @@ export const ghanaUniversities: OpportunityItem[] = [
       "text": "#38BDF8",
       "monogram": "MUC",
       "crestColor": "#38BDF8",
-      "logoDescription": "Marshalls Slate Blue & Cyan Crest"
+      "logoDescription": "Marshalls Slate Blue & Cyan Crest",
+      "logoUrl": "/logos/marshalls-college-ghana.png",
+      "logoSourceUrl": "https://marshalls.edu.gh/test/"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -5929,8 +5979,8 @@ export const ghanaUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇭",
     "city": "Nungua, Accra, Greater Accra",
     "officialWebsite": "https://rmu.edu.gh",
-    "sourceUrl": "https://admissions.rmu.edu.gh",
-    "officialUrl": "https://admissions.rmu.edu.gh",
+    "sourceUrl": "https://rmu.edu.gh/apply-to-rmu/",
+    "officialUrl": "https://rmu.edu.gh/apply-to-rmu/",
     "category": "university",
     "institutionType": "Specialized / Regional",
     "title": "Nautical Science, Marine Engineering & Maritime Transport Degrees",
@@ -6135,7 +6185,9 @@ export const ghanaUniversities: OpportunityItem[] = [
     "intakeTerm": "August/September 2026",
     "verifiedBadge": "Verified Official Data",
     "summary": "Ghana’s highest military and civilian defense institution in Teshie, awarding accredited Master of Science and PhD degrees in defense, crisis management, and national security.",
-    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC) in institutional partnership with the University of Ghana."
+    "officialRuleSummary": "Accredited by the Ghana Tertiary Education Commission (GTEC) in institutional partnership with the University of Ghana.",
+    "linkStatus": "needs-review",
+    "reviewNote": "Official domain (gafcsc.mil.gh) failed DNS resolution during automated check; verify public admissions portal."
   },
   {
     "id": "kaiptc-peacekeeping-ghana",

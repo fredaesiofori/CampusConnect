@@ -11,8 +11,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Nairobi",
     officialWebsite: "https://www.ku.ac.ke",
-    sourceUrl: "https://www.ku.ac.ke/admissions",
-    officialUrl: "https://www.ku.ac.ke/admissions",
+    sourceUrl: 'https://www.ku.ac.ke/admission.html',
+    officialUrl: 'https://www.ku.ac.ke/admission.html',
     category: "university",
     institutionType: "Public University",
     title: "Kenyatta University Vice-Chancellor's Academic Excellence Scholarship",
@@ -24,7 +24,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "KU",
       crestColor: "#800000",
-      logoDescription: "Kenyatta University Official Seal & Emblem"
+      logoDescription: "Kenyatta University Official Seal & Emblem",
+      logoUrl: '/logos/ku-kenya.png',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:Kenyatta_University_Logo.png'
     },
     eligibilityCountries: [
       "Kenya",
@@ -76,11 +78,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -183,11 +185,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -212,7 +214,9 @@ export const kenyaUniversities: OpportunityItem[] = [
     intakeTerm: "September Intake 2026",
     verifiedBadge: "Verified Official Data",
     summary: "Pioneering private chartered university in Nairobi, internationally renowned for Strathmore Business School, @iLabAfrica research, and top graduate employability.",
-    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya."
+    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate chain incomplete on automated check; confirm browser accessibility.'
   },
   {
     id: "jkuat-kenya",
@@ -290,11 +294,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -319,7 +323,9 @@ export const kenyaUniversities: OpportunityItem[] = [
     intakeTerm: "September Intake 2026",
     verifiedBadge: "Verified Official Data",
     summary: "Kenya’s premier public technological institution, recognized as the regional innovation hub for precision agriculture, mechatronics, and mobile technology.",
-    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya."
+    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate chain incomplete on automated check; confirm browser accessibility.'
   },
   {
     id: "moi-kenya",
@@ -397,11 +403,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -426,7 +432,9 @@ export const kenyaUniversities: OpportunityItem[] = [
     intakeTerm: "September Intake 2026",
     verifiedBadge: "Verified Official Data",
     summary: "Established in 1984 as Kenya's second public university, home to the internationally recognized Moi Teaching and Referral Hospital (MTRH) and School of Aviation.",
-    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya."
+    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate chain incomplete on automated check; confirm browser accessibility.'
   },
   {
     id: "egerton-kenya",
@@ -438,8 +446,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Njoro, Nakuru County",
     officialWebsite: "https://www.egerton.ac.ke",
-    sourceUrl: "https://www.egerton.ac.ke/admissions",
-    officialUrl: "https://www.egerton.ac.ke/admissions",
+    sourceUrl: 'https://www.egerton.ac.ke/students-admissions/admissions/undergraduate-admission.html',
+    officialUrl: 'https://www.egerton.ac.ke/students-admissions/admissions/undergraduate-admission.html',
     category: "university",
     institutionType: "Public University",
     title: "Egerton University Agricultural Sciences & Agro-Enterprise Fellowship",
@@ -451,7 +459,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "EGER",
       crestColor: "#154734",
-      logoDescription: "Egerton University Official Seal & Emblem"
+      logoDescription: "Egerton University Official Seal & Emblem",
+      logoUrl: '/logos/egerton-kenya.png',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:Egerton_University_logo.png'
     },
     eligibilityCountries: [
       "Kenya",
@@ -503,11 +513,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -544,8 +554,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Maseno, Kisumu County",
     officialWebsite: "https://www.maseno.ac.ke",
-    sourceUrl: "https://www.maseno.ac.ke/admissions",
-    officialUrl: "https://www.maseno.ac.ke/admissions",
+    sourceUrl: 'https://maseno.ac.ke/how-apply',
+    officialUrl: 'https://maseno.ac.ke/how-apply',
     category: "university",
     institutionType: "Public University",
     title: "Maseno University Equator ICT & Health Sciences Grant",
@@ -557,7 +567,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFF00",
       monogram: "MASU",
       crestColor: "#003366",
-      logoDescription: "Maseno University Official Seal & Emblem"
+      logoDescription: "Maseno University Official Seal & Emblem",
+      logoUrl: '/logos/maseno-kenya.png',
+      logoSourceUrl: 'https://maseno.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -609,11 +621,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -663,7 +675,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MMUST",
       crestColor: "#004B23",
-      logoDescription: "Masinde Muliro University of Science and Technology Official Seal & Emblem"
+      logoDescription: "Masinde Muliro University of Science and Technology Official Seal & Emblem",
+      logoUrl: '/logos/mmust-kenya.jpg',
+      logoSourceUrl: 'https://mmust.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -715,11 +729,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -756,8 +770,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Nyeri County",
     officialWebsite: "https://www.dkut.ac.ke",
-    sourceUrl: "https://www.dkut.ac.ke/admissions",
-    officialUrl: "https://www.dkut.ac.ke/admissions",
+    sourceUrl: 'https://admissions.dkut.ac.ke/',
+    officialUrl: 'https://admissions.dkut.ac.ke/',
     category: "university",
     institutionType: "Public University",
     title: "DeKUT Science Park & Industrial Innovation Grant",
@@ -769,7 +783,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "DeKUT",
       crestColor: "#1E3F20",
-      logoDescription: "Dedan Kimathi University of Technology Official Seal & Emblem"
+      logoDescription: "Dedan Kimathi University of Technology Official Seal & Emblem",
+      logoUrl: '/logos/dekut-kenya.jpg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Kuctlogo1.jpg'
     },
     eligibilityCountries: [
       "Kenya",
@@ -821,11 +837,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -862,8 +878,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Chuka, Tharaka Nithi County",
     officialWebsite: "https://www.chuka.ac.ke",
-    sourceUrl: "https://www.chuka.ac.ke/admissions",
-    officialUrl: "https://www.chuka.ac.ke/admissions",
+    sourceUrl: 'https://admissions.chuka.ac.ke/',
+    officialUrl: 'https://admissions.chuka.ac.ke/',
     category: "university",
     institutionType: "Public University",
     title: "Chuka University Eastern Kenya Academic Scholarship",
@@ -875,7 +891,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#F4D03F",
       monogram: "CHUK",
       crestColor: "#0B5345",
-      logoDescription: "Chuka University Official Seal & Emblem"
+      logoDescription: "Chuka University Official Seal & Emblem",
+      logoUrl: '/logos/chuka-kenya.png',
+      logoSourceUrl: 'https://www.chuka.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -927,11 +945,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -968,8 +986,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Haile Selassie Avenue, Nairobi",
     officialWebsite: "https://tukenya.ac.ke",
-    sourceUrl: "https://tukenya.ac.ke/admissions",
-    officialUrl: "https://tukenya.ac.ke/admissions",
+    sourceUrl: 'https://tukenya.ac.ke',
+    officialUrl: 'https://tukenya.ac.ke',
     category: "university",
     institutionType: "Technical University",
     title: "TUK Applied Technology & Poly-Engineering Fellowship",
@@ -981,7 +999,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#D4AF37",
       monogram: "TUK",
       crestColor: "#002D62",
-      logoDescription: "Technical University of Kenya Official Seal & Emblem"
+      logoDescription: "Technical University of Kenya Official Seal & Emblem",
+      logoUrl: '/logos/tuk-kenya.png',
+      logoSourceUrl: 'https://tukenya.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -1033,11 +1053,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -1140,11 +1160,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -1181,8 +1201,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Kisii County",
     officialWebsite: "https://kisiiuniversity.ac.ke",
-    sourceUrl: "https://kisiiuniversity.ac.ke/admissions",
-    officialUrl: "https://kisiiuniversity.ac.ke/admissions",
+    sourceUrl: 'https://kisiiuniversity.ac.ke/admission/how-to-apply',
+    officialUrl: 'https://kisiiuniversity.ac.ke/admission/how-to-apply',
     category: "university",
     institutionType: "Public University",
     title: "Kisii University Highlands Innovation & Health Grant",
@@ -1194,7 +1214,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#F5B041",
       monogram: "KSU",
       crestColor: "#1A5276",
-      logoDescription: "Kisii University Official Seal & Emblem"
+      logoDescription: "Kisii University Official Seal & Emblem",
+      logoUrl: '/logos/kisii-kenya.png',
+      logoSourceUrl: 'https://kisiiuniversity.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -1246,11 +1268,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -1300,7 +1322,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UoE",
       crestColor: "#0E6655",
-      logoDescription: "University of Eldoret Official Seal & Emblem"
+      logoDescription: "University of Eldoret Official Seal & Emblem",
+      logoUrl: '/logos/uoe-kenya.png',
+      logoSourceUrl: 'https://www.uoeld.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -1352,11 +1376,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -1393,8 +1417,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Kilifi County",
     officialWebsite: "https://www.pu.ac.ke",
-    sourceUrl: "https://www.pu.ac.ke/admissions",
-    officialUrl: "https://www.pu.ac.ke/admissions",
+    sourceUrl: 'https://www.pu.ac.ke',
+    officialUrl: 'https://www.pu.ac.ke',
     category: "university",
     institutionType: "Public University",
     title: "Pwani University Biosciences & KEMRI-Wellcome Trust Fellowship",
@@ -1406,7 +1430,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FAD7A0",
       monogram: "PU",
       crestColor: "#1B4F72",
-      logoDescription: "Pwani University Official Seal & Emblem"
+      logoDescription: "Pwani University Official Seal & Emblem",
+      logoUrl: '/logos/pwani-kenya.png',
+      logoSourceUrl: 'https://www.pu.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -1458,11 +1484,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -1512,7 +1538,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MMAR",
       crestColor: "#922B21",
-      logoDescription: "Maasai Mara University Official Seal & Emblem"
+      logoDescription: "Maasai Mara University Official Seal & Emblem",
+      logoUrl: '/logos/maasaimara-kenya.png',
+      logoSourceUrl: 'https://www.mmarau.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -1564,11 +1592,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -1670,11 +1698,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -1699,7 +1727,9 @@ export const kenyaUniversities: OpportunityItem[] = [
     intakeTerm: "September Intake 2026",
     verifiedBadge: "Verified Official Data",
     summary: "Hosts the World Bank Africa Center of Excellence in Sustainable Use of Insects as Food and Feeds (INSEFOODS), leading food security innovation in Africa.",
-    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya."
+    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Institutional website returned HTTP 500 during automated check; verify portal status manually.'
   },
   {
     id: "seku-kenya",
@@ -1724,7 +1754,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "SEKU",
       crestColor: "#145A32",
-      logoDescription: "South Eastern Kenya University Official Seal & Emblem"
+      logoDescription: "South Eastern Kenya University Official Seal & Emblem",
+      logoUrl: '/logos/seku-kenya.jpg',
+      logoSourceUrl: 'https://www.seku.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -1776,11 +1808,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -1817,8 +1849,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Nyahururu, Laikipia County",
     officialWebsite: "https://www.laikipia.ac.ke",
-    sourceUrl: "https://www.laikipia.ac.ke/admissions",
-    officialUrl: "https://www.laikipia.ac.ke/admissions",
+    sourceUrl: 'https://application.laikipia.ac.ke/',
+    officialUrl: 'https://application.laikipia.ac.ke/',
     category: "university",
     institutionType: "Public University",
     title: "Laikipia University Humanities & Education Award",
@@ -1830,7 +1862,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "LAIK",
       crestColor: "#1B4F72",
-      logoDescription: "Laikipia University Official Seal & Emblem"
+      logoDescription: "Laikipia University Official Seal & Emblem",
+      logoUrl: '/logos/laikipia-kenya.png',
+      logoSourceUrl: 'https://www.laikipia.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -1882,11 +1916,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -1936,7 +1970,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MKSU",
       crestColor: "#117864",
-      logoDescription: "Machakos University Official Seal & Emblem"
+      logoDescription: "Machakos University Official Seal & Emblem",
+      logoUrl: '/logos/machakos-kenya.png',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:Machakos_University_Logo.png'
     },
     eligibilityCountries: [
       "Kenya",
@@ -1988,11 +2024,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -2094,11 +2130,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -2123,7 +2159,9 @@ export const kenyaUniversities: OpportunityItem[] = [
     intakeTerm: "September Intake 2026",
     verifiedBadge: "Verified Official Data",
     summary: "Located in the heart of Kenya's lush green tea-growing highlands in Kericho, celebrated for sustainable forestry, tea research, and healthcare sciences.",
-    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya."
+    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate chain incomplete on automated check; confirm browser accessibility.'
   },
   {
     id: "karatina-kenya",
@@ -2135,8 +2173,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Karatina, Nyeri County",
     officialWebsite: "https://www.karu.ac.ke",
-    sourceUrl: "https://www.karu.ac.ke/admissions",
-    officialUrl: "https://www.karu.ac.ke/admissions",
+    sourceUrl: 'https://karu.ac.ke/admission-letters/',
+    officialUrl: 'https://karu.ac.ke/admission-letters/',
     category: "university",
     institutionType: "Public University",
     title: "Karatina University Mount Kenya Natural Resources Award",
@@ -2148,7 +2186,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "KARU",
       crestColor: "#2E4053",
-      logoDescription: "Karatina University Official Seal & Emblem"
+      logoDescription: "Karatina University Official Seal & Emblem",
+      logoUrl: '/logos/karatina-kenya.png',
+      logoSourceUrl: 'https://karu.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -2200,11 +2240,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -2241,8 +2281,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Meru County",
     officialWebsite: "https://www.must.ac.ke",
-    sourceUrl: "https://www.must.ac.ke/admissions",
-    officialUrl: "https://www.must.ac.ke/admissions",
+    sourceUrl: 'https://admission.must.ac.ke/',
+    officialUrl: 'https://admission.must.ac.ke/',
     category: "university",
     institutionType: "Public University",
     title: "MUST Innovation & Sanitation Tech Research Fellowship",
@@ -2254,7 +2294,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MUST",
       crestColor: "#1E8449",
-      logoDescription: "Meru University of Science and Technology Official Seal & Emblem"
+      logoDescription: "Meru University of Science and Technology Official Seal & Emblem",
+      logoUrl: '/logos/must-kenya.png',
+      logoSourceUrl: 'https://www.must.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -2306,11 +2348,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -2412,11 +2454,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -2441,7 +2483,9 @@ export const kenyaUniversities: OpportunityItem[] = [
     intakeTerm: "September Intake 2026",
     verifiedBadge: "Verified Official Data",
     summary: "A modern technological hub in western Kenya, offering state-of-the-art computer labs, high performance computing clusters, and community agricultural outreach.",
-    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya."
+    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate chain incomplete on automated check; confirm browser accessibility.'
   },
   {
     id: "rongo-kenya",
@@ -2518,11 +2562,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -2547,7 +2591,9 @@ export const kenyaUniversities: OpportunityItem[] = [
     intakeTerm: "September Intake 2026",
     verifiedBadge: "Verified Official Data",
     summary: "Located near Lake Victoria and the Migori gold belt, providing leadership in agricultural modernization, community journalism, and gold mining safety.",
-    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya."
+    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate chain incomplete on automated check; confirm browser accessibility.'
   },
   {
     id: "ttu-kenya",
@@ -2572,7 +2618,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "TTU",
       crestColor: "#7D6608",
-      logoDescription: "Taita Taveta University Official Seal & Emblem"
+      logoDescription: "Taita Taveta University Official Seal & Emblem",
+      logoUrl: '/logos/ttu-kenya.png',
+      logoSourceUrl: 'https://www.ttu.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -2624,11 +2672,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -2678,7 +2726,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MUT",
       crestColor: "#117A65",
-      logoDescription: "Murang'a University of Technology Official Seal & Emblem"
+      logoDescription: "Murang'a University of Technology Official Seal & Emblem",
+      logoUrl: '/logos/muranga-kenya.jpg',
+      logoSourceUrl: 'https://mut.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -2730,11 +2780,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -2771,8 +2821,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Kerugoya, Kirinyaga County",
     officialWebsite: "https://kyu.ac.ke",
-    sourceUrl: "https://kyu.ac.ke/admissions",
-    officialUrl: "https://kyu.ac.ke/admissions",
+    sourceUrl: 'https://kyu.ac.ke/admissions/how-to-apply2',
+    officialUrl: 'https://kyu.ac.ke/admissions/how-to-apply2',
     category: "university",
     institutionType: "Public University",
     title: "Kirinyaga University Rice Irrigation & Engineering Fellowship",
@@ -2784,7 +2834,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "KyU",
       crestColor: "#0B5345",
-      logoDescription: "Kirinyaga University Official Seal & Emblem"
+      logoDescription: "Kirinyaga University Official Seal & Emblem",
+      logoUrl: '/logos/kyau-kenya.png',
+      logoSourceUrl: 'https://kyu.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -2836,11 +2888,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -2890,7 +2942,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "CUK",
       crestColor: "#1E8449",
-      logoDescription: "The Co-operative University of Kenya Official Seal & Emblem"
+      logoDescription: "The Co-operative University of Kenya Official Seal & Emblem",
+      logoUrl: '/logos/cuk-kenya.png',
+      logoSourceUrl: 'https://www.cuk.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -2942,11 +2996,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -2983,8 +3037,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Embu County",
     officialWebsite: "https://embuni.ac.ke",
-    sourceUrl: "https://embuni.ac.ke/admissions",
-    officialUrl: "https://embuni.ac.ke/admissions",
+    sourceUrl: 'https://embuni.ac.ke/how-to-apply/',
+    officialUrl: 'https://embuni.ac.ke/how-to-apply/',
     category: "university",
     institutionType: "Public University",
     title: "University of Embu Agro-Ecology & Crop Protection Award",
@@ -2996,7 +3050,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UoEm",
       crestColor: "#145A32",
-      logoDescription: "University of Embu Official Seal & Emblem"
+      logoDescription: "University of Embu Official Seal & Emblem",
+      logoUrl: '/logos/uoem-kenya.png',
+      logoSourceUrl: 'https://embuni.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -3048,11 +3104,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -3154,11 +3210,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -3183,7 +3239,9 @@ export const kenyaUniversities: OpportunityItem[] = [
     intakeTerm: "September Intake 2026",
     verifiedBadge: "Verified Official Data",
     summary: "The first public chartered university in northeastern Kenya, serving as a beacon of academic resilience, pastoral economy innovation, and regional peacebuilding.",
-    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya."
+    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate chain incomplete on automated check; confirm browser accessibility.'
   },
   {
     id: "alupe-kenya",
@@ -3195,8 +3253,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Busia County",
     officialWebsite: "https://au.ac.ke",
-    sourceUrl: "https://au.ac.ke/admissions",
-    officialUrl: "https://au.ac.ke/admissions",
+    sourceUrl: 'https://admissionletter.au.ac.ke/',
+    officialUrl: 'https://admissionletter.au.ac.ke/',
     category: "university",
     institutionType: "Public University",
     title: "Alupe University Medical & Infectious Disease Research Grant",
@@ -3208,7 +3266,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "ALUP",
       crestColor: "#1B4F72",
-      logoDescription: "Alupe University Official Seal & Emblem"
+      logoDescription: "Alupe University Official Seal & Emblem",
+      logoUrl: '/logos/alupe-kenya.png',
+      logoSourceUrl: 'https://au.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -3260,11 +3320,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -3314,7 +3374,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "THAR",
       crestColor: "#1E8449",
-      logoDescription: "Tharaka University Official Seal & Emblem"
+      logoDescription: "Tharaka University Official Seal & Emblem",
+      logoUrl: '/logos/tharaka-kenya.png',
+      logoSourceUrl: 'https://www.tharaka.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -3366,11 +3428,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -3420,7 +3482,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "TMU",
       crestColor: "#1A5276",
-      logoDescription: "Tom Mboya University Official Seal & Emblem"
+      logoDescription: "Tom Mboya University Official Seal & Emblem",
+      logoUrl: '/logos/tmuc-kenya.png',
+      logoSourceUrl: 'https://tmu.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -3472,11 +3536,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -3526,7 +3590,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "KAFU",
       crestColor: "#0E6251",
-      logoDescription: "Kaimosi Friends University Official Seal & Emblem"
+      logoDescription: "Kaimosi Friends University Official Seal & Emblem",
+      logoUrl: '/logos/kaimosi-kenya.png',
+      logoSourceUrl: 'https://kafu.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -3578,11 +3644,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -3632,7 +3698,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFBF00",
       monogram: "USIU",
       crestColor: "#00205B",
-      logoDescription: "United States International University Africa Official Seal & Emblem"
+      logoDescription: "United States International University Africa Official Seal & Emblem",
+      logoUrl: '/logos/usiu-africa-kenya.png',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:USIU_Africa_Logo.png'
     },
     eligibilityCountries: [
       "Kenya",
@@ -3684,11 +3752,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -3725,8 +3793,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Nairobi & Athi River",
     officialWebsite: "https://www.daystar.ac.ke",
-    sourceUrl: "https://www.daystar.ac.ke/scholarships",
-    officialUrl: "https://www.daystar.ac.ke/scholarships",
+    sourceUrl: 'https://www.daystar.ac.ke',
+    officialUrl: 'https://www.daystar.ac.ke',
     category: "university",
     institutionType: "Private University",
     title: "Daystar University Media & Leadership Excellence Scholarship",
@@ -3738,7 +3806,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "DAY",
       crestColor: "#003366",
-      logoDescription: "Daystar University Official Seal & Emblem"
+      logoDescription: "Daystar University Official Seal & Emblem",
+      logoUrl: '/logos/daystar-kenya.png',
+      logoSourceUrl: 'https://www.daystar.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -3790,11 +3860,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -3844,7 +3914,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "CUEA",
       crestColor: "#641E16",
-      logoDescription: "The Catholic University of Eastern Africa Official Seal & Emblem"
+      logoDescription: "The Catholic University of Eastern Africa Official Seal & Emblem",
+      logoUrl: '/logos/cuea-kenya.png',
+      logoSourceUrl: 'https://cuea.edu/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -3896,11 +3968,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -3937,8 +4009,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Thika, Kiambu County",
     officialWebsite: "https://www.mku.ac.ke",
-    sourceUrl: "https://www.mku.ac.ke/admissions",
-    officialUrl: "https://www.mku.ac.ke/admissions",
+    sourceUrl: 'http://mku.ac.ke/category/mku-admission/',
+    officialUrl: 'http://mku.ac.ke/category/mku-admission/',
     category: "university",
     institutionType: "Private University",
     title: "Mount Kenya University Health Sciences & Innovation Scholarship",
@@ -3950,7 +4022,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#F28C00",
       monogram: "MKU",
       crestColor: "#003B73",
-      logoDescription: "Mount Kenya University Official Seal & Emblem"
+      logoDescription: "Mount Kenya University Official Seal & Emblem",
+      logoUrl: '/logos/mku-kenya.png',
+      logoSourceUrl: 'http://mku.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -4002,11 +4076,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -4056,7 +4130,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "ANU",
       crestColor: "#002B49",
-      logoDescription: "Africa Nazarene University Official Seal & Emblem"
+      logoDescription: "Africa Nazarene University Official Seal & Emblem",
+      logoUrl: '/logos/anu-kenya.png',
+      logoSourceUrl: 'https://www.anu.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -4108,11 +4184,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -4214,11 +4290,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -4243,7 +4319,9 @@ export const kenyaUniversities: OpportunityItem[] = [
     intakeTerm: "September Intake 2026",
     verifiedBadge: "Verified Official Data",
     summary: "First private chartered university in Kenya (chartered 1991), renowned for establishing Kenya's first degree program in nursing.",
-    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya."
+    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate hostname mismatch on automated check; verify admissions URL.'
   },
   {
     id: "scott-kenya",
@@ -4321,11 +4399,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -4362,8 +4440,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Nakuru County",
     officialWebsite: "https://kabarak.ac.ke",
-    sourceUrl: "https://kabarak.ac.ke/admissions",
-    officialUrl: "https://kabarak.ac.ke/admissions",
+    sourceUrl: 'https://kabarak.ac.ke/intakes',
+    officialUrl: 'https://kabarak.ac.ke/intakes',
     category: "university",
     institutionType: "Private University",
     title: "Kabarak University Health Sciences & Law Excellence Scholarship",
@@ -4428,11 +4506,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -4534,11 +4612,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -4563,7 +4641,9 @@ export const kenyaUniversities: OpportunityItem[] = [
     intakeTerm: "September Intake 2026",
     verifiedBadge: "Verified Official Data",
     summary: "Prominent for counseling psychology, leadership development, and training ethical leaders across the African continent.",
-    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya."
+    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate hostname mismatch on automated check; verify admissions URL.'
   },
   {
     id: "kemu-kenya",
@@ -4575,8 +4655,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Meru, Nairobi & Mombasa",
     officialWebsite: "https://www.kemu.ac.ke",
-    sourceUrl: "https://www.kemu.ac.ke/admissions",
-    officialUrl: "https://www.kemu.ac.ke/admissions",
+    sourceUrl: 'https://www.kemu.ac.ke',
+    officialUrl: 'https://www.kemu.ac.ke',
     category: "university",
     institutionType: "Private University",
     title: "KeMU Health Sciences & Christian Leadership Grant",
@@ -4588,7 +4668,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#F4D03F",
       monogram: "KeMU",
       crestColor: "#1A5276",
-      logoDescription: "Kenya Methodist University Official Seal & Emblem"
+      logoDescription: "Kenya Methodist University Official Seal & Emblem",
+      logoUrl: '/logos/kemu-kenya.png',
+      logoSourceUrl: 'https://kemu.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -4640,11 +4722,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -4681,8 +4763,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Limuru, Kiambu County",
     officialWebsite: "https://www.spu.ac.ke",
-    sourceUrl: "https://www.spu.ac.ke/admissions",
-    officialUrl: "https://www.spu.ac.ke/admissions",
+    sourceUrl: 'https://www.spu.ac.ke/admissions/admission-regulations',
+    officialUrl: 'https://www.spu.ac.ke/admissions/admission-regulations',
     category: "university",
     institutionType: "Private University",
     title: "St. Paul's University Communication & Divinity Fellowship",
@@ -4694,7 +4776,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "SPU",
       crestColor: "#002B49",
-      logoDescription: "St. Paul's University Official Seal & Emblem"
+      logoDescription: "St. Paul's University Official Seal & Emblem",
+      logoUrl: '/logos/stpauls-kenya.png',
+      logoSourceUrl: 'https://www.spu.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -4746,11 +4830,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -4787,8 +4871,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     countryFlag: "🇰🇪",
     city: "Ruaraka, Nairobi",
     officialWebsite: "https://www.kcau.ac.ke",
-    sourceUrl: "https://www.kcau.ac.ke/admissions",
-    officialUrl: "https://www.kcau.ac.ke/admissions",
+    sourceUrl: 'https://www.kcau.ac.ke/kuccps-placement-admission-letters/',
+    officialUrl: 'https://www.kcau.ac.ke/kuccps-placement-admission-letters/',
     category: "university",
     institutionType: "Private University",
     title: "KCA University Accounting & Financial Technology Scholarship",
@@ -4853,11 +4937,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -4907,7 +4991,9 @@ export const kenyaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "RU",
       crestColor: "#78281F",
-      logoDescription: "Riara University Official Seal & Emblem"
+      logoDescription: "Riara University Official Seal & Emblem",
+      logoUrl: '/logos/riara-kenya.png',
+      logoSourceUrl: 'https://riarauniversity.ac.ke/'
     },
     eligibilityCountries: [
       "Kenya",
@@ -4959,11 +5045,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -5066,11 +5152,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -5172,11 +5258,11 @@ export const kenyaUniversities: OpportunityItem[] = [
       details: "KCSE C+ minimum or equivalent senior secondary credentials."
     },
     deadlines: {
-      term: "September Intake 2026 / January Intake 2027",
-      deadlineText: "KUCCPS Placement & Direct International Deadline: August 15, 2026",
+      term: 'Rolling Direct & Trimester Intakes (January / May / September)',
+      deadlineText: 'Rolling Direct Intakes Open (KUCCPS Placement closed Aug 15, 2026)',
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'KUCCPS 2026 centralized placement concluded August 15, 2026. Self-sponsored and international applications remain open on a rolling trimester basis (January, May, September).',
       isRolling: true
     },
     deadline: "August 15, 2026",
@@ -5201,6 +5287,8 @@ export const kenyaUniversities: OpportunityItem[] = [
     intakeTerm: "September Intake 2026",
     verifiedBadge: "Verified Official Data",
     summary: "Pioneers the unique Partnership for Health and Development model in Western Kenya, championing grassroots primary healthcare.",
-    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya."
+    officialRuleSummary: "Accredited and chartered by the Commission for University Education (CUE), Kenya.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Institutional website (gluk.ac.ke) timed out during automated verification; verify portal availability.'
   }
 ];

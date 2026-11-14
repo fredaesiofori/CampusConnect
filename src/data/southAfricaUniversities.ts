@@ -11,8 +11,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Johannesburg, Gauteng",
     officialWebsite: "https://www.wits.ac.za",
-    sourceUrl: "https://www.wits.ac.za/study-at-wits/financial-aid-and-scholarships/",
-    officialUrl: "https://www.wits.ac.za/study-at-wits/financial-aid-and-scholarships/",
+    sourceUrl: 'https://www.wits.ac.za/study-at-wits/',
+    officialUrl: 'https://www.wits.ac.za/study-at-wits/',
     category: "university",
     institutionType: "Public University",
     title: "Wits University Vice-Chancellor's Equality & Postgraduate Merit Award",
@@ -78,11 +78,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -185,11 +185,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -292,11 +292,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -332,8 +332,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Durban & Pietermaritzburg, KwaZulu-Natal",
     officialWebsite: "https://ukzn.ac.za",
-    sourceUrl: "https://ukzn.ac.za/student-funding/",
-    officialUrl: "https://ukzn.ac.za/student-funding/",
+    sourceUrl: 'https://ukzn.ac.za/',
+    officialUrl: 'https://ukzn.ac.za/',
     category: "university",
     institutionType: "Public University",
     title: "UKZN Health Sciences & CAPRISA HIV/TB Fellowship",
@@ -399,11 +399,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -506,11 +506,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -613,11 +613,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -720,11 +720,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -760,8 +760,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Potchefstroom, Mahikeng & Vanderbijlpark",
     officialWebsite: "https://www.nwu.ac.za",
-    sourceUrl: "https://studies.nwu.ac.za/financial-support-services",
-    officialUrl: "https://studies.nwu.ac.za/financial-support-services",
+    sourceUrl: 'https://studies.nwu.ac.za/studies/apply',
+    officialUrl: 'https://studies.nwu.ac.za/studies/apply',
     category: "university",
     institutionType: "Public University",
     title: "NWU Solar Car & Nuclear Engineering Merit Scholarship",
@@ -827,11 +827,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -934,11 +934,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -1041,11 +1041,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -1081,8 +1081,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Alice & East London, Eastern Cape",
     officialWebsite: "https://www.ufh.ac.za",
-    sourceUrl: "https://www.ufh.ac.za/student-fees",
-    officialUrl: "https://www.ufh.ac.za/student-fees",
+    sourceUrl: 'https://www.ufh.ac.za/admission',
+    officialUrl: 'https://www.ufh.ac.za/admission',
     category: "university",
     institutionType: "Public University",
     title: "University of Fort Hare Heritage & Pan-African Leadership Award",
@@ -1148,11 +1148,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -1255,11 +1255,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -1283,7 +1283,9 @@ export const southAfricaUniversities: OpportunityItem[] = [
     intakeTerm: "February 2027",
     verifiedBadge: "Verified Official Data",
     summary: "Focused on rural development, subtropical crop farming, and public health situated in Limpopo’s biodiversity-rich Vhembe biosphere reserve.",
-    officialRuleSummary: "Accredited and registered with the Council on Higher Education (CHE) and Department of Higher Education and Training (DHET), South Africa."
+    officialRuleSummary: "Accredited and registered with the Council on Higher Education (CHE) and Department of Higher Education and Training (DHET), South Africa.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate chain incomplete on automated check; confirm browser accessibility.'
   },
   {
     id: "ul-south-africa",
@@ -1295,8 +1297,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Mankweng, Polokwane, Limpopo",
     officialWebsite: "https://www.ul.ac.za",
-    sourceUrl: "https://www.ul.ac.za/financial-support/",
-    officialUrl: "https://www.ul.ac.za/financial-support/",
+    sourceUrl: 'https://www.ul.ac.za/admissions/',
+    officialUrl: 'https://www.ul.ac.za/admissions/',
     category: "university",
     institutionType: "Public University",
     title: "University of Limpopo Health Sciences & Materials Science Fellowship",
@@ -1362,11 +1364,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -1402,8 +1404,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Mthatha, Buffalo City, Butterworth & Komani, Eastern Cape",
     officialWebsite: "https://www.wsu.ac.za",
-    sourceUrl: "https://www.wsu.ac.za/financial-aid/",
-    officialUrl: "https://www.wsu.ac.za/financial-aid/",
+    sourceUrl: 'https://www.wsu.ac.za/en/study-with-us/undergraduate-programmes/new-students/admission-requirement',
+    officialUrl: 'https://www.wsu.ac.za/en/study-with-us/undergraduate-programmes/new-students/admission-requirement',
     category: "university",
     institutionType: "Public University",
     title: "WSU Rural Health Innovation & Technical Fellowship",
@@ -1469,11 +1471,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -1576,11 +1578,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -1629,7 +1631,9 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#D4AF37",
       monogram: "SMU",
       crestColor: "#003A70",
-      logoDescription: "Sefako Makgatho Health Sciences University Official Coat of Arms & Emblem"
+      logoDescription: "Sefako Makgatho Health Sciences University Official Coat of Arms & Emblem",
+      logoUrl: '/logos/smu-south-africa.png',
+      logoSourceUrl: 'https://www.smu.ac.za/'
     },
     eligibilityCountries: [
       "South Africa",
@@ -1682,11 +1686,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -1722,8 +1726,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Kimberley, Northern Cape",
     officialWebsite: "https://www.spu.ac.za",
-    sourceUrl: "https://www.spu.ac.za/index.php/fees-and-funding/",
-    officialUrl: "https://www.spu.ac.za/index.php/fees-and-funding/",
+    sourceUrl: 'https://www.spu.ac.za/index.php/admission-requirements-2/',
+    officialUrl: 'https://www.spu.ac.za/index.php/admission-requirements-2/',
     category: "university",
     institutionType: "Public University",
     title: "Sol Plaatje University Data Science & Heritage Award",
@@ -1789,11 +1793,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -1829,8 +1833,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Mbombela & Siyabuswa, Mpumalanga",
     officialWebsite: "https://www.ump.ac.za",
-    sourceUrl: "https://www.ump.ac.za/Financial-Aid",
-    officialUrl: "https://www.ump.ac.za/Financial-Aid",
+    sourceUrl: 'https://www.ump.ac.za/Study-with-us/Application-Process/Online-Applications',
+    officialUrl: 'https://www.ump.ac.za/Study-with-us/Application-Process/Online-Applications',
     category: "university",
     institutionType: "Public University",
     title: "UMP Agricultural Sustainability & Biodiversity Grant",
@@ -1896,11 +1900,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -2003,11 +2007,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -2031,7 +2035,9 @@ export const southAfricaUniversities: OpportunityItem[] = [
     intakeTerm: "February 2027",
     verifiedBadge: "Verified Official Data",
     summary: "Largest university in the Western Cape, leading Africa in cube-satellite and space communication technologies via the French South African Institute of Technology (FSATI).",
-    officialRuleSummary: "Accredited and registered with the Council on Higher Education (CHE) and Department of Higher Education and Training (DHET), South Africa."
+    officialRuleSummary: "Accredited and registered with the Council on Higher Education (CHE) and Department of Higher Education and Training (DHET), South Africa.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate chain incomplete on automated check; confirm browser accessibility.'
   },
   {
     id: "dut-south-africa",
@@ -2056,7 +2062,9 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "DUT",
       crestColor: "#D71920",
-      logoDescription: "Durban University of Technology Official Coat of Arms & Emblem"
+      logoDescription: "Durban University of Technology Official Coat of Arms & Emblem",
+      logoUrl: '/logos/dut-south-africa.jpg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:The_Durban_University_of_Technology_new_log.jpg'
     },
     eligibilityCountries: [
       "South Africa",
@@ -2109,11 +2117,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -2216,11 +2224,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -2323,11 +2331,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -2430,11 +2438,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -2470,8 +2478,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Umlazi, Durban, KwaZulu-Natal",
     officialWebsite: "https://www.mut.ac.za",
-    sourceUrl: "https://www.mut.ac.za/financial-aid/",
-    officialUrl: "https://www.mut.ac.za/financial-aid/",
+    sourceUrl: 'https://www.mut.ac.za/prospective-students/apply/',
+    officialUrl: 'https://www.mut.ac.za/prospective-students/apply/',
     category: "university",
     institutionType: "Technical University",
     title: "MUT Township Economy & Applied Chemical Engineering Award",
@@ -2483,7 +2491,9 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#F39C12",
       monogram: "MUT",
       crestColor: "#102F54",
-      logoDescription: "Mangosuthu University of Technology Official Coat of Arms & Emblem"
+      logoDescription: "Mangosuthu University of Technology Official Coat of Arms & Emblem",
+      logoUrl: '/logos/mut-south-africa.png',
+      logoSourceUrl: 'https://www.mut.ac.za/'
     },
     eligibilityCountries: [
       "South Africa",
@@ -2536,11 +2546,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -2576,8 +2586,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Pretoria, Gauteng",
     officialWebsite: "https://www.unisa.ac.za",
-    sourceUrl: "https://www.unisa.ac.za/sites/corporate/default/Apply-for-admission/Student-fees-and-funding",
-    officialUrl: "https://www.unisa.ac.za/sites/corporate/default/Apply-for-admission/Student-fees-and-funding",
+    sourceUrl: 'https://www.unisa.ac.za/sites/corporate/default/Apply-for-admission',
+    officialUrl: 'https://www.unisa.ac.za/sites/corporate/default/Apply-for-admission',
     category: "university",
     institutionType: "Public University",
     title: "UNISA Open Distance e-Learning (ODeL) Bursary Scheme",
@@ -2643,11 +2653,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -2750,11 +2760,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -2790,8 +2800,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Midrand, Johannesburg & 12 Campuses Nationally",
     officialWebsite: "https://www.eduvos.com",
-    sourceUrl: "https://www.eduvos.com/financial-aid/",
-    officialUrl: "https://www.eduvos.com/financial-aid/",
+    sourceUrl: 'https://www.eduvos.com/admissions/',
+    officialUrl: 'https://www.eduvos.com/admissions/',
     category: "university",
     institutionType: "Private University",
     title: "Eduvos Employability & Tech Innovation Scholarship",
@@ -2857,11 +2867,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -2897,8 +2907,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Johannesburg, Cape Town, Durban & Gqeberha",
     officialWebsite: "https://www.afda.co.za",
-    sourceUrl: "https://www.afda.co.za/scholarships/",
-    officialUrl: "https://www.afda.co.za/scholarships/",
+    sourceUrl: 'https://afda.co.za/apply-now/',
+    officialUrl: 'https://afda.co.za/apply-now/',
     category: "university",
     institutionType: "Private University",
     title: "AFDA Creative Economy & Academy Award Fellowship",
@@ -2964,11 +2974,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -3004,8 +3014,8 @@ export const southAfricaUniversities: OpportunityItem[] = [
     countryFlag: "🇿🇦",
     city: "Durban, KwaZulu-Natal & SADC Network",
     officialWebsite: "https://www.mancosa.co.za",
-    sourceUrl: "https://www.mancosa.co.za/bursaries/",
-    officialUrl: "https://www.mancosa.co.za/bursaries/",
+    sourceUrl: 'https://www.mancosa.co.za/apply-application-portal/',
+    officialUrl: 'https://www.mancosa.co.za/apply-application-portal/',
     category: "university",
     institutionType: "Private University",
     title: "MANCOSA Executive MBA & SADC Leadership Scholarship",
@@ -3017,7 +3027,9 @@ export const southAfricaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MANC",
       crestColor: "#0B5345",
-      logoDescription: "Management College of Southern Africa Official Coat of Arms & Emblem"
+      logoDescription: "Management College of Southern Africa Official Coat of Arms & Emblem",
+      logoUrl: '/logos/mancosa-south-africa.png',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:MANCOSA_.png'
     },
     eligibilityCountries: [
       "South Africa",
@@ -3070,11 +3082,11 @@ export const southAfricaUniversities: OpportunityItem[] = [
       details: "Matriculation endorsement required."
     },
     deadlines: {
-      term: "First Semester 2027 (February)",
+      term: 'First Semester 2027 Intake (Main Cycle Closed)',
       deadlineText: "Application Deadline: September 30, 2026 (General) / June 30, 2026 (Health Sciences)",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Main 2027 undergraduate applications closed on September 30, 2026. Confirm late-application or Semester 2 (July 2027) openings on the official university portal.',
       isRolling: false
     },
     deadline: "September 30, 2026",

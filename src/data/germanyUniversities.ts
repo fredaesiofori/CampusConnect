@@ -11,10 +11,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Munich, Bavaria",
     officialWebsite: "https://www.lmu.de",
-    sourceUrl: "https://www.lmu.de/en/study/international-students/",
-    officialUrl: "https://www.lmu.de/en/study/international-students/",
+    sourceUrl: 'https://www.lmu.de/de/index.html',
+    officialUrl: 'https://www.lmu.de/de/index.html',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "LMU Munich Tuition-Free Degree & DAAD Merit Support",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -24,7 +24,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "LMU",
       crestColor: "#006853",
-      logoDescription: "Ludwig-Maximilians-Universität München Official Institutional Seal & Monogram"
+      logoDescription: "Ludwig-Maximilians-Universität München Official Institutional Seal & Monogram",
+      logoUrl: '/logos/lmu-munich-germany.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:LMU_Muenchen_Logo.svg'
     },
     eligibilityCountries: [
       "Germany",
@@ -79,15 +81,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -124,7 +126,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.hu-berlin.de/en/prospective-students",
     officialUrl: "https://www.hu-berlin.de/en/prospective-students",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Humboldt University Tuition-Free Excellence & International Scholar Support",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -190,15 +192,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -235,7 +237,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.rwth-aachen.de/international",
     officialUrl: "https://www.rwth-aachen.de/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "RWTH Aachen Engineering & Technology Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -301,15 +303,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -346,7 +348,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.intl.kit.edu",
     officialUrl: "https://www.intl.kit.edu",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "KIT Research University in the Helmholtz Association Merit Award",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -412,15 +414,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -457,7 +459,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.fu-berlin.de/en/international",
     officialUrl: "https://www.fu-berlin.de/en/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Freie Universität Berlin International Study Support (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -523,15 +525,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -568,7 +570,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.tu.berlin/en/international",
     officialUrl: "https://www.tu.berlin/en/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "TU Berlin Engineering & Sustainable Technologies Tuition-Free Program",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -634,15 +636,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -679,7 +681,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-bonn.de/en/studying/international-students",
     officialUrl: "https://www.uni-bonn.de/en/studying/international-students",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Bonn Excellence Cluster Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -689,7 +691,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#F18800",
       monogram: "BONN",
       crestColor: "#004B76",
-      logoDescription: "Rheinische Friedrich-Wilhelms-Universität Bonn Official Institutional Seal & Monogram"
+      logoDescription: "Rheinische Friedrich-Wilhelms-Universität Bonn Official Institutional Seal & Monogram",
+      logoUrl: '/logos/bonn-germany.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Universit%C3%A4t_Bonn.svg'
     },
     eligibilityCountries: [
       "Germany",
@@ -744,15 +748,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -789,7 +793,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://uni-freiburg.de/international/",
     officialUrl: "https://uni-freiburg.de/international/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Freiburg Black Forest International Scholars Program",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -799,7 +803,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "ALU",
       crestColor: "#004A99",
-      logoDescription: "Albert-Ludwigs-Universität Freiburg Official Institutional Seal & Monogram"
+      logoDescription: "Albert-Ludwigs-Universität Freiburg Official Institutional Seal & Monogram",
+      logoUrl: '/logos/freiburg-germany.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Siegel_der_Albert-Ludwigs-Universit%C3%A4t_Freiburg.svg'
     },
     eligibilityCountries: [
       "Germany",
@@ -854,15 +860,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -899,7 +905,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://uni-tuebingen.de/en/international/",
     officialUrl: "https://uni-tuebingen.de/en/international/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Tübingen Cyber Valley AI & Medicine Fellowship",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -965,15 +971,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -1007,10 +1013,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Göttingen, Lower Saxony",
     officialWebsite: "https://www.uni-goettingen.de",
-    sourceUrl: "https://www.uni-goettingen.de/en/international-students/110.html",
-    officialUrl: "https://www.uni-goettingen.de/en/international-students/110.html",
+    sourceUrl: 'https://www.uni-goettingen.de/de/international/502946.html',
+    officialUrl: 'https://www.uni-goettingen.de/de/international/502946.html',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Göttingen Gauss-Lichtenberg Research Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -1076,15 +1082,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -1118,10 +1124,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Frankfurt am Main, Hesse",
     officialWebsite: "https://www.goethe-university-frankfurt.de",
-    sourceUrl: "https://www.goethe-university-frankfurt.de/international",
-    officialUrl: "https://www.goethe-university-frankfurt.de/international",
+    sourceUrl: 'https://www.uni-frankfurt.de/en/studium/studienorientierung',
+    officialUrl: 'https://www.uni-frankfurt.de/en/studium/studienorientierung',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Goethe University European Financial Hub & Critical Theory Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -1187,15 +1193,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -1232,7 +1238,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-hamburg.de/en/internationales.html",
     officialUrl: "https://www.uni-hamburg.de/en/internationales.html",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Universität Hamburg Climate & Marine Research Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -1298,15 +1304,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -1343,7 +1349,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-stuttgart.de/en/study/international/",
     officialUrl: "https://www.uni-stuttgart.de/en/study/international/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Stuttgart Automotive & Aerospace Engineering Fellowship",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -1409,15 +1415,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -1454,7 +1460,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://tu-dresden.de/internationales",
     officialUrl: "https://tu-dresden.de/internationales",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "TU Dresden Silicon Saxony Microelectronics & Physics Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -1520,15 +1526,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -1565,7 +1571,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://international.uni-koeln.de/en/",
     officialUrl: "https://international.uni-koeln.de/en/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Cologne Global Rhineland Scholars Program (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -1575,7 +1581,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UZK",
       crestColor: "#003A70",
-      logoDescription: "Universität zu Köln Official Institutional Seal & Monogram"
+      logoDescription: "Universität zu Köln Official Institutional Seal & Monogram",
+      logoUrl: '/logos/cologne-germany.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Siegel_Uni_K%C3%B6ln_(grau).svg'
     },
     eligibilityCountries: [
       "Germany",
@@ -1630,15 +1638,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -1672,10 +1680,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Münster, North Rhine-Westphalia",
     officialWebsite: "https://www.uni-muenster.de",
-    sourceUrl: "https://www.uni-muenster.de/internationalstudents/en/",
-    officialUrl: "https://www.uni-muenster.de/internationalstudents/en/",
+    sourceUrl: 'https://www.uni-muenster.de/international/index.shtml',
+    officialUrl: 'https://www.uni-muenster.de/international/index.shtml',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Münster Battery & Energy Science Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -1741,15 +1749,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -1786,7 +1794,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.fau.eu/education/international/",
     officialUrl: "https://www.fau.eu/education/international/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "FAU Innovation & Medical Valley Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -1852,15 +1860,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -1897,7 +1905,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.tu-darmstadt.de/international/",
     officialUrl: "https://www.tu-darmstadt.de/international/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "TU Darmstadt Cybersecurity & Smart Systems Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -1907,7 +1915,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#BADA55",
       monogram: "TUDa",
       crestColor: "#004E8A",
-      logoDescription: "Technische Universität Darmstadt Official Institutional Seal & Monogram"
+      logoDescription: "Technische Universität Darmstadt Official Institutional Seal & Monogram",
+      logoUrl: '/logos/tu-darmstadt-germany.svg',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:Athene_logo_sw.svg'
     },
     eligibilityCountries: [
       "Germany",
@@ -1962,15 +1972,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -2004,10 +2014,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Mainz, Rhineland-Palatinate",
     officialWebsite: "https://www.uni-mainz.de",
-    sourceUrl: "https://www.studium.uni-mainz.de/en/international-students/",
-    officialUrl: "https://www.studium.uni-mainz.de/en/international-students/",
+    sourceUrl: 'https://www.uni-mainz.de/',
+    officialUrl: 'https://www.uni-mainz.de/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "JGU Mainz Precision Physics & mRNA Biotechnology Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -2073,15 +2083,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -2118,7 +2128,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-wuerzburg.de/en/international/",
     officialUrl: "https://www.uni-wuerzburg.de/en/international/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Würzburg Quantum & Molecular Medicine Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -2184,15 +2194,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -2226,10 +2236,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Jena, Thuringia",
     officialWebsite: "https://www.uni-jena.de",
-    sourceUrl: "https://www.uni-jena.de/en/international-students",
-    officialUrl: "https://www.uni-jena.de/en/international-students",
+    sourceUrl: 'https://www.uni-jena.de/68/international',
+    officialUrl: 'https://www.uni-jena.de/68/international',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Jena Abbe Photonics & Optics Excellence Program (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -2295,15 +2305,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -2337,10 +2347,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Leipzig, Saxony",
     officialWebsite: "https://www.uni-leipzig.de",
-    sourceUrl: "https://www.uni-leipzig.de/en/international/",
-    officialUrl: "https://www.uni-leipzig.de/en/international/",
+    sourceUrl: 'https://www.uni-leipzig.de/',
+    officialUrl: 'https://www.uni-leipzig.de/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Leipzig University Central European Excellence Program (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -2406,15 +2416,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -2448,10 +2458,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Bremen",
     officialWebsite: "https://www.uni-bremen.de",
-    sourceUrl: "https://www.uni-bremen.de/en/studies/international",
-    officialUrl: "https://www.uni-bremen.de/en/studies/international",
+    sourceUrl: 'https://www.uni-bremen.de/en/studies',
+    officialUrl: 'https://www.uni-bremen.de/en/studies',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Bremen Marine Sciences (MARUM) Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -2461,7 +2471,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "BREM",
       crestColor: "#D71920",
-      logoDescription: "Universität Bremen Official Institutional Seal & Monogram"
+      logoDescription: "Universität Bremen Official Institutional Seal & Monogram",
+      logoUrl: '/logos/bremen-germany.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Universit%C3%A4t_Bremen.svg'
     },
     eligibilityCountries: [
       "Germany",
@@ -2516,15 +2528,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -2561,7 +2573,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.international.uni-kiel.de/en",
     officialUrl: "https://www.international.uni-kiel.de/en",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Kiel University Oceanic Sciences & Molecular Biology Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -2627,15 +2639,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -2672,7 +2684,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-konstanz.de/en/international-office/",
     officialUrl: "https://www.uni-konstanz.de/en/international-office/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Konstanz Lake Constance Excellence Grant",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -2738,15 +2750,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -2780,10 +2792,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Ulm, Baden-Württemberg",
     officialWebsite: "https://www.uni-ulm.de",
-    sourceUrl: "https://www.uni-ulm.de/en/study/international-students/",
-    officialUrl: "https://www.uni-ulm.de/en/study/international-students/",
+    sourceUrl: 'https://www.uni-ulm.de/en/study/study-at-ulm-university/',
+    officialUrl: 'https://www.uni-ulm.de/en/study/study-at-ulm-university/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Ulm University Energy Storage & Electrochemical Science Fellowship",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -2793,7 +2805,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#000000",
       monogram: "ULM",
       crestColor: "#7D9AAA",
-      logoDescription: "Universität Ulm Official Institutional Seal & Monogram"
+      logoDescription: "Universität Ulm Official Institutional Seal & Monogram",
+      logoUrl: '/logos/ulm-germany.svg',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:UniUlm_logo.svg'
     },
     eligibilityCountries: [
       "Germany",
@@ -2848,15 +2862,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -2890,10 +2904,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Hannover, Lower Saxony",
     officialWebsite: "https://www.uni-hannover.de",
-    sourceUrl: "https://www.uni-hannover.de/en/studies/international",
-    officialUrl: "https://www.uni-hannover.de/en/studies/international",
+    sourceUrl: 'https://www.uni-hannover.de/universitaet/internationales',
+    officialUrl: 'https://www.uni-hannover.de/universitaet/internationales',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Leibniz University Hannover Quantum Engineering & Geodesy Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -2903,7 +2917,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "LUH",
       crestColor: "#005A9B",
-      logoDescription: "Gottfried Wilhelm Leibniz Universität Hannover Official Institutional Seal & Monogram"
+      logoDescription: "Gottfried Wilhelm Leibniz Universität Hannover Official Institutional Seal & Monogram",
+      logoUrl: '/logos/hannover-germany.png',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Leibniz-Universit%C3%A4t_Hannover.png'
     },
     eligibilityCountries: [
       "Germany",
@@ -2958,15 +2974,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -3003,7 +3019,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-potsdam.de/en/international/",
     officialUrl: "https://www.uni-potsdam.de/en/international/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Potsdam Earth Sciences & Hasso Plattner IT Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -3069,15 +3085,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -3114,7 +3130,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://international.ruhr-uni-bochum.de/en",
     officialUrl: "https://international.ruhr-uni-bochum.de/en",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Ruhr University Bochum CASA Cybersecurity & Solvation Science Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -3180,15 +3196,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -3225,7 +3241,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-due.de/international/",
     officialUrl: "https://www.uni-due.de/international/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Duisburg-Essen Nanointrigue & Logistics Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -3235,7 +3251,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UDE",
       crestColor: "#004B87",
-      logoDescription: "Universität Duisburg-Essen Official Institutional Seal & Monogram"
+      logoDescription: "Universität Duisburg-Essen Official Institutional Seal & Monogram",
+      logoUrl: '/logos/duisburg-essen-germany.png',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Uni_Duisburg.png'
     },
     eligibilityCountries: [
       "Germany",
@@ -3290,15 +3308,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -3335,7 +3353,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://international.tu-dortmund.de/en/",
     officialUrl: "https://international.tu-dortmund.de/en/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "TU Dortmund Machine Learning & Industrial Engineering Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -3401,15 +3419,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -3446,7 +3464,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-marburg.de/en/international",
     officialUrl: "https://www.uni-marburg.de/en/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Philipps University Marburg Synthetic Microbiology Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -3512,15 +3530,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -3557,7 +3575,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-giessen.de/en/international-pages",
     officialUrl: "https://www.uni-giessen.de/en/international-pages",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Justus Liebig University Agricultural & Nutritional Science Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -3623,15 +3641,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -3668,7 +3686,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-passau.de/en/international",
     officialUrl: "https://www.uni-passau.de/en/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Passau Digital Security & International Law Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -3734,15 +3752,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -3779,7 +3797,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-bayreuth.de/en/international",
     officialUrl: "https://www.uni-bayreuth.de/en/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Bayreuth African Studies & High-Pressure Physics Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -3789,7 +3807,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "BAYR",
       crestColor: "#004038",
-      logoDescription: "Universität Bayreuth Official Institutional Seal & Monogram"
+      logoDescription: "Universität Bayreuth Official Institutional Seal & Monogram",
+      logoUrl: '/logos/bayreuth-germany.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Universit%C3%A4t_Bayreuth.svg'
     },
     eligibilityCountries: [
       "Germany",
@@ -3844,15 +3864,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -3889,7 +3909,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-regensburg.de/international/index.html",
     officialUrl: "https://www.uni-regensburg.de/international/index.html",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Regensburg Spintronics & Immunotherapy Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -3899,7 +3919,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UR",
       crestColor: "#003250",
-      logoDescription: "Universität Regensburg Official Institutional Seal & Monogram"
+      logoDescription: "Universität Regensburg Official Institutional Seal & Monogram",
+      logoUrl: '/logos/regensburg-germany.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:UR_Logo_Grau_RGB.svg'
     },
     eligibilityCountries: [
       "Germany",
@@ -3954,15 +3976,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -3996,10 +4018,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Augsburg, Bavaria",
     officialWebsite: "https://www.uni-augsburg.de",
-    sourceUrl: "https://www.uni-augsburg.de/en/international/",
-    officialUrl: "https://www.uni-augsburg.de/en/international/",
+    sourceUrl: 'https://www.uni-augsburg.de/de/ueber-uns/internationales/',
+    officialUrl: 'https://www.uni-augsburg.de/de/ueber-uns/internationales/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Augsburg Resource Strategy & AI in Healthcare Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -4065,15 +4087,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -4107,10 +4129,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Bamberg, Bavaria",
     officialWebsite: "https://www.uni-bamberg.de",
-    sourceUrl: "https://www.uni-bamberg.de/en/studies/international/",
-    officialUrl: "https://www.uni-bamberg.de/en/studies/international/",
+    sourceUrl: 'https://www.uni-bamberg.de/isu/',
+    officialUrl: 'https://www.uni-bamberg.de/isu/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Bamberg Heritage Sciences & Applied Informatics Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -4176,15 +4198,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -4221,7 +4243,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-saarland.de/en/international/",
     officialUrl: "https://www.uni-saarland.de/en/international/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Saarland University CISPA & Max Planck Informatics Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -4287,15 +4309,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -4332,7 +4354,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-siegen.de/start/international/",
     officialUrl: "https://www.uni-siegen.de/start/international/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Siegen Sensor Technology & Quantum Control Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -4398,15 +4420,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -4443,7 +4465,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-kassel.de/uni/international",
     officialUrl: "https://www.uni-kassel.de/uni/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Kassel Renewable Energy & Decentralized Systems Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -4509,15 +4531,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -4554,7 +4576,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-paderborn.de/en/studies/international-office",
     officialUrl: "https://www.uni-paderborn.de/en/studies/international-office",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Paderborn University Information Society & Photonics Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -4564,7 +4586,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UPB",
       crestColor: "#004B87",
-      logoDescription: "Universität Paderborn Official Institutional Seal & Monogram"
+      logoDescription: "Universität Paderborn Official Institutional Seal & Monogram",
+      logoUrl: '/logos/paderborn-germany.jpg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:University_of_Paderborn_Logo.jpg'
     },
     eligibilityCountries: [
       "Germany",
@@ -4619,15 +4643,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -4664,7 +4688,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-trier.de/en/international",
     officialUrl: "https://www.uni-trier.de/en/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Trier University European Legal Studies & Environmental Geosciences Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -4730,15 +4754,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -4775,7 +4799,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-greifswald.de/en/international/",
     officialUrl: "https://www.uni-greifswald.de/en/international/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Greifswald Plasma Physics & Baltic Marine Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -4785,7 +4809,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UGRE",
       crestColor: "#8A1538",
-      logoDescription: "Universität Greifswald Official Institutional Seal & Monogram"
+      logoDescription: "Universität Greifswald Official Institutional Seal & Monogram",
+      logoUrl: '/logos/greifswald-germany.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Wissen_lockt.svg'
     },
     eligibilityCountries: [
       "Germany",
@@ -4840,15 +4866,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -4885,7 +4911,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uni-rostock.de/en/international-affairs/",
     officialUrl: "https://www.uni-rostock.de/en/international-affairs/",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Rostock Baltic Maritime & Catalysis Fellowship (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -4951,15 +4977,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -4996,7 +5022,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.ovgu.de/en/International.html",
     officialUrl: "https://www.ovgu.de/en/International.html",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "OVGU Magdeburg Neuroscience & High-Field Neuroimaging Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -5062,15 +5088,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -5104,10 +5130,10 @@ export const germanyUniversities: OpportunityItem[] = [
     countryFlag: "🇩🇪",
     city: "Halle (Saale) & Wittenberg, Saxony-Anhalt",
     officialWebsite: "https://www.uni-halle.de",
-    sourceUrl: "https://www.international.uni-halle.de/en/",
-    officialUrl: "https://www.international.uni-halle.de/en/",
+    sourceUrl: 'https://www.international.uni-halle.de/',
+    officialUrl: 'https://www.international.uni-halle.de/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "MLU Halle-Wittenberg Plant Biotechnology & Material Science Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -5117,7 +5143,9 @@ export const germanyUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MLU",
       crestColor: "#005A9C",
-      logoDescription: "Martin-Luther-Universität Halle-Wittenberg Official Institutional Seal & Monogram"
+      logoDescription: "Martin-Luther-Universität Halle-Wittenberg Official Institutional Seal & Monogram",
+      logoUrl: '/logos/halle-germany.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Logo_MLU_Halle-Wittenberg.svg'
     },
     eligibilityCountries: [
       "Germany",
@@ -5172,15 +5200,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",
@@ -5217,7 +5245,7 @@ export const germanyUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.tu-ilmenau.de/en/international",
     officialUrl: "https://www.tu-ilmenau.de/en/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "TU Ilmenau MP3 Audio Tech & Wireless Communications Grant (Tuition-Free)",
     isVerified: true,
     verificationSource: "Hochschulrektorenkonferenz (HRK) / German Rectors' Conference & DAAD, Germany",
@@ -5283,15 +5311,15 @@ export const germanyUniversities: OpportunityItem[] = [
       details: "Evaluated according to KMK / anabin database criteria."
     },
     deadlines: {
-      term: "Winter Semester 2026/2027",
+      term: 'Summer Semester 2027 (Winter 2026 Closed)',
       deadlineText: "Application Deadline: July 15, 2026 (Winter) / January 15, 2027 (Summer)",
-      deadlineDate: "2026-07-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      deadlineDate: '2027-01-15',
+      cycleStatus: 'open',
+      statusNotice: 'Winter 2026/2027 closed July 15, 2026. Summer Semester 2027 deadlines run until January 15, 2027 for participating degree programs — confirm course-specific intake on the official portal.',
       isRolling: false
     },
-    deadline: "July 15, 2026",
-    deadlineDate: "2026-07-15",
+    deadline: 'July 15 (Winter) / January 15, 2027 (Summer)',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: "Higher education entrance qualification (Abitur equivalent, Studienkolleg, or recognized secondary school credentials).",
       language: "English B2/C1 proficiency for English programs, or TestDaF/DSH for German-taught degrees.",

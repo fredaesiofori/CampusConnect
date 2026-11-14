@@ -14,7 +14,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.imperial.ac.uk/study/apply/undergraduate/",
     "officialUrl": "https://www.imperial.ac.uk/study/apply/undergraduate/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Technical University",
     "title": "Imperial College London Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Royal Charter",
@@ -103,6 +103,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "A*A*A – AAA at A-Level or equivalent 85%+ secondary score",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -131,7 +139,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.ucl.ac.uk/prospective-students/scholarships",
     "officialUrl": "https://www.ucl.ac.uk/prospective-students/scholarships",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University College London Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & University of London Federation",
@@ -220,6 +228,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "A*AA – AAB A-Level equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -248,7 +264,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.lse.ac.uk/study-at-lse/Undergraduate/fees-and-funding",
     "officialUrl": "https://www.lse.ac.uk/study-at-lse/Undergraduate/fees-and-funding",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Specialized / Regional",
     "title": "London School of Economics and Political Science Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & QAA UK",
@@ -337,6 +353,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "A*AA – AAA at A-Level or equivalent",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -365,7 +389,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.kcl.ac.uk/study/undergraduate/fees-and-funding",
     "officialUrl": "https://www.kcl.ac.uk/study/undergraduate/fees-and-funding",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "King's College London Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & University of London",
@@ -454,6 +478,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "A*AA – AAB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -478,10 +510,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "Manchester, England",
     "officialWebsite": "https://www.manchester.ac.uk",
-    "sourceUrl": "https://www.manchester.ac.uk/study/international/finance-and-travel/funding/",
-    "officialUrl": "https://www.manchester.ac.uk/study/international/finance-and-travel/funding/",
+    "sourceUrl": "https://www.manchester.ac.uk/study/undergraduate/applying/",
+    "officialUrl": "https://www.manchester.ac.uk/study/undergraduate/applying/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Manchester Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -570,6 +602,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – ABB at A-Level or equivalent",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -597,7 +637,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.bristol.ac.uk/fees-funding/",
     "officialUrl": "https://www.bristol.ac.uk/fees-funding/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Bristol Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -686,6 +726,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "A*AA – AAB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -710,10 +758,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "Coventry, England",
     "officialWebsite": "https://warwick.ac.uk",
-    "sourceUrl": "https://warwick.ac.uk/study/undergraduate/fees-funding/",
-    "officialUrl": "https://warwick.ac.uk/study/undergraduate/fees-funding/",
+    "sourceUrl": "https://warwick.ac.uk/study/",
+    "officialUrl": "https://warwick.ac.uk/study/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Warwick Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -802,6 +850,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "A*AA – AAA at A-Level or equivalent",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -829,7 +885,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.gla.ac.uk/scholarships/",
     "officialUrl": "https://www.gla.ac.uk/scholarships/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Glasgow Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Quality Assurance Agency for Higher Education (QAA Scotland)",
@@ -918,6 +974,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – AAB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -945,7 +1009,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.birmingham.ac.uk/study/undergraduate/fees-funding",
     "officialUrl": "https://www.birmingham.ac.uk/study/undergraduate/fees-funding",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Birmingham Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -1034,6 +1098,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -1061,7 +1133,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.southampton.ac.uk/study/fees-funding",
     "officialUrl": "https://www.southampton.ac.uk/study/fees-funding",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Southampton Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -1150,6 +1222,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "A*AA – AAB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -1176,7 +1256,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.leeds.ac.uk/undergraduate-fees-funding",
     "officialUrl": "https://www.leeds.ac.uk/undergraduate-fees-funding",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Leeds Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -1265,6 +1345,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -1292,7 +1380,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.sheffield.ac.uk/international/fees-and-funding",
     "officialUrl": "https://www.sheffield.ac.uk/international/fees-and-funding",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Sheffield Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -1381,6 +1469,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "A*AA – AAB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -1408,7 +1504,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.st-andrews.ac.uk/study/fees-and-funding/undergraduate/scholarships/",
     "officialUrl": "https://www.st-andrews.ac.uk/study/fees-and-funding/undergraduate/scholarships/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of St Andrews Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "QAA Scotland & Royal Charter",
@@ -1418,7 +1514,9 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "STAN",
       "crestColor": "#00539B",
-      "logoDescription": "University of St Andrews Official Coat of Arms & Emblems"
+      "logoDescription": "University of St Andrews Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/st-andrews-university-uk.svg",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:University_of_St_Andrews_arms.svg"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -1496,6 +1594,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA at A-Level or high secondary school GPA",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -1523,7 +1629,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.york.ac.uk/study/undergraduate/fees-funding/",
     "officialUrl": "https://www.york.ac.uk/study/undergraduate/fees-funding/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of York Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -1612,6 +1718,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -1636,10 +1750,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "Nottingham, England",
     "officialWebsite": "https://www.nottingham.ac.uk",
-    "sourceUrl": "https://www.nottingham.ac.uk/studywithus/international-applicants/scholarships-fees-and-finance/",
-    "officialUrl": "https://www.nottingham.ac.uk/studywithus/international-applicants/scholarships-fees-and-finance/",
+    "sourceUrl": "https://www.nottingham.ac.uk/study/home.html",
+    "officialUrl": "https://www.nottingham.ac.uk/study/home.html",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Nottingham Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -1728,6 +1842,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – AAB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -1755,7 +1877,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.qmul.ac.uk/scholarships/",
     "officialUrl": "https://www.qmul.ac.uk/scholarships/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Queen Mary University of London Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -1844,6 +1966,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -1871,7 +2001,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.lancaster.ac.uk/study/fees-and-funding/",
     "officialUrl": "https://www.lancaster.ac.uk/study/fees-and-funding/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Lancaster University Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & QAA UK",
@@ -1960,6 +2090,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -1987,7 +2125,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.ncl.ac.uk/undergraduate/fees-funding/",
     "officialUrl": "https://www.ncl.ac.uk/undergraduate/fees-funding/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Newcastle University Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -2076,6 +2214,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -2103,7 +2249,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.exeter.ac.uk/study/funding/globalexcellence/",
     "officialUrl": "https://www.exeter.ac.uk/study/funding/globalexcellence/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Exeter Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -2192,6 +2338,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – AAB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -2219,7 +2373,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.cardiff.ac.uk/study/undergraduate/funding/international",
     "officialUrl": "https://www.cardiff.ac.uk/study/undergraduate/funding/international",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Cardiff University Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Higher Education Funding Council for Wales (HEFCW) & Russell Group",
@@ -2308,6 +2462,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – AAB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -2335,7 +2497,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.qub.ac.uk/International/International-students/International-scholarships/",
     "officialUrl": "https://www.qub.ac.uk/International/International-students/International-scholarships/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Queen's University Belfast Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Department for the Economy Northern Ireland & Russell Group",
@@ -2345,7 +2507,9 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "QUB",
       "crestColor": "#D41B2C",
-      "logoDescription": "Queen's University Belfast Official Coat of Arms & Emblems"
+      "logoDescription": "Queen's University Belfast Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/queens-belfast-uk.svg",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Queen%27s_University_Belfast_arms.svg"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -2423,6 +2587,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -2447,10 +2619,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "Bath, England",
     "officialWebsite": "https://www.bath.ac.uk",
-    "sourceUrl": "https://www.bath.ac.uk/guides/scholarships-and-bursaries-for-international-undergraduate-students/",
-    "officialUrl": "https://www.bath.ac.uk/guides/scholarships-and-bursaries-for-international-undergraduate-students/",
+    "sourceUrl": "https://www.bath.ac.uk/",
+    "officialUrl": "https://www.bath.ac.uk/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Bath Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Royal Charter",
@@ -2539,6 +2711,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "A*AA – AAA equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -2563,10 +2743,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "Durham, England",
     "officialWebsite": "https://www.durham.ac.uk",
-    "sourceUrl": "https://www.durham.ac.uk/study/fees-and-funding/undergraduate/scholarships/",
-    "officialUrl": "https://www.durham.ac.uk/study/fees-and-funding/undergraduate/scholarships/",
+    "sourceUrl": "https://www.durham.ac.uk/study/",
+    "officialUrl": "https://www.durham.ac.uk/study/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Durham University Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -2655,6 +2835,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "A*AA – AAB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -2679,10 +2867,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "Liverpool, England",
     "officialWebsite": "https://www.liverpool.ac.uk",
-    "sourceUrl": "https://www.liverpool.ac.uk/study/undergraduate/fees-and-funding/scholarships-and-bursaries/",
-    "officialUrl": "https://www.liverpool.ac.uk/study/undergraduate/fees-and-funding/scholarships-and-bursaries/",
+    "sourceUrl": "https://www.liverpool.ac.uk/undergraduate/applying/",
+    "officialUrl": "https://www.liverpool.ac.uk/undergraduate/applying/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Liverpool Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & Russell Group",
@@ -2771,6 +2959,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -2795,10 +2991,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "Aberdeen, Scotland",
     "officialWebsite": "https://www.abdn.ac.uk",
-    "sourceUrl": "https://www.abdn.ac.uk/study/funding/scholarships/",
-    "officialUrl": "https://www.abdn.ac.uk/study/funding/scholarships/",
+    "sourceUrl": "https://www.abdn.ac.uk/study/undergraduate/apply/",
+    "officialUrl": "https://www.abdn.ac.uk/study/undergraduate/apply/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Aberdeen Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "QAA Scotland & Royal Charter",
@@ -2887,6 +3083,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -2911,10 +3115,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "Brighton, England",
     "officialWebsite": "https://www.sussex.ac.uk",
-    "sourceUrl": "https://www.sussex.ac.uk/study/fees-funding/scholarships",
-    "officialUrl": "https://www.sussex.ac.uk/study/fees-funding/scholarships",
+    "sourceUrl": "https://www.sussex.ac.uk/study/apply",
+    "officialUrl": "https://www.sussex.ac.uk/study/apply",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Sussex Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Royal Charter",
@@ -3003,6 +3207,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -3029,7 +3241,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.reading.ac.uk/study/fees-and-funding/scholarships-and-bursaries",
     "officialUrl": "https://www.reading.ac.uk/study/fees-and-funding/scholarships-and-bursaries",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Reading Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Royal Charter",
@@ -3118,6 +3330,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – BBB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -3144,7 +3364,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.strath.ac.uk/studywithus/scholarships/",
     "officialUrl": "https://www.strath.ac.uk/studywithus/scholarships/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Strathclyde Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "QAA Scotland & Royal Charter",
@@ -3233,6 +3453,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -3259,7 +3487,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.lboro.ac.uk/study/undergraduate/fees-funding/",
     "officialUrl": "https://www.lboro.ac.uk/study/undergraduate/fees-funding/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Loughborough University Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Royal Charter",
@@ -3348,6 +3576,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "A*AA – AAB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -3373,7 +3609,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://le.ac.uk/study/undergraduate/fees-funding",
     "officialUrl": "https://le.ac.uk/study/undergraduate/fees-funding",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Leicester Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Royal Charter",
@@ -3462,6 +3698,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – BBB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -3488,7 +3732,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.surrey.ac.uk/fees-and-funding",
     "officialUrl": "https://www.surrey.ac.uk/fees-and-funding",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Surrey Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Royal Charter",
@@ -3577,6 +3821,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -3603,7 +3855,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.uea.ac.uk/study/fees-and-funding",
     "officialUrl": "https://www.uea.ac.uk/study/fees-and-funding",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of East Anglia Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Royal Charter",
@@ -3692,6 +3944,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – BBB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -3718,7 +3978,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.royalholloway.ac.uk/studying-here/fees-and-funding/scholarships/",
     "officialUrl": "https://www.royalholloway.ac.uk/studying-here/fees-and-funding/scholarships/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Royal Holloway, University of London Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & University of London",
@@ -3807,6 +4067,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -3834,7 +4102,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.dundee.ac.uk/scholarships",
     "officialUrl": "https://www.dundee.ac.uk/scholarships",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Dundee Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "QAA Scotland & Royal Charter",
@@ -3923,6 +4191,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -3950,7 +4226,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.essex.ac.uk/fees-and-funding/scholarships",
     "officialUrl": "https://www.essex.ac.uk/fees-and-funding/scholarships",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Essex Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Royal Charter",
@@ -4039,6 +4315,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – BBB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -4051,7 +4335,9 @@ export const ukUniversities: OpportunityItem[] = [
     "intakeTerm": "Fall 2027",
     "verifiedBadge": "Verified Official Data",
     "summary": "Global pioneer in international human rights law and political science, celebrated for diverse international student community.",
-    "officialRuleSummary": "Verified through Office for Students (OfS) & UK Royal Charter and University of Essex official admissions portal."
+    "officialRuleSummary": "Verified through Office for Students (OfS) & UK Royal Charter and University of Essex official admissions portal.",
+    "linkStatus": "needs-review",
+    "reviewNote": "Server TLS intermediate certificate missing on automated check; confirm browser accessibility."
   },
   {
     "id": "brunel-university-uk",
@@ -4066,7 +4352,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.brunel.ac.uk/scholarships",
     "officialUrl": "https://www.brunel.ac.uk/scholarships",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Brunel University London Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Royal Charter",
@@ -4155,6 +4441,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "BBB – BBC equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -4181,7 +4475,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.swansea.ac.uk/international-students/my-finances/international-scholarships/",
     "officialUrl": "https://www.swansea.ac.uk/international-students/my-finances/international-scholarships/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Swansea University Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "HEFCW Wales & UK Royal Charter",
@@ -4270,6 +4564,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – BBB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -4297,7 +4599,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.stir.ac.uk/scholarships/",
     "officialUrl": "https://www.stir.ac.uk/scholarships/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Stirling Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "QAA Scotland & Royal Charter",
@@ -4386,6 +4688,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – BBB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -4408,10 +4718,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "London, England",
     "officialWebsite": "https://www.soas.ac.uk",
-    "sourceUrl": "https://www.soas.ac.uk/study/fees-and-finance/scholarships",
-    "officialUrl": "https://www.soas.ac.uk/study/fees-and-finance/scholarships",
+    "sourceUrl": "https://www.soas.ac.uk/how-apply-undergraduate-study",
+    "officialUrl": "https://www.soas.ac.uk/how-apply-undergraduate-study",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Specialized / Regional",
     "title": "SOAS University of London Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & University of London",
@@ -4500,6 +4810,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – ABB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -4527,7 +4845,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.gold.ac.uk/fees-funding/",
     "officialUrl": "https://www.gold.ac.uk/fees-funding/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Goldsmiths, University of London Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & University of London",
@@ -4537,7 +4855,9 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFC72C",
       "monogram": "GOLD",
       "crestColor": "#000000",
-      "logoDescription": "Goldsmiths, University of London Official Coat of Arms & Emblems"
+      "logoDescription": "Goldsmiths, University of London Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/goldsmiths-london-uk.png",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Goldsmithsnew.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4615,6 +4935,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – BBB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -4642,7 +4970,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.city.ac.uk/prospective-students/finance/scholarships",
     "officialUrl": "https://www.city.ac.uk/prospective-students/finance/scholarships",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "City, University of London Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & University of London",
@@ -4652,7 +4980,9 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "CITY",
       "crestColor": "#C41230",
-      "logoDescription": "City, University of London Official Coat of Arms & Emblems"
+      "logoDescription": "City, University of London Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/city-university-london-uk.svg",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Arms_of_City,_University_of_London.svg"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4730,6 +5060,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAA – BBB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -4757,7 +5095,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.bbk.ac.uk/student-services/financial-support",
     "officialUrl": "https://www.bbk.ac.uk/student-services/financial-support",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Birkbeck, University of London Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & University of London",
@@ -4767,7 +5105,9 @@ export const ukUniversities: OpportunityItem[] = [
       "text": "#FFFFFF",
       "monogram": "BIRK",
       "crestColor": "#660066",
-      "logoDescription": "Birkbeck, University of London Official Coat of Arms & Emblems"
+      "logoDescription": "Birkbeck, University of London Official Coat of Arms & Emblems",
+      "logoUrl": "/logos/birkbeck-london-uk.png",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Birkbeck,_University_of_London.png"
     },
     "eligibilityCountries": [
       "Ghana",
@@ -4845,6 +5185,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "AAB – BBB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -4869,10 +5217,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "Oxford, England",
     "officialWebsite": "https://www.brookes.ac.uk",
-    "sourceUrl": "https://www.brookes.ac.uk/international/fees-and-funding/",
-    "officialUrl": "https://www.brookes.ac.uk/international/fees-and-funding/",
+    "sourceUrl": "https://www.brookes.ac.uk/study/how-to-apply",
+    "officialUrl": "https://www.brookes.ac.uk/study/how-to-apply",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Oxford Brookes University Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Privy Council",
@@ -4961,6 +5309,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "BBB – BBC equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -4984,10 +5340,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "Bristol, England",
     "officialWebsite": "https://www.uwe.ac.uk",
-    "sourceUrl": "https://www.uwe.ac.uk/courses/fees-and-funding",
-    "officialUrl": "https://www.uwe.ac.uk/courses/fees-and-funding",
+    "sourceUrl": "https://www.uwe.ac.uk/study",
+    "officialUrl": "https://www.uwe.ac.uk/study",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of the West of England Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Privy Council",
@@ -5076,6 +5432,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "BBC – CCC equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -5102,7 +5466,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.mmu.ac.uk/international/fees-and-funding",
     "officialUrl": "https://www.mmu.ac.uk/international/fees-and-funding",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Manchester Metropolitan University Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Privy Council",
@@ -5191,6 +5555,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "ABB – BBB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -5217,7 +5589,7 @@ export const ukUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.northumbria.ac.uk/study-at-northumbria/fees-funding/",
     "officialUrl": "https://www.northumbria.ac.uk/study-at-northumbria/fees-funding/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Northumbria University Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Privy Council",
@@ -5306,6 +5678,14 @@ export const ukUniversities: OpportunityItem[] = [
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",
         "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "ABB – BBB equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
       ]
     },
     "studyFields": [
@@ -5329,10 +5709,10 @@ export const ukUniversities: OpportunityItem[] = [
     "countryFlag": "🇬🇧",
     "city": "Coventry, England",
     "officialWebsite": "https://www.coventry.ac.uk",
-    "sourceUrl": "https://www.coventry.ac.uk/international-students-hub/finance/scholarships-and-discounts/",
-    "officialUrl": "https://www.coventry.ac.uk/international-students-hub/finance/scholarships-and-discounts/",
+    "sourceUrl": "https://www.coventry.ac.uk/study-at-coventry/",
+    "officialUrl": "https://www.coventry.ac.uk/study-at-coventry/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Coventry University Undergraduate Admissions & International Student Funding",
     "isVerified": true,
     "verificationSource": "Office for Students (OfS) & UK Privy Council",
@@ -5417,6 +5797,14 @@ export const ukUniversities: OpportunityItem[] = [
       "englishProficiency": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
       "standardizedTests": "A-Level, IB, Foundation Year, or equivalent high secondary school certificate",
       "documentsRequired": [
+        "Official Secondary School Certificate / WASSCE Transcript",
+        "UCAS Personal Statement",
+        "One Academic Teacher / Headmaster Reference",
+        "Copy of International Passport Bio-data Page"
+      ],
+      "academic": "BBB – BBC equivalence",
+      "language": "WAEC English grade C6/B3+ or IELTS Academic 6.5+ (minimum 6.0 in each subscore)",
+      "documents": [
         "Official Secondary School Certificate / WASSCE Transcript",
         "UCAS Personal Statement",
         "One Academic Teacher / Headmaster Reference",

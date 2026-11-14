@@ -47,9 +47,12 @@ export interface ApplicationsViewProps {
 type StageFilter = 'all' | ActiveApplicationStage;
 
 function getRequiredTasksForOpportunity(item: OpportunityItem): string[] {
+  const rawDocs = item.admissionsRequirements?.documents?.length
+    ? item.admissionsRequirements.documents
+    : item.admissionsRequirements?.documentsRequired;
   const docs =
-    item.admissionsRequirements?.documents && item.admissionsRequirements.documents.length > 0
-      ? item.admissionsRequirements.documents
+    rawDocs && rawDocs.length > 0
+      ? rawDocs
       : ['Official Academic Transcripts', 'Identification / Passport', 'Personal Statement / Motivation Letter'];
   const uniqueDocs = Array.from(new Set(docs.map((d) => d.trim()).filter(Boolean)));
   const finalStep = 'Submit Official Online Application';

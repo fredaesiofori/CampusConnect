@@ -14,7 +14,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.ualberta.ca/admissions/undergraduate/index.html",
     officialUrl: "https://www.ualberta.ca/admissions/undergraduate/index.html",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Alberta Global Undergraduate Admissions & Entrance Scholarships",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Alberta Advanced Education",
@@ -66,11 +66,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "B3 in WASSCE English satisfies English proficiency requirement."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "International Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open for Fall 2026 intake.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -105,7 +105,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://future.mcmaster.ca",
     officialUrl: "https://future.mcmaster.ca",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "McMaster University Health Sciences, Engineering & Admissions",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -155,11 +155,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "English instruction waiver or WASSCE B3."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "OUAC Application Deadline: February 1, 2026",
       deadlineDate: "2026-02-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active for Fall 2026.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 1, 2026",
@@ -188,7 +188,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://uwaterloo.ca/future-students",
     officialUrl: "https://uwaterloo.ca/future-students",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Waterloo Computer Science, Co-op & Engineering Admissions",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -238,11 +238,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "Secondary school English-medium waiver applies."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "OUAC Application: February 1, 2026",
       deadlineDate: "2026-02-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 1, 2026",
@@ -271,7 +271,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://welcome.uwo.ca",
     officialUrl: "https://welcome.uwo.ca",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Western University Ivey Business, Science & Engineering",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -282,6 +282,8 @@ export const canadaUniversities: OpportunityItem[] = [
       monogram: "UWO",
       crestColor: "#4F2683",
       logoDescription: "Western University Purple & Silver Crest",
+      logoUrl: '/logos/western-university-canada.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Western_ontario_univ_textlogo.svg'
           },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -320,11 +322,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "English instruction waiver available."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "International Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -353,7 +355,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.ucalgary.ca/future-students/undergraduate",
     officialUrl: "https://www.ucalgary.ca/future-students/undergraduate",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Calgary Engineering, Business & Global Scholarships",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Alberta Advanced Education",
@@ -403,11 +405,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -436,7 +438,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uottawa.ca/study",
     officialUrl: "https://www.uottawa.ca/study",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Ottawa Bilingual Degree Programs & French Differential Fee Exemption",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -486,11 +488,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WAEC English or French DELF accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: April 1, 2026",
       deadlineDate: "2026-04-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (April 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "April 1, 2026",
@@ -519,7 +521,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.queensu.ca/admission",
     officialUrl: "https://www.queensu.ca/admission",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Queen's University Smith Commerce, Health & Engineering",
     isVerified: true,
     verificationSource: "Universities Canada & Royal Charter",
@@ -530,6 +532,8 @@ export const canadaUniversities: OpportunityItem[] = [
       monogram: "QU",
       crestColor: "#002452",
       logoDescription: "Queen's Royal Crown, Open Book & Saltire Shield",
+      logoUrl: '/logos/queens-university-canada.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:QueensU_Wordmark.svg'
           },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -568,11 +572,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "English instruction waiver available."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "OUAC Application: February 1, 2026",
       deadlineDate: "2026-02-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 1, 2026",
@@ -601,7 +605,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.dal.ca/admissions.html",
     officialUrl: "https://www.dal.ca/admissions.html",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Dalhousie University Ocean Sciences, Medicine & Engineering",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Nova Scotia",
@@ -651,11 +655,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application & Scholarship Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -684,7 +688,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.sfu.ca/students/admission.html",
     officialUrl: "https://www.sfu.ca/students/admission.html",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "SFU Computing Science, Sustainable Engineering & Co-op",
     isVerified: true,
     verificationSource: "Universities Canada & Ministry of Post-Secondary Education BC",
@@ -734,11 +738,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE B3 or 3 years English instruction."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: January 31, 2026",
       deadlineDate: "2026-01-31",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (January 31, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "January 31, 2026",
@@ -767,7 +771,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uvic.ca/undergraduate",
     officialUrl: "https://www.uvic.ca/undergraduate",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Victoria Oceans, Climate & Computer Science",
     isVerified: true,
     verificationSource: "Universities Canada & Government of British Columbia",
@@ -817,11 +821,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "English instruction waiver available."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: January 31, 2026",
       deadlineDate: "2026-01-31",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (January 31, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "January 31, 2026",
@@ -850,7 +854,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.concordia.ca/admissions.html",
     officialUrl: "https://www.concordia.ca/admissions.html",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Concordia University Gina Cody Engineering & John Molson Business",
     isVerified: true,
     verificationSource: "Universities Canada & Ministère de l'Enseignement supérieur Québec",
@@ -901,11 +905,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE B3 satisfies requirement."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: February 1, 2026",
       deadlineDate: "2026-02-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 1, 2026",
@@ -934,7 +938,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://futurestudents.yorku.ca",
     officialUrl: "https://futurestudents.yorku.ca",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "York University Schulich Business, Lassonde Engineering & Osgoode Law",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -984,11 +988,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: February 15, 2026",
       deadlineDate: "2026-02-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 15, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 15, 2026",
@@ -1017,7 +1021,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.carleton.ca",
     officialUrl: "https://admissions.carleton.ca",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Carleton University Public Affairs, Journalism & Aerospace Engineering",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -1067,11 +1071,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: April 1, 2026",
       deadlineDate: "2026-04-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (April 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "April 1, 2026",
@@ -1100,7 +1104,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.mun.ca/undergrad",
     officialUrl: "https://www.mun.ca/undergrad",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Memorial University Affordable International Tuition & Marine Engineering",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Newfoundland and Labrador",
@@ -1150,11 +1154,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -1183,7 +1187,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admission.uoguelph.ca",
     officialUrl: "https://admission.uoguelph.ca",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Guelph Veterinary, Agriculture & Environmental Sciences",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -1233,11 +1237,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: February 15, 2026",
       deadlineDate: "2026-02-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 15, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 15, 2026",
@@ -1266,7 +1270,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.torontomu.ca/admissions",
     officialUrl: "https://www.torontomu.ca/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "TMU DMZ Tech Incubator, Media & Computer Science",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -1316,11 +1320,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: February 1, 2026",
       deadlineDate: "2026-02-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 1, 2026",
@@ -1349,7 +1353,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://umanitoba.ca/admissions",
     officialUrl: "https://umanitoba.ca/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Manitoba Engineering, Health & International Bursaries",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Manitoba Advanced Education",
@@ -1399,11 +1403,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -1432,7 +1436,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.usask.ca",
     officialUrl: "https://admissions.usask.ca",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "USask Agriculture, Vaccine Discovery (VIDO) & Engineering",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Saskatchewan",
@@ -1482,11 +1486,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: February 15, 2026",
       deadlineDate: "2026-02-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 15, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 15, 2026",
@@ -1512,10 +1516,10 @@ export const canadaUniversities: OpportunityItem[] = [
     countryFlag: "🇨🇦",
     city: "Windsor, Ontario",
     officialWebsite: "https://www.uwindsor.ca",
-    sourceUrl: "https://future.uwindsor.ca",
-    officialUrl: "https://future.uwindsor.ca",
+    sourceUrl: 'https://future.uwindsor.ca/future-students',
+    officialUrl: 'https://future.uwindsor.ca/future-students',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Windsor Automotive Engineering & Computer Science",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -1565,11 +1569,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: May 1, 2026",
       deadlineDate: "2026-05-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (May 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "May 1, 2026",
@@ -1598,7 +1602,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://brocku.ca/admissions",
     officialUrl: "https://brocku.ca/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Brock University Goodman School of Business, Oenology & Co-op",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -1648,11 +1652,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: April 1, 2026",
       deadlineDate: "2026-04-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (April 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "April 1, 2026",
@@ -1681,7 +1685,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.unb.ca/admissions",
     officialUrl: "https://www.unb.ca/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "UNB Cybersecurity, Geodesy & Global Entrance Scholarships",
     isVerified: true,
     verificationSource: "Universities Canada & Government of New Brunswick",
@@ -1731,11 +1735,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -1764,7 +1768,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admission.umontreal.ca",
     officialUrl: "https://admission.umontreal.ca",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "UdeM Artificial Intelligence (MILA), Life Sciences & UdeM Exemption Scholarships",
     isVerified: true,
     verificationSource: "Universities Canada & Ministère de l'Enseignement supérieur Québec",
@@ -1774,7 +1778,9 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UdeM",
       crestColor: "#0055A5",
-      logoDescription: "UdeM Blue & Gold Rays Shield"
+      logoDescription: "UdeM Blue & Gold Rays Shield",
+      logoUrl: '/logos/umontreal-canada.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Universit%C3%A4t_Montreal_Logo.svg'
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -1813,11 +1819,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "French B2 or English proficiency according to degree track."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: February 1, 2026",
       deadlineDate: "2026-02-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 1, 2026",
@@ -1846,7 +1852,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.ulaval.ca/admission",
     officialUrl: "https://www.ulaval.ca/admission",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Université Laval Optics-Photonics, Forestry & Citizen of the World Awards",
     isVerified: true,
     verificationSource: "Universities Canada & Royal Charter (1852)",
@@ -1896,11 +1902,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "French B2 proficiency."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: February 1, 2026",
       deadlineDate: "2026-02-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 1, 2026",
@@ -1929,7 +1935,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.usherbrooke.ca/admission",
     officialUrl: "https://www.usherbrooke.ca/admission",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Université de Sherbrooke Quantum Science & Paid Co-op Programs",
     isVerified: true,
     verificationSource: "Universities Canada & Ministère de l'Enseignement supérieur Québec",
@@ -1979,11 +1985,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "French language requirement."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -2012,7 +2018,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://etudier.uqam.ca",
     officialUrl: "https://etudier.uqam.ca",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "UQAM Science, Design, Communications & Social Justice Programs",
     isVerified: true,
     verificationSource: "Universities Canada & Université du Québec System",
@@ -2062,11 +2068,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "French proficiency requirement."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -2092,10 +2098,10 @@ export const canadaUniversities: OpportunityItem[] = [
     countryFlag: "🇨🇦",
     city: "Montreal, Quebec",
     officialWebsite: "https://www.hec.ca/en",
-    sourceUrl: "https://www.hec.ca/en/programs/bba",
-    officialUrl: "https://www.hec.ca/en/programs/bba",
+    sourceUrl: 'https://www.hec.ca/en/programs',
+    officialUrl: 'https://www.hec.ca/en/programs',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Specialized / Regional',
     title: "HEC Montréal Triple-Accredited Business Administration (Trilingual BBA)",
     isVerified: true,
     verificationSource: "Universities Canada, AACSB, EQUIS & AMBA (Triple Crown)",
@@ -2105,7 +2111,9 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "HEC",
       crestColor: "#002855",
-      logoDescription: "HEC Montréal Navy & Bronze Crown Seal"
+      logoDescription: "HEC Montréal Navy & Bronze Crown Seal",
+      logoUrl: '/logos/hec-montreal-canada.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:HECMontreal.svg'
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2144,11 +2152,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "English or French proficiency."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: February 15, 2026",
       deadlineDate: "2026-02-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 15, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 15, 2026",
@@ -2177,7 +2185,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.polymtl.ca/admission/en",
     officialUrl: "https://www.polymtl.ca/admission/en",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "Polytechnique Montréal Engineering & Innovation Degrees",
     isVerified: true,
     verificationSource: "Universities Canada & Engineers Canada (CEAB)",
@@ -2227,11 +2235,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "French proficiency required."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: February 1, 2026",
       deadlineDate: "2026-02-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 1, 2026",
@@ -2260,7 +2268,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.wlu.ca/admissions",
     officialUrl: "https://www.wlu.ca/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Wilfrid Laurier Lazaridis School of Business & Economics",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -2310,11 +2318,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: April 1, 2026",
       deadlineDate: "2026-04-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (April 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "April 1, 2026",
@@ -2343,7 +2351,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.trentu.ca/futurestudents",
     officialUrl: "https://www.trentu.ca/futurestudents",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Trent University Environmental & Forensic Sciences, Global Awards",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -2393,11 +2401,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application & Scholarship Deadline: February 15, 2026",
       deadlineDate: "2026-02-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 15, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 15, 2026",
@@ -2426,7 +2434,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.ulethbridge.ca/future-student",
     officialUrl: "https://www.ulethbridge.ca/future-student",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Lethbridge Neuroscience, Science & Global Scholarships",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Alberta Advanced Education",
@@ -2476,11 +2484,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: June 1, 2026",
       deadlineDate: "2026-06-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (June 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "June 1, 2026",
@@ -2509,7 +2517,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.uregina.ca/admissions",
     officialUrl: "https://www.uregina.ca/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Regina Petroleum Systems & UR Guarantee Program",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Saskatchewan",
@@ -2559,11 +2567,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: May 1, 2026",
       deadlineDate: "2026-05-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (May 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "May 1, 2026",
@@ -2592,7 +2600,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.lakeheadu.ca/admissions",
     officialUrl: "https://www.lakeheadu.ca/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Lakehead University Forestry, Engineering & Entrance Grants",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -2602,7 +2610,9 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFD100",
       monogram: "LAKE",
       crestColor: "#002F6C",
-      logoDescription: "Lakehead Blue & Gold Beaver Shield"
+      logoDescription: "Lakehead Blue & Gold Beaver Shield",
+      logoUrl: '/logos/lakehead-university-canada.png',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Lakehead_univ_textlogo.png'
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2641,11 +2651,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: May 1, 2026",
       deadlineDate: "2026-05-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (May 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "May 1, 2026",
@@ -2674,7 +2684,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://ontariotechu.ca/admissions",
     officialUrl: "https://ontariotechu.ca/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Ontario Tech Nuclear Engineering, AI & Automotive Innovation",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -2684,7 +2694,9 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#E35205",
       monogram: "OT",
       crestColor: "#0077CA",
-      logoDescription: "Ontario Tech Blue & Orange Tech Emblem"
+      logoDescription: "Ontario Tech Blue & Orange Tech Emblem",
+      logoUrl: '/logos/ontariotech-canada.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:OntarioTech_primary_2019.svg'
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2723,11 +2735,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application & Scholarship Deadline: February 25, 2026",
       deadlineDate: "2026-02-25",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (February 25, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "February 25, 2026",
@@ -2756,7 +2768,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://laurentian.ca/admissions",
     officialUrl: "https://laurentian.ca/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Laurentian University Mining Engineering, Geology & SNOLAB Research",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -2766,7 +2778,9 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFD100",
       monogram: "LU",
       crestColor: "#002B49",
-      logoDescription: "Laurentian Blue & Gold Mine and Shield"
+      logoDescription: "Laurentian Blue & Gold Mine and Shield",
+      logoUrl: '/logos/laurentian-university-canada.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Laurentian_univ_textlogo.svg'
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2805,11 +2819,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: May 1, 2026",
       deadlineDate: "2026-05-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (May 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "May 1, 2026",
@@ -2838,7 +2852,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.unbc.ca/admissions",
     officialUrl: "https://www.unbc.ca/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "UNBC Green University, Natural Resources & Engineering",
     isVerified: true,
     verificationSource: "Universities Canada & Government of British Columbia",
@@ -2848,7 +2862,9 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#00966C",
       monogram: "UNBC",
       crestColor: "#00483A",
-      logoDescription: "UNBC Forest Green & Mountain Wave Seal"
+      logoDescription: "UNBC Forest Green & Mountain Wave Seal",
+      logoUrl: '/logos/unbc-canada.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:UNBC_Logo.svg'
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2887,11 +2903,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -2917,10 +2933,10 @@ export const canadaUniversities: OpportunityItem[] = [
     countryFlag: "🇨🇦",
     city: "Kamloops, British Columbia",
     officialWebsite: "https://www.tru.ca",
-    sourceUrl: "https://www.tru.ca/admissions.html",
-    officialUrl: "https://www.tru.ca/admissions.html",
+    sourceUrl: 'https://www.tru.ca',
+    officialUrl: 'https://www.tru.ca',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Thompson Rivers University Software Engineering, Law & Co-op",
     isVerified: true,
     verificationSource: "Universities Canada & Government of British Columbia",
@@ -2930,7 +2946,9 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "TRU",
       crestColor: "#003865",
-      logoDescription: "TRU Blue River & Sun Shield"
+      logoDescription: "TRU Blue River & Sun Shield",
+      logoUrl: '/logos/tru-kamloops-canada.png',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:Coat_of_Arms_of_Thompson_Rivers_University.png'
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -2969,11 +2987,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: May 1, 2026",
       deadlineDate: "2026-05-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (May 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "May 1, 2026",
@@ -3002,7 +3020,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.upei.ca/apply",
     officialUrl: "https://www.upei.ca/apply",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "UPEI Atlantic Veterinary College, Engineering & Sustainable Design",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Prince Edward Island",
@@ -3052,11 +3070,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -3085,7 +3103,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www2.acadiau.ca/admissions.html",
     officialUrl: "https://www2.acadiau.ca/admissions.html",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Acadia University Pure & Applied Science, Business & Scholarships",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Nova Scotia",
@@ -3135,11 +3153,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -3165,10 +3183,10 @@ export const canadaUniversities: OpportunityItem[] = [
     countryFlag: "🇨🇦",
     city: "Halifax, Nova Scotia",
     officialWebsite: "https://www.smu.ca",
-    sourceUrl: "https://www.smu.ca/admission",
-    officialUrl: "https://www.smu.ca/admission",
+    sourceUrl: 'https://www.smu.ca/future-students/admissions/cs-apply-online.html',
+    officialUrl: 'https://www.smu.ca/future-students/admissions/cs-apply-online.html',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Saint Mary's University Sobey School of Business & Science",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Nova Scotia",
@@ -3178,7 +3196,9 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "SMU",
       crestColor: "#800000",
-      logoDescription: "Saint Mary's Maroon & White Heraldic Cross"
+      logoDescription: "Saint Mary's Maroon & White Heraldic Cross",
+      logoUrl: '/logos/smu-halifax-canada.png',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:St_mary_univ_halifax_textlogo.png'
     },
     eligibilityCountries: ["Ghana", "Nigeria", "Kenya", "Canada", "All International Countries"],
     nationalityEligibility: {
@@ -3217,11 +3237,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -3250,7 +3270,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.stfx.ca/admissions",
     officialUrl: "https://www.stfx.ca/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "StFX Coady Institute, Schwartz School of Business & X-Ring Tradition",
     isVerified: true,
     verificationSource: "Universities Canada & Government of Nova Scotia",
@@ -3300,11 +3320,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -3333,7 +3353,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.mta.ca/apply",
     officialUrl: "https://www.mta.ca/apply",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Mount Allison University Top-Ranked Undergraduate Liberal Arts & Sciences",
     isVerified: true,
     verificationSource: "Universities Canada & Government of New Brunswick",
@@ -3383,11 +3403,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application & Scholarship Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -3416,7 +3436,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.ubishops.ca/future-students",
     officialUrl: "https://www.ubishops.ca/future-students",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Bishop's University English-Language Liberal Arts, Business & Science",
     isVerified: true,
     verificationSource: "Universities Canada & Royal Charter (1853)",
@@ -3466,11 +3486,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English B3 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Fall Term 2026 (Cycle Concluded)',
       deadlineText: "Application Deadline: March 1, 2026",
       deadlineDate: "2026-03-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'Fall 2026 international deadline (March 1, 2026) has passed. Check the official admissions portal for Winter 2027 and Fall 2027 opening dates.',
       isRolling: false
     },
     deadline: "March 1, 2026",
@@ -3499,7 +3519,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.nipissingu.ca/international",
     officialUrl: "https://www.nipissingu.ca/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Nipissing International Student Excellence Award (CAD $5,000–$10,000)",
     isVerified: true,
     verificationSource: "Universities Canada & Ontario Ministry of Colleges and Universities",
@@ -3563,11 +3583,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English C6 accepted."
     },
     deadlines: {
-      term: "Fall Semester 2026",
+      term: 'Rolling International Intakes (Winter / Spring / Fall 2027)',
       deadlineText: "International Application Deadline: April 1, 2026",
       deadlineDate: "2026-04-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'Fall 2026 priority cutoff passed; rolling international applications remain open for upcoming Winter, Spring, and Fall 2027 intakes — check program seat availability on portal.',
       isRolling: true
     },
     deadline: "April 1, 2026",
@@ -3605,7 +3625,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.macewan.ca/international",
     officialUrl: "https://www.macewan.ca/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "MacEwan International Student Entrance Scholarship (up to CAD $14,000)",
     isVerified: true,
     verificationSource: "Universities Canada & Alberta Ministry of Advanced Education",
@@ -3615,7 +3635,9 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MAC",
       crestColor: "#7A1C29",
-      logoDescription: "MacEwan University Crimson & Charcoal Griffin Crest"
+      logoDescription: "MacEwan University Crimson & Charcoal Griffin Crest",
+      logoUrl: '/logos/macewan-canada.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:MacEwanU-Logo.svg'
     },
     eligibilityCountries: [
       "Canada",
@@ -3668,11 +3690,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English C6 accepted."
     },
     deadlines: {
-      term: "Fall Term 2026",
+      term: 'Rolling International Intakes (Winter / Spring / Fall 2027)',
       deadlineText: "International Application Deadline: May 1, 2026",
       deadlineDate: "2026-05-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions rolling.",
+      cycleStatus: 'rolling',
+      statusNotice: 'Fall 2026 priority cutoff passed; rolling international applications remain open for upcoming Winter, Spring, and Fall 2027 intakes — check program seat availability on portal.',
       isRolling: true
     },
     deadline: "May 1, 2026",
@@ -3710,7 +3732,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.mtroyal.ca/international",
     officialUrl: "https://www.mtroyal.ca/international",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "MRU President's International Scholarship (up to CAD $7,500)",
     isVerified: true,
     verificationSource: "Universities Canada & Alberta Ministry of Advanced Education",
@@ -3773,11 +3795,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English C6 accepted."
     },
     deadlines: {
-      term: "Fall Semester 2026",
+      term: 'Rolling International Intakes (Winter / Spring / Fall 2027)',
       deadlineText: "International Application Deadline: April 1, 2026",
       deadlineDate: "2026-04-01",
-      cycleStatus: "open",
-      statusNotice: "Applications open.",
+      cycleStatus: 'rolling',
+      statusNotice: 'Fall 2026 priority cutoff passed; rolling international applications remain open for upcoming Winter, Spring, and Fall 2027 intakes — check program seat availability on portal.',
       isRolling: true
     },
     deadline: "April 1, 2026",
@@ -3815,7 +3837,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://international.ufv.ca",
     officialUrl: "https://international.ufv.ca",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "UFV International Excellence Entrance Scholarship (CAD $5,000)",
     isVerified: true,
     verificationSource: "Universities Canada & BC Ministry of Post-Secondary Education and Future Skills",
@@ -3825,7 +3847,9 @@ export const canadaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UFV",
       crestColor: "#B78727",
-      logoDescription: "UFV Forest Green & Gold Cascading Wave Crest"
+      logoDescription: "UFV Forest Green & Gold Cascading Wave Crest",
+      logoUrl: '/logos/ufv-canada.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Fraser_valley_univ_logo.svg'
     },
     eligibilityCountries: [
       "Canada",
@@ -3878,11 +3902,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English C6 accepted."
     },
     deadlines: {
-      term: "Fall Semester 2026",
+      term: 'Rolling International Intakes (Winter / Spring / Fall 2027)',
       deadlineText: "International Application Deadline: April 15, 2026",
       deadlineDate: "2026-04-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'Fall 2026 priority cutoff passed; rolling international applications remain open for upcoming Winter, Spring, and Fall 2027 intakes — check program seat availability on portal.',
       isRolling: true
     },
     deadline: "April 15, 2026",
@@ -3920,7 +3944,7 @@ export const canadaUniversities: OpportunityItem[] = [
     sourceUrl: "https://international.viu.ca",
     officialUrl: "https://international.viu.ca",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "VIU International Regional & Academic Excellence Award (CAD $2,500–$5,000)",
     isVerified: true,
     verificationSource: "Universities Canada & BC Ministry of Post-Secondary Education and Future Skills",
@@ -3984,11 +4008,11 @@ export const canadaUniversities: OpportunityItem[] = [
       details: "WASSCE English C6 accepted."
     },
     deadlines: {
-      term: "Fall Semester 2026",
+      term: 'Rolling International Intakes (Winter / Spring / Fall 2027)',
       deadlineText: "International Application Deadline: May 1, 2026",
       deadlineDate: "2026-05-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'rolling',
+      statusNotice: 'Fall 2026 priority cutoff passed; rolling international applications remain open for upcoming Winter, Spring, and Fall 2027 intakes — check program seat availability on portal.',
       isRolling: true
     },
     deadline: "May 1, 2026",

@@ -151,6 +151,126 @@
         }
       },
       "required": ["id", "userId", "title", "createdAt", "updatedAt", "messages"]
+    },
+    "OpportunitySubscriber": {
+      "title": "OpportunitySubscriber",
+      "description": "Server-only private subscriber record for verified Campus Connect opportunity and deadline email alerts.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Normalized subscriber email address"
+        },
+        "emailHash": {
+          "type": "string",
+          "description": "SHA-256 hash of normalized email used as deterministic document ID"
+        },
+        "preferences": {
+          "type": "array",
+          "description": "Selected opportunity alert categories (admissions, fully-funded, partial-aid, fee-waiver, sat-optional, international, graduate, deadlines, all)"
+        },
+        "consentStatus": {
+          "type": "string",
+          "description": "Double opt-in consent state: pending, confirmed, or unsubscribed"
+        },
+        "frequency": {
+          "type": "string",
+          "description": "Delivery frequency preference (immediate or weekly)"
+        },
+        "uid": {
+          "type": "string",
+          "description": "Optional linked Firebase Auth user ID for authenticated student accounts"
+        },
+        "preferredDestinations": {
+          "type": "array",
+          "description": "Optional preferred study destination countries for personalized opportunity matching"
+        },
+        "intendedDegree": {
+          "type": "string",
+          "description": "Optional degree level filter"
+        },
+        "fieldOfStudy": {
+          "type": "string",
+          "description": "Optional academic field of study filter"
+        },
+        "manageTokenHash": {
+          "type": "string",
+          "description": "SHA-256 hash of subscription management token"
+        },
+        "confirmTokenHash": {
+          "type": "string",
+          "description": "SHA-256 hash of double opt-in confirmation token"
+        },
+        "unsubscribeTokenHash": {
+          "type": "string",
+          "description": "SHA-256 hash of one-click unsubscribe token"
+        },
+        "subscribedAt": {
+          "type": "string",
+          "description": "ISO timestamp of initial subscription"
+        },
+        "confirmedAt": {
+          "type": "string",
+          "description": "ISO timestamp of email confirmation"
+        },
+        "unsubscribedAt": {
+          "type": "string",
+          "description": "ISO timestamp of unsubscribe action"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last update"
+        }
+      },
+      "required": ["email", "emailHash", "preferences", "consentStatus", "subscribedAt", "updatedAt"]
+    },
+    "AlertDeliveryLog": {
+      "title": "AlertDeliveryLog",
+      "description": "Server-only delivery audit and deduplication log for confirmation, digest, and deadline reminder emails.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Deterministic delivery log ID or deduplication key"
+        },
+        "emailHash": {
+          "type": "string",
+          "description": "Hashed subscriber identifier"
+        },
+        "alertType": {
+          "type": "string",
+          "description": "Type of email notification: confirmation, welcome, digest, or deadline-reminder"
+        },
+        "opportunityIds": {
+          "type": "array",
+          "description": "IDs of verified opportunities included in the delivery"
+        },
+        "dedupeKey": {
+          "type": "string",
+          "description": "Deduplication key preventing duplicate deadline reminders for the same cycle"
+        },
+        "provider": {
+          "type": "string",
+          "description": "Email delivery provider used (resend or sendgrid)"
+        },
+        "providerMessageId": {
+          "type": "string",
+          "description": "Provider message ID returned upon successful send"
+        },
+        "status": {
+          "type": "string",
+          "description": "Delivery status: sent or failed"
+        },
+        "errorMessage": {
+          "type": "string",
+          "description": "Sanitized provider error message if delivery failed"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of delivery attempt"
+        }
+      },
+      "required": ["id", "emailHash", "alertType", "status", "createdAt"]
     }
   },
   "firestore": {
@@ -171,6 +291,18 @@
         "$ref": "#/entities/CovaConversation"
       },
       "description": "Private COVA AI assistant conversation threads owned by the authenticated student."
+    },
+    "/opportunitySubscribers/{subscriberId}": {
+      "schema": {
+        "$ref": "#/entities/OpportunitySubscriber"
+      },
+      "description": "Server-only persistent store for verified opportunity alert subscribers (client access denied)."
+    },
+    "/alertDeliveryLogs/{logId}": {
+      "schema": {
+        "$ref": "#/entities/AlertDeliveryLog"
+      },
+      "description": "Server-only delivery log and deadline reminder deduplication table (client access denied)."
     }
   }
 }

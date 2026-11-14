@@ -11,10 +11,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Akoka, Lagos",
     officialWebsite: "https://unilag.edu.ng",
-    sourceUrl: "https://admissions.unilag.edu.ng",
-    officialUrl: "https://admissions.unilag.edu.ng",
+    sourceUrl: 'https://unilag.edu.ng/category/admissions/',
+    officialUrl: 'https://unilag.edu.ng/category/admissions/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Lagos Undergraduate Admissions & Scholarships",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -24,7 +24,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UNILAG",
       crestColor: "#800020",
-      logoDescription: "University of Lagos Official Seal & Gold Sunburst"
+      logoDescription: "University of Lagos Official Seal & Gold Sunburst",
+      logoUrl: '/logos/unilag-nigeria.jpg',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:UniLagos.jpg'
     },
     eligibilityCountries: [
       "Nigeria",
@@ -72,11 +74,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "Five credit passes in WAEC/NECO including English satisfy requirements."
     },
     deadlines: {
-      term: "2026/2027 Academic Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Post-UTME & International Registration: August 31, 2026",
       deadlineDate: "2026-08-31",
-      cycleStatus: "open",
-      statusNotice: "Applications open for the 2026/2027 academic session.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 31, 2026",
@@ -118,7 +120,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.oauife.edu.ng",
     officialUrl: "https://admissions.oauife.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Obafemi Awolowo University Undergraduate & Postgraduate Admissions",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -128,7 +130,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FDB913",
       monogram: "OAU",
       crestColor: "#002B49",
-      logoDescription: "OAU Seal with Great Ife Book and Torch"
+      logoDescription: "OAU Seal with Great Ife Book and Torch",
+      logoUrl: '/logos/oau-nigeria.png',
+      logoSourceUrl: 'https://oauife.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -167,11 +171,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WASSCE English satisfies requirement."
     },
     deadlines: {
-      term: "2026/2027 Academic Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Screening Deadline: September 15, 2026",
       deadlineDate: "2026-09-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open for 2026/2027.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 15, 2026",
@@ -197,10 +201,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Zaria, Kaduna",
     officialWebsite: "https://abu.edu.ng",
-    sourceUrl: "https://portals.abu.edu.ng",
-    officialUrl: "https://portals.abu.edu.ng",
+    sourceUrl: 'https://abu.edu.ng/admission-guidelines/',
+    officialUrl: 'https://abu.edu.ng/admission-guidelines/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Ahmadu Bello University Degree Programs & Research",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -249,11 +253,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 30, 2026",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Applications open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -282,7 +286,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://portal.unn.edu.ng",
     officialUrl: "https://portal.unn.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Nigeria Undergraduate & Postgraduate Admissions",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -292,7 +296,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFD700",
       monogram: "UNN",
       crestColor: "#004225",
-      logoDescription: "UNN Black Lion and Green Shield Crest"
+      logoDescription: "UNN Black Lion and Green Shield Crest",
+      logoUrl: '/logos/unn-nigeria.png',
+      logoSourceUrl: 'https://www.unn.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -329,11 +335,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: August 25, 2026",
       deadlineDate: "2026-08-25",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 25, 2026",
@@ -362,7 +368,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://waeup.uniben.edu",
     officialUrl: "https://waeup.uniben.edu",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Benin Admissions & Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -409,11 +415,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Registration Deadline: August 20, 2026",
       deadlineDate: "2026-08-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 20, 2026",
@@ -439,10 +445,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Ilorin, Kwara",
     officialWebsite: "https://unilorin.edu.ng",
-    sourceUrl: "https://uilugportal.unilorin.edu.ng",
-    officialUrl: "https://uilugportal.unilorin.edu.ng",
+    sourceUrl: 'https://www.unilorin.edu.ng/admissions/',
+    officialUrl: 'https://www.unilorin.edu.ng/admissions/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Ilorin Degree Programs & Continuous Academic Calendar",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -452,7 +458,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UNILORIN",
       crestColor: "#003366",
-      logoDescription: "UNILORIN Blue and Gold Seal"
+      logoDescription: "UNILORIN Blue and Gold Seal",
+      logoUrl: '/logos/unilorin-nigeria.png',
+      logoSourceUrl: 'https://www.unilorin.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -489,11 +497,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 10, 2026",
       deadlineDate: "2026-09-10",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 10, 2026",
@@ -522,7 +530,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://www.futa.edu.ng/admissions",
     officialUrl: "https://www.futa.edu.ng/admissions",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "FUTA Engineering, Computing & Technological Degree Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -569,11 +577,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Screening Deadline: August 30, 2026",
       deadlineDate: "2026-08-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions active.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 30, 2026",
@@ -602,7 +610,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.covenantuniversity.edu.ng",
     officialUrl: "https://admissions.covenantuniversity.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Private University',
     title: "Covenant University Undergraduate Degree Programs & Global Accreditations",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -651,11 +659,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Academic Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: July 31, 2026",
       deadlineDate: "2026-07-31",
-      cycleStatus: "open",
-      statusNotice: "Applications open for 2026/2027.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "July 31, 2026",
@@ -684,7 +692,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://portal.futo.edu.ng",
     officialUrl: "https://portal.futo.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "FUTO Engineering, Petroleum & Technology Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -694,7 +702,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "FUTO",
       crestColor: "#004D40",
-      logoDescription: "FUTO Official Technology Crest"
+      logoDescription: "FUTO Official Technology Crest",
+      logoUrl: '/logos/futo-nigeria.png',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:FUTO_logo.png'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -731,11 +741,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 15, 2026",
       deadlineDate: "2026-09-15",
-      cycleStatus: "open",
-      statusNotice: "Applications open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 15, 2026",
@@ -764,7 +774,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admission.funaab.edu.ng",
     officialUrl: "https://admission.funaab.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "FUNAAB Agricultural Sciences, Engineering & Environmental Management",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -774,7 +784,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "FUNAAB",
       crestColor: "#1B5E20",
-      logoDescription: "FUNAAB Green Agronomy Crest"
+      logoDescription: "FUNAAB Green Agronomy Crest",
+      logoUrl: '/logos/funaab-nigeria.jpg',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:FUNAAB_Logo.jpg'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -811,11 +823,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: August 31, 2026",
       deadlineDate: "2026-08-31",
-      cycleStatus: "open",
-      statusNotice: "Applications open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 31, 2026",
@@ -841,10 +853,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Ojo, Lagos",
     officialWebsite: "https://lasu.edu.ng",
-    sourceUrl: "https://services.lidc.lasu.edu.ng",
-    officialUrl: "https://services.lidc.lasu.edu.ng",
+    sourceUrl: 'https://lasu.edu.ng/home/',
+    officialUrl: 'https://lasu.edu.ng/home/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Lagos State University Degree Programs & Digital Campus",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -892,11 +904,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 15, 2026",
       deadlineDate: "2026-09-15",
-      cycleStatus: "open",
-      statusNotice: "Applications open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 15, 2026",
@@ -922,10 +934,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Ibeju-Lekki, Lagos",
     officialWebsite: "https://pau.edu.ng",
-    sourceUrl: "https://admissions.pau.edu.ng",
-    officialUrl: "https://admissions.pau.edu.ng",
+    sourceUrl: 'https://pau.edu.ng/admission-aid/',
+    officialUrl: 'https://pau.edu.ng/admission-aid/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Private University',
     title: "Pan-Atlantic University Business, Media & Technology Degrees",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -935,7 +947,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#D4AF37",
       monogram: "PAU",
       crestColor: "#183059",
-      logoDescription: "Pan-Atlantic University Blue & Gold Coat of Arms"
+      logoDescription: "Pan-Atlantic University Blue & Gold Coat of Arms",
+      logoUrl: '/logos/pan-atlantic-university-nigeria.png',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:Logo_of_Pan-Atlantic_University.png'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -973,11 +987,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: July 31, 2026",
       deadlineDate: "2026-07-31",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "July 31, 2026",
@@ -1006,7 +1020,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.abuad.edu.ng",
     officialUrl: "https://admissions.abuad.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Private University',
     title: "ABUAD Law, Medicine, Engineering & Sciences Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1016,7 +1030,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "ABUAD",
       crestColor: "#7B1113",
-      logoDescription: "ABUAD Maroon & Gold Seal"
+      logoDescription: "ABUAD Maroon & Gold Seal",
+      logoUrl: '/logos/abuad-nigeria.png',
+      logoSourceUrl: 'https://www.abuad.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1053,11 +1069,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: August 15, 2026",
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 15, 2026",
@@ -1086,7 +1102,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.babcock.edu.ng",
     officialUrl: "https://admissions.babcock.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Private University',
     title: "Babcock University Medical, Computer Science & Business Degrees",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1134,11 +1150,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: August 20, 2026",
       deadlineDate: "2026-08-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 20, 2026",
@@ -1163,11 +1179,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryCode: "NG",
     countryFlag: "🇳🇬",
     city: "Abuja, FCT",
-    officialWebsite: "https://nile.edu.ng",
+    officialWebsite: 'https://nileuniversity.edu.ng',
     sourceUrl: "https://application.nile.edu.ng",
     officialUrl: "https://application.nile.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Private University',
     title: "Nile University Honoris United Universities Degree Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1216,11 +1232,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 1, 2026",
       deadlineDate: "2026-09-01",
-      cycleStatus: "open",
-      statusNotice: "Applications open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 1, 2026",
@@ -1234,7 +1250,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
     intakeTerm: "September 2026",
     verifiedBadge: "Verified Official Data",
     summary: "Leading private university in Abuja and member of Honoris United Universities, offering world-class facilities and score-based scholarships.",
-    officialRuleSummary: "Accredited by NUC."
+    officialRuleSummary: "Accredited by NUC.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Updated domain to nileuniversity.edu.ng (old nile.edu.ng dead); automated fetch blocked by Cloudflare 520, verify in browser.'
   },
   {
     id: "aun-nigeria",
@@ -1246,10 +1264,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Yola, Adamawa",
     officialWebsite: "https://aun.edu.ng",
-    sourceUrl: "https://admissions.aun.edu.ng",
-    officialUrl: "https://admissions.aun.edu.ng",
+    sourceUrl: 'https://aun.edu.ng/index.php/admissions',
+    officialUrl: 'https://aun.edu.ng/index.php/admissions',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Private University',
     title: "American University of Nigeria US-Style Curriculum & Degrees",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1259,7 +1277,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#C41230",
       monogram: "AUN",
       crestColor: "#002855",
-      logoDescription: "AUN American Eagle & Torch Seal"
+      logoDescription: "AUN American Eagle & Torch Seal",
+      logoUrl: '/logos/aun-nigeria.png',
+      logoSourceUrl: 'https://aun.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1296,11 +1316,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/WASSCE English accepted."
     },
     deadlines: {
-      term: "2026/2027 Academic Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: August 15, 2026",
       deadlineDate: "2026-08-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 15, 2026",
@@ -1329,7 +1349,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://mybuk2.buk.edu.ng",
     officialUrl: "https://mybuk2.buk.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Bayero University Kano Academic & Research Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1377,11 +1397,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",
@@ -1410,7 +1430,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://portal.unijos.edu.ng",
     officialUrl: "https://portal.unijos.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Jos Degree Programs & Medical Research",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1458,11 +1478,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 15, 2026",
       deadlineDate: "2026-09-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 15, 2026",
@@ -1488,10 +1508,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Port Harcourt, Rivers",
     officialWebsite: "https://uniport.edu.ng",
-    sourceUrl: "https://myuniport.edu.ng",
-    officialUrl: "https://myuniport.edu.ng",
+    sourceUrl: 'https://www.uniport.edu.ng/admissions/',
+    officialUrl: 'https://www.uniport.edu.ng/admissions/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Port Harcourt Petroleum & Marine Studies",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1501,7 +1521,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFCC00",
       monogram: "UNIPORT",
       crestColor: "#003366",
-      logoDescription: "UNIPORT Marine Crest"
+      logoDescription: "UNIPORT Marine Crest",
+      logoUrl: '/logos/uniport-nigeria.png',
+      logoSourceUrl: 'http://www.uniport.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1538,11 +1560,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: August 31, 2026",
       deadlineDate: "2026-08-31",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 31, 2026",
@@ -1571,7 +1593,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://myunical.edu.ng",
     officialUrl: "https://myunical.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Calabar Degree Programs & Marine Biology",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1581,7 +1603,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UNICAL",
       crestColor: "#104E8B",
-      logoDescription: "UNICAL Blue & Gold Seal"
+      logoDescription: "UNICAL Blue & Gold Seal",
+      logoUrl: '/logos/unical-nigeria.png',
+      logoSourceUrl: 'https://unical.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1618,11 +1642,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 10, 2026",
       deadlineDate: "2026-09-10",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 10, 2026",
@@ -1651,7 +1675,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://portal.uniabuja.edu.ng",
     officialUrl: "https://portal.uniabuja.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Abuja Law, Public Policy & Degree Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1699,11 +1723,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 30, 2026",
       deadlineDate: "2026-09-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 30, 2026",
@@ -1729,10 +1753,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Awka, Anambra",
     officialWebsite: "https://unizik.edu.ng",
-    sourceUrl: "https://my.unizik.edu.ng",
-    officialUrl: "https://my.unizik.edu.ng",
+    sourceUrl: 'https://unizik.edu.ng/admissions',
+    officialUrl: 'https://unizik.edu.ng/admissions',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "UNIZIK Degree Programs & Chinese Language Institute",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1742,7 +1766,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UNIZIK",
       crestColor: "#8B0000",
-      logoDescription: "UNIZIK Crimson Eagle Seal"
+      logoDescription: "UNIZIK Crimson Eagle Seal",
+      logoUrl: '/logos/unizik-nigeria.png',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:Badge_of_Nnamdi_Azikiwe_University.png'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1779,11 +1805,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",
@@ -1812,7 +1838,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://uniuyo.edu.ng/eportals",
     officialUrl: "https://uniuyo.edu.ng/eportals",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Uyo Degree Programs & Oil-Bearing Ecology",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1822,7 +1848,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UNIUYO",
       crestColor: "#005A36",
-      logoDescription: "UNIUYO Forest Green Academic Shield"
+      logoDescription: "UNIUYO Forest Green Academic Shield",
+      logoUrl: '/logos/uniuyo-nigeria.png',
+      logoSourceUrl: 'https://uniuyo.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1859,11 +1887,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 25, 2026",
       deadlineDate: "2026-09-25",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 25, 2026",
@@ -1892,7 +1920,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://eportal.futminna.edu.ng",
     officialUrl: "https://eportal.futminna.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "FUTMINNA Engineering & Information Technology",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -1902,7 +1930,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#E5A823",
       monogram: "FUTM",
       crestColor: "#004B23",
-      logoDescription: "FUTMINNA Technical Seal"
+      logoDescription: "FUTMINNA Technical Seal",
+      logoUrl: '/logos/futminna-nigeria.jpg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:FUT.Minna_Logo_IMG_0600.jpg'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -1939,11 +1969,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 15, 2026",
       deadlineDate: "2026-09-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 15, 2026",
@@ -1972,7 +2002,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admission.lmu.edu.ng",
     officialUrl: "https://admission.lmu.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Private University',
     title: "Landmark University Agrarian Revolution & Engineering Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2020,11 +2050,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: August 20, 2026",
       deadlineDate: "2026-08-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 20, 2026",
@@ -2038,7 +2068,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
     intakeTerm: "September 2026",
     verifiedBadge: "Verified Official Data",
     summary: "Renowned private university spearheading an agrarian revolution in Africa with 100% tuition-free scholarships for agricultural programs.",
-    officialRuleSummary: "Accredited by NUC."
+    officialRuleSummary: "Accredited by NUC.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate chain incomplete during automated check; verify HTTPS configuration.'
   },
   {
     id: "lautech-nigeria",
@@ -2050,10 +2082,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Ogbomoso, Oyo",
     officialWebsite: "https://lautech.edu.ng",
-    sourceUrl: "https://admissions.lautech.edu.ng",
-    officialUrl: "https://admissions.lautech.edu.ng",
+    sourceUrl: 'https://apply.lautech.edu.ng/en/logon',
+    officialUrl: 'https://apply.lautech.edu.ng/en/logon',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "LAUTECH Engineering, Nanotechnology & Medical Sciences",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2063,7 +2095,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "LAUTECH",
       crestColor: "#7B0000",
-      logoDescription: "LAUTECH Technology Gear & Shield"
+      logoDescription: "LAUTECH Technology Gear & Shield",
+      logoUrl: '/logos/lautech-nigeria.png',
+      logoSourceUrl: 'https://lautech.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -2100,11 +2134,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 15, 2026",
       deadlineDate: "2026-09-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 15, 2026",
@@ -2133,7 +2167,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.bowen.edu.ng",
     officialUrl: "https://admissions.bowen.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Private University',
     title: "Bowen University Medical, Legal & Agricultural Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2143,7 +2177,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#E5A823",
       monogram: "BOWEN",
       crestColor: "#103050",
-      logoDescription: "Bowen University Navy & Gold Shield"
+      logoDescription: "Bowen University Navy & Gold Shield",
+      logoUrl: '/logos/bowen-university-nigeria.webp',
+      logoSourceUrl: 'https://bowen.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -2180,11 +2216,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: August 25, 2026",
       deadlineDate: "2026-08-25",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 25, 2026",
@@ -2213,7 +2249,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.bazeuniversity.edu.ng",
     officialUrl: "https://admissions.bazeuniversity.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Private University',
     title: "Baze University British-Standard Degree Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2223,7 +2259,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "BAZE",
       crestColor: "#003366",
-      logoDescription: "Baze University Blue Shield"
+      logoDescription: "Baze University Blue Shield",
+      logoUrl: '/logos/baze-university-nigeria.png',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:Logo_of_Baze_University_Abuja,_Nigeri.png'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -2260,11 +2298,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 1, 2026",
       deadlineDate: "2026-09-01",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 1, 2026",
@@ -2278,7 +2316,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
     intakeTerm: "September 2026",
     verifiedBadge: "Verified Official Data",
     summary: "A distinctive private university in Abuja modelled on British university curricula with an ultra-modern medical hospital campus.",
-    officialRuleSummary: "Accredited by NUC."
+    officialRuleSummary: "Accredited by NUC.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Admissions subdomain (admissions.bazeuniversity.edu.ng) failed DNS resolution; verify admissions portal URL.'
   },
   {
     id: "rsu-nigeria",
@@ -2293,7 +2333,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://ecampus.rsu.edu.ng",
     officialUrl: "https://ecampus.rsu.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Rivers State University Engineering & Maritime Technology",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2340,11 +2380,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 15, 2026",
       deadlineDate: "2026-09-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 15, 2026",
@@ -2358,7 +2398,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
     intakeTerm: "September 2026",
     verifiedBadge: "Verified Official Data",
     summary: "Nigeria's first state technological university, recognized for naval architecture, marine engineering, and environmental law.",
-    officialRuleSummary: "Accredited by NUC."
+    officialRuleSummary: "Accredited by NUC.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server SSL certificate expired on automated check; verify current HTTPS portal.'
   },
   {
     id: "oou-nigeria",
@@ -2373,7 +2415,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://portal.oouagoiwoye.edu.ng",
     officialUrl: "https://portal.oouagoiwoye.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "OOU Degree Programs & College of Health Sciences",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2420,11 +2462,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",
@@ -2453,7 +2495,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://eksuportal.eksu.edu.ng",
     officialUrl: "https://eksuportal.eksu.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Ekiti State University Degree Programs & Research",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2500,11 +2542,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 25, 2026",
       deadlineDate: "2026-09-25",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 25, 2026",
@@ -2530,10 +2572,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Abraka, Delta",
     officialWebsite: "https://delsu.edu.ng",
-    sourceUrl: "https://delsuonline.com",
-    officialUrl: "https://delsuonline.com",
+    sourceUrl: 'https://delsu.edu.ng/',
+    officialUrl: 'https://delsu.edu.ng/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Delta State University Abraka Programs & Health Sciences",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2543,7 +2585,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "DELSU",
       crestColor: "#002366",
-      logoDescription: "DELSU Royal Blue Emblem"
+      logoDescription: "DELSU Royal Blue Emblem",
+      logoUrl: '/logos/delsu-nigeria.png',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:DeltaStateUniversity.png'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -2580,11 +2624,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 15, 2026",
       deadlineDate: "2026-09-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 15, 2026",
@@ -2613,7 +2657,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://aaue.waeup.org",
     officialUrl: "https://aaue.waeup.org",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Ambrose Alli University Ekpoma Academic Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2623,7 +2667,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "AAU",
       crestColor: "#551A8B",
-      logoDescription: "AAU Ekpoma Academic Seal"
+      logoDescription: "AAU Ekpoma Academic Seal",
+      logoUrl: '/logos/aau-ekpoma-nigeria.png',
+      logoSourceUrl: 'https://aauekpoma.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -2660,11 +2706,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",
@@ -2690,10 +2736,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Akungba-Akoko, Ondo",
     officialWebsite: "https://aaua.edu.ng",
-    sourceUrl: "https://eportal.aaua.edu.ng",
-    officialUrl: "https://eportal.aaua.edu.ng",
+    sourceUrl: 'https://aaua.edu.ng',
+    officialUrl: 'https://aaua.edu.ng',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Adekunle Ajasin University Degree Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2703,7 +2749,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "AAUA",
       crestColor: "#0047AB",
-      logoDescription: "AAUA Blue & Gold Crest"
+      logoDescription: "AAUA Blue & Gold Crest",
+      logoUrl: '/logos/aaua-nigeria.png',
+      logoSourceUrl: 'https://aaua.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -2740,11 +2788,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 15, 2026",
       deadlineDate: "2026-09-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 15, 2026",
@@ -2773,7 +2821,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.uniosun.edu.ng",
     officialUrl: "https://admissions.uniosun.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Osun State University Multi-Campus Degree Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2783,7 +2831,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UNIOSUN",
       crestColor: "#800000",
-      logoDescription: "UNIOSUN Maroon Crest"
+      logoDescription: "UNIOSUN Maroon Crest",
+      logoUrl: '/logos/uniosun-nigeria.png',
+      logoSourceUrl: 'https://uniosun.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -2820,11 +2870,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",
@@ -2853,7 +2903,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://portal.kwasu.edu.ng",
     officialUrl: "https://portal.kwasu.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Kwara State University Aeronautics, Engineering & Entrepreneurship",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2863,7 +2913,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFD700",
       monogram: "KWASU",
       crestColor: "#006400",
-      logoDescription: "KWASU Green and Gold Aeronautical Crest"
+      logoDescription: "KWASU Green and Gold Aeronautical Crest",
+      logoUrl: '/logos/kwasu-nigeria.png',
+      logoSourceUrl: 'https://kwasu.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -2900,11 +2952,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 25, 2026",
       deadlineDate: "2026-09-25",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 25, 2026",
@@ -2933,7 +2985,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://forms.kasu.edu.ng",
     officialUrl: "https://forms.kasu.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Kaduna State University Degree Programs & Medicine",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -2943,7 +2995,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "KASU",
       crestColor: "#191970",
-      logoDescription: "KASU Midnight Blue Seal"
+      logoDescription: "KASU Midnight Blue Seal",
+      logoUrl: '/logos/kasu-nigeria.png',
+      logoSourceUrl: 'https://kasu.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -2980,11 +3034,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",
@@ -3013,7 +3067,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://portal.bsum.edu.ng",
     officialUrl: "https://portal.bsum.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Benue State University Degree Programs & Food Basket Research",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3023,7 +3077,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "BSUM",
       crestColor: "#2E8B57",
-      logoDescription: "BSU Sea Green Agrarian Seal"
+      logoDescription: "BSU Sea Green Agrarian Seal",
+      logoUrl: '/logos/bsu-makurdi-nigeria.png',
+      logoSourceUrl: 'https://bsum.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -3060,11 +3116,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 25, 2026",
       deadlineDate: "2026-09-25",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 25, 2026",
@@ -3093,7 +3149,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.run.edu.ng",
     officialUrl: "https://admissions.run.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Private University',
     title: "Redeemer's University Genomics & Degree Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3140,11 +3196,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: August 25, 2026",
       deadlineDate: "2026-08-25",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 25, 2026",
@@ -3158,7 +3214,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
     intakeTerm: "September 2026",
     verifiedBadge: "Verified Official Data",
     summary: "World-renowned for housing the African Centre of Excellence for Genomics of Infectious Diseases (ACEGID), which sequenced the first Ebola and Monkeypox genomes in Africa.",
-    officialRuleSummary: "Accredited by NUC."
+    officialRuleSummary: "Accredited by NUC.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Server TLS certificate chain incomplete during automated check; verify HTTPS configuration.'
   },
   {
     id: "fuoye-nigeria",
@@ -3173,7 +3231,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://ecampus.fuoye.edu.ng",
     officialUrl: "https://ecampus.fuoye.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Federal University Oye-Ekiti Degree Programs & Engineering",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3220,11 +3278,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",
@@ -3253,7 +3311,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://utme.fupre.edu.ng",
     officialUrl: "https://utme.fupre.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "FUPRE Petroleum, Gas & Energy Engineering",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3263,7 +3321,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFD700",
       monogram: "FUPRE",
       crestColor: "#1C1C1C",
-      logoDescription: "FUPRE Oil Drop & Rig Emblem"
+      logoDescription: "FUPRE Oil Drop & Rig Emblem",
+      logoUrl: '/logos/fupre-nigeria.png',
+      logoSourceUrl: 'https://fupre.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -3300,11 +3360,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 15, 2026",
       deadlineDate: "2026-09-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 15, 2026",
@@ -3333,7 +3393,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.udusok.edu.ng",
     officialUrl: "https://admissions.udusok.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Usmanu Danfodiyo University Medical & Agricultural Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3343,7 +3403,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UDUS",
       crestColor: "#006400",
-      logoDescription: "UDUS Green Crescent & Book Seal"
+      logoDescription: "UDUS Green Crescent & Book Seal",
+      logoUrl: '/logos/udus-sokoto-nigeria.png',
+      logoSourceUrl: 'https://www.udusok.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -3380,11 +3442,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 25, 2026",
       deadlineDate: "2026-09-25",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 25, 2026",
@@ -3410,10 +3472,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Bauchi, Bauchi",
     officialWebsite: "https://atbu.edu.ng",
-    sourceUrl: "https://portal.atbu.edu.ng",
-    officialUrl: "https://portal.atbu.edu.ng",
+    sourceUrl: 'https://atbu.edu.ng/admission/',
+    officialUrl: 'https://atbu.edu.ng/admission/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "ATBU Science & Technological Degree Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3461,11 +3523,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",
@@ -3494,7 +3556,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.lcu.edu.ng",
     officialUrl: "https://admissions.lcu.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Private University',
     title: "Lead City University Professional Degree Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3541,11 +3603,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: August 30, 2026",
       deadlineDate: "2026-08-30",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "August 30, 2026",
@@ -3574,7 +3636,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://portal.uam.edu.ng",
     officialUrl: "https://portal.uam.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "FUAM Agricultural Engineering, Veterinary Medicine & Agronomy",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3621,11 +3683,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",
@@ -3639,7 +3701,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
     intakeTerm: "September 2026",
     verifiedBadge: "Verified Official Data",
     summary: "One of Nigeria's premier specialized federal universities of agriculture, driving innovations in crops, livestock, and food security.",
-    officialRuleSummary: "Accredited by NUC."
+    officialRuleSummary: "Accredited by NUC.",
+    linkStatus: 'needs-review',
+    reviewNote: 'Institutional website (uam.edu.ng) timed out during automated verification; verify current Joseph Sarwuan Tarka University portal.'
   },
   {
     id: "unimaid-nigeria",
@@ -3651,10 +3715,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Maiduguri, Borno",
     officialWebsite: "https://unimaid.edu.ng",
-    sourceUrl: "https://portal.unimaid.edu.ng",
-    officialUrl: "https://portal.unimaid.edu.ng",
+    sourceUrl: 'https://unimaid.edu.ng/register.php?track=standard',
+    officialUrl: 'https://unimaid.edu.ng/register.php?track=standard',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "University of Maiduguri Degree Programs & Arid Zone Ecology",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3664,7 +3728,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "UNIMAID",
       crestColor: "#154360",
-      logoDescription: "UNIMAID Blue and White Seal"
+      logoDescription: "UNIMAID Blue and White Seal",
+      logoUrl: '/logos/unimaid-nigeria.png',
+      logoSourceUrl: 'https://unimaid.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -3701,11 +3767,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 25, 2026",
       deadlineDate: "2026-09-25",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 25, 2026",
@@ -3731,10 +3797,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Yola, Adamawa",
     officialWebsite: "https://mau.edu.ng",
-    sourceUrl: "https://mautech.edu.ng/admissions",
-    officialUrl: "https://mautech.edu.ng/admissions",
+    sourceUrl: 'https://mau.edu.ng/',
+    officialUrl: 'https://mau.edu.ng/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Modibbo Adama University Engineering & Science Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3744,7 +3810,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "MAU",
       crestColor: "#145A32",
-      logoDescription: "MAU Green and Gold Academic Crest"
+      logoDescription: "MAU Green and Gold Academic Crest",
+      logoUrl: '/logos/mau-yola-nigeria.png',
+      logoSourceUrl: 'https://mau.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -3781,11 +3849,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",
@@ -3814,7 +3882,7 @@ export const nigeriaUniversities: OpportunityItem[] = [
     sourceUrl: "https://portal.abiastateuniversity.edu.ng",
     officialUrl: "https://portal.abiastateuniversity.edu.ng",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "Abia State University Law, Medicine & Optometry Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3862,11 +3930,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",
@@ -3892,10 +3960,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Agbani, Enugu",
     officialWebsite: "https://esut.edu.ng",
-    sourceUrl: "https://portal.esut.edu.ng",
-    officialUrl: "https://portal.esut.edu.ng",
+    sourceUrl: 'https://www.esut.edu.ng/',
+    officialUrl: 'https://www.esut.edu.ng/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "ESUT Technology, Medicine & Engineering Degree Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3905,7 +3973,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "ESUT",
       crestColor: "#7D3C98",
-      logoDescription: "ESUT Purple and Gold Technology Shield"
+      logoDescription: "ESUT Purple and Gold Technology Shield",
+      logoUrl: '/logos/esut-nigeria.webp',
+      logoSourceUrl: 'https://www.esut.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -3942,11 +4012,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 25, 2026",
       deadlineDate: "2026-09-25",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 25, 2026",
@@ -3972,10 +4042,10 @@ export const nigeriaUniversities: OpportunityItem[] = [
     countryFlag: "🇳🇬",
     city: "Keffi, Nasarawa",
     officialWebsite: "https://nsuk.edu.ng",
-    sourceUrl: "https://portal.nsuk.edu.ng",
-    officialUrl: "https://portal.nsuk.edu.ng",
+    sourceUrl: 'https://nsuk.edu.ng/',
+    officialUrl: 'https://nsuk.edu.ng/',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "NSUK Law, Agriculture & Environmental Science Programs",
     isVerified: true,
     verificationSource: "National Universities Commission (NUC), Nigeria",
@@ -3985,7 +4055,9 @@ export const nigeriaUniversities: OpportunityItem[] = [
       text: "#FFFFFF",
       monogram: "NSUK",
       crestColor: "#196F3D",
-      logoDescription: "NSUK Green Mineral State Emblem"
+      logoDescription: "NSUK Green Mineral State Emblem",
+      logoUrl: '/logos/nsuk-nigeria.png',
+      logoSourceUrl: 'https://nsuk.edu.ng/'
     },
     eligibilityCountries: ["Nigeria", "Ghana", "All 54 African Countries", "All International Countries"],
     nationalityEligibility: {
@@ -4022,11 +4094,11 @@ export const nigeriaUniversities: OpportunityItem[] = [
       details: "WAEC/NECO English accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Admissions Closing: September 20, 2026",
       deadlineDate: "2026-09-20",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: 'The 2026/2027 Post-UTME and direct entry application window closed on August 31, 2026. Check the official admissions portal for 2027/2028 announcements.',
       isRolling: false
     },
     deadline: "September 20, 2026",

@@ -14,7 +14,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admission.stanford.edu/apply/",
     "officialUrl": "https://admission.stanford.edu/apply/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Stanford Undergraduate Admissions & Need-Based Global Financial Aid",
     "isVerified": true,
     "verificationSource": "WASC Senior College and University Commission (WSCUC)",
@@ -103,6 +103,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ Cumulative GPA or WASSCE 6+ A1-B3 equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -128,10 +137,10 @@ export const usUniversities: OpportunityItem[] = [
     "countryFlag": "🇺🇸",
     "city": "New Haven, Connecticut",
     "officialWebsite": "https://www.yale.edu",
-    "sourceUrl": "https://admissions.yale.edu/financial-aid-prospective-students",
-    "officialUrl": "https://admissions.yale.edu/financial-aid-prospective-students",
+    "sourceUrl": "https://www.yale.edu/admissions",
+    "officialUrl": "https://www.yale.edu/admissions",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Yale University Need-Blind International Admissions & Full Financial Aid",
     "isVerified": true,
     "verificationSource": "New England Commission of Higher Education (NECHE)",
@@ -220,6 +229,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.8+ GPA / Top 5% high school graduating class",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -248,7 +266,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://undergrad.admissions.columbia.edu/afford",
     "officialUrl": "https://undergrad.admissions.columbia.edu/afford",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Columbia University Undergraduate Admissions & Need-Based Grant Aid",
     "isVerified": true,
     "verificationSource": "Middle States Commission on Higher Education (MSCHE)",
@@ -337,6 +355,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ Cumulative GPA or WASSCE Grade A1-B3 distinctions",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -362,10 +389,10 @@ export const usUniversities: OpportunityItem[] = [
     "countryFlag": "🇺🇸",
     "city": "Philadelphia, Pennsylvania",
     "officialWebsite": "https://www.upenn.edu",
-    "sourceUrl": "https://admissions.upenn.edu/affordability",
-    "officialUrl": "https://admissions.upenn.edu/affordability",
+    "sourceUrl": "https://admissions.upenn.edu/",
+    "officialUrl": "https://admissions.upenn.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Penn All-Grant Need-Based Financial Aid & Wharton Dual Degrees",
     "isVerified": true,
     "verificationSource": "Middle States Commission on Higher Education (MSCHE)",
@@ -454,6 +481,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.75+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -481,7 +517,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admission.brown.edu/international",
     "officialUrl": "https://admission.brown.edu/international",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Brown Open Curriculum & Need-Blind International Admissions",
     "isVerified": true,
     "verificationSource": "New England Commission of Higher Education (NECHE)",
@@ -570,6 +606,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA or top-tier national secondary leaving scores",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -597,7 +642,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.dartmouth.edu/financial-aid",
     "officialUrl": "https://admissions.dartmouth.edu/financial-aid",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Dartmouth Universal Need-Blind Admissions & Full Scholarship Support",
     "isVerified": true,
     "verificationSource": "New England Commission of Higher Education (NECHE)",
@@ -686,6 +731,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.75+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -713,7 +767,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.cornell.edu/apply",
     "officialUrl": "https://admissions.cornell.edu/apply",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Cornell University Admissions & Tata International Scholarship Program",
     "isVerified": true,
     "verificationSource": "Middle States Commission on Higher Education (MSCHE)",
@@ -802,6 +856,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.6+ GPA or high secondary examination distinctions",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -829,7 +892,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.admissions.caltech.edu/",
     "officialUrl": "https://www.admissions.caltech.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Caltech STEM Undergraduate Admissions & Need-Based Institutional Aid",
     "isVerified": true,
     "verificationSource": "WASC Senior College and University Commission (WSCUC)",
@@ -918,6 +981,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.8+ GPA with rigorous calculus, chemistry, and physics foundation",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -945,7 +1017,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://collegeadmissions.uchicago.edu/cost-aid",
     "officialUrl": "https://collegeadmissions.uchicago.edu/cost-aid",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "UChicago Odyssey Scholarship Program & Global Need-Based Aid",
     "isVerified": true,
     "verificationSource": "Higher Learning Commission (HLC)",
@@ -1034,6 +1106,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA or exceptional intellectual inquiry evidence",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -1062,7 +1143,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://apply.jhu.edu/tuition-aid/",
     "officialUrl": "https://apply.jhu.edu/tuition-aid/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Johns Hopkins University Loan-Free Need-Based Financial Aid",
     "isVerified": true,
     "verificationSource": "Middle States Commission on Higher Education (MSCHE)",
@@ -1151,6 +1232,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ Cumulative GPA",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -1178,7 +1268,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.northwestern.edu/tuition-aid/",
     "officialUrl": "https://admissions.northwestern.edu/tuition-aid/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Northwestern University All-Grant Need-Based Financial Aid Program",
     "isVerified": true,
     "verificationSource": "Higher Learning Commission (HLC)",
@@ -1267,6 +1357,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA or top-tier secondary graduation records",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -1294,7 +1393,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://financialaid.duke.edu/undergraduate-applicants/",
     "officialUrl": "https://financialaid.duke.edu/undergraduate-applicants/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Duke University Undergraduate Admissions & Robertson Scholars Leadership",
     "isVerified": true,
     "verificationSource": "Southern Association of Colleges and Schools Commission on Colleges (SACSCOC)",
@@ -1383,6 +1482,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -1410,7 +1518,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.vanderbilt.edu/financialaid/",
     "officialUrl": "https://www.vanderbilt.edu/financialaid/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Opportunity Vanderbilt 100% Need-Met No-Loan Financial Aid",
     "isVerified": true,
     "verificationSource": "Southern Association of Colleges and Schools Commission on Colleges (SACSCOC)",
@@ -1499,6 +1607,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA or WASSCE Grade A1-B3 profile",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -1522,10 +1639,10 @@ export const usUniversities: OpportunityItem[] = [
     "countryFlag": "🇺🇸",
     "city": "Houston, Texas",
     "officialWebsite": "https://www.rice.edu",
-    "sourceUrl": "https://financialaid.rice.edu/the-rice-investment",
-    "officialUrl": "https://financialaid.rice.edu/the-rice-investment",
+    "sourceUrl": "https://admission.rice.edu/",
+    "officialUrl": "https://admission.rice.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "The Rice Investment Full-Tuition Grant & Undergraduate Admissions",
     "isVerified": true,
     "verificationSource": "Southern Association of Colleges and Schools Commission on Colleges (SACSCOC)",
@@ -1614,6 +1731,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA or equivalent credentials",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -1641,7 +1767,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://financialaid.wustl.edu/",
     "officialUrl": "https://financialaid.wustl.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "WashU No-Loan Need-Blind Financial Aid & Danforth Scholars",
     "isVerified": true,
     "verificationSource": "Higher Learning Commission (HLC)",
@@ -1730,6 +1856,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -1756,7 +1891,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://financialaid.nd.edu/",
     "officialUrl": "https://financialaid.nd.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Notre Dame Undergraduate Admissions & Need-Blind Global Aid",
     "isVerified": true,
     "verificationSource": "Higher Learning Commission (HLC)",
@@ -1845,6 +1980,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA or top-tier secondary leaving certificate",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -1872,7 +2016,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://finaid.georgetown.edu/",
     "officialUrl": "https://finaid.georgetown.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Georgetown International Admissions & Need-Blind Jesuit Aid",
     "isVerified": true,
     "verificationSource": "Middle States Commission on Higher Education (MSCHE)",
@@ -1961,6 +2105,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA or equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -1987,7 +2140,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://studentaid.emory.edu/",
     "officialUrl": "https://studentaid.emory.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Emory Advantage 100% Need-Met No-Loan Aid & Scholars Program",
     "isVerified": true,
     "verificationSource": "Southern Association of Colleges and Schools Commission on Colleges (SACSCOC)",
@@ -2076,6 +2229,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -2103,7 +2265,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.cmu.edu/admission/",
     "officialUrl": "https://www.cmu.edu/admission/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Carnegie Mellon School of Computer Science & Robotics Admissions",
     "isVerified": true,
     "verificationSource": "Middle States Commission on Higher Education (MSCHE)",
@@ -2192,6 +2354,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.8+ GPA with rigorous mathematics and science course profile",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -2220,7 +2391,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.nyu.edu/admissions/financial-aid-and-scholarships.html",
     "officialUrl": "https://www.nyu.edu/admissions/financial-aid-and-scholarships.html",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "NYU Promise 100% Need-Met Financial Aid & Global Campus Network",
     "isVerified": true,
     "verificationSource": "Middle States Commission on Higher Education (MSCHE)",
@@ -2309,6 +2480,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.6+ GPA or high secondary distinctions",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -2336,7 +2516,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.bu.edu/admissions/tuition-aid/",
     "officialUrl": "https://www.bu.edu/admissions/tuition-aid/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Boston University Richard D. Cohen Scholarship & Presidential Merit Aid",
     "isVerified": true,
     "verificationSource": "New England Commission of Higher Education (NECHE)",
@@ -2425,6 +2605,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.6+ Cumulative GPA",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -2452,7 +2641,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.tufts.edu/tuition-and-aid/",
     "officialUrl": "https://admissions.tufts.edu/tuition-and-aid/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Tufts University 100% Need-Met Undergraduate Grant Aid",
     "isVerified": true,
     "verificationSource": "New England Commission of Higher Education (NECHE)",
@@ -2541,6 +2730,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -2567,7 +2765,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admission.usc.edu/",
     "officialUrl": "https://admission.usc.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "USC Undergraduate Admissions & Trustee Full-Tuition Merit Scholarships",
     "isVerified": true,
     "verificationSource": "WASC Senior College and University Commission (WSCUC)",
@@ -2656,6 +2854,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -2682,7 +2889,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.berkeley.edu/",
     "officialUrl": "https://admissions.berkeley.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "UC Berkeley Public Flagship Admissions & Regents and Chancellor’s Aid",
     "isVerified": true,
     "verificationSource": "WASC Senior College and University Commission (WSCUC)",
@@ -2771,6 +2978,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.4+ non-resident GPA minimum (admitted average 3.86+)",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -2799,7 +3015,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admission.ucla.edu/",
     "officialUrl": "https://admission.ucla.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "UCLA Undergraduate Admissions & Regents Scholar Recognition",
     "isVerified": true,
     "verificationSource": "WASC Senior College and University Commission (WSCUC)",
@@ -2888,6 +3104,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.4+ minimum non-resident GPA (admitted average 3.9+)",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -2915,7 +3140,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.umich.edu/",
     "officialUrl": "https://admissions.umich.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Michigan Flagship Admissions & Ross School of Business",
     "isVerified": true,
     "verificationSource": "Higher Learning Commission (HLC)",
@@ -3004,6 +3229,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.8+ GPA average",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -3031,7 +3265,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admission.virginia.edu/",
     "officialUrl": "https://admission.virginia.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "UVA Jefferson Scholars Foundation Full Fellowship & Admissions",
     "isVerified": true,
     "verificationSource": "Southern Association of Colleges and Schools Commission on Colleges (SACSCOC)",
@@ -3120,6 +3354,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -3146,7 +3389,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.unc.edu/",
     "officialUrl": "https://admissions.unc.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "UNC Morehead-Cain Full Scholarship & Carolina Covenant Aid",
     "isVerified": true,
     "verificationSource": "Southern Association of Colleges and Schools Commission on Colleges (SACSCOC)",
@@ -3235,6 +3478,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -3261,7 +3513,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admission.gatech.edu/",
     "officialUrl": "https://admission.gatech.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Technical University",
     "title": "Georgia Tech Engineering & Computing Undergraduate Admissions",
     "isVerified": true,
     "verificationSource": "Southern Association of Colleges and Schools Commission on Colleges (SACSCOC)",
@@ -3350,6 +3602,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.8+ GPA with rigorous mathematics course load",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -3377,7 +3638,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.utexas.edu/",
     "officialUrl": "https://admissions.utexas.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "UT Austin Cockrell Engineering & McCombs School of Business",
     "isVerified": true,
     "verificationSource": "Southern Association of Colleges and Schools Commission on Colleges (SACSCOC)",
@@ -3466,6 +3727,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.6+ GPA or top high school class ranking",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -3493,7 +3763,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admit.washington.edu/",
     "officialUrl": "https://admit.washington.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Washington Paul G. Allen School of Computer Science & Medicine",
     "isVerified": true,
     "verificationSource": "Northwest Commission on Colleges and Universities (NWCCU)",
@@ -3582,6 +3852,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA average",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -3609,7 +3888,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.wisc.edu/",
     "officialUrl": "https://admissions.wisc.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "UW Madison Flagship Admissions & International Undergraduate Aid",
     "isVerified": true,
     "verificationSource": "Higher Learning Commission (HLC)",
@@ -3698,6 +3977,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.6+ GPA or high secondary examination results",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -3725,7 +4013,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.illinois.edu/",
     "officialUrl": "https://admissions.illinois.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "UIUC Grainger College of Engineering & Supercomputing Admissions",
     "isVerified": true,
     "verificationSource": "Higher Learning Commission (HLC)",
@@ -3814,6 +4102,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.6+ GPA or equivalent high school record",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -3841,7 +4138,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.admissions.purdue.edu/",
     "officialUrl": "https://www.admissions.purdue.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Purdue Cradle of Astronauts Engineering & Aviation Admissions",
     "isVerified": true,
     "verificationSource": "Higher Learning Commission (HLC)",
@@ -3930,6 +4227,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.5+ GPA with strong STEM coursework",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -3957,7 +4263,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://undergrad.osu.edu/",
     "officialUrl": "https://undergrad.osu.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Ohio State University Undergraduate Admissions & Eminence Fellows Aid",
     "isVerified": true,
     "verificationSource": "Higher Learning Commission (HLC)",
@@ -4046,6 +4352,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.6+ GPA average",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -4073,7 +4388,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.psu.edu/",
     "officialUrl": "https://admissions.psu.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Penn State University Park Flagship Admissions & Schreyer Honors Aid",
     "isVerified": true,
     "verificationSource": "Middle States Commission on Higher Education (MSCHE)",
@@ -4162,6 +4477,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.5+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -4189,7 +4513,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.ufl.edu/",
     "officialUrl": "https://admissions.ufl.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Florida Top-5 Public Flagship & AI-Across-the-Curriculum",
     "isVerified": true,
     "verificationSource": "Southern Association of Colleges and Schools Commission on Colleges (SACSCOC)",
@@ -4278,6 +4602,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA minimum (admitted average 4.4+ weighted)",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -4304,7 +4637,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.umd.edu/",
     "officialUrl": "https://admissions.umd.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Maryland Brendan Iribe Computer Science & Quantum Aid",
     "isVerified": true,
     "verificationSource": "Middle States Commission on Higher Education (MSCHE)",
@@ -4393,6 +4726,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.6+ GPA or equivalent high secondary achievement",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -4420,7 +4762,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.tc.umn.edu/",
     "officialUrl": "https://admissions.tc.umn.edu/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "University of Minnesota Global Excellence Scholarships & Biomedical Research",
     "isVerified": true,
     "verificationSource": "Higher Learning Commission (HLC)",
@@ -4509,6 +4851,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.5+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -4536,7 +4887,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.williams.edu/admission-aid/",
     "officialUrl": "https://www.williams.edu/admission-aid/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Williams College All-Grant 100% Need-Met Aid & Oxford Tutorials",
     "isVerified": true,
     "verificationSource": "New England Commission of Higher Education (NECHE)",
@@ -4623,6 +4974,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.8+ GPA or top 3% secondary ranking",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -4651,7 +5011,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.amherst.edu/admission/financial_aid",
     "officialUrl": "https://www.amherst.edu/admission/financial_aid",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Amherst College Need-Blind International Admissions & Open Curriculum",
     "isVerified": true,
     "verificationSource": "New England Commission of Higher Education (NECHE)",
@@ -4738,6 +5098,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.75+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -4765,7 +5134,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.swarthmore.edu/financial-aid",
     "officialUrl": "https://www.swarthmore.edu/financial-aid",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Swarthmore College Honors Program & Loan-Free Need-Met Aid",
     "isVerified": true,
     "verificationSource": "Middle States Commission on Higher Education (MSCHE)",
@@ -4852,6 +5221,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.75+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -4876,10 +5254,10 @@ export const usUniversities: OpportunityItem[] = [
     "countryFlag": "🇺🇸",
     "city": "Wellesley, Massachusetts",
     "officialWebsite": "https://www.wellesley.edu",
-    "sourceUrl": "https://www.wellesley.edu/admission/affordable",
-    "officialUrl": "https://www.wellesley.edu/admission/affordable",
+    "sourceUrl": "https://www.wellesley.edu/admission-aid",
+    "officialUrl": "https://www.wellesley.edu/admission-aid",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Wellesley College Women’s Leadership & Need-Based Grant Aid",
     "isVerified": true,
     "verificationSource": "New England Commission of Higher Education (NECHE)",
@@ -4966,6 +5344,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -4990,10 +5377,10 @@ export const usUniversities: OpportunityItem[] = [
     "countryFlag": "🇺🇸",
     "city": "Middlebury, Vermont",
     "officialWebsite": "https://www.middlebury.edu",
-    "sourceUrl": "https://www.middlebury.edu/college/admissions/tuition-financial-aid",
-    "officialUrl": "https://www.middlebury.edu/college/admissions/tuition-financial-aid",
+    "sourceUrl": "https://www.middlebury.edu/college/admissions",
+    "officialUrl": "https://www.middlebury.edu/college/admissions",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Middlebury College Global Studies & 100% Need-Met Grant Support",
     "isVerified": true,
     "verificationSource": "New England Commission of Higher Education (NECHE)",
@@ -5080,6 +5467,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.65+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -5104,10 +5500,10 @@ export const usUniversities: OpportunityItem[] = [
     "countryFlag": "🇺🇸",
     "city": "Claremont, California",
     "officialWebsite": "https://www.pomona.edu",
-    "sourceUrl": "https://www.pomona.edu/admissions/financial-aid",
-    "officialUrl": "https://www.pomona.edu/admissions/financial-aid",
+    "sourceUrl": "https://www.pomona.edu/admissions-aid",
+    "officialUrl": "https://www.pomona.edu/admissions-aid",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Pomona College Claremont Consortium & No-Loan Need-Met Financial Aid",
     "isVerified": true,
     "verificationSource": "WASC Senior College and University Commission (WSCUC)",
@@ -5194,6 +5590,15 @@ export const usUniversities: OpportunityItem[] = [
         "Counselor Recommendation",
         "Personal Statement / Common App Essay",
         "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.8+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
       ]
     },
     "studyFields": [
@@ -5222,7 +5627,7 @@ export const usUniversities: OpportunityItem[] = [
     "sourceUrl": "https://www.davidson.edu/admission-and-financial-aid",
     "officialUrl": "https://www.davidson.edu/admission-and-financial-aid",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "The Davidson Trust 100% Need-Met No-Loan Financial Aid Guarantee",
     "isVerified": true,
     "verificationSource": "Southern Association of Colleges and Schools Commission on Colleges (SACSCOC)",
@@ -5304,6 +5709,15 @@ export const usUniversities: OpportunityItem[] = [
       "englishProficiency": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
       "standardizedTests": "Test-optional for undergraduate admissions.",
       "documentsRequired": [
+        "Official Secondary School Transcript / WASSCE Results",
+        "Two Academic Teacher Recommendations",
+        "Counselor Recommendation",
+        "Personal Statement / Common App Essay",
+        "Financial Aid Application (CSS Profile or ISFAA)"
+      ],
+      "academic": "3.7+ GPA equivalent",
+      "language": "Duolingo 125+, IELTS 7.0+, TOEFL 100+ or official English medium waiver",
+      "documents": [
         "Official Secondary School Transcript / WASSCE Results",
         "Two Academic Teacher Recommendations",
         "Counselor Recommendation",

@@ -15,7 +15,7 @@ export const moreGlobalUniversities: OpportunityItem[] = [
     sourceUrl: "https://admissions.iisc.ac.in",
     officialUrl: "https://admissions.iisc.ac.in",
     category: "university",
-    institutionType: "International",
+    institutionType: 'Public University',
     title: "IISc Bachelor of Science (Research) & Global Graduate Fellowships",
     isVerified: true,
     verificationSource: "Institute of National Importance (INI) & Ministry of Education, India",
@@ -66,11 +66,11 @@ export const moreGlobalUniversities: OpportunityItem[] = [
       details: "SAT / A-Levels / JEE accepted."
     },
     deadlines: {
-      term: "2026/2027 Academic Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Application Deadline: May 15, 2026",
       deadlineDate: "2026-05-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: '2026/2027 admissions cycle has concluded. Check the official institutional portal for 2027/2028 intake dates.',
       isRolling: false
     },
     deadline: "May 15, 2026",
@@ -96,10 +96,10 @@ export const moreGlobalUniversities: OpportunityItem[] = [
     countryFlag: "🇮🇳",
     city: "Mumbai, Maharashtra",
     officialWebsite: "https://www.iitb.ac.in",
-    sourceUrl: "https://www.iitb.ac.in/en/education/admissions",
-    officialUrl: "https://www.iitb.ac.in/en/education/admissions",
+    sourceUrl: 'https://acad.iitb.ac.in/admissions/bachelors',
+    officialUrl: 'https://acad.iitb.ac.in/admissions/bachelors',
     category: "university",
-    institutionType: "International",
+    institutionType: 'Technical University',
     title: "IIT Bombay Computer Science, Electrical Engineering & International Grants",
     isVerified: true,
     verificationSource: "Institute of National Importance (INI) & Ministry of Education, India",
@@ -149,11 +149,11 @@ export const moreGlobalUniversities: OpportunityItem[] = [
       details: "SAT / JEE accepted."
     },
     deadlines: {
-      term: "2026/2027 Session",
+      term: '2026/2027 Academic Session (Cycle Concluded)',
       deadlineText: "Application Deadline: June 15, 2026",
       deadlineDate: "2026-06-15",
-      cycleStatus: "open",
-      statusNotice: "Admissions open.",
+      cycleStatus: 'expired',
+      statusNotice: '2026/2027 admissions cycle has concluded. Check the official institutional portal for 2027/2028 intake dates.',
       isRolling: false
     },
     deadline: "June 15, 2026",

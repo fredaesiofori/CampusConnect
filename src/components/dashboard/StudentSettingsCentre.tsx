@@ -49,7 +49,12 @@ import {
   PASSWORD_MIN_LENGTH,
   validatePasswordPolicy,
 } from '../../services/auth';
-import { checkCurrentUserIsAdmin } from '../../services/firebase';
+import {
+  checkCurrentUserIsAdmin,
+  fetchScholarshipAlertFromFirestore,
+  getCurrentUserIdToken,
+  syncScholarshipAlertToFirestore,
+} from '../../services/firebase';
 import { CountrySelect, CountryMultiSelect } from '../ui/CountrySelect';
 import { Button } from '../ui/Button';
 
@@ -244,6 +249,96 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       });
     }
   }, [user]);
+
+  // Email Opportunity Alerts state (synced with backend Firestore + email provider)
+  const EMAIL_ALERT_CATEGORIES = [
+    { id: 'admissions', label: 'University Admissions' },
+    { id: 'fully-funded', label: 'Fully Funded Scholarships' },
+    { id: 'partial-aid', label: 'Partial Aid & Grants' },
+    { id: 'fee-waiver', label: 'Application Fee Waivers' },
+    { id: 'sat-optional', label: 'SAT-Free & Test-Optional' },
+    { id: 'international', label: 'International Study' },
+    { id: 'graduate', label: 'Postgraduate & Grants' },
+    { id: 'deadlines', label: 'Upcoming Deadlines' },
+  ] as const;
+
+  const [emailAlertEmail, setEmailAlertEmail] = useState(user?.email || '');
+  const [emailAlertCategories, setEmailAlertCategories] = useState<string[]>([
+    'admissions',
+    'fully-funded',
+    'fee-waiver',
+    'deadlines',
+  ]);
+  const [emailAlertFrequency, setEmailAlertFrequency] = useState<'weekly' | 'immediate'>('weekly');
+  const [emailAlertConsentStatus, setEmailAlertConsentStatus] = useState<
+    'none' | 'pending' | 'confirmed' | 'unsubscribed'
+  >('none');
+  const [emailDeliveryReady, setEmailDeliveryReady] = useState(false);
+  const [firestoreAlertsReady, setFirestoreAlertsReady] = useState(true);
+  const [isLoadingEmailAlerts, setIsLoadingEmailAlerts] = useState(false);
+  const [isSavingEmailAlerts, setIsSavingEmailAlerts] = useState(false);
+  const [emailAlertSuccess, setEmailAlertSuccess] = useState<string | null>(null);
+  const [emailAlertError, setEmailAlertError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (user?.email && !emailAlertEmail) {
+      setEmailAlertEmail(user.email);
+    }
+  }, [user?.email]);
+
+  useEffect(() => {
+    if (activeTab !== 'notifications') return;
+    let mounted = true;
+    const loadEmailAlertState = async () => {
+      setIsLoadingEmailAlerts(true);
+      try {
+        const idToken = await getCurrentUserIdToken();
+        const headers: Record<string, string> = {};
+        if (idToken) headers.Authorization = `Bearer ${idToken}`;
+        const res = await fetch('/api/newsletter/subscription', { headers });
+        const data = await res.json().catch(() => null);
+        if (mounted && data) {
+          setEmailDeliveryReady(Boolean(data.emailDeliveryConfigured));
+          if (typeof data.firestoreConfigured === 'boolean') {
+            setFirestoreAlertsReady(data.firestoreConfigured);
+          }
+          if (data.subscribed && data.subscription) {
+            setEmailAlertEmail(data.subscription.email || user?.email || '');
+            setEmailAlertCategories(
+              Array.isArray(data.subscription.preferences) && data.subscription.preferences.length > 0
+                ? data.subscription.preferences.filter((p: string) => p !== 'all')
+                : ['admissions', 'fully-funded', 'fee-waiver', 'deadlines']
+            );
+            setEmailAlertFrequency(data.subscription.frequency === 'immediate' ? 'immediate' : 'weekly');
+            setEmailAlertConsentStatus(data.subscription.consentStatus || 'pending');
+            setIsLoadingEmailAlerts(false);
+            return;
+          }
+        }
+
+        // Fall back to user profile mirror if server subscription not linked yet
+        const profileMirror = await fetchScholarshipAlertFromFirestore();
+        if (mounted && profileMirror) {
+          setEmailAlertEmail(profileMirror.email || user?.email || '');
+          setEmailAlertCategories(
+            profileMirror.preferences.filter((p) => p !== 'all')
+          );
+          if (profileMirror.frequency) setEmailAlertFrequency(profileMirror.frequency);
+          setEmailAlertConsentStatus(
+            profileMirror.consentStatus || (profileMirror.subscribed ? 'confirmed' : 'unsubscribed')
+          );
+        }
+      } catch {
+        // Ignore transient status fetch issues
+      } finally {
+        if (mounted) setIsLoadingEmailAlerts(false);
+      }
+    };
+    void loadEmailAlertState();
+    return () => {
+      mounted = false;
+    };
+  }, [activeTab, user?.id]);
 
   // =========================================================================
   // TAB 4: STUDY PREFERENCES STATE
@@ -598,6 +693,129 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       admissionUpdates: true,
     });
     setNotificationSuccessMessage('Reset toggles to default recommended settings. Remember to click "Save Notification Preferences" to persist changes.');
+  };
+
+  const handleToggleEmailAlertCategory = (id: string) => {
+    setEmailAlertError(null);
+    setEmailAlertSuccess(null);
+    setEmailAlertCategories((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleSaveEmailAlertSubscription = async () => {
+    setEmailAlertError(null);
+    setEmailAlertSuccess(null);
+
+    const targetEmail = (emailAlertEmail || user?.email || '').trim().toLowerCase();
+    if (!targetEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(targetEmail)) {
+      setEmailAlertError('Please enter a valid email address for opportunity alerts.');
+      return;
+    }
+
+    if (emailAlertCategories.length === 0) {
+      setEmailAlertError('Select at least one email opportunity alert category.');
+      return;
+    }
+
+    setIsSavingEmailAlerts(true);
+    try {
+      const idToken = await getCurrentUserIdToken();
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      if (idToken) headers.Authorization = `Bearer ${idToken}`;
+
+      const isAlreadyActiveOrPending =
+        emailAlertConsentStatus === 'confirmed' || emailAlertConsentStatus === 'pending';
+
+      const endpoint = isAlreadyActiveOrPending
+        ? '/api/newsletter/preferences'
+        : '/api/newsletter/subscribe';
+      const method = isAlreadyActiveOrPending ? 'PATCH' : 'POST';
+
+      const res = await fetch(endpoint, {
+        method,
+        headers,
+        body: JSON.stringify({
+          email: targetEmail,
+          preferences: emailAlertCategories,
+          frequency: emailAlertFrequency,
+          preferredDestinations: destinations,
+          intendedDegree: degreeLevel,
+          fieldOfStudy,
+        }),
+      });
+
+      const data = await res.json().catch(() => null);
+      if (typeof data?.emailDeliveryConfigured === 'boolean') {
+        setEmailDeliveryReady(data.emailDeliveryConfigured);
+      }
+      if (typeof data?.firestoreConfigured === 'boolean') {
+        setFirestoreAlertsReady(data.firestoreConfigured);
+      }
+
+      if (!res.ok) {
+        setEmailAlertError(data?.error || 'Could not update your email opportunity alerts right now.');
+        return;
+      }
+
+      const nextConsent = data?.subscription?.consentStatus || 'pending';
+      setEmailAlertConsentStatus(nextConsent);
+
+      await syncScholarshipAlertToFirestore({
+        subscribed: nextConsent === 'confirmed',
+        email: targetEmail,
+        preferences: emailAlertCategories,
+        consentStatus: nextConsent,
+        frequency: emailAlertFrequency,
+      }).catch(() => {});
+
+      setEmailAlertSuccess(
+        data?.message || 'Email opportunity alert preferences updated.'
+      );
+      onShowNotification('Email opportunity alert preferences saved.');
+    } catch (err: any) {
+      setEmailAlertError(err?.message || 'Failed to update email opportunity alerts.');
+    } finally {
+      setIsSavingEmailAlerts(false);
+    }
+  };
+
+  const handleUnsubscribeEmailAlerts = async () => {
+    setEmailAlertError(null);
+    setEmailAlertSuccess(null);
+    setIsSavingEmailAlerts(true);
+    try {
+      const idToken = await getCurrentUserIdToken();
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      if (idToken) headers.Authorization = `Bearer ${idToken}`;
+
+      const res = await fetch('/api/newsletter/unsubscribe', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({}),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok && res.status !== 404) {
+        setEmailAlertError(data?.error || 'Unable to unsubscribe right now.');
+        return;
+      }
+
+      setEmailAlertConsentStatus('unsubscribed');
+      await syncScholarshipAlertToFirestore({
+        subscribed: false,
+        email: (emailAlertEmail || user?.email || '').trim().toLowerCase(),
+        preferences: emailAlertCategories,
+        consentStatus: 'unsubscribed',
+        frequency: emailAlertFrequency,
+      }).catch(() => {});
+
+      setEmailAlertSuccess('You have been unsubscribed from Campus Connect email opportunity alerts.');
+      onShowNotification('Unsubscribed from email opportunity alerts.');
+    } catch (err: any) {
+      setEmailAlertError(err?.message || 'Unable to unsubscribe right now.');
+    } finally {
+      setIsSavingEmailAlerts(false);
+    }
   };
 
   // Handle Toggle Destination
@@ -1548,7 +1766,8 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
         {/* TAB 3: NOTIFICATIONS & ALERTS */}
         {/* ========================================================================= */}
         {activeTab === 'notifications' && (
-          <form onSubmit={handleSaveNotifications} className="space-y-6 max-w-2xl animate-in fade-in duration-150">
+          <div className="space-y-6 max-w-2xl animate-in fade-in duration-150">
+            <form onSubmit={handleSaveNotifications} className="space-y-6">
             {/* Header Card */}
             <div className="p-5 sm:p-6 rounded-2xl bg-white border border-[#E2E8F0] space-y-3 shadow-xs">
               <div className="flex items-start gap-3.5">
@@ -1705,7 +1924,177 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                 <span>Reset to Defaults</span>
               </button>
             </div>
-          </form>
+            </form>
+
+            {/* Real Email Opportunity Alerts & Deadline Reminders Management */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-white border border-[#E2E8F0] space-y-4 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-bold text-[#10132D]">
+                      Email Opportunity Alerts &amp; Deadline Digests
+                    </h3>
+                    <p className="text-xs text-slate-500 leading-relaxed">
+                      Receive verified admissions updates, scholarships, fee waivers, SAT-free options, and upcoming deadline reminders tailored to your study profile.
+                    </p>
+                  </div>
+                </div>
+
+                <span
+                  className={`inline-flex items-center self-start px-2.5 py-1 rounded-md text-[11px] font-bold shrink-0 ${
+                    emailAlertConsentStatus === 'confirmed'
+                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                      : emailAlertConsentStatus === 'pending'
+                      ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                      : 'bg-slate-100 text-slate-600 border border-slate-200'
+                  }`}
+                >
+                  {isLoadingEmailAlerts
+                    ? 'Checking...'
+                    : emailAlertConsentStatus === 'confirmed'
+                    ? 'Confirmed & Active'
+                    : emailAlertConsentStatus === 'pending'
+                    ? 'Confirmation Pending'
+                    : emailAlertConsentStatus === 'unsubscribed'
+                    ? 'Unsubscribed'
+                    : 'Not Subscribed'}
+                </span>
+              </div>
+
+              {(!firestoreAlertsReady || !emailDeliveryReady) && (
+                <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-start gap-2">
+                  <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <span>
+                    {!firestoreAlertsReady
+                      ? 'Server-side Firestore subscriber storage awaits FIREBASE_SERVICE_ACCOUNT_JSON configuration.'
+                      : 'Email delivery provider credentials (RESEND_API_KEY / SENDGRID_API_KEY + EMAIL_FROM) are not yet configured on the server.'}
+                  </span>
+                </div>
+              )}
+
+              {emailAlertError && (
+                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                  <span>{emailAlertError}</span>
+                </div>
+              )}
+
+              {emailAlertSuccess && (
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <span>{emailAlertSuccess}</span>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label htmlFor="settings-alert-email" className="text-xs font-bold text-[#10132D] block">
+                    Alert Delivery Email
+                  </label>
+                  <input
+                    id="settings-alert-email"
+                    type="email"
+                    value={emailAlertEmail}
+                    onChange={(e) => setEmailAlertEmail(e.target.value)}
+                    disabled={emailAlertConsentStatus === 'confirmed' || isSavingEmailAlerts}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-800 bg-slate-50/70 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#6846F5]/30 disabled:opacity-70"
+                    placeholder="student@university.edu"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label htmlFor="settings-alert-frequency" className="text-xs font-bold text-[#10132D] block">
+                    Alert Cadence
+                  </label>
+                  <select
+                    id="settings-alert-frequency"
+                    value={emailAlertFrequency}
+                    onChange={(e) =>
+                      setEmailAlertFrequency(e.target.value === 'immediate' ? 'immediate' : 'weekly')
+                    }
+                    disabled={isSavingEmailAlerts}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-[#6846F5]/30"
+                  >
+                    <option value="weekly">Weekly Digest + Deadline Reminders</option>
+                    <option value="immediate">Immediate Matching Alerts + Deadlines</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <span className="text-xs font-bold text-[#10132D] block">
+                  Opportunity Categories
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {EMAIL_ALERT_CATEGORIES.map((cat) => {
+                    const checked = emailAlertCategories.includes(cat.id);
+                    return (
+                      <label
+                        key={cat.id}
+                        className={`px-3 py-2 rounded-xl border text-xs font-medium flex items-center justify-between gap-2 cursor-pointer transition-colors ${
+                          checked
+                            ? 'bg-[#F0EDFF] border-[#6846F5]/40 text-[#10132D]'
+                            : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'
+                        }`}
+                      >
+                        <span>{cat.label}</span>
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => handleToggleEmailAlertCategory(cat.id)}
+                          disabled={isSavingEmailAlerts}
+                          className="w-4 h-4 rounded text-[#6846F5] focus:ring-[#6846F5] border-slate-300 cursor-pointer"
+                        />
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-slate-100">
+                <Button
+                  type="button"
+                  variant="primary"
+                  size="md"
+                  onClick={handleSaveEmailAlertSubscription}
+                  disabled={isSavingEmailAlerts}
+                  className="w-full sm:w-auto min-h-[42px] justify-center bg-[#10132D] hover:bg-[#1E214F] text-white text-xs font-bold px-5 inline-flex items-center gap-2"
+                >
+                  {isSavingEmailAlerts ? (
+                    <>
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                      <span>Saving Alert Settings...</span>
+                    </>
+                  ) : emailAlertConsentStatus === 'confirmed' || emailAlertConsentStatus === 'pending' ? (
+                    <>
+                      <Save className="w-3.5 h-3.5" />
+                      <span>Update Email Alert Preferences</span>
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>Subscribe to Email Alerts</span>
+                    </>
+                  )}
+                </Button>
+
+                {(emailAlertConsentStatus === 'confirmed' || emailAlertConsentStatus === 'pending') && (
+                  <button
+                    type="button"
+                    onClick={handleUnsubscribeEmailAlerts}
+                    disabled={isSavingEmailAlerts}
+                    className="w-full sm:w-auto min-h-[42px] justify-center inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-rose-200 text-xs font-semibold text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Unsubscribe</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
         )}
 
         {/* ========================================================================= */}

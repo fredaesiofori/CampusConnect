@@ -28,6 +28,7 @@ export interface UniversityLogo {
   crestColor: string;
   logoDescription?: string;
   logoUrl?: string;
+  logoSourceUrl?: string;
 }
 
 export interface FundingDetails {
@@ -75,61 +76,47 @@ export interface Deadlines {
   statusNotice?: string;
 }
 
+function parseDeadlineEndUtc(dateStr?: string | null): Date | null {
+  if (!dateStr) return null;
+  const trimmed = dateStr.trim();
+  // Normalize bare YYYY-MM-DD dates to end-of-day UTC so deadlines remain valid throughout the listed day
+  const normalized = /^\d{4}-\d{2}-\d{2}$/.test(trimmed) ? `${trimmed}T23:59:59Z` : trimmed;
+  const parsed = new Date(normalized);
+  return isNaN(parsed.getTime()) ? null : parsed;
+}
+
 export function evaluateOpportunityDeadline(
   deadlines?: Deadlines,
-  currentDateStr = '2026-10-21T04:59:28-07:00'
+  currentDate?: Date | string
 ): EvaluatedDeadline {
   if (!deadlines) {
     return {
       status: 'rolling',
-      badgeText: 'Rolling / Check Portal',
+      badgeText: 'Check Official Portal',
       badgeVariant: 'rolling',
       isExpired: false,
       isOpen: true,
-      displayText: 'Rolling / Check Portal',
+      displayText: 'Check Official Portal',
     };
   }
 
-  // Explicit cycleStatus override
-  if (deadlines.cycleStatus === 'expired') {
-    return {
-      status: 'expired',
-      badgeText: 'Deadline Expired',
-      badgeVariant: 'expired',
-      isExpired: true,
-      isOpen: false,
-      displayText: deadlines.deadlineText,
-      cycleNotice: deadlines.statusNotice || 'Application cycle closed for current intake. Next cycle dates to be published on official portal.',
-    };
-  }
-  if (deadlines.cycleStatus === 'rolling') {
-    return {
-      status: 'rolling',
-      badgeText: 'Rolling Admissions',
-      badgeVariant: 'rolling',
-      isExpired: false,
-      isOpen: true,
-      displayText: deadlines.deadlineText,
-      cycleNotice: deadlines.statusNotice || 'Applications evaluated continuously on a rolling basis.',
-    };
-  }
-  if (deadlines.cycleStatus === 'open') {
-    return {
-      status: 'open',
-      badgeText: 'Applications Open',
-      badgeVariant: 'open',
-      isExpired: false,
-      isOpen: true,
-      displayText: deadlines.deadlineText,
-      cycleNotice: deadlines.statusNotice || 'Admissions actively open for this cycle.',
-    };
-  }
-
-  const now = new Date(currentDateStr);
+  const now = currentDate ? new Date(currentDate) : new Date();
   const text = deadlines.deadlineText || '';
   const lowerText = text.toLowerCase();
-  const isExplicitExpired = lowerText.includes('expired') || lowerText.includes('closed') || lowerText.includes('concluded');
-  const isRolling = !isExplicitExpired && (deadlines.isRolling || lowerText.includes('rolling') || lowerText.includes('continuous'));
+  const dDate = parseDeadlineEndUtc(deadlines.deadlineDate);
+
+  const isExplicitExpired =
+    deadlines.cycleStatus === 'expired' ||
+    lowerText.includes('expired') ||
+    lowerText.includes('closed') ||
+    lowerText.includes('concluded');
+
+  const isRolling =
+    !isExplicitExpired &&
+    (deadlines.cycleStatus === 'rolling' ||
+      Boolean(deadlines.isRolling) ||
+      lowerText.includes('rolling') ||
+      lowerText.includes('continuous'));
 
   if (isExplicitExpired) {
     return {
@@ -139,7 +126,9 @@ export function evaluateOpportunityDeadline(
       isExpired: true,
       isOpen: false,
       displayText: text,
-      cycleNotice: deadlines.statusNotice || 'Application deadline expired.',
+      cycleNotice:
+        deadlines.statusNotice ||
+        'Application cycle closed for current intake. Check official portal for next cycle announcements.',
     };
   }
 
@@ -150,45 +139,58 @@ export function evaluateOpportunityDeadline(
       badgeVariant: 'rolling',
       isExpired: false,
       isOpen: true,
-      displayText: text,
-      cycleNotice: deadlines.statusNotice || 'Rolling admissions active.',
+      displayText: text || 'Rolling Admissions (Check Official Portal)',
+      cycleNotice:
+        deadlines.statusNotice || 'Applications evaluated on a rolling / intake basis.',
     };
   }
 
-  if (deadlines.deadlineDate) {
-    const dDate = new Date(deadlines.deadlineDate);
-    if (!isNaN(dDate.getTime())) {
-      if (dDate < now) {
-        return {
-          status: 'expired',
-          badgeText: 'Deadline Expired',
-          badgeVariant: 'expired',
-          isExpired: true,
-          isOpen: false,
-          displayText: `${text} (Expired)`,
-          cycleNotice: deadlines.statusNotice || 'Application cycle concluded for this intake.',
-        };
-      } else {
-        return {
-          status: 'open',
-          badgeText: 'Applications Open',
-          badgeVariant: 'open',
-          isExpired: false,
-          isOpen: true,
-          displayText: text,
-          cycleNotice: deadlines.statusNotice || 'Applications actively open for this upcoming intake.',
-        };
-      }
+  // Always enforce real-time date check before marking fixed deadlines open
+  if (dDate) {
+    if (dDate < now) {
+      return {
+        status: 'expired',
+        badgeText: 'Deadline Expired',
+        badgeVariant: 'expired',
+        isExpired: true,
+        isOpen: false,
+        displayText: lowerText.includes('cycle concluded') ? text : `${text} (Cycle Concluded)`,
+        cycleNotice:
+          'This deadline date has passed. Check the official institutional portal for upcoming intake dates.',
+      };
     }
+    return {
+      status: 'open',
+      badgeText: 'Applications Open',
+      badgeVariant: 'open',
+      isExpired: false,
+      isOpen: true,
+      displayText: text,
+      cycleNotice:
+        deadlines.statusNotice || 'Applications open ahead of the published institutional deadline.',
+    };
+  }
+
+  if (deadlines.cycleStatus === 'open') {
+    return {
+      status: 'open',
+      badgeText: 'Applications Open',
+      badgeVariant: 'open',
+      isExpired: false,
+      isOpen: true,
+      displayText: text,
+      cycleNotice: deadlines.statusNotice || 'Confirm exact closing dates on official institutional portal.',
+    };
   }
 
   return {
-    status: 'open',
-    badgeText: 'Applications Open',
-    badgeVariant: 'open',
+    status: 'rolling',
+    badgeText: 'Check Official Portal',
+    badgeVariant: 'rolling',
     isExpired: false,
     isOpen: true,
-    displayText: text,
+    displayText: text || 'Check Official Portal',
+    cycleNotice: deadlines.statusNotice || 'Verify current intake schedule on official portal.',
   };
 }
 
@@ -210,6 +212,8 @@ export interface OpportunityItem {
   isVerified: boolean;
   verificationSource: string;
   verifiedAt: string;
+  linkStatus?: 'verified' | 'needs-review';
+  reviewNote?: string;
   logo: UniversityLogo;
   eligibilityCountries: string[];
   nationalityEligibility: {
@@ -297,7 +301,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://www.colby.edu/admission/apply/',
     officialUrl: 'https://www.colby.edu/admission/apply/',
     category: 'fee-waiver',
-    institutionType: 'International',
+    institutionType: 'Private University',
     title: 'Zero Application Fee & 100% Demonstrated Need Met (No Loans)',
     isVerified: true,
     verificationSource: 'Colby College Office of Admissions Official Universal $0 Application Fee Policy',
@@ -308,6 +312,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       monogram: 'COLBY',
       crestColor: '#8065FF',
       logoDescription: 'Colby College Deep Blue & White Seal',
+      logoUrl: '/logos/colby-college-usa.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Colby_College_logo.svg'
           },
     eligibilityCountries: ['All Countries', 'Ghana', 'United States', 'International Worldwide'],
     nationalityEligibility: {
@@ -357,7 +363,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "Common Application actively open for Fall 2027 with universal $0 application fee for all students worldwide.",
     },
     deadline: "Early Decision I: Nov 15, 2026 · Regular Decision: Jan 2, 2027",
-    deadlineDate: '2026-01-02',
+    deadlineDate: '2027-01-02',
     admissionsRequirements: {
       academic: 'Rigorous secondary school transcript (WASSCE, KCSE, Cambridge A-Levels, or equivalent top percentile academic achievement).',
       language: 'TOEFL/IELTS optional or waived if secondary education was conducted in English.',
@@ -396,10 +402,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     countryFlag: '🇺🇸',
     city: 'Granville, Ohio',
     officialWebsite: 'https://denison.edu',
-    sourceUrl: 'https://denison.edu/admissions/apply',
-    officialUrl: 'https://denison.edu/admissions/apply',
+    sourceUrl: 'https://denison.edu/campus/finances/apply-for-scholarships-aid',
+    officialUrl: 'https://denison.edu/campus/finances/apply-for-scholarships-aid',
     category: 'test-waiver',
-    institutionType: 'International',
+    institutionType: 'Private University',
     title: 'Free Common App & Test-Optional International Admissions',
     isVerified: true,
     verificationSource: 'Denison University Office of Admissions International Policies',
@@ -410,6 +416,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       monogram: 'DU',
       crestColor: '#FFFFFF',
       logoDescription: 'Denison University Cardinal Red & White Monogram',
+      logoUrl: '/logos/denison-university-usa.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Denison_University_logo.svg'
           },
     eligibilityCountries: ['All Countries', 'Ghana', 'International Worldwide'],
     nationalityEligibility: {
@@ -459,7 +467,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "Applications open on Common App with free international application and test-optional review.",
     },
     deadline: "Early Decision I / Action: Nov 15, 2026 · Regular Decision: Jan 15, 2027",
-    deadlineDate: '2026-01-15',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: 'High school graduation certificate / WAEC results with strong marks across STEM and humanities.',
       language: 'Duolingo English Test, TOEFL, or official high school English medium instruction letter.',
@@ -499,7 +507,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://www.rhodeshouse.ox.ac.uk/scholarships/the-rhodes-scholarship/',
     officialUrl: 'https://www.rhodeshouse.ox.ac.uk/scholarships/the-rhodes-scholarship/',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'Rhodes Scholarship for West & Southern Africa / Clarendon Fund',
     isVerified: true,
     verificationSource: 'Rhodes Trust Oxford & University of Oxford Graduate Admissions Directorate',
@@ -614,10 +622,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     countryFlag: '🇬🇧',
     city: 'Cambridge, England',
     officialWebsite: 'https://www.cam.ac.uk',
-    sourceUrl: 'https://www.gatescambridge.org/apply/eligibility-criteria/',
-    officialUrl: 'https://www.gatescambridge.org/apply/eligibility-criteria/',
+    sourceUrl: 'https://www.undergraduate.study.cam.ac.uk/apply',
+    officialUrl: 'https://www.undergraduate.study.cam.ac.uk/apply',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'Gates Cambridge Scholarship (Full Cost of Attendance)',
     isVerified: true,
     verificationSource: 'Gates Cambridge Trust & Cambridge University Student Registry',
@@ -717,7 +725,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://future.utoronto.ca/pearson/',
     officialUrl: 'https://future.utoronto.ca/pearson/',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'Lester B. Pearson International Scholarship Program',
     isVerified: true,
     verificationSource: 'University of Toronto Future Students Admissions Directorate',
@@ -816,7 +824,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://www.mcgill.ca/studentaid/scholarships-aid/future-undergrads/entrance-scholarships',
     officialUrl: 'https://www.mcgill.ca/studentaid/scholarships-aid/future-undergrads/entrance-scholarships',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'Major Entrance Scholarships & Mastercard Foundation Partner Program',
     isVerified: true,
     verificationSource: 'McGill University Scholarships and Student Aid Office',
@@ -874,7 +882,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "McGill Enrolment Services portal open for Fall 2027 undergraduate admissions and Major Entrance awards.",
     },
     deadline: "Regular International Deadline: Jan 15, 2027",
-    deadlineDate: '2026-01-15',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: 'Top high school academic record (minimum 85%+ or high A/B in WASSCE/A-Levels depending on faculty).',
       language: 'IELTS 6.5+ or Duolingo 115+ (exempt if high school instruction was in English).',
@@ -912,7 +920,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://www.tum.de/en/studies/international-students',
     officialUrl: 'https://www.tum.de/en/studies/international-students',
     category: 'university',
-    institutionType: 'International',
+    institutionType: 'Technical University',
     title: 'DAAD Helmut-Schmidt & Zero/Low Tuition Public STEM Degrees',
     isVerified: true,
     verificationSource: 'DAAD (German Academic Exchange Service) & Bavarian Higher Education Directorate',
@@ -1007,10 +1015,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     countryFlag: '🇺🇸',
     city: 'Berea, Kentucky',
     officialWebsite: 'https://www.berea.edu',
-    sourceUrl: 'https://www.berea.edu/admissions/international-students',
-    officialUrl: 'https://www.berea.edu/admissions/international-students',
+    sourceUrl: 'https://www.berea.edu/admissions',
+    officialUrl: 'https://www.berea.edu/admissions',
     category: 'fee-waiver',
-    institutionType: 'International',
+    institutionType: 'Private University',
     title: 'No-Tuition Promise for 100% of Enrolled International Students',
     isVerified: true,
     verificationSource: 'Berea College Office of Admissions Official Tuition Promise Charter',
@@ -1021,6 +1029,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       monogram: 'BEREA',
       crestColor: '#FCA311',
       logoDescription: 'Berea College Navy & Gold Lamp of Learning',
+      logoUrl: '/logos/berea-college-usa.png',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Berea_college_full_logo.png'
           },
     eligibilityCountries: ['All Countries', 'Ghana', 'International Worldwide'],
     nationalityEligibility: {
@@ -1070,7 +1080,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "Berea College portal open for international applicants with 100% tuition-free promise.",
     },
     deadline: "Early Action: Nov 30, 2026 · Regular Decision: Jan 15, 2027",
-    deadlineDate: '2026-01-15',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: 'Strong secondary school completion (WASSCE, KCSE, or equivalent) with high marks and demonstrated financial need.',
       language: 'Duolingo English Test (105+), TOEFL, or IELTS.',
@@ -1107,10 +1117,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     countryFlag: '🇬🇧',
     city: 'Edinburgh, Scotland',
     officialWebsite: 'https://www.ed.ac.uk',
-    sourceUrl: 'https://www.ed.ac.uk/student-funding/postgraduate/international/global/mastercard-foundation',
-    officialUrl: 'https://www.ed.ac.uk/student-funding/postgraduate/international/global/mastercard-foundation',
+    sourceUrl: 'https://study.ed.ac.uk/',
+    officialUrl: 'https://study.ed.ac.uk/',
     category: 'admissions',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'Mastercard Foundation Scholars & WASSCE English Language Waiver',
     isVerified: true,
     verificationSource: 'University of Edinburgh College of Humanities & Mastercard Foundation Secretariat',
@@ -1208,7 +1218,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://study.unimelb.edu.au/',
     officialUrl: 'https://study.unimelb.edu.au/',
     category: 'university',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'Melbourne International Undergraduate Scholarship & Research Grants',
     isVerified: true,
     verificationSource: 'University of Melbourne Academic Board & Group of Eight International Office',
@@ -1257,12 +1267,12 @@ export const authenticOpportunities: OpportunityItem[] = [
       details: 'Australian universities do not require SAT or ACT scores. Admission is determined solely on high school marks or tertiary results.',
     },
     deadlines: {
-      term: "Semester 1 2027 (February Intake)",
+      term: 'Semester 1 2027 (Direct Cutoff Passed)',
       deadlineText: "October 31, 2026",
       deadlineDate: "2026-10-31",
       isRolling: false,
-      cycleStatus: "open",
-      statusNotice: "Applications actively open for Semester 1 2027 admissions and merit scholarships.",
+      cycleStatus: 'expired',
+      statusNotice: 'Semester 1 (February 2027) international cutoff (October 31, 2026) has passed. Check the official portal for Semester 2 (July 2027) dates.',
     },
     deadline: "October 31, 2026",
     deadlineDate: '2026-10-31',
@@ -1305,7 +1315,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://www.anu.edu.au/study/scholarships/find-a-scholarship/anu-chancellor%E2%80%99s-international-scholarship',
     officialUrl: 'https://www.anu.edu.au/study/scholarships/find-a-scholarship/anu-chancellor%E2%80%99s-international-scholarship',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'ANU Chancellor’s International Scholarship & Research Awards',
     isVerified: true,
     verificationSource: 'ANU Division of Student Administration and Academic Services',
@@ -1401,7 +1411,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://college.harvard.edu/admissions',
     officialUrl: 'https://college.harvard.edu/admissions',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Private University',
     title: '100% Need-Blind International Admissions & Full Financial Aid',
     isVerified: true,
     verificationSource: 'Harvard College Griffin Financial Aid Office Official Need-Blind International Guarantee',
@@ -1462,7 +1472,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "Applications open on Common Application and Coalition with 100% need-blind financial aid for all international applicants.",
     },
     deadline: "Restrictive Early Action: Nov 1, 2026 · Regular Decision: Jan 1, 2027",
-    deadlineDate: '2026-01-01',
+    deadlineDate: '2027-01-01',
     admissionsRequirements: {
       academic: 'Exceptional academic excellence (WASSCE, IB, A-Levels, or equivalent national credentials with distinction).',
       language: 'English proficiency demonstration; high school curriculum in English satisfies requirement.',
@@ -1502,7 +1512,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://admission.princeton.edu/cost-aid',
     officialUrl: 'https://admission.princeton.edu/cost-aid',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Private University',
     title: '100% Need-Blind International Admissions & No-Loan Financial Aid',
     isVerified: true,
     verificationSource: 'Princeton Undergraduate Financial Aid Office Official Charter',
@@ -1563,7 +1573,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "Applications open on Common App for Fall 2027 with 100% need-blind aid and zero student loans.",
     },
     deadline: "Single-Choice Early Action: Nov 1, 2026 · Regular Decision: Jan 1, 2027",
-    deadlineDate: '2026-01-01',
+    deadlineDate: '2027-01-01',
     admissionsRequirements: {
       academic: 'Exceptional academic transcripts, rigorous curriculum (WASSCE, A-Levels, IB, or national diploma with highest distinction).',
       language: 'English proficiency demonstration (or education conducted in English).',
@@ -1602,7 +1612,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://www.bowdoin.edu/admissions/',
     officialUrl: 'https://www.bowdoin.edu/admissions/',
     category: 'fee-waiver',
-    institutionType: 'International',
+    institutionType: 'Private University',
     title: 'Need-Blind for International Applicants & $0 Fee for Aid Applicants',
     isVerified: true,
     verificationSource: 'Bowdoin College Office of Admissions Comprehensive Need-Blind Policy',
@@ -1613,6 +1623,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       monogram: 'BOW',
       crestColor: '#FFFFFF',
       logoDescription: 'Bowdoin Black & White Polar Bear Shield',
+      logoUrl: '/logos/bowdoin-college-usa.png',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Bowdoin_college_blacklogo.png'
           },
     eligibilityCountries: ['All Countries', 'Ghana', 'International Worldwide'],
     nationalityEligibility: {
@@ -1662,7 +1674,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "Applications open on Common App with need-blind international admissions and $0 fee for aid seekers.",
     },
     deadline: "Early Decision I: Nov 15, 2026 · Regular Decision: Jan 5, 2027",
-    deadlineDate: '2026-01-05',
+    deadlineDate: '2027-01-05',
     admissionsRequirements: {
       academic: 'High school graduation with top academic standing (WASSCE, A-Levels, IB, or national diploma).',
       language: 'TOEFL, IELTS, or Duolingo English Test (waived if high school instruction was in English).',
@@ -1700,7 +1712,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://www.alueducation.com/admissions/',
     officialUrl: 'https://www.alueducation.com/admissions/',
     category: 'fee-waiver',
-    institutionType: 'International',
+    institutionType: 'Private University',
     title: 'Zero Application Fee & Mandela Centennial Leaders Scholarship',
     isVerified: true,
     verificationSource: 'Higher Education Council (HEC) of Rwanda & ALU Admissions Charter',
@@ -1761,7 +1773,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "Applications open on ALU Admissions Portal for the upcoming January 2027 intake.",
     },
     deadline: "Rolling / January 2027 Intake Open",
-    deadlineDate: '2026-04-30',
+    deadlineDate: '2027-01-31',
     admissionsRequirements: {
       academic: 'High school graduation with pass in 5 subjects including Mathematics and English (WASSCE, KCSE, Baccalauréat, or equivalent).',
       language: 'Official high school English medium transcript or ALU online English evaluation.',
@@ -1799,7 +1811,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://www.bates.edu/admission/',
     officialUrl: 'https://www.bates.edu/admission/',
     category: 'test-waiver',
-    institutionType: 'International',
+    institutionType: 'Private University',
     title: 'Zero Application Fee & Permanent Test-Optional Admissions',
     isVerified: true,
     verificationSource: 'Bates College Office of Admission Policy on International Access',
@@ -1810,6 +1822,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       monogram: 'BATES',
       crestColor: '#C5A059',
       logoDescription: 'Bates College Garnet & Gold Bobcat Shield',
+      logoUrl: '/logos/bates-college-usa.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Bates_College_wordmark.svg'
           },
     eligibilityCountries: ['All Countries', 'Ghana', 'International Worldwide'],
     nationalityEligibility: {
@@ -1859,7 +1873,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "Common Application open with permanent $0 fee for all applicants and test-optional policy.",
     },
     deadline: "Early Decision I: Nov 15, 2026 · Regular Decision: Jan 10, 2027",
-    deadlineDate: '2026-01-10',
+    deadlineDate: '2027-01-10',
     admissionsRequirements: {
       academic: 'Rigorous high school academic record (WASSCE, A-Levels, IB, or national diploma with strong marks).',
       language: 'TOEFL, IELTS, or Duolingo English Test (or high school instruction in English waiver).',
@@ -1900,7 +1914,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://www.uni-heidelberg.de/en/study/international-studies',
     officialUrl: 'https://www.uni-heidelberg.de/en/study/international-studies',
     category: 'university',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'DAAD EPOS / Baden-Württemberg Tuition Waiver Programs',
     isVerified: true,
     verificationSource: 'Baden-Württemberg Ministry of Science and Arts & Heidelberg University Admissions Office',
@@ -1911,6 +1925,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       monogram: 'HD',
       crestColor: '#C49A45',
       logoDescription: 'Heidelberg University Crimson & Gold Imperial Eagle and Palatinate Lion Seal',
+      logoUrl: '/logos/heidelberg-university-germany.svg',
+      logoSourceUrl: 'https://commons.wikimedia.org/wiki/File:Logo_University_of_Heidelberg.svg'
           },
     eligibilityCountries: ['All Countries', 'Ghana', 'International Worldwide'],
     nationalityEligibility: {
@@ -1993,10 +2009,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     countryFlag: '🇺🇸',
     city: 'Cambridge, Massachusetts',
     officialWebsite: 'https://www.mit.edu',
-    sourceUrl: 'https://mitadmissions.org/afford/basics/who-is-eligible/',
-    officialUrl: 'https://mitadmissions.org',
+    sourceUrl: 'https://www.mit.edu/admissions-aid/',
+    officialUrl: 'https://www.mit.edu/admissions-aid/',
     category: 'university',
-    institutionType: 'International',
+    institutionType: 'Private University',
     title: 'Need-Blind Undergraduate Admissions & 100% Demonstrated Need Met (Zero Loans)',
     isVerified: true,
     verificationSource: 'MIT Student Financial Services & Office of Admissions Bulletin (SEVP Certified)',
@@ -2055,7 +2071,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "MIT online application portal actively open for Fall 2027 with 100% need-blind aid.",
     },
     deadline: "Early Action: Nov 1, 2026 · Regular Action: Jan 4, 2027",
-    deadlineDate: '2026-01-04',
+    deadlineDate: '2027-01-04',
     admissionsRequirements: {
       academic: 'Top-tier secondary school coursework in calculus, physics, chemistry, biology, and humanities.',
       language: 'TOEFL iBT (minimum 90, recommended 100+) or IELTS (minimum 7.0, recommended 7.5+).',
@@ -2092,10 +2108,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     countryFlag: '🇿🇦',
     city: 'Rondebosch, Cape Town',
     officialWebsite: 'https://www.uct.ac.za',
-    sourceUrl: 'https://www.mcfsp.uct.ac.za',
-    officialUrl: 'https://www.uct.ac.za/apply',
+    sourceUrl: 'https://uct.ac.za/students/applications-admission-requirements/eligibility-admission',
+    officialUrl: 'https://uct.ac.za/students/applications-admission-requirements/eligibility-admission',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'Mastercard Foundation Scholars Program & International Postgraduate Merit Awards',
     isVerified: true,
     verificationSource: 'UCT International Academic Programmes Office (IAPO) & Mastercard Foundation Registry',
@@ -2190,10 +2206,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     countryFlag: '🇫🇷',
     city: 'Paris',
     officialWebsite: 'https://www.sciencespo.fr',
-    sourceUrl: 'https://www.sciencespo.fr/students/en/fees-funding/bursaries-financial-aid/emile-boutmy-scholarship.html',
-    officialUrl: 'https://www.sciencespo.fr/admissions/en/',
+    sourceUrl: 'https://www.sciencespo.fr/',
+    officialUrl: 'https://www.sciencespo.fr/',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Specialized / Regional',
     title: 'Émile Boutmy Scholarships for Non-EU International Students',
     isVerified: true,
     verificationSource: 'Sciences Po Admissions & Financial Aid Direction & Campus France Directory',
@@ -2252,7 +2268,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "Sciences Po portal open for non-EU applicants and Émile Boutmy scholarships.",
     },
     deadline: "February 22, 2027 (Émile Boutmy Scholarship)",
-    deadlineDate: '2026-02-22',
+    deadlineDate: '2027-02-22',
     admissionsRequirements: {
       academic: 'Exceptional secondary school record (French Baccalauréat equivalent, WASSCE with top grades, Cambridge A-Levels, or IB).',
       language: 'English C1 (IELTS 7.0 or TOEFL 100) for English tracks; French B2/C1 for French tracks.',
@@ -2288,10 +2304,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     countryFlag: '🇯🇵',
     city: 'Tokyo',
     officialWebsite: 'https://www.u-tokyo.ac.jp/en/',
-    sourceUrl: 'https://peak.c.u-tokyo.ac.jp/',
-    officialUrl: 'https://peak.c.u-tokyo.ac.jp/apply/',
+    sourceUrl: 'https://www.u-tokyo.ac.jp/en/prospective-students/undergraduate.html',
+    officialUrl: 'https://www.u-tokyo.ac.jp/en/prospective-students/undergraduate.html',
     category: 'university',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'PEAK Undergraduate Programs in English & Japanese Government (MEXT) University Recommendation',
     isVerified: true,
     verificationSource: 'University of Tokyo PEAK Admissions Office & MEXT Official Guidelines',
@@ -2350,7 +2366,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "PEAK undergraduate admissions portal opening November 25, 2026 for Autumn 2027.",
     },
     deadline: "Application Period: Nov 25, 2026 – Jan 15, 2027",
-    deadlineDate: '2026-01-15',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: 'Official transcripts for the final 3 years of secondary school showing top 5–10% class standing.',
       language: 'TOEFL iBT (minimum 100) or IELTS (minimum 7.0), or English-medium certification.',
@@ -2385,10 +2401,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     countryFlag: '🇳🇱',
     city: 'Delft',
     officialWebsite: 'https://www.tudelft.nl/en/',
-    sourceUrl: 'https://www.tudelft.nl/en/education/practical-matters/scholarships/justus-louise-van-effen-excellence-scholarships',
-    officialUrl: 'https://www.tudelft.nl/en/education/admission-and-application/',
+    sourceUrl: 'https://www.tudelft.nl/en/education/admission-and-application',
+    officialUrl: 'https://www.tudelft.nl/en/education/admission-and-application',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Technical University',
     title: 'Justus & Louise van Effen Excellence MSc Scholarships',
     isVerified: true,
     verificationSource: 'TU Delft International Admissions Board & Nuffic Study in NL Accreditation',
@@ -2447,7 +2463,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "TU Delft Studielink and Osiris portal open for 2027/2028 MSc intake.",
     },
     deadline: "December 1, 2026 (Justus van Effen Scholarship)",
-    deadlineDate: '2025-12-01',
+    deadlineDate: '2026-12-01',
     admissionsRequirements: {
       academic: 'Bachelor’s degree from an internationally recognized university with minimum cumulative GPA of 80% (or first-class honours equivalent).',
       language: 'TOEFL iBT (minimum 100 with all subscores 22+) or IELTS Academic (minimum 7.0 with all subscores 6.5+).',
@@ -2486,7 +2502,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://ethz.ch/students/en/studies/financial/scholarships/excellencescholarship.html',
     officialUrl: 'https://ethz.ch/en/studies/master/application.html',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Technical University',
     title: 'Excellence Scholarship & Opportunity Programme (ESOP)',
     isVerified: true,
     verificationSource: 'ETH Zurich Financial Aid & Rectorate Guidelines (SERI Regulated)',
@@ -2545,7 +2561,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "ETH Zurich eApply portal open for international master’s applicants.",
     },
     deadline: "December 15, 2026 (ESOP Excellence Scholarship)",
-    deadlineDate: '2025-12-15',
+    deadlineDate: '2026-12-15',
     admissionsRequirements: {
       academic: 'Outstanding bachelor’s degree with grade ranking in the top 10% of the graduation cohort.',
       language: 'English C1 (IELTS 7.0 or TOEFL 100).',
@@ -2584,7 +2600,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://pgcollege.ui.edu.ng',
     officialUrl: 'https://admissions.ui.edu.ng',
     category: 'university',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'Pan-African Postgraduate Research Fellowships & Direct International Admissions',
     isVerified: true,
     verificationSource: 'National Universities Commission (NUC) of Nigeria & University of Ibadan Postgraduate College Bulletin',
@@ -2595,6 +2611,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       monogram: 'UI',
       crestColor: '#5C0000',
       logoDescription: 'University of Ibadan Crimson and Gold',
+      logoUrl: '/logos/unibadan-nigeria.jpg',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:University_of_Ibadan_logo.jpeg'
     },
     eligibilityCountries: ['Ghana', 'Nigeria', 'ECOWAS Member States', 'African Union'],
     nationalityEligibility: {
@@ -2680,7 +2698,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://application.uonbi.ac.ke',
     officialUrl: 'https://application.uonbi.ac.ke',
     category: 'university',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'Direct International Admissions & East African Community Mobility Programs',
     isVerified: true,
     verificationSource: 'Commission for University Education (CUE) Kenya & UoN Center for International Programmes',
@@ -2691,6 +2709,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       monogram: 'UoN',
       crestColor: '#F58220',
       logoDescription: 'University of Nairobi Green and Ochre',
+      logoUrl: '/logos/uon-kenya.gif',
+      logoSourceUrl: 'https://en.wikipedia.org/wiki/File:Uon_emblem.gif'
     },
     eligibilityCountries: ['Ghana', 'Kenya', 'East African Community (EAC)', 'African Union'],
     nationalityEligibility: {
@@ -2737,7 +2757,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "University of Nairobi online application portal active for January 2027 intake.",
     },
     deadline: "Rolling / January 2027 Intake Open",
-    deadlineDate: '2026-08-15',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: 'KCSE Mean Grade C+ or equivalent (WASSCE, IB, A-Levels). Kenya National Qualifications Authority (KNQA) equation of foreign certificates.',
       language: 'English proficiency confirmed through secondary school certificate.',
@@ -2776,7 +2796,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://you.ubc.ca/financial-planning/scholarships-awards-international-students/international-scholars/',
     officialUrl: 'https://you.ubc.ca/applying-ubc/',
     category: 'scholarship',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'Karen McKellin International Leader of Tomorrow Award & Major Entrance Scholarships',
     isVerified: true,
     verificationSource: 'UBC International Student Initiative & IRCC Designated Learning Institution (DLI #O19327981502)',
@@ -2835,7 +2855,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       statusNotice: "UBC applications open via EducationPlannerBC for 2027 entry.",
     },
     deadline: "ILOT Award: Dec 1, 2026 · Regular: Jan 15, 2027",
-    deadlineDate: '2026-01-15',
+    deadlineDate: '2027-01-15',
     admissionsRequirements: {
       academic: 'Senior Secondary School Graduation Diploma (WASSCE, IB, A-Levels, or equivalent) with high academic standing (equivalent to minimum 85%+).',
       language: 'IELTS Academic (minimum 6.5, no band below 6.0) or TOEFL iBT (minimum 90 with 22 in reading/listening, 21 in writing/speaking).',
@@ -2874,7 +2894,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     sourceUrl: 'https://ur.ac.rw/?Admissions-75',
     officialUrl: 'https://registration.ur.ac.rw',
     category: 'university',
-    institutionType: 'International',
+    institutionType: 'Public University',
     title: 'World Bank African Centers of Excellence Fellowships & Regional Undergraduate Entry',
     isVerified: true,
     verificationSource: 'Higher Education Council of Rwanda (HEC) & World Bank ACE II Project Directory',
@@ -2972,7 +2992,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://www.nus.edu.sg/oam/admissions",
     "officialUrl": "https://www.nus.edu.sg/oam/admissions",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Singapore MOE Tuition Grant Scheme & NUS Science & Technology Undergraduate Scholarship",
     "isVerified": true,
     "verificationSource": "Singapore Ministry of Education (MOE) & NUS Office of Admissions Bulletin",
@@ -3056,7 +3076,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "February 28, 2027",
-    "deadlineDate": "2026-02-28",
+    "deadlineDate": "2027-02-28",
     "admissionsRequirements": {
       "academic": "Exceptional academic record: High School Diploma / Cambridge A-Levels (minimum 3 AAA grades) / IB Diploma (minimum 38 points).",
       "language": "English proficiency (IELTS 6.5+, TOEFL 92+, or WASSCE A1-B3).",
@@ -3092,10 +3112,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     "countryFlag": "🇨🇳",
     "city": "Haidian District, Beijing",
     "officialWebsite": "https://www.tsinghua.edu.cn/en/",
-    "sourceUrl": "https://admissions.tsinghua.edu.cn",
-    "officialUrl": "https://admissions.tsinghua.edu.cn",
+    "sourceUrl": "https://www.tsinghua.edu.cn/en/Admissions.htm",
+    "officialUrl": "https://www.tsinghua.edu.cn/en/Admissions.htm",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Schwarzman Scholars & Chinese Government Scholarship (CSC Full Award)",
     "isVerified": true,
     "verificationSource": "China Scholarship Council (CSC) & Tsinghua Undergraduate/Graduate International Admissions",
@@ -3177,7 +3197,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "January 10, 2027 (Round 1) / March 1, 2027 (CSC Fellowship)",
-    "deadlineDate": "2026-03-01",
+    "deadlineDate": "2027-03-01",
     "admissionsRequirements": {
       "academic": "High school graduation diploma or Bachelor’s degree with high academic standing.",
       "language": "English proficiency (TOEFL 85+ or IELTS 6.5+) for English-medium tracks; or HSK Level 5 (180+) for Chinese-taught programs.",
@@ -3216,7 +3236,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://admission.kaist.ac.kr/intl-undergraduate/",
     "officialUrl": "https://admission.kaist.ac.kr",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Technical University",
     "title": "KAIST International Student Full Scholarship (100% Tuition & Monthly Allowance)",
     "isVerified": true,
     "verificationSource": "KAIST Office of International Admissions & Korean Ministry of Science and ICT",
@@ -3298,7 +3318,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "Early: Nov 20, 2026 · Regular: January 15, 2027",
-    "deadlineDate": "2026-01-15",
+    "deadlineDate": "2027-01-15",
     "admissionsRequirements": {
       "academic": "High school graduation with exceptional grades in Advanced Mathematics, Physics, Chemistry, and Computing.",
       "language": "TOEFL iBT 83, IELTS 6.5, or official verification of English-medium secondary schooling.",
@@ -3320,7 +3340,9 @@ export const authenticOpportunities: OpportunityItem[] = [
     "intakeTerm": "September 2027",
     "verifiedBadge": "Verified Official Data",
     "summary": "South Korea’s top science and technology research university, 100% taught in English, providing every admitted international student full tuition and monthly living allowances.",
-    "officialRuleSummary": "Established by the South Korean Government under the special KAIST Act."
+    "officialRuleSummary": "Established by the South Korean Government under the special KAIST Act.",
+    "linkStatus": "needs-review",
+    "reviewNote": "International admissions subdomain (admission.kaist.ac.kr) timed out during automated check; verify portal connectivity."
   },
 
   // 34. UNITED ARAB EMIRATES - New York University Abu Dhabi
@@ -3337,7 +3359,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://nyuad.nyu.edu/en/admissions.html",
     "officialUrl": "https://nyuad.nyu.edu/en/admissions.html",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Need-Blind Admissions & 100% Demonstrated Need-Met Aid (Falcon Scholarship)",
     "isVerified": true,
     "verificationSource": "NYU Office of Global Financial Aid & UAE Commission for Academic Accreditation",
@@ -3420,7 +3442,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "Early Decision I: Nov 1, 2026 · Regular Decision: January 5, 2027",
-    "deadlineDate": "2026-01-05",
+    "deadlineDate": "2027-01-05",
     "admissionsRequirements": {
       "academic": "Outstanding secondary school diploma, WASSCE (A1/B2 grades), IB Diploma, or Cambridge A-Levels.",
       "language": "English proficiency via secondary curriculum verification or IELTS 7.5 / TOEFL 100+.",
@@ -3459,7 +3481,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://qatar.georgetown.edu/admissions/",
     "officialUrl": "https://qatar.georgetown.edu/admissions/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Bachelor of Science in Foreign Service (BSFS) & Qatar Foundation Need-Based Aid",
     "isVerified": true,
     "verificationSource": "Qatar Foundation for Education & Georgetown University Office of Undergraduate Admissions",
@@ -3537,7 +3559,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "Priority Round: Nov 15, 2026 · Regular Decision: February 1, 2027",
-    "deadlineDate": "2026-02-01",
+    "deadlineDate": "2027-02-01",
     "admissionsRequirements": {
       "academic": "High school graduation with strong performance in social sciences, history, literature, and mathematics.",
       "language": "English proficiency demonstration via secondary schooling or IELTS 7.0 / TOEFL 100.",
@@ -3572,10 +3594,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     "countryFlag": "🇸🇪",
     "city": "Solna / Stockholm, Sweden",
     "officialWebsite": "https://ki.se/en",
-    "sourceUrl": "https://ki.se/en/education/master-programmes",
-    "officialUrl": "https://ki.se/en/education",
+    "sourceUrl": "https://education.ki.se/bachelors-masters-studies/apply",
+    "officialUrl": "https://education.ki.se/bachelors-masters-studies/apply",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Specialized / Regional",
     "title": "Karolinska Institutet Global Master’s Scholarship & Swedish Institute Grants",
     "isVerified": true,
     "verificationSource": "Swedish Higher Education Authority (UKÄ) & Karolinska Scholarship Committee",
@@ -3654,7 +3676,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "Application: January 15, 2027 · Document Submission: February 1, 2027",
-    "deadlineDate": "2026-01-15",
+    "deadlineDate": "2027-01-15",
     "admissionsRequirements": {
       "academic": "Bachelor’s degree (or equivalent foreign degree) with major in Biomedicine, Biology, Chemistry, Medicine, or related health sciences.",
       "language": "English 6 proficiency (IELTS 6.5 with no band below 5.5, TOEFL 90, or English-taught degree verification).",
@@ -3693,7 +3715,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://www.tcd.ie/study/international/",
     "officialUrl": "https://www.tcd.ie/study/international/",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Government of Ireland International Education Scholarship (GOI-IES) & Global Excellence Award",
     "isVerified": true,
     "verificationSource": "Higher Education Authority (HEA) Ireland & Trinity Global Admissions",
@@ -3772,7 +3794,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "GOI-IES Scholarship: March 15, 2027 · TCD Direct: June 30, 2027",
-    "deadlineDate": "2026-03-15",
+    "deadlineDate": "2027-03-15",
     "admissionsRequirements": {
       "academic": "Senior high school diploma (minimum 80% or A-Levels ABB / IB 34+) or upper second-class honours Bachelor degree for Master’s programs.",
       "language": "IELTS 6.5+, TOEFL 90+, or recognized WASSCE English credentials.",
@@ -3811,7 +3833,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://www.polimi.it/en/international-prospective-students",
     "officialUrl": "https://www.polimi.it/en/international-prospective-students",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Technical University",
     "title": "DSU Regional Right to Education Full Scholarship & Merit Platinum Awards",
     "isVerified": true,
     "verificationSource": "Regione Lombardia DSU & Ministry of University and Research (MUR) Italy",
@@ -3822,6 +3844,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       "monogram": "POLIMI",
       "crestColor": "#00264D",
       "logoDescription": "PoliMi Navy & Gold Classical Crest",
+      "logoUrl": "/logos/politecnico-di-milano-italy.svg",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Politecnicomilano-logo.svg"
     },
     "eligibilityCountries": [
       "Italy",
@@ -3889,7 +3913,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "Round 1: February 15, 2027 · Round 2: March 31, 2027",
-    "deadlineDate": "2026-03-31",
+    "deadlineDate": "2027-03-31",
     "admissionsRequirements": {
       "academic": "Bachelor of Science or equivalent degree in Engineering, Architecture, or Design with strong mathematical foundation.",
       "language": "English proficiency (TOEFL 78, IELTS 6.0, or English-medium degree certificate).",
@@ -3911,7 +3935,9 @@ export const authenticOpportunities: OpportunityItem[] = [
     "intakeTerm": "September 2027",
     "verifiedBadge": "Verified Official Data",
     "summary": "Europe’s top technical university for engineering, architecture, and design, offering complete tuition waivers, free housing, and living grants through Lombardy regional DSU programs.",
-    "officialRuleSummary": "Accredited by the Ministry of University and Research (MUR) Italy and member of IDEA League."
+    "officialRuleSummary": "Accredited by the Ministry of University and Research (MUR) Italy and member of IDEA League.",
+    "linkStatus": "needs-review",
+    "reviewNote": "Admissions portal timed out during automated check; verify link manually."
   },
 
   // 39. NEW ZEALAND - The University of Auckland
@@ -3928,7 +3954,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://www.auckland.ac.nz/en/study/international-students.html",
     "officialUrl": "https://www.auckland.ac.nz/en/study/international-students.html",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Manaaki New Zealand Government Scholarships & International Student Excellence Award",
     "isVerified": true,
     "verificationSource": "New Zealand Ministry of Foreign Affairs and Trade (MFAT) & NZQA",
@@ -3939,6 +3965,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       "monogram": "UoA",
       "crestColor": "#00467F",
       "logoDescription": "Auckland Blue & Open Book Crest",
+      "logoUrl": "/logos/university-of-auckland-new-zealand.png",
+      "logoSourceUrl": "https://en.wikipedia.org/wiki/File:University_of_Auckland_Coat_of_Arms.png"
     },
     "eligibilityCountries": [
       "New Zealand",
@@ -4006,7 +4034,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "Semester 1 (Feb 2027): Dec 8, 2026 · Manaaki Scholarship: February 28, 2027",
-    "deadlineDate": "2026-02-28",
+    "deadlineDate": "2027-02-28",
     "admissionsRequirements": {
       "academic": "Recognized Bachelor’s degree with a minimum Grade Point Average of 5.0 (B grade or second-class upper equivalent) and relevant work experience.",
       "language": "English language proficiency (IELTS 6.5 with no band below 6.0 or TOEFL iBT 90).",
@@ -4045,7 +4073,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://www.aucegypt.edu/admissions/scholarships",
     "officialUrl": "https://www.aucegypt.edu/admissions",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "African Graduate Fellowships & Tomorrow’s Leaders Undergraduate Full Scholarship",
     "isVerified": true,
     "verificationSource": "Egyptian Ministry of Higher Education & Middle States Commission on Higher Education",
@@ -4056,6 +4084,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       "monogram": "AUC",
       "crestColor": "#D99B00",
       "logoDescription": "AUC Cairo Deep Blue & Gold Crest",
+      "logoUrl": "/logos/american-university-in-cairo-egypt.svg",
+      "logoSourceUrl": "https://en.wikipedia.org/wiki/File:The_American_University_in_Cairo_logo.svg"
     },
     "eligibilityCountries": [
       "Egypt",
@@ -4123,7 +4153,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "Fellowships & Financial Aid: February 1, 2027 · Regular: April 1, 2027",
-    "deadlineDate": "2026-02-01",
+    "deadlineDate": "2027-02-01",
     "admissionsRequirements": {
       "academic": "Bachelor of Science or Arts degree with minimum overall GPA of 3.2 on a 4.0 scale (or very good / upper second class honours).",
       "language": "IELTS 6.5 or TOEFL iBT 79; or official certificate of English instruction.",
@@ -4162,7 +4192,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://www.kuleuven.be/english/admissions",
     "officialUrl": "https://www.kuleuven.be/english/admissions",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Master Mind Scholarships for International Students (Flemish Ministry of Education)",
     "isVerified": true,
     "verificationSource": "Flemish Ministry of Education and Training & KU Leuven International Admissions",
@@ -4241,7 +4271,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "Master Mind Candidates: February 1, 2027 · Non-EEA Standard: March 1, 2027",
-    "deadlineDate": "2026-03-01",
+    "deadlineDate": "2027-03-01",
     "admissionsRequirements": {
       "academic": "Bachelor degree in related discipline with high academic achievement (Grade Point Average of 3.5 out of 4.0 or equivalent).",
       "language": "TOEFL iBT 94 (minimum 20 all sections) or IELTS 7.0 (minimum 6.5 all sections).",
@@ -4280,7 +4310,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://admissions.hku.hk/international",
     "officialUrl": "https://admissions.hku.hk/international",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Hong Kong PhD Fellowship Scheme (HKPFS) & Foundation Entrance Full Scholarships",
     "isVerified": true,
     "verificationSource": "Research Grants Council (RGC) Hong Kong & HKU International Admissions Office",
@@ -4360,7 +4390,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "HKPFS PhD: December 1, 2026 · International UG: February 20, 2027",
-    "deadlineDate": "2026-02-20",
+    "deadlineDate": "2027-02-20",
     "admissionsRequirements": {
       "academic": "Outstanding academic record: High School Diploma / IB (36+) / A-Levels (AAA or better) for undergraduate; First Class Honours Bachelor degree for PhD.",
       "language": "IELTS 6.5 or TOEFL 93, or recognized English-instruction credentials.",
@@ -4396,10 +4426,10 @@ export const authenticOpportunities: OpportunityItem[] = [
     "countryFlag": "🇲🇽",
     "city": "Monterrey, Nuevo León, Mexico",
     "officialWebsite": "https://tec.mx/en",
-    "sourceUrl": "https://admision.tec.mx/internacional",
-    "officialUrl": "https://admision.tec.mx/internacional",
+    "sourceUrl": "https://tec.mx/en/admissions-and-aid",
+    "officialUrl": "https://tec.mx/en/admissions-and-aid",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Líderes del Mañana (Leaders of Tomorrow) 100% Full Scholarship & International Excellence",
     "isVerified": true,
     "verificationSource": "Secretariat of Public Education (SEP) Mexico & SACSCOC Accreditation",
@@ -4476,7 +4506,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "Líderes del Mañana Fellowship: February 28, 2027",
-    "deadlineDate": "2026-02-28",
+    "deadlineDate": "2027-02-28",
     "admissionsRequirements": {
       "academic": "High school diploma with minimum 90/100 grade average (or equivalent high performance) and proven social entrepreneurship leadership.",
       "language": "Spanish or English proficiency depending on chosen degree medium.",
@@ -4515,7 +4545,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://international.ku.edu.tr",
     "officialUrl": "https://international.ku.edu.tr",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Private University",
     "title": "Koç University Full Graduate Scholarship & Türkiye Bursları Bilateral Awards",
     "isVerified": true,
     "verificationSource": "Council of Higher Education (YÖK) Turkey & Koç Graduate Admissions",
@@ -4526,6 +4556,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       "monogram": "KU",
       "crestColor": "#A51818",
       "logoDescription": "Koç University Crimson Emblem",
+      "logoUrl": "/logos/koc-university-turkey.svg",
+      "logoSourceUrl": "https://en.wikipedia.org/wiki/File:Ko%C3%A7_University_logo.svg"
     },
     "eligibilityCountries": [
       "Turkey",
@@ -4595,7 +4627,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "Early Round: February 20, 2027 · Regular Graduate: June 15, 2027",
-    "deadlineDate": "2026-06-15",
+    "deadlineDate": "2027-06-15",
     "admissionsRequirements": {
       "academic": "Bachelor degree in relevant STEM or Social Science discipline with minimum GPA of 3.0/4.0.",
       "language": "TOEFL iBT 80 or higher (IELTS not accepted under Turkish Higher Education Council rules for university admission).",
@@ -4634,7 +4666,7 @@ export const authenticOpportunities: OpportunityItem[] = [
     "sourceUrl": "https://www.uba.ar/internacionales",
     "officialUrl": "https://www.uba.ar/internacionales",
     "category": "university",
-    "institutionType": "International",
+    "institutionType": "Public University",
     "title": "Tuition-Free ($0 Tuition) Undergraduate Higher Education for All Nationalities",
     "isVerified": true,
     "verificationSource": "Argentine Ministry of Education & National Commission for University Evaluation (CONEAU)",
@@ -4645,6 +4677,8 @@ export const authenticOpportunities: OpportunityItem[] = [
       "monogram": "UBA",
       "crestColor": "#002B49",
       "logoDescription": "UBA Classical Seal & Academic Torch",
+      "logoUrl": "/logos/universidad-de-buenos-aires-argentina.png",
+      "logoSourceUrl": "https://commons.wikimedia.org/wiki/File:Uba_univ_bsas_logo.png"
     },
     "eligibilityCountries": [
       "Argentina",
@@ -4710,7 +4744,7 @@ export const authenticOpportunities: OpportunityItem[] = [
       "isRolling": false
     },
     "deadline": "CBC 2027 Pre-enrollment: February 15, 2027",
-    "deadlineDate": "2026-02-15",
+    "deadlineDate": "2027-02-15",
     "admissionsRequirements": {
       "academic": "High school graduation diploma convalidated by the Argentine Ministry of Education (Convalidación de Título Secundario).",
       "language": "Spanish proficiency at B2 level (CELU or DELE B2 certificate).",

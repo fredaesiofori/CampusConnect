@@ -7,11 +7,12 @@ import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import { createServer as createViteServer } from 'vite';
 import path from 'path';
-import fs from 'fs/promises';
-import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI, ThinkingLevel } from '@google/genai';
 import { authenticOpportunities, OpportunityItem } from './src/data/opportunities';
+import { FirebaseAdminFirestoreAdapter, OpportunitySubscriberStore } from './server/alerts/firestoreStore';
+import { AlertNotificationService } from './server/alerts/alertService';
+import { createAlertRouter } from './server/alerts/router';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -870,365 +871,61 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
 });
 
 // -------------------------------------------------------------
-// Scholarship Alerts Subscription Store & API
+// Opportunity Alerts & Deadline Notifications (Firestore + Email Provider)
 // -------------------------------------------------------------
-const ALLOWED_PREFERENCE_IDS = [
-  'all',
-  'fully-funded',
-  'fee-waiver',
-  'sat-optional',
-  'graduate',
-] as const;
-
-const SPECIFIC_PREFERENCE_IDS = [
-  'fully-funded',
-  'fee-waiver',
-  'sat-optional',
-  'graduate',
-] as const;
-
-type PreferenceId = (typeof ALLOWED_PREFERENCE_IDS)[number];
-
-interface NewsletterSubscriberRecord {
-  email: string;
-  preferences: PreferenceId[];
-  status: 'active' | 'unsubscribed';
-  manageTokenHash: string;
-  subscribedAt: string;
-  updatedAt: string;
-  unsubscribedAt?: string;
-}
-
-const NEWSLETTER_DATA_DIR = path.resolve(__dirname, '.data');
-const NEWSLETTER_STORE_PATH = path.join(NEWSLETTER_DATA_DIR, 'scholarship-subscribers.json');
-let newsletterWriteLock: Promise<void> = Promise.resolve();
-
-function isEmailDeliveryConfigured(): boolean {
-  return Boolean(
-    process.env.RESEND_API_KEY?.trim() ||
-      process.env.SENDGRID_API_KEY?.trim() ||
-      (process.env.SMTP_HOST?.trim() &&
-        process.env.SMTP_USER?.trim() &&
-        process.env.SMTP_PASS?.trim())
-  );
-}
-
-function hashToken(token: string): string {
-  return crypto.createHash('sha256').update(token).digest('hex');
-}
-
-function normalizeEmail(raw: string): string {
-  return raw.trim().toLowerCase();
-}
-
-function isValidEmailAddress(email: string): boolean {
-  if (!email || email.length < 5 || email.length > 254) return false;
-  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-}
-
-function normalizePreferences(raw: unknown): PreferenceId[] {
-  if (!Array.isArray(raw)) return [];
-  const allowedSet = new Set<string>(ALLOWED_PREFERENCE_IDS);
-  const filtered = Array.from(
-    new Set(raw.filter((item): item is PreferenceId => typeof item === 'string' && allowedSet.has(item)))
-  );
-
-  if (filtered.includes('all')) {
-    return [...ALLOWED_PREFERENCE_IDS];
-  }
-
-  const hasAllSpecific = SPECIFIC_PREFERENCE_IDS.every((id) => filtered.includes(id));
-  if (hasAllSpecific) {
-    return [...ALLOWED_PREFERENCE_IDS];
-  }
-
-  return filtered;
-}
-
-async function readSubscribersStore(): Promise<Record<string, NewsletterSubscriberRecord>> {
-  try {
-    const content = await fs.readFile(NEWSLETTER_STORE_PATH, 'utf-8');
-    const parsed = JSON.parse(content);
-    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
-      return parsed as Record<string, NewsletterSubscriberRecord>;
-    }
-    return {};
-  } catch (err: any) {
-    if (err?.code === 'ENOENT') {
-      return {};
-    }
-    throw err;
-  }
-}
-
-async function writeSubscribersStore(store: Record<string, NewsletterSubscriberRecord>): Promise<void> {
-  await fs.mkdir(NEWSLETTER_DATA_DIR, { recursive: true, mode: 0o700 });
-  const tempPath = `${NEWSLETTER_STORE_PATH}.${process.pid}.${Date.now()}.tmp`;
-  await fs.writeFile(tempPath, JSON.stringify(store, null, 2), { encoding: 'utf-8', mode: 0o600 });
-  await fs.rename(tempPath, NEWSLETTER_STORE_PATH);
-}
-
-function withStoreLock<T>(fn: () => Promise<T>): Promise<T> {
-  const run = newsletterWriteLock.then(fn, fn);
-  newsletterWriteLock = run.then(
-    () => undefined,
-    () => undefined
-  );
-  return run;
-}
-
-function findActiveByToken(
-  store: Record<string, NewsletterSubscriberRecord>,
-  token: string
-): NewsletterSubscriberRecord | null {
-  if (!token || typeof token !== 'string' || token.length < 16) return null;
-  const targetHash = hashToken(token.trim());
-  for (const record of Object.values(store)) {
-    if (record.status === 'active' && record.manageTokenHash && record.manageTokenHash === targetHash) {
-      return record;
-    }
-  }
-  return null;
-}
-
-app.get('/api/newsletter/status', (_req: Request, res: Response) => {
-  res.json({
-    emailDeliveryConfigured: isEmailDeliveryConfigured(),
-  });
+const firestoreAdapter = new FirebaseAdminFirestoreAdapter(process.env);
+const subscriberStore = new OpportunitySubscriberStore(firestoreAdapter);
+const alertService = new AlertNotificationService({
+  store: subscriberStore,
+  env: process.env,
+  catalog: authenticOpportunities,
 });
 
-app.get('/api/newsletter/subscription', async (req: Request, res: Response) => {
-  const token = typeof req.query.token === 'string' ? req.query.token : '';
-  const emailDeliveryConfigured = isEmailDeliveryConfigured();
+app.use(
+  createAlertRouter({
+    service: alertService,
+    checkRateLimit,
+  })
+);
 
-  if (!token) {
-    res.json({ subscribed: false, emailDeliveryConfigured });
-    return;
-  }
+const DEADLINE_SCHEDULER_INTERVAL_MS = 6 * 60 * 60 * 1000; // Every 6 hours
 
-  try {
-    const store = await readSubscribersStore();
-    const match = findActiveByToken(store, token);
-    if (!match) {
-      res.json({ subscribed: false, emailDeliveryConfigured });
+function startOpportunityAlertScheduler(): void {
+  const runScheduledCheck = async () => {
+    const health = alertService.getHealthStatus();
+    if (!health.firestoreConfigured || !health.emailDeliveryConfigured) {
       return;
     }
-
-    res.json({
-      subscribed: true,
-      emailDeliveryConfigured,
-      subscription: {
-        email: match.email,
-        preferences: match.preferences,
-        subscribedAt: match.subscribedAt,
-        updatedAt: match.updatedAt,
-      },
-    });
-  } catch (err) {
-    console.error('[Newsletter] Failed to check subscription:', err);
-    res.status(500).json({ error: 'Unable to verify subscription status right now.' });
-  }
-});
-
-app.post('/api/newsletter/subscribe', async (req: Request, res: Response) => {
-  const clientIp = req.ip || req.socket.remoteAddress || 'unknown-client';
-  if (!checkRateLimit(clientIp)) {
-    res.status(429).json({
-      error: 'Too many requests. Please wait a moment and try again.',
-    });
-    return;
-  }
-
-  const { email, preferences } = req.body || {};
-  if (!email || typeof email !== 'string') {
-    res.status(400).json({ error: 'Please enter your email address.' });
-    return;
-  }
-
-  const emailNormalized = normalizeEmail(email);
-  if (!isValidEmailAddress(emailNormalized)) {
-    res.status(400).json({ error: 'Please enter a valid email address (e.g., student@university.edu).' });
-    return;
-  }
-
-  const normalizedPrefs = normalizePreferences(preferences);
-  if (normalizedPrefs.length === 0) {
-    res.status(400).json({ error: 'Please select at least one opportunity preference.' });
-    return;
-  }
-
-  const emailDeliveryConfigured = isEmailDeliveryConfigured();
-
-  try {
-    const result = await withStoreLock(async () => {
-      const store = await readSubscribersStore();
-      const existing = store[emailNormalized];
-
-      if (existing && existing.status === 'active') {
-        return { duplicate: true as const };
-      }
-
-      const now = new Date().toISOString();
-      const manageToken = crypto.randomBytes(24).toString('hex');
-      const manageTokenHash = hashToken(manageToken);
-
-      const record: NewsletterSubscriberRecord = {
-        email: emailNormalized,
-        preferences: normalizedPrefs,
-        status: 'active',
-        manageTokenHash,
-        subscribedAt: existing?.subscribedAt || now,
-        updatedAt: now,
-      };
-
-      store[emailNormalized] = record;
-      await writeSubscribersStore(store);
-
-      return {
-        duplicate: false as const,
-        reactivated: Boolean(existing),
-        manageToken,
-        record,
-      };
-    });
-
-    if (result.duplicate) {
-      res.status(409).json({
-        alreadySubscribed: true,
-        emailDeliveryConfigured,
-        error: 'This email is already subscribed to opportunity updates. No duplicate subscription was created.',
-      });
-      return;
+    try {
+      const summary = await alertService.runDeadlineReminderJob({ windowDays: 21 });
+      console.log('[Alerts/Scheduler] Deadline reminder check completed:', JSON.stringify(summary));
+    } catch (err: any) {
+      console.error('[Alerts/Scheduler] Scheduled deadline check error:', err?.message);
     }
+  };
 
-    res.status(result.reactivated ? 200 : 201).json({
-      success: true,
-      alreadySubscribed: false,
-      reactivated: result.reactivated,
-      manageToken: result.manageToken,
-      emailDeliveryConfigured,
-      subscription: {
-        email: result.record.email,
-        preferences: result.record.preferences,
-        subscribedAt: result.record.subscribedAt,
-        updatedAt: result.record.updatedAt,
-      },
-      message: emailDeliveryConfigured
-        ? 'Your email and opportunity preferences are saved for periodic updates.'
-        : 'Your email and opportunity preferences have been saved.',
-    });
-  } catch (err) {
-    console.error('[Newsletter] Subscription persistence error:', err);
-    res.status(500).json({
-      error: 'Could not save your subscription right now. Please try again.',
-    });
-  }
-});
-
-app.patch('/api/newsletter/preferences', async (req: Request, res: Response) => {
-  const clientIp = req.ip || req.socket.remoteAddress || 'unknown-client';
-  if (!checkRateLimit(clientIp)) {
-    res.status(429).json({ error: 'Too many requests. Please wait a moment and try again.' });
-    return;
-  }
-
-  const { token, preferences } = req.body || {};
-  if (!token || typeof token !== 'string') {
-    res.status(401).json({ error: 'Subscription management token is required.' });
-    return;
-  }
-
-  const normalizedPrefs = normalizePreferences(preferences);
-  if (normalizedPrefs.length === 0) {
-    res.status(400).json({ error: 'Please select at least one opportunity preference.' });
-    return;
-  }
-
-  try {
-    const updated = await withStoreLock(async () => {
-      const store = await readSubscribersStore();
-      const match = findActiveByToken(store, token);
-      if (!match) return null;
-
-      match.preferences = normalizedPrefs;
-      match.updatedAt = new Date().toISOString();
-      store[match.email] = match;
-      await writeSubscribersStore(store);
-      return match;
-    });
-
-    if (!updated) {
-      res.status(404).json({ error: 'Active subscription not found. Please subscribe again.' });
-      return;
-    }
-
-    res.json({
-      success: true,
-      emailDeliveryConfigured: isEmailDeliveryConfigured(),
-      subscription: {
-        email: updated.email,
-        preferences: updated.preferences,
-        subscribedAt: updated.subscribedAt,
-        updatedAt: updated.updatedAt,
-      },
-      message: 'Opportunity preferences updated.',
-    });
-  } catch (err) {
-    console.error('[Newsletter] Preference update error:', err);
-    res.status(500).json({ error: 'Could not update preferences right now. Please try again.' });
-  }
-});
-
-app.post('/api/newsletter/unsubscribe', async (req: Request, res: Response) => {
-  const clientIp = req.ip || req.socket.remoteAddress || 'unknown-client';
-  if (!checkRateLimit(clientIp)) {
-    res.status(429).json({ error: 'Too many requests. Please wait a moment and try again.' });
-    return;
-  }
-
-  const { token } = req.body || {};
-  if (!token || typeof token !== 'string') {
-    res.status(400).json({ error: 'Subscription management token is required.' });
-    return;
-  }
-
-  try {
-    const unsubscribedRecord = await withStoreLock(async () => {
-      const store = await readSubscribersStore();
-      const match = findActiveByToken(store, token);
-      if (!match) return null;
-
-      const now = new Date().toISOString();
-      match.status = 'unsubscribed';
-      match.unsubscribedAt = now;
-      match.updatedAt = now;
-      match.manageTokenHash = '';
-      store[match.email] = match;
-      await writeSubscribersStore(store);
-      return match;
-    });
-
-    if (!unsubscribedRecord) {
-      res.status(404).json({ error: 'No active subscription found to unsubscribe.' });
-      return;
-    }
-
-    res.json({
-      success: true,
-      emailDeliveryConfigured: isEmailDeliveryConfigured(),
-      email: unsubscribedRecord.email,
-      message: 'You have been unsubscribed from opportunity updates.',
-    });
-  } catch (err) {
-    console.error('[Newsletter] Unsubscribe error:', err);
-    res.status(500).json({ error: 'Could not complete unsubscribe right now. Please try again.' });
-  }
-});
+  setInterval(() => {
+    void runScheduledCheck();
+  }, DEADLINE_SCHEDULER_INTERVAL_MS);
+}
 
 // -------------------------------------------------------------
 // Vite Middleware / Static Server
 // -------------------------------------------------------------
 async function startServer() {
+  if (subscriberStore.isConfigured()) {
+    const migrated = await subscriberStore.migrateLegacyJsonFileIfPresent().catch(() => 0);
+    if (migrated > 0) {
+      console.log(`[Alerts] Migrated ${migrated} legacy subscriber record(s) into Firestore.`);
+    }
+  } else {
+    console.warn(
+      '[Alerts] Firebase Admin Firestore is not configured yet (FIREBASE_SERVICE_ACCOUNT_JSON missing). Opportunity alert persistence awaits admin credentials.'
+    );
+  }
+
+  startOpportunityAlertScheduler();
+
   if (!isProduction) {
     const vite = await createViteServer({
       server: { middlewareMode: true },

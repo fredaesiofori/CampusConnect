@@ -482,6 +482,8 @@ export async function seedVerifiedOpportunitiesToFirestore(): Promise<number> {
   }
 }
 
+const DATA_REVISION_ISO = '2026-11-13T16:30:00.000Z';
+
 // 7. Fetch Verified Opportunities from Cloud Firestore (Read-Only for Students)
 export async function fetchVerifiedOpportunitiesFromFirestore(): Promise<OpportunityItem[]> {
   try {
@@ -496,15 +498,32 @@ export async function fetchVerifiedOpportunitiesFromFirestore(): Promise<Opportu
       return authenticOpportunities;
     }
 
+    const curatedById = new Map<string, OpportunityItem>(
+      authenticOpportunities.map((item) => [item.id, item])
+    );
+
     const firestoreItems: OpportunityItem[] = [];
     const seenIds = new Set<string>();
     const seenNames = new Set<string>();
 
     snapshot.forEach((docSnap) => {
-      const data = docSnap.data() as Partial<OpportunityItem>;
+      const data = docSnap.data() as Partial<OpportunityItem> & { lastSyncedAt?: string };
       if (data && data.isVerified && data.officialName) {
-        const normName = data.officialName.toLowerCase().trim();
         const docId = data.id || docSnap.id;
+        const curated = curatedById.get(docId);
+
+        // Prefer freshly audited curated data if the Firestore document predates the latest audit
+        if (curated && (!data.lastSyncedAt || data.lastSyncedAt < DATA_REVISION_ISO)) {
+          const normCuratedName = curated.officialName.toLowerCase().trim();
+          if (!seenIds.has(curated.id) && !seenNames.has(normCuratedName)) {
+            seenIds.add(curated.id);
+            seenNames.add(normCuratedName);
+            firestoreItems.push(curated);
+          }
+          return;
+        }
+
+        const normName = data.officialName.toLowerCase().trim();
         if (!seenIds.has(docId) && !seenNames.has(normName)) {
           seenIds.add(docId);
           seenNames.add(normName);
@@ -541,6 +560,8 @@ export async function fetchVerifiedOpportunitiesFromFirestore(): Promise<Opportu
             isVerified: true,
             verificationSource: data.verificationSource || 'Official Accreditation',
             verifiedAt: data.verifiedAt || 'Academic Year 2026/2027',
+            linkStatus: data.linkStatus,
+            reviewNote: data.reviewNote,
             logo: data.logo || {
               bg: '#1E293B',
               text: '#FFFFFF',
@@ -566,8 +587,8 @@ export async function fetchVerifiedOpportunitiesFromFirestore(): Promise<Opportu
               isRolling: true,
             },
             admissionsRequirements: data.admissionsRequirements || {
-              academic: 'High school diploma or bachelor degree depending on level.',
-              language: 'English proficiency or WAEC/WASSCE accepted.',
+              academic: 'Specific academic cutoffs vary by faculty — verify on official portal.',
+              language: 'Confirm language requirements on official admissions portal.',
               documents: ['Official Academic Transcripts', 'Identification / Passport'],
             },
             studyFields: data.studyFields || ['General Studies', 'Science & Technology'],
@@ -581,6 +602,16 @@ export async function fetchVerifiedOpportunitiesFromFirestore(): Promise<Opportu
         }
       }
     });
+
+    // Include any curated records not yet present in Firestore
+    for (const curated of authenticOpportunities) {
+      const normName = curated.officialName.toLowerCase().trim();
+      if (!seenIds.has(curated.id) && !seenNames.has(normName)) {
+        seenIds.add(curated.id);
+        seenNames.add(normName);
+        firestoreItems.push(curated);
+      }
+    }
 
     return firestoreItems.length > 0 ? firestoreItems : authenticOpportunities;
   } catch (error) {
@@ -801,13 +832,33 @@ export interface ScholarshipAlertRecord {
   subscribed: boolean;
   email: string;
   preferences: string[];
+  consentStatus?: 'pending' | 'confirmed' | 'unsubscribed';
+  frequency?: 'immediate' | 'weekly';
+  confirmedAt?: string;
+  unsubscribedAt?: string;
   updatedAt: string;
+}
+
+export async function getCurrentUserIdToken(): Promise<string | null> {
+  const fbUser = auth.currentUser;
+  if (!fbUser || fbUser.isAnonymous) {
+    return null;
+  }
+  try {
+    return await fbUser.getIdToken();
+  } catch {
+    return null;
+  }
 }
 
 export async function syncScholarshipAlertToFirestore(payload: {
   subscribed: boolean;
   email: string;
   preferences: string[];
+  consentStatus?: 'pending' | 'confirmed' | 'unsubscribed';
+  frequency?: 'immediate' | 'weekly';
+  confirmedAt?: string;
+  unsubscribedAt?: string;
 }): Promise<FirestoreMutationResult> {
   const fbUser = auth.currentUser;
   if (!fbUser || fbUser.isAnonymous) {
@@ -817,8 +868,19 @@ export async function syncScholarshipAlertToFirestore(payload: {
   const targetUid = fbUser.uid;
   const path = `users/${targetUid}`;
   const cleanEmail = payload.email.trim().toLowerCase().slice(0, 254);
-  const cleanPrefs = Array.from(new Set(payload.preferences)).slice(0, 10);
+  const cleanPrefs = Array.from(new Set(payload.preferences)).slice(0, 12);
   const updatedAt = new Date().toISOString();
+
+  const alertData: Record<string, unknown> = {
+    subscribed: Boolean(payload.subscribed),
+    email: cleanEmail,
+    preferences: cleanPrefs,
+    updatedAt,
+  };
+  if (payload.consentStatus) alertData.consentStatus = payload.consentStatus;
+  if (payload.frequency) alertData.frequency = payload.frequency;
+  if (payload.confirmedAt) alertData.confirmedAt = payload.confirmedAt;
+  if (payload.unsubscribedAt) alertData.unsubscribedAt = payload.unsubscribedAt;
 
   try {
     const userDocRef = doc(db, 'users', targetUid);
@@ -827,12 +889,7 @@ export async function syncScholarshipAlertToFirestore(payload: {
       {
         uid: targetUid,
         email: fbUser.email || cleanEmail,
-        scholarshipAlerts: {
-          subscribed: Boolean(payload.subscribed),
-          email: cleanEmail,
-          preferences: cleanPrefs,
-          updatedAt,
-        },
+        scholarshipAlerts: alertData,
         updatedAt,
       },
       { merge: true }
@@ -878,6 +935,18 @@ export async function fetchScholarshipAlertFromFirestore(): Promise<ScholarshipA
         subscribed: alerts.subscribed,
         email: alerts.email,
         preferences: alerts.preferences.filter((p: unknown): p is string => typeof p === 'string'),
+        consentStatus:
+          alerts.consentStatus === 'pending' ||
+          alerts.consentStatus === 'confirmed' ||
+          alerts.consentStatus === 'unsubscribed'
+            ? alerts.consentStatus
+            : undefined,
+        frequency:
+          alerts.frequency === 'immediate' || alerts.frequency === 'weekly'
+            ? alerts.frequency
+            : undefined,
+        confirmedAt: typeof alerts.confirmedAt === 'string' ? alerts.confirmedAt : undefined,
+        unsubscribedAt: typeof alerts.unsubscribedAt === 'string' ? alerts.unsubscribedAt : undefined,
         updatedAt: typeof alerts.updatedAt === 'string' ? alerts.updatedAt : '',
       };
     }
