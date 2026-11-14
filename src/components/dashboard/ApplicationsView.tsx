@@ -34,7 +34,13 @@ export interface ApplicationsViewProps {
   targetList: Record<string, TargetListItem>;
   onUpdateApplication: (
     opportunityId: string,
-    patch: { stage?: ActiveApplicationStage; completedTasks?: string[]; notes?: string }
+    patch: {
+      stage?: ActiveApplicationStage;
+      completedTasks?: string[];
+      notes?: string;
+      followUpDate?: string | null;
+      requirementSnapshot?: string;
+    }
   ) => Promise<void>;
   onStartApplication: (opportunityId: string, stage?: ActiveApplicationStage) => Promise<void>;
   onRemoveApplication: (opportunityId: string, title: string) => Promise<void>;
@@ -481,6 +487,47 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
                         </button>
                       );
                     })}
+                  </div>
+                </div>
+
+                {/* Optional Personal Follow-Up Date Reminder */}
+                <div className="p-3.5 rounded-xl bg-white border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="space-y-0.5">
+                    <label
+                      htmlFor={`followup-${app.opportunityId}`}
+                      className="text-xs font-bold text-[#10132D] block"
+                    >
+                      Personal Follow-Up Reminder Date (Optional)
+                    </label>
+                    <p className="text-[11px] text-slate-500">
+                      Set your own date to check portals, send transcripts, or follow up on this application.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <input
+                      id={`followup-${app.opportunityId}`}
+                      type="date"
+                      value={app.followUpDate || ''}
+                      onChange={(e) =>
+                        onUpdateApplication(app.opportunityId, {
+                          followUpDate: e.target.value ? e.target.value : null,
+                        })
+                      }
+                      className="h-9 px-3 rounded-xl border border-[#CBD5E1] bg-slate-50 focus:bg-white text-xs font-semibold text-[#10132D] focus:border-[#6846F5] focus:outline-none"
+                    />
+                    {app.followUpDate && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          onUpdateApplication(app.opportunityId, { followUpDate: null })
+                        }
+                        className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                        title="Clear follow-up reminder date"
+                        aria-label="Clear follow-up reminder date"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                   </div>
                 </div>
 

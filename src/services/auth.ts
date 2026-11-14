@@ -26,14 +26,44 @@ import {
 import { getCountryByName } from '../data/countries';
 import { User as FirebaseUser } from 'firebase/auth';
 
+export type ReminderIntervalDays = 30 | 14 | 7 | 3 | 1 | 0;
+
+export const ALL_REMINDER_INTERVALS: ReminderIntervalDays[] = [30, 14, 7, 3, 1, 0];
+
+export interface NotificationMatchingPreferences {
+  matchByNationality: boolean;
+  matchByDestination: boolean;
+  matchByDegree: boolean;
+  matchByFieldOfStudy: boolean;
+  matchByFunding: boolean;
+  matchByFeeWaiver: boolean;
+  matchByTestOptional: boolean;
+}
+
+export const DEFAULT_MATCHING_PREFERENCES: NotificationMatchingPreferences = {
+  matchByNationality: true,
+  matchByDestination: true,
+  matchByDegree: true,
+  matchByFieldOfStudy: true,
+  matchByFunding: true,
+  matchByFeeWaiver: true,
+  matchByTestOptional: true,
+};
+
 export interface NotificationPreferences {
   deadlineAlerts: boolean; // Scholarship and application deadlines
-  savedUpdatesAlerts: boolean; // Saved university and scholarship updates
-  trackerReminders: boolean; // Application tracker reminders
-  admissionUpdates: boolean; // Important university admission updates
+  savedUpdatesAlerts: boolean; // Saved university and scholarship requirement updates
+  trackerReminders: boolean; // Application progress, checklist & follow-up reminders
+  admissionUpdates: boolean; // Personalized new/updated opportunities matching profile
+  nonUrgentUpdates?: boolean; // Weekly digests and general guidance updates
   scholarshipAlerts?: boolean;
   waiverAlerts?: boolean;
   weeklyDigest?: boolean;
+  reminderIntervals?: ReminderIntervalDays[];
+  matchingPreferences?: NotificationMatchingPreferences;
+  inAppEnabled?: boolean;
+  emailNotificationsEnabled?: boolean;
+  pushNotificationsEnabled?: boolean;
 }
 
 export const DEFAULT_NOTIFICATION_PREFERENCES: NotificationPreferences = {
@@ -41,10 +71,55 @@ export const DEFAULT_NOTIFICATION_PREFERENCES: NotificationPreferences = {
   savedUpdatesAlerts: true,
   trackerReminders: true,
   admissionUpdates: true,
+  nonUrgentUpdates: true,
   scholarshipAlerts: true,
   waiverAlerts: true,
   weeklyDigest: false,
+  reminderIntervals: [30, 14, 7, 3, 1, 0],
+  matchingPreferences: { ...DEFAULT_MATCHING_PREFERENCES },
+  inAppEnabled: true,
+  emailNotificationsEnabled: false,
+  pushNotificationsEnabled: false,
 };
+
+export function normalizeNotificationPreferences(
+  raw?: Partial<NotificationPreferences> | null
+): NotificationPreferences {
+  const validIntervals = new Set<ReminderIntervalDays>(ALL_REMINDER_INTERVALS);
+  const rawIntervals = Array.isArray(raw?.reminderIntervals)
+    ? Array.from(
+        new Set(
+          raw!.reminderIntervals.filter(
+            (n): n is ReminderIntervalDays =>
+              typeof n === 'number' && validIntervals.has(n as ReminderIntervalDays)
+          )
+        )
+      ).sort((a, b) => b - a)
+    : [...ALL_REMINDER_INTERVALS];
+
+  return {
+    deadlineAlerts: raw?.deadlineAlerts ?? DEFAULT_NOTIFICATION_PREFERENCES.deadlineAlerts,
+    savedUpdatesAlerts:
+      raw?.savedUpdatesAlerts ?? raw?.scholarshipAlerts ?? DEFAULT_NOTIFICATION_PREFERENCES.savedUpdatesAlerts,
+    trackerReminders: raw?.trackerReminders ?? DEFAULT_NOTIFICATION_PREFERENCES.trackerReminders,
+    admissionUpdates:
+      raw?.admissionUpdates ?? raw?.waiverAlerts ?? DEFAULT_NOTIFICATION_PREFERENCES.admissionUpdates,
+    nonUrgentUpdates: raw?.nonUrgentUpdates ?? DEFAULT_NOTIFICATION_PREFERENCES.nonUrgentUpdates,
+    scholarshipAlerts:
+      raw?.scholarshipAlerts ?? raw?.savedUpdatesAlerts ?? DEFAULT_NOTIFICATION_PREFERENCES.scholarshipAlerts,
+    waiverAlerts:
+      raw?.waiverAlerts ?? raw?.admissionUpdates ?? DEFAULT_NOTIFICATION_PREFERENCES.waiverAlerts,
+    weeklyDigest: raw?.weeklyDigest ?? DEFAULT_NOTIFICATION_PREFERENCES.weeklyDigest,
+    reminderIntervals: raw?.reminderIntervals !== undefined ? rawIntervals : [...ALL_REMINDER_INTERVALS],
+    matchingPreferences: {
+      ...DEFAULT_MATCHING_PREFERENCES,
+      ...(raw?.matchingPreferences || {}),
+    },
+    inAppEnabled: raw?.inAppEnabled ?? true,
+    emailNotificationsEnabled: raw?.emailNotificationsEnabled ?? false,
+    pushNotificationsEnabled: raw?.pushNotificationsEnabled ?? false,
+  };
+}
 
 export interface StudentProfile {
   nationality: string;
@@ -83,6 +158,8 @@ export interface ActiveApplicationItem {
   stage: ActiveApplicationStage;
   completedTasks: string[];
   notes?: string;
+  followUpDate?: string;
+  requirementSnapshot?: string;
   startedAt: string;
   updatedAt: string;
 }
@@ -264,6 +341,8 @@ function hydrateActiveApplications(
           ? val.completedTasks.filter((t: unknown): t is string => typeof t === 'string')
           : [],
         notes: typeof val.notes === 'string' ? val.notes : undefined,
+        followUpDate: typeof val.followUpDate === 'string' && val.followUpDate.trim() ? val.followUpDate.trim() : undefined,
+        requirementSnapshot: typeof val.requirementSnapshot === 'string' ? val.requirementSnapshot : undefined,
         startedAt: typeof val.startedAt === 'string' ? val.startedAt : new Date().toISOString(),
         updatedAt: typeof val.updatedAt === 'string' ? val.updatedAt : new Date().toISOString(),
       };
@@ -483,10 +562,7 @@ export const authService = {
       resolvedFullName = firestoreData.fullName || fbUser.displayName || 'Scholar';
       resolvedProfile = {
         ...firestoreData.profile,
-        notificationPreferences: {
-          ...DEFAULT_NOTIFICATION_PREFERENCES,
-          ...(firestoreData.profile.notificationPreferences || {}),
-        },
+        notificationPreferences: normalizeNotificationPreferences(firestoreData.profile.notificationPreferences),
       };
       resolvedSaved = Array.from(new Set(firestoreData.savedOpportunities || []));
       resolvedTracker = firestoreData.applicationTracker || {};
@@ -860,11 +936,10 @@ export const authService = {
         onboardingCompleted: false,
       }),
       ...(firestoreData.profile || {}),
-      notificationPreferences: {
-        ...DEFAULT_NOTIFICATION_PREFERENCES,
+      notificationPreferences: normalizeNotificationPreferences({
         ...(currentUser.profile?.notificationPreferences || {}),
         ...(firestoreData.profile?.notificationPreferences || {}),
-      },
+      }),
     };
 
     const hydrated: User = {
@@ -1140,7 +1215,13 @@ export const authService = {
 
   async updateActiveApplication(
     opportunityId: string,
-    patch: { stage?: ActiveApplicationStage; completedTasks?: string[]; notes?: string }
+    patch: {
+      stage?: ActiveApplicationStage;
+      completedTasks?: string[];
+      notes?: string;
+      followUpDate?: string | null;
+      requirementSnapshot?: string;
+    }
   ): Promise<{ success: boolean; persistedToCloud: boolean; user?: User; error?: string }> {
     const currentUser = this.getCurrentUser();
     if (!currentUser) {
@@ -1151,6 +1232,18 @@ export const authService = {
     const prevTracker = { ...(currentUser.applicationTracker || {}) };
     const existing = prevApps[opportunityId];
     const now = new Date().toISOString();
+
+    const resolvedFollowUp =
+      patch.followUpDate === null
+        ? undefined
+        : patch.followUpDate !== undefined
+        ? patch.followUpDate.trim() || undefined
+        : existing?.followUpDate;
+
+    const resolvedSnapshot =
+      patch.requirementSnapshot !== undefined
+        ? patch.requirementSnapshot
+        : existing?.requirementSnapshot;
 
     const nextStage: ActiveApplicationStage = patch.stage || existing?.stage || 'preparing';
     const nextItem: ActiveApplicationItem = {
@@ -1165,6 +1258,8 @@ export const authService = {
         : existing?.notes !== undefined
         ? { notes: existing.notes }
         : {}),
+      ...(resolvedFollowUp ? { followUpDate: resolvedFollowUp } : {}),
+      ...(resolvedSnapshot ? { requirementSnapshot: resolvedSnapshot } : {}),
       startedAt: existing?.startedAt || now,
       updatedAt: now,
     };
@@ -1451,10 +1546,14 @@ export const authService = {
       onboardingCompleted: true,
     };
 
-    const existingPrefs = currentProfile.notificationPreferences || DEFAULT_NOTIFICATION_PREFERENCES;
-    const mergedPreferences: NotificationPreferences = {
+    const existingPrefs = normalizeNotificationPreferences(currentProfile.notificationPreferences);
+    const mergedPreferences: NotificationPreferences = normalizeNotificationPreferences({
       ...existingPrefs,
       ...preferences,
+      matchingPreferences: {
+        ...(existingPrefs.matchingPreferences || DEFAULT_MATCHING_PREFERENCES),
+        ...(preferences.matchingPreferences || {}),
+      },
       scholarshipAlerts:
         preferences.savedUpdatesAlerts ??
         preferences.scholarshipAlerts ??
@@ -1465,7 +1564,7 @@ export const authService = {
         preferences.waiverAlerts ??
         existingPrefs.waiverAlerts ??
         true,
-    };
+    });
 
     const updatedProfile: StudentProfile = {
       ...currentProfile,
@@ -1657,7 +1756,7 @@ export const authService = {
           checkCurrentUserIsAdmin(false),
         ]);
 
-        const profile: StudentProfile = firestoreData?.profile || {
+        const rawProfile: StudentProfile = firestoreData?.profile || {
           nationality: 'Ghanaian',
           countryOfResidence: 'Ghana',
           preferredDestinations: ['Ghana', 'United States', 'United Kingdom', 'Canada'],
@@ -1666,6 +1765,10 @@ export const authService = {
           fieldOfStudy: 'Computer Science & Engineering',
           graduationYear: '2026',
           onboardingCompleted: false,
+        };
+        const profile: StudentProfile = {
+          ...rawProfile,
+          notificationPreferences: normalizeNotificationPreferences(rawProfile.notificationPreferences),
         };
 
         const syncedUser: User = {

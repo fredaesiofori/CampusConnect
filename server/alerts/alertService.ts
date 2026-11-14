@@ -83,8 +83,8 @@ export class AlertNotificationService {
     providerStatus: EmailProviderStatus;
     envStatus: {
       RESEND_API_KEY: boolean;
-      SENDGRID_API_KEY: boolean;
       EMAIL_FROM: boolean;
+      EMAIL_TEST_MODE: string;
       FIREBASE_SERVICE_ACCOUNT_JSON: boolean;
       ALERT_CRON_SECRET: boolean;
       APP_URL: boolean;
@@ -100,8 +100,8 @@ export class AlertNotificationService {
       providerStatus,
       envStatus: {
         RESEND_API_KEY: Boolean(this.env.RESEND_API_KEY?.trim()),
-        SENDGRID_API_KEY: Boolean(this.env.SENDGRID_API_KEY?.trim()),
         EMAIL_FROM: Boolean(this.env.EMAIL_FROM?.trim()),
+        EMAIL_TEST_MODE: providerStatus.testingMode ? 'true' : 'false',
         FIREBASE_SERVICE_ACCOUNT_JSON: Boolean(
           this.env.FIREBASE_SERVICE_ACCOUNT_JSON?.trim() ||
             this.env.FIREBASE_SERVICE_ACCOUNT?.trim() ||

@@ -59,10 +59,17 @@ export interface OpportunitySubscriberRecord {
 export interface AlertDeliveryLogRecord {
   id: string;
   emailHash: string;
-  alertType: 'confirmation' | 'welcome' | 'preferences-updated' | 'digest' | 'deadline-reminder';
+  alertType:
+    | 'confirmation'
+    | 'welcome'
+    | 'preferences-updated'
+    | 'digest'
+    | 'deadline-reminder'
+    | 'personalized-opportunity'
+    | 'application-checklist';
   opportunityIds: string[];
   dedupeKey?: string;
-  provider: 'resend' | 'sendgrid' | 'none';
+  provider: 'resend' | 'none';
   providerMessageId?: string;
   status: 'sent' | 'failed';
   errorMessage?: string;
@@ -71,7 +78,7 @@ export interface AlertDeliveryLogRecord {
 
 export interface EmailProviderStatus {
   configured: boolean;
-  provider: 'resend' | 'sendgrid' | null;
+  provider: 'resend' | null;
   fromAddressConfigured: boolean;
   senderIdentity: string | null;
   testingMode: boolean;
@@ -80,7 +87,7 @@ export interface EmailProviderStatus {
 
 export interface EmailSendResult {
   delivered: boolean;
-  provider: 'resend' | 'sendgrid' | 'none';
+  provider: 'resend' | 'none';
   messageId?: string;
   statusCode?: number;
   rateLimited?: boolean;

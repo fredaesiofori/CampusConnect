@@ -316,3 +316,156 @@ export function buildDeadlineReminderEmail(params: {
 
   return { subject, html, text: textLines.join('\n') };
 }
+
+export function buildPersonalizedOpportunityEmail(params: {
+  studentName?: string;
+  matchedReasons?: string[];
+  opportunities: MatchedOpportunityCard[];
+  manageUrl: string;
+  unsubscribeUrl: string;
+}): EmailTemplateOutput {
+  const count = params.opportunities.length;
+  const first = params.opportunities[0];
+  const subject =
+    count === 1 && first
+      ? `New Opportunity Match: ${first.officialName} (${first.country})`
+      : `${count} Verified Educational Opportunities Matching Your Profile`;
+
+  const reasonsHtml =
+    params.matchedReasons && params.matchedReasons.length > 0
+      ? `<div style="background-color:#F0EDFF;border:1px solid #DDD6FE;border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#4338CA;">
+          <strong>Matched to Your Profile:</strong> ${escapeHtml(params.matchedReasons.join(' · '))}
+        </div>`
+      : '';
+
+  const bodyHtml = `
+    ${reasonsHtml}
+    ${renderOpportunityCardsHtml(params.opportunities)}`;
+
+  const greetingName = params.studentName?.trim() ? `Hi ${params.studentName.trim()}, ` : '';
+  const html = wrapCampusConnectLayout({
+    preheader: `${count} verified program${count === 1 ? '' : 's'} matching your Campus Connect study profile and preferences.`,
+    eyebrow: 'Personalized Match',
+    heading: 'New & Updated Opportunities Matching Your Profile',
+    intro: `${greetingName}Campus Connect found ${count} verified educational opportunit${
+      count === 1 ? 'y' : 'ies'
+    } aligned with your preferred study destinations, degree level, funding, or waiver goals.`,
+    bodyHtml,
+    manageUrl: params.manageUrl,
+    unsubscribeUrl: params.unsubscribeUrl,
+  });
+
+  const textLines = [
+    'Campus Connect — Personalized Opportunity Matches',
+    '',
+    ...(params.matchedReasons?.length
+      ? [`Matched criteria: ${params.matchedReasons.join(', ')}`, '']
+      : []),
+    ...params.opportunities.flatMap((o) => [
+      `* ${o.officialName} (${o.country})`,
+      `  Funding: ${o.fundingBadge} | Fee: ${o.feeBadge} | Tests: ${o.testBadge}`,
+      `  Deadline: ${o.deadlineDisplay}`,
+      `  Official Portal: ${o.officialUrl}`,
+      '',
+    ]),
+    `Update preferences: ${params.manageUrl}`,
+    `Unsubscribe: ${params.unsubscribeUrl}`,
+  ];
+
+  return { subject, html, text: textLines.join('\n') };
+}
+
+export function buildApplicationChecklistReminderEmail(params: {
+  studentName?: string;
+  applications: Array<{
+    officialName: string;
+    country: string;
+    stage: string;
+    completedCount: number;
+    totalCount: number;
+    pendingTasks: string[];
+    deadlineDisplay: string;
+    followUpDate?: string;
+    officialUrl: string;
+  }>;
+  manageUrl: string;
+  unsubscribeUrl: string;
+}): EmailTemplateOutput {
+  const count = params.applications.length;
+  const first = params.applications[0];
+  const subject =
+    count === 1 && first
+      ? `Application Checklist Reminder: ${first.officialName} (${first.pendingTasks.length} tasks remaining)`
+      : `Application Progress Reminder: ${count} Active Applications Have Pending Tasks`;
+
+  const cardsHtml = params.applications
+    .map((app) => {
+      const tasksHtml = app.pendingTasks
+        .slice(0, 5)
+        .map((t) => `<li style="margin-bottom:4px;">${escapeHtml(t)}</li>`)
+        .join('');
+      const followUpRow = app.followUpDate
+        ? `<div style="font-size:12px;color:#4338CA;font-weight:600;margin-top:6px;">Scheduled Personal Follow-Up: ${escapeHtml(app.followUpDate)}</div>`
+        : '';
+
+      return `
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:14px;border:1px solid #E2E8F0;border-radius:12px;background-color:#F8FAFC;">
+        <tr>
+          <td style="padding:16px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#6846F5;margin-bottom:4px;">
+              ${escapeHtml(app.country)} &bull; Stage: ${escapeHtml(app.stage)}
+            </div>
+            <div style="font-size:16px;font-weight:800;color:#10132D;line-height:1.35;margin-bottom:6px;">
+              ${escapeHtml(app.officialName)}
+            </div>
+            <div style="font-size:13px;color:#334155;margin-bottom:8px;">
+              <strong>Checklist Progress:</strong> ${app.completedCount}/${app.totalCount} completed &nbsp;|&nbsp;
+              <strong>Deadline:</strong> ${escapeHtml(app.deadlineDisplay)}
+            </div>
+            ${followUpRow}
+            <div style="font-size:12px;font-weight:700;color:#10132D;margin-top:10px;margin-bottom:4px;">
+              Remaining Tasks:
+            </div>
+            <ul style="margin:0 0 12px 18px;padding:0;font-size:13px;color:#475569;line-height:1.5;">
+              ${tasksHtml}
+            </ul>
+            <div>
+              <a href="${escapeHtml(app.officialUrl)}" target="_blank" rel="noopener noreferrer" class="cc-btn" style="display:inline-block;padding:10px 16px;background-color:#6846F5;color:#FFFFFF;font-size:13px;font-weight:700;text-decoration:none;border-radius:8px;">
+                Review Official Portal &rarr;
+              </a>
+            </div>
+          </td>
+        </tr>
+      </table>`;
+    })
+    .join('');
+
+  const greetingName = params.studentName?.trim() ? `Hi ${params.studentName.trim()}, ` : '';
+  const html = wrapCampusConnectLayout({
+    preheader: `${count} active application${count === 1 ? '' : 's'} with pending checklist items or upcoming follow-up dates.`,
+    eyebrow: 'Application Checklist',
+    heading: 'Keep Your Active Applications on Track',
+    intro: `${greetingName}Here is a summary of your active Campus Connect applications that still have pending document tasks or upcoming follow-up reminders.`,
+    bodyHtml: cardsHtml,
+    manageUrl: params.manageUrl,
+    unsubscribeUrl: params.unsubscribeUrl,
+  });
+
+  const textLines = [
+    'Campus Connect — Application Checklist Reminder',
+    '',
+    ...params.applications.flatMap((app) => [
+      `* ${app.officialName} (${app.country}) — ${app.completedCount}/${app.totalCount} completed`,
+      `  Deadline: ${app.deadlineDisplay}`,
+      ...(app.followUpDate ? [`  Follow-up Date: ${app.followUpDate}`] : []),
+      `  Remaining: ${app.pendingTasks.join('; ')}`,
+      `  Portal: ${app.officialUrl}`,
+      '',
+    ]),
+    `Update preferences: ${params.manageUrl}`,
+    `Unsubscribe: ${params.unsubscribeUrl}`,
+  ];
+
+  return { subject, html, text: textLines.join('\n') };
+}
+

@@ -851,8 +851,8 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
                       placeholder="Enter your student email..."
                       autoComplete="email"
                       required
-                      disabled={status === 'loading'}
-                      className={`w-full pl-10 pr-4 py-3 rounded-xl bg-white text-slate-900 placeholder-slate-400 text-sm sm:text-base font-medium border shadow-inner transition-all outline-none focus:ring-2 ${
+                      disabled={status === 'loading' || !firestoreConfigured}
+                      className={`w-full pl-10 pr-4 py-3 rounded-xl bg-white text-slate-900 placeholder-slate-400 text-sm sm:text-base font-medium border shadow-inner transition-all outline-none focus:ring-2 disabled:opacity-60 disabled:cursor-not-allowed ${
                         status === 'error'
                           ? 'border-red-400 focus:ring-red-400'
                           : 'border-slate-200 focus:border-[#6846F5] focus:ring-[#6846F5]/40'
@@ -864,8 +864,8 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
                     type="submit"
                     variant="primary"
                     size="md"
-                    disabled={status === 'loading'}
-                    className="sm:w-auto w-full py-3 px-5 sm:px-6 bg-[#6846F5] hover:bg-[#5b3adb] text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+                    disabled={status === 'loading' || !firestoreConfigured}
+                    className="sm:w-auto w-full py-3 px-5 sm:px-6 bg-[#6846F5] hover:bg-[#5b3adb] text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {status === 'loading' ? (
                       <>
@@ -908,7 +908,7 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
                 {(!emailDeliveryConfigured || !firestoreConfigured) && (
                   <p className="text-[11px] text-[#94A3B8] text-center sm:text-left pt-0.5">
                     {!firestoreConfigured
-                      ? 'Persistent alert storage is awaiting server configuration.'
+                      ? 'Email opportunity alerts are temporarily disabled until server-side Firebase credentials are configured for deployment.'
                       : 'Email delivery is not yet configured, so confirmation emails are not active yet.'}
                   </p>
                 )}

@@ -251,7 +251,7 @@
         },
         "provider": {
           "type": "string",
-          "description": "Email delivery provider used (resend or sendgrid)"
+          "description": "Email delivery provider used (resend)"
         },
         "providerMessageId": {
           "type": "string",
@@ -271,6 +271,140 @@
         }
       },
       "required": ["id", "emailHash", "alertType", "status", "createdAt"]
+    },
+    "StudentNotification": {
+      "title": "StudentNotification",
+      "description": "Private in-app smart notification or reminder record owned by an authenticated student.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Deterministic or unique notification identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Authentication user ID"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["deadline", "opportunity", "application", "requirement", "system"],
+          "description": "Notification category"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["urgent", "high", "normal", "low"],
+          "description": "Notification urgency priority"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 180,
+          "description": "Short notification headline"
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 600,
+          "description": "Notification detail text"
+        },
+        "read": {
+          "type": "boolean",
+          "description": "Whether the student has read this notification"
+        },
+        "dedupeKey": {
+          "type": "string",
+          "maxLength": 160,
+          "description": "Idempotency key preventing duplicate notifications"
+        },
+        "opportunityId": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Associated verified opportunity ID for direct navigation"
+        },
+        "opportunityName": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Associated university or scholarship name"
+        },
+        "actionTab": {
+          "type": "string",
+          "enum": ["overview", "universities", "scholarships", "tracker", "profile", "resources", "settings"],
+          "description": "Target dashboard tab upon click"
+        },
+        "actionSection": {
+          "type": "string",
+          "enum": ["home", "saved", "applications", "notifications"],
+          "description": "Target dashboard sub-section upon click"
+        },
+        "deadlineDate": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "Associated verified deadline or follow-up ISO/YYYY-MM-DD date"
+        },
+        "daysRemaining": {
+          "type": "number",
+          "description": "Calendar days remaining until deadline when generated"
+        },
+        "sourceVerified": {
+          "type": "boolean",
+          "description": "Whether the underlying record was verified at generation time"
+        },
+        "createdAt": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "ISO timestamp of creation"
+        },
+        "updatedAt": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "ISO timestamp of last update (e.g. mark read)"
+        }
+      },
+      "required": ["id", "userId", "category", "priority", "title", "message", "read", "createdAt", "updatedAt"]
+    },
+    "StudentPushToken": {
+      "title": "StudentPushToken",
+      "description": "Private browser Web Push / FCM registration record owned by an authenticated student.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Deterministic device token identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Authentication user ID"
+        },
+        "token": {
+          "type": "string",
+          "maxLength": 1024,
+          "description": "FCM browser registration token"
+        },
+        "platform": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "Browser or OS platform label"
+        },
+        "permissionState": {
+          "type": "string",
+          "enum": ["granted", "denied", "default"],
+          "description": "Browser Notification.permission state"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether push token is active"
+        },
+        "createdAt": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "ISO timestamp of registration"
+        },
+        "updatedAt": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "ISO timestamp of last refresh"
+        }
+      },
+      "required": ["id", "userId", "token", "platform", "permissionState", "enabled", "createdAt", "updatedAt"]
     }
   },
   "firestore": {
@@ -291,6 +425,18 @@
         "$ref": "#/entities/CovaConversation"
       },
       "description": "Private COVA AI assistant conversation threads owned by the authenticated student."
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": {
+        "$ref": "#/entities/StudentNotification"
+      },
+      "description": "Private smart notifications and deadline reminders owned by the authenticated student."
+    },
+    "/users/{userId}/pushTokens/{tokenId}": {
+      "schema": {
+        "$ref": "#/entities/StudentPushToken"
+      },
+      "description": "Private browser push / FCM registration records owned by the authenticated student."
     },
     "/opportunitySubscribers/{subscriberId}": {
       "schema": {

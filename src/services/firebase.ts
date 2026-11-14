@@ -30,9 +30,11 @@ import {
   getDocFromServer,
   setDoc,
   getDoc,
+  updateDoc,
   deleteDoc,
   collection,
   getDocs,
+  onSnapshot,
   writeBatch,
   query,
   where,
@@ -1168,5 +1170,399 @@ export async function clearAllCovaConversationsInFirestore(userId: string): Prom
     return false;
   }
 }
+
+// 13. Student Smart Notifications & Browser Push Token Persistence (Private per Student)
+export type StudentNotificationCategory =
+  | 'deadline'
+  | 'opportunity'
+  | 'application'
+  | 'requirement'
+  | 'system';
+
+export type StudentNotificationPriority = 'urgent' | 'high' | 'normal' | 'low';
+
+export interface StudentNotificationRecord {
+  id: string;
+  userId: string;
+  category: StudentNotificationCategory;
+  priority: StudentNotificationPriority;
+  title: string;
+  message: string;
+  read: boolean;
+  createdAt: string;
+  updatedAt: string;
+  dedupeKey?: string;
+  opportunityId?: string;
+  opportunityName?: string;
+  actionTab?:
+    | 'overview'
+    | 'universities'
+    | 'scholarships'
+    | 'tracker'
+    | 'profile'
+    | 'resources'
+    | 'settings';
+  actionSection?: 'home' | 'saved' | 'applications' | 'notifications';
+  deadlineDate?: string;
+  daysRemaining?: number;
+  sourceVerified?: boolean;
+}
+
+export interface StudentPushTokenRecord {
+  id: string;
+  userId: string;
+  token: string;
+  platform: string;
+  permissionState: 'granted' | 'denied' | 'default';
+  enabled: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+function sanitizeNotificationForFirestore(
+  userId: string,
+  n: StudentNotificationRecord
+): StudentNotificationRecord | null {
+  if (!isValidFirestoreDocId(userId) || !isValidFirestoreDocId(n.id)) {
+    return null;
+  }
+  const clean: StudentNotificationRecord = {
+    id: n.id,
+    userId,
+    category: n.category,
+    priority: n.priority,
+    title: String(n.title || 'Campus Connect Update').trim().slice(0, 180) || 'Campus Connect Update',
+    message: String(n.message || '').trim().slice(0, 600) || 'Open to view details.',
+    read: Boolean(n.read),
+    createdAt: String(n.createdAt || new Date().toISOString()).slice(0, 64),
+    updatedAt: String(n.updatedAt || n.createdAt || new Date().toISOString()).slice(0, 64),
+  };
+  if (n.dedupeKey) clean.dedupeKey = String(n.dedupeKey).slice(0, 160);
+  if (n.opportunityId) clean.opportunityId = String(n.opportunityId).slice(0, 128);
+  if (n.opportunityName) clean.opportunityName = String(n.opportunityName).slice(0, 200);
+  if (n.actionTab) clean.actionTab = n.actionTab;
+  if (n.actionSection) clean.actionSection = n.actionSection;
+  if (n.deadlineDate) clean.deadlineDate = String(n.deadlineDate).slice(0, 64);
+  if (typeof n.daysRemaining === 'number' && Number.isFinite(n.daysRemaining)) {
+    clean.daysRemaining = n.daysRemaining;
+  }
+  if (typeof n.sourceVerified === 'boolean') clean.sourceVerified = n.sourceVerified;
+  return clean;
+}
+
+export function subscribeToUserNotifications(
+  userId: string,
+  onUpdate: (items: StudentNotificationRecord[]) => void,
+  onError?: (err: unknown) => void
+): () => void {
+  const fbUser = auth.currentUser;
+  if (!fbUser || fbUser.isAnonymous || !userId || fbUser.uid !== userId || !isValidFirestoreDocId(userId)) {
+    onUpdate([]);
+    return () => {};
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}/notifications`;
+  const colRef = collection(db, 'users', targetUid, 'notifications');
+  const q = query(colRef, where('userId', '==', targetUid));
+
+  return onSnapshot(
+    q,
+    (snapshot) => {
+      const items: StudentNotificationRecord[] = [];
+      snapshot.forEach((docSnap) => {
+        const data = docSnap.data() as Partial<StudentNotificationRecord>;
+        if (data && data.id && data.userId === targetUid && data.title && data.message) {
+          items.push({
+            id: data.id,
+            userId: data.userId,
+            category: data.category || 'system',
+            priority: data.priority || 'normal',
+            title: data.title,
+            message: data.message,
+            read: Boolean(data.read),
+            createdAt: data.createdAt || new Date().toISOString(),
+            updatedAt: data.updatedAt || data.createdAt || new Date().toISOString(),
+            dedupeKey: data.dedupeKey,
+            opportunityId: data.opportunityId,
+            opportunityName: data.opportunityName,
+            actionTab: data.actionTab,
+            actionSection: data.actionSection,
+            deadlineDate: data.deadlineDate,
+            daysRemaining: data.daysRemaining,
+            sourceVerified: data.sourceVerified,
+          });
+        }
+      });
+      items.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      onUpdate(items.slice(0, 100));
+    },
+    (error) => {
+      handleFirestoreError(error, OperationType.LIST, path);
+      onError?.(error);
+    }
+  );
+}
+
+export async function fetchUserNotificationsFromFirestore(
+  userId: string
+): Promise<StudentNotificationRecord[]> {
+  const fbUser = auth.currentUser;
+  if (!fbUser || fbUser.isAnonymous || !userId || fbUser.uid !== userId || !isValidFirestoreDocId(userId)) {
+    return [];
+  }
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}/notifications`;
+  try {
+    const colRef = collection(db, 'users', targetUid, 'notifications');
+    const q = query(colRef, where('userId', '==', targetUid));
+    const snapshot = await getDocs(q);
+    const items: StudentNotificationRecord[] = [];
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data() as Partial<StudentNotificationRecord>;
+      if (data && data.id && data.userId === targetUid && data.title && data.message) {
+        items.push(data as StudentNotificationRecord);
+      }
+    });
+    items.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return items.slice(0, 100);
+  } catch (error) {
+    handleFirestoreError(error, OperationType.LIST, path);
+    return [];
+  }
+}
+
+export async function batchCreateUserNotificationsInFirestore(
+  userId: string,
+  notifications: StudentNotificationRecord[]
+): Promise<number> {
+  const fbUser = auth.currentUser;
+  if (
+    !fbUser ||
+    fbUser.isAnonymous ||
+    !userId ||
+    fbUser.uid !== userId ||
+    !isValidFirestoreDocId(userId) ||
+    notifications.length === 0
+  ) {
+    return 0;
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}/notifications`;
+  const validItems = notifications
+    .map((n) => sanitizeNotificationForFirestore(targetUid, n))
+    .filter((n): n is StudentNotificationRecord => Boolean(n));
+
+  if (validItems.length === 0) return 0;
+
+  let written = 0;
+  try {
+    for (let i = 0; i < validItems.length; i += 50) {
+      const chunk = validItems.slice(i, i + 50);
+      const batch = writeBatch(db);
+      for (const item of chunk) {
+        batch.set(doc(db, 'users', targetUid, 'notifications', item.id), item);
+      }
+      await batch.commit();
+      written += chunk.length;
+    }
+    return written;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+    return written;
+  }
+}
+
+export async function markUserNotificationReadInFirestore(
+  userId: string,
+  notificationId: string,
+  read: boolean
+): Promise<boolean> {
+  const fbUser = auth.currentUser;
+  if (
+    !fbUser ||
+    fbUser.isAnonymous ||
+    !userId ||
+    fbUser.uid !== userId ||
+    !isValidFirestoreDocId(userId) ||
+    !isValidFirestoreDocId(notificationId)
+  ) {
+    return false;
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}/notifications/${notificationId}`;
+  try {
+    await updateDoc(doc(db, 'users', targetUid, 'notifications', notificationId), {
+      read: Boolean(read),
+      updatedAt: new Date().toISOString(),
+    });
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.UPDATE, path);
+    return false;
+  }
+}
+
+export async function markAllUserNotificationsReadInFirestore(
+  userId: string,
+  notificationIds: string[]
+): Promise<boolean> {
+  const fbUser = auth.currentUser;
+  if (!fbUser || fbUser.isAnonymous || !userId || fbUser.uid !== userId || !isValidFirestoreDocId(userId)) {
+    return false;
+  }
+
+  const targetUid = fbUser.uid;
+  const validIds = notificationIds.filter(isValidFirestoreDocId);
+  if (validIds.length === 0) return true;
+
+  const path = `users/${targetUid}/notifications`;
+  const updatedAt = new Date().toISOString();
+  try {
+    for (let i = 0; i < validIds.length; i += 50) {
+      const chunk = validIds.slice(i, i + 50);
+      const batch = writeBatch(db);
+      for (const id of chunk) {
+        batch.update(doc(db, 'users', targetUid, 'notifications', id), {
+          read: true,
+          updatedAt,
+        });
+      }
+      await batch.commit();
+    }
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.UPDATE, path);
+    return false;
+  }
+}
+
+export async function deleteUserNotificationInFirestore(
+  userId: string,
+  notificationId: string
+): Promise<boolean> {
+  const fbUser = auth.currentUser;
+  if (
+    !fbUser ||
+    fbUser.isAnonymous ||
+    !userId ||
+    fbUser.uid !== userId ||
+    !isValidFirestoreDocId(userId) ||
+    !isValidFirestoreDocId(notificationId)
+  ) {
+    return false;
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}/notifications/${notificationId}`;
+  try {
+    await deleteDoc(doc(db, 'users', targetUid, 'notifications', notificationId));
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+    return false;
+  }
+}
+
+export async function clearAllUserNotificationsInFirestore(
+  userId: string,
+  notificationIds?: string[]
+): Promise<boolean> {
+  const fbUser = auth.currentUser;
+  if (!fbUser || fbUser.isAnonymous || !userId || fbUser.uid !== userId || !isValidFirestoreDocId(userId)) {
+    return false;
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}/notifications`;
+  try {
+    let targetIds = (notificationIds || []).filter(isValidFirestoreDocId);
+    if (targetIds.length === 0) {
+      const colRef = collection(db, 'users', targetUid, 'notifications');
+      const snapshot = await getDocs(query(colRef, where('userId', '==', targetUid)));
+      targetIds = snapshot.docs.map((d) => d.id).filter(isValidFirestoreDocId);
+    }
+    if (targetIds.length === 0) return true;
+
+    for (let i = 0; i < targetIds.length; i += 50) {
+      const chunk = targetIds.slice(i, i + 50);
+      const batch = writeBatch(db);
+      for (const id of chunk) {
+        batch.delete(doc(db, 'users', targetUid, 'notifications', id));
+      }
+      await batch.commit();
+    }
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+    return false;
+  }
+}
+
+export async function saveStudentPushTokenToFirestore(
+  userId: string,
+  record: StudentPushTokenRecord
+): Promise<boolean> {
+  const fbUser = auth.currentUser;
+  if (
+    !fbUser ||
+    fbUser.isAnonymous ||
+    !userId ||
+    fbUser.uid !== userId ||
+    !isValidFirestoreDocId(userId) ||
+    !isValidFirestoreDocId(record.id)
+  ) {
+    return false;
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}/pushTokens/${record.id}`;
+  try {
+    await setDoc(doc(db, 'users', targetUid, 'pushTokens', record.id), {
+      id: record.id,
+      userId: targetUid,
+      token: String(record.token).slice(0, 1024),
+      platform: String(record.platform || 'web').slice(0, 64),
+      permissionState: record.permissionState,
+      enabled: Boolean(record.enabled),
+      createdAt: String(record.createdAt || new Date().toISOString()).slice(0, 64),
+      updatedAt: String(record.updatedAt || new Date().toISOString()).slice(0, 64),
+    });
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+    return false;
+  }
+}
+
+export async function deleteStudentPushTokenFromFirestore(
+  userId: string,
+  tokenId: string
+): Promise<boolean> {
+  const fbUser = auth.currentUser;
+  if (
+    !fbUser ||
+    fbUser.isAnonymous ||
+    !userId ||
+    fbUser.uid !== userId ||
+    !isValidFirestoreDocId(userId) ||
+    !isValidFirestoreDocId(tokenId)
+  ) {
+    return false;
+  }
+
+  const targetUid = fbUser.uid;
+  const path = `users/${targetUid}/pushTokens/${tokenId}`;
+  try {
+    await deleteDoc(doc(db, 'users', targetUid, 'pushTokens', tokenId));
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+    return false;
+  }
+}
+
 
 

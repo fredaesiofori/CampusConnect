@@ -45,7 +45,11 @@ import {
   authService,
   StudentProfile,
   NotificationPreferences,
+  ReminderIntervalDays,
+  ALL_REMINDER_INTERVALS,
   DEFAULT_NOTIFICATION_PREFERENCES,
+  DEFAULT_MATCHING_PREFERENCES,
+  normalizeNotificationPreferences,
   PASSWORD_MIN_LENGTH,
   validatePasswordPolicy,
 } from '../../services/auth';
@@ -55,6 +59,13 @@ import {
   getCurrentUserIdToken,
   syncScholarshipAlertToFirestore,
 } from '../../services/firebase';
+import {
+  PushCapabilityStatus,
+  getPushCapabilityStatus,
+  enableBrowserPushNotifications,
+  disableBrowserPushNotifications,
+  cleanupRevokedPushTokenIfNeeded,
+} from '../../services/pushNotifications';
 import { CountrySelect, CountryMultiSelect } from '../ui/CountrySelect';
 import { Button } from '../ui/Button';
 
@@ -78,6 +89,7 @@ export interface StudentSettingsCentreProps {
   onUpdateUserCountry: (country: string) => void;
   savedOpportunitiesCount: number;
   onClearSavedOpportunities?: () => void;
+  initialTab?: SettingsTab;
 }
 
 export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
@@ -92,8 +104,15 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
   onUpdateUserCountry,
   savedOpportunitiesCount,
   onClearSavedOpportunities,
+  initialTab,
 }) => {
-  const [activeTab, setActiveTab] = useState<SettingsTab>('account');
+  const [activeTab, setActiveTab] = useState<SettingsTab>(initialTab || 'account');
+
+  useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   // Check admin authorization strictly via server-verified Firebase Auth custom claims (`admin === true`)
   const [isAuthorizedAdmin, setIsAuthorizedAdmin] = useState<boolean>(false);
@@ -223,32 +242,38 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
   // =========================================================================
   // TAB 3: NOTIFICATIONS STATE
   // =========================================================================
-  const [notificationPrefs, setNotificationPrefs] = useState<NotificationPreferences>({
-    deadlineAlerts: user?.profile?.notificationPreferences?.deadlineAlerts ?? true,
-    savedUpdatesAlerts:
-      user?.profile?.notificationPreferences?.savedUpdatesAlerts ??
-      (user?.profile?.notificationPreferences?.scholarshipAlerts ?? true),
-    trackerReminders: user?.profile?.notificationPreferences?.trackerReminders ?? true,
-    admissionUpdates:
-      user?.profile?.notificationPreferences?.admissionUpdates ??
-      (user?.profile?.notificationPreferences?.waiverAlerts ?? true),
-  });
+  const [notificationPrefs, setNotificationPrefs] = useState<NotificationPreferences>(() =>
+    normalizeNotificationPreferences(user?.profile?.notificationPreferences)
+  );
   const [isSavingNotifications, setIsSavingNotifications] = useState(false);
   const [notificationSuccessMessage, setNotificationSuccessMessage] = useState<string | null>(null);
   const [notificationErrorMessage, setNotificationErrorMessage] = useState<string | null>(null);
+  const [pushStatus, setPushStatus] = useState<PushCapabilityStatus | null>(null);
+  const [isUpdatingPush, setIsUpdatingPush] = useState(false);
+  const [pushFeedbackMessage, setPushFeedbackMessage] = useState<string | null>(null);
 
   // Synchronize notification preferences when authenticated student updates
   useEffect(() => {
     if (user?.profile?.notificationPreferences) {
-      const prefs = user.profile.notificationPreferences;
-      setNotificationPrefs({
-        deadlineAlerts: prefs.deadlineAlerts ?? true,
-        savedUpdatesAlerts: prefs.savedUpdatesAlerts ?? (prefs.scholarshipAlerts ?? true),
-        trackerReminders: prefs.trackerReminders ?? true,
-        admissionUpdates: prefs.admissionUpdates ?? (prefs.waiverAlerts ?? true),
-      });
+      setNotificationPrefs(
+        normalizeNotificationPreferences(user.profile.notificationPreferences)
+      );
     }
   }, [user]);
+
+  useEffect(() => {
+    if (activeTab !== 'notifications') return;
+    let mounted = true;
+    getPushCapabilityStatus().then((status) => {
+      if (mounted) setPushStatus(status);
+    });
+    if (user?.id) {
+      cleanupRevokedPushTokenIfNeeded(user.id).catch(() => {});
+    }
+    return () => {
+      mounted = false;
+    };
+  }, [activeTab, user?.id]);
 
   // Email Opportunity Alerts state (synced with backend Firestore + email provider)
   const EMAIL_ALERT_CATEGORIES = [
@@ -686,13 +711,87 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
 
   // Handle Reset Notification Preferences to Recommended Defaults
   const handleResetNotifications = () => {
+    setNotificationPrefs(normalizeNotificationPreferences(DEFAULT_NOTIFICATION_PREFERENCES));
+    setNotificationSuccessMessage(
+      'Reset preferences to recommended defaults. Click "Save Notification Preferences" to persist changes.'
+    );
+  };
+
+  const handleToggleReminderInterval = (days: ReminderIntervalDays) => {
+    const current = notificationPrefs.reminderIntervals || [...ALL_REMINDER_INTERVALS];
+    const next = current.includes(days)
+      ? current.filter((d) => d !== days)
+      : [...current, days].sort((a, b) => b - a);
     setNotificationPrefs({
-      deadlineAlerts: true,
-      savedUpdatesAlerts: true,
-      trackerReminders: true,
-      admissionUpdates: true,
+      ...notificationPrefs,
+      reminderIntervals: next,
     });
-    setNotificationSuccessMessage('Reset toggles to default recommended settings. Remember to click "Save Notification Preferences" to persist changes.');
+  };
+
+  const handleToggleMatchingCriterion = (
+    key: keyof typeof DEFAULT_MATCHING_PREFERENCES
+  ) => {
+    const current = notificationPrefs.matchingPreferences || { ...DEFAULT_MATCHING_PREFERENCES };
+    setNotificationPrefs({
+      ...notificationPrefs,
+      matchingPreferences: {
+        ...current,
+        [key]: !current[key],
+      },
+    });
+  };
+
+  const handleEnablePushNotifications = async () => {
+    if (!user?.id) return;
+    setIsUpdatingPush(true);
+    setPushFeedbackMessage(null);
+    try {
+      const res = await enableBrowserPushNotifications(user.id);
+      const updatedStatus = await getPushCapabilityStatus();
+      setPushStatus(updatedStatus);
+
+      if (res.success) {
+        const nextPrefs = normalizeNotificationPreferences({
+          ...notificationPrefs,
+          pushNotificationsEnabled: true,
+        });
+        setNotificationPrefs(nextPrefs);
+        const saved = await authService.updateNotificationPreferences(nextPrefs);
+        if (saved.success && saved.user) {
+          onUpdateUser(saved.user);
+        }
+        setPushFeedbackMessage(res.message);
+        onShowNotification('Browser notification preference updated.');
+      } else {
+        setPushFeedbackMessage(res.error || res.message);
+      }
+    } finally {
+      setIsUpdatingPush(false);
+    }
+  };
+
+  const handleDisablePushNotifications = async () => {
+    if (!user?.id) return;
+    setIsUpdatingPush(true);
+    setPushFeedbackMessage(null);
+    try {
+      await disableBrowserPushNotifications(user.id);
+      const nextPrefs = normalizeNotificationPreferences({
+        ...notificationPrefs,
+        pushNotificationsEnabled: false,
+      });
+      setNotificationPrefs(nextPrefs);
+      const saved = await authService.updateNotificationPreferences(nextPrefs);
+      if (saved.success && saved.user) {
+        onUpdateUser(saved.user);
+      }
+      const updatedStatus = await getPushCapabilityStatus();
+      setPushStatus(updatedStatus);
+      setPushFeedbackMessage('Browser push notifications disabled and any stored token removed.');
+      onShowNotification('Browser push notifications disabled.');
+    } finally {
+      setIsUpdatingPush(false);
+    }
   };
 
   const handleToggleEmailAlertCategory = (id: string) => {
@@ -1809,16 +1908,16 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
               </div>
             )}
 
-            {/* 4 Required Notification Categories */}
+            {/* Category Toggles */}
             <div className="space-y-3">
               {/* 1. Scholarship and application deadlines */}
               <label className="p-4 rounded-xl border border-slate-200 hover:border-[#6846F5]/40 transition-colors flex items-start justify-between gap-4 cursor-pointer bg-white">
                 <div className="space-y-0.5">
                   <span className="text-xs font-bold text-[#10132D] block">
-                    Scholarship &amp; Application Deadlines
+                    Deadline Reminders (Active Apps, Targets &amp; Saved)
                   </span>
                   <span className="text-xs text-slate-500 leading-relaxed block">
-                    Countdown alerts and warnings 14 days and 48 hours prior to official university intake and scholarship application closing dates.
+                    Verified date-based alerts prior to official university intake and scholarship deadlines using the intervals selected below.
                   </span>
                 </div>
                 <input
@@ -1831,34 +1930,34 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                 />
               </label>
 
-              {/* 2. Saved university and scholarship updates */}
+              {/* 2. Personalized matching opportunities */}
               <label className="p-4 rounded-xl border border-slate-200 hover:border-[#6846F5]/40 transition-colors flex items-start justify-between gap-4 cursor-pointer bg-white">
                 <div className="space-y-0.5">
                   <span className="text-xs font-bold text-[#10132D] block">
-                    Saved University &amp; Scholarship Updates
+                    Personalized Opportunity Alerts
                   </span>
                   <span className="text-xs text-slate-500 leading-relaxed block">
-                    Alerts when universities on your saved shortlist update their admissions requirements, tuition waiver programs, or funding availability.
+                    Receive alerts when newly added or updated verified programs match your destinations, degree level, funding, or waiver goals.
                   </span>
                 </div>
                 <input
                   type="checkbox"
-                  checked={notificationPrefs.savedUpdatesAlerts}
+                  checked={notificationPrefs.admissionUpdates}
                   onChange={(e) =>
-                    setNotificationPrefs({ ...notificationPrefs, savedUpdatesAlerts: e.target.checked })
+                    setNotificationPrefs({ ...notificationPrefs, admissionUpdates: e.target.checked })
                   }
                   className="w-5 h-5 rounded text-[#6846F5] focus:ring-[#6846F5] border-slate-300 mt-0.5 cursor-pointer"
                 />
               </label>
 
-              {/* 3. Application tracker reminders */}
+              {/* 3. Application progress & follow-up reminders */}
               <label className="p-4 rounded-xl border border-slate-200 hover:border-[#6846F5]/40 transition-colors flex items-start justify-between gap-4 cursor-pointer bg-white">
                 <div className="space-y-0.5">
                   <span className="text-xs font-bold text-[#10132D] block">
-                    Application Tracker Reminders
+                    Application Progress &amp; Follow-Up Reminders
                   </span>
                   <span className="text-xs text-slate-500 leading-relaxed block">
-                    Milestone reminders to help you advance and finalize applications across saved, preparing, and submitted stages.
+                    Reminders for incomplete application checklist tasks, your personal follow-up dates, and verified requirement updates on active applications.
                   </span>
                 </div>
                 <input
@@ -1871,25 +1970,218 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                 />
               </label>
 
-              {/* 4. Important university admission updates */}
+              {/* 4. Saved university & scholarship requirement updates */}
               <label className="p-4 rounded-xl border border-slate-200 hover:border-[#6846F5]/40 transition-colors flex items-start justify-between gap-4 cursor-pointer bg-white">
                 <div className="space-y-0.5">
                   <span className="text-xs font-bold text-[#10132D] block">
-                    Important University Admission Updates
+                    Saved Opportunity Requirement Updates
                   </span>
                   <span className="text-xs text-slate-500 leading-relaxed block">
-                    Critical updates regarding international student visa guidelines, standardized test policies (SAT/GRE/IELTS), and new accredited programs.
+                    Alerts when universities or scholarships in your Saved Opportunities or Target List update verified fee, test, or document requirements.
                   </span>
                 </div>
                 <input
                   type="checkbox"
-                  checked={notificationPrefs.admissionUpdates}
+                  checked={notificationPrefs.savedUpdatesAlerts}
                   onChange={(e) =>
-                    setNotificationPrefs({ ...notificationPrefs, admissionUpdates: e.target.checked })
+                    setNotificationPrefs({ ...notificationPrefs, savedUpdatesAlerts: e.target.checked })
                   }
                   className="w-5 h-5 rounded text-[#6846F5] focus:ring-[#6846F5] border-slate-300 mt-0.5 cursor-pointer"
                 />
               </label>
+
+              {/* 5. Non-urgent updates */}
+              <label className="p-4 rounded-xl border border-slate-200 hover:border-[#6846F5]/40 transition-colors flex items-start justify-between gap-4 cursor-pointer bg-white">
+                <div className="space-y-0.5">
+                  <span className="text-xs font-bold text-[#10132D] block">
+                    Non-Urgent Digests &amp; General Updates
+                  </span>
+                  <span className="text-xs text-slate-500 leading-relaxed block">
+                    Include lower-priority updates and summary recommendations alongside urgent deadline notices.
+                  </span>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={notificationPrefs.nonUrgentUpdates ?? true}
+                  onChange={(e) =>
+                    setNotificationPrefs({ ...notificationPrefs, nonUrgentUpdates: e.target.checked })
+                  }
+                  className="w-5 h-5 rounded text-[#6846F5] focus:ring-[#6846F5] border-slate-300 mt-0.5 cursor-pointer"
+                />
+              </label>
+            </div>
+
+            {/* Customizable Deadline Reminder Intervals */}
+            <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-3 shadow-xs">
+              <div className="space-y-0.5">
+                <h4 className="text-xs font-bold text-[#10132D] uppercase tracking-wider">
+                  Deadline Reminder Intervals
+                </h4>
+                <p className="text-xs text-slate-500">
+                  Choose which countdown milestones trigger reminders for your Saved Opportunities, Target List, and Active Applications.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {ALL_REMINDER_INTERVALS.map((days) => {
+                  const selected = (notificationPrefs.reminderIntervals || ALL_REMINDER_INTERVALS).includes(days);
+                  const label =
+                    days === 0
+                      ? 'Deadline Day'
+                      : days === 1
+                      ? '1 Day Before'
+                      : `${days} Days Before`;
+                  return (
+                    <label
+                      key={days}
+                      className={`px-3 py-2.5 rounded-xl border text-xs font-semibold flex items-center justify-between gap-2 cursor-pointer transition-colors ${
+                        selected
+                          ? 'bg-[#F0EDFF] border-[#6846F5]/50 text-[#10132D]'
+                          : 'bg-slate-50/70 border-slate-200 text-slate-600 hover:border-slate-300'
+                      }`}
+                    >
+                      <span>{label}</span>
+                      <input
+                        type="checkbox"
+                        checked={selected}
+                        onChange={() => handleToggleReminderInterval(days)}
+                        className="w-4 h-4 rounded text-[#6846F5] focus:ring-[#6846F5] border-slate-300 cursor-pointer"
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Opportunity Matching Preferences */}
+            <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-3 shadow-xs">
+              <div className="space-y-0.5">
+                <h4 className="text-xs font-bold text-[#10132D] uppercase tracking-wider">
+                  Opportunity Matching Criteria
+                </h4>
+                <p className="text-xs text-slate-500">
+                  Select which parts of your student profile trigger personalized opportunity notifications.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {(
+                  [
+                    { key: 'matchByNationality', label: 'Nationality & Eligibility Match' },
+                    { key: 'matchByDestination', label: 'Preferred Study Destinations' },
+                    { key: 'matchByDegree', label: 'Target Degree Level' },
+                    { key: 'matchByFieldOfStudy', label: 'Field of Study Match' },
+                    { key: 'matchByFunding', label: 'Funding & Scholarship Match' },
+                    { key: 'matchByFeeWaiver', label: 'Fee Waivers & $0 Application Fees' },
+                    { key: 'matchByTestOptional', label: 'SAT-Free & Test-Optional Policies' },
+                  ] as const
+                ).map((item) => {
+                  const matching = notificationPrefs.matchingPreferences || DEFAULT_MATCHING_PREFERENCES;
+                  const checked = Boolean(matching[item.key]);
+                  return (
+                    <label
+                      key={item.key}
+                      className={`px-3 py-2 rounded-xl border text-xs font-medium flex items-center justify-between gap-2 cursor-pointer transition-colors ${
+                        checked
+                          ? 'bg-[#F0EDFF] border-[#6846F5]/40 text-[#10132D]'
+                          : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => handleToggleMatchingCriterion(item.key)}
+                        className="w-4 h-4 rounded text-[#6846F5] focus:ring-[#6846F5] border-slate-300 cursor-pointer"
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Delivery Channels (In-App, Browser Push, Email) */}
+            <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-4 shadow-xs">
+              <div className="space-y-0.5">
+                <h4 className="text-xs font-bold text-[#10132D] uppercase tracking-wider">
+                  Notification Delivery Channels
+                </h4>
+                <p className="text-xs text-slate-500">
+                  Manage in-app notifications, browser notifications, and email delivery independently.
+                </p>
+              </div>
+
+              {/* Channel 1: In-App Notification Centre */}
+              <label className="p-3.5 rounded-xl border border-slate-200 bg-[#F8F9FD] flex items-center justify-between gap-4 cursor-pointer">
+                <div className="space-y-0.5">
+                  <span className="text-xs font-bold text-[#10132D] block">
+                    In-App Notification Centre (Bell Icon)
+                  </span>
+                  <span className="text-[11px] text-slate-500 block">
+                    Active across sessions and synced privately to your student account.
+                  </span>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={notificationPrefs.inAppEnabled ?? true}
+                  onChange={(e) =>
+                    setNotificationPrefs({ ...notificationPrefs, inAppEnabled: e.target.checked })
+                  }
+                  className="w-5 h-5 rounded text-[#6846F5] focus:ring-[#6846F5] border-slate-300 cursor-pointer"
+                />
+              </label>
+
+              {/* Channel 2: Browser Push Notifications */}
+              <div className="p-4 rounded-xl border border-slate-200 bg-white space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-[#10132D] block">
+                      Browser Push Notifications
+                    </span>
+                    <span className="text-[11px] text-slate-500 block leading-relaxed">
+                      {pushStatus
+                        ? `Permission: ${pushStatus.permissionState} · ${
+                            pushStatus.vapidKeyConfigured && pushStatus.serverDispatchConfigured
+                              ? 'Active'
+                              : 'Background delivery inactive until deployment VAPID & server credentials'
+                          }`
+                        : 'Checking browser notification support...'}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2 shrink-0">
+                    {notificationPrefs.pushNotificationsEnabled ? (
+                      <button
+                        type="button"
+                        disabled={isUpdatingPush}
+                        onClick={handleDisablePushNotifications}
+                        className="px-3 py-1.5 rounded-xl border border-rose-200 text-xs font-semibold text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                      >
+                        {isUpdatingPush ? 'Updating...' : 'Disable Browser Push'}
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        disabled={isUpdatingPush || pushStatus?.permissionState === 'unsupported'}
+                        onClick={handleEnablePushNotifications}
+                        className="px-3 py-1.5 rounded-xl bg-[#F0EDFF] hover:bg-[#E4DFFF] text-[#6846F5] text-xs font-bold transition-colors cursor-pointer disabled:opacity-50"
+                      >
+                        {isUpdatingPush ? 'Requesting...' : 'Enable Browser Notifications'}
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {pushStatus && (
+                  <p className="text-[11px] text-slate-500 leading-relaxed bg-slate-50 border border-slate-200/80 rounded-lg px-3 py-2">
+                    {pushStatus.summary}
+                  </p>
+                )}
+
+                {pushFeedbackMessage && (
+                  <p className="text-[11px] font-medium text-[#10132D] bg-[#F0EDFF]/60 border border-[#DDD6FE] rounded-lg px-3 py-2">
+                    {pushFeedbackMessage}
+                  </p>
+                )}
+              </div>
             </div>
 
             {/* Action Buttons */}
@@ -1969,8 +2261,8 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                   <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                   <span>
                     {!firestoreAlertsReady
-                      ? 'Server-side Firestore subscriber storage awaits FIREBASE_SERVICE_ACCOUNT_JSON configuration.'
-                      : 'Email delivery provider credentials (RESEND_API_KEY / SENDGRID_API_KEY + EMAIL_FROM) are not yet configured on the server.'}
+                      ? 'Email opportunity alerts are temporarily disabled until server-side Firebase access is configured at deployment. Your in-app notification preferences above remain active.'
+                      : 'Email delivery credentials (RESEND_API_KEY) are not yet configured on the server.'}
                   </span>
                 </div>
               )}
@@ -2060,8 +2352,8 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                   variant="primary"
                   size="md"
                   onClick={handleSaveEmailAlertSubscription}
-                  disabled={isSavingEmailAlerts}
-                  className="w-full sm:w-auto min-h-[42px] justify-center bg-[#10132D] hover:bg-[#1E214F] text-white text-xs font-bold px-5 inline-flex items-center gap-2"
+                  disabled={isSavingEmailAlerts || !firestoreAlertsReady}
+                  className="w-full sm:w-auto min-h-[42px] justify-center bg-[#10132D] hover:bg-[#1E214F] text-white text-xs font-bold px-5 inline-flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSavingEmailAlerts ? (
                     <>

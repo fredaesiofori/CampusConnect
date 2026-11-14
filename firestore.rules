@@ -86,6 +86,68 @@ service cloud.firestore {
         (data.messages.size() == 0 || data.messages[0] is map);
     }
 
+    function isValidStudentNotification(data, userId, notificationId) {
+      return data.keys().hasAll(['id', 'userId', 'category', 'priority', 'title', 'message', 'read', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly([
+          'id',
+          'userId',
+          'category',
+          'priority',
+          'title',
+          'message',
+          'read',
+          'createdAt',
+          'updatedAt',
+          'dedupeKey',
+          'opportunityId',
+          'opportunityName',
+          'actionTab',
+          'actionSection',
+          'deadlineDate',
+          'daysRemaining',
+          'sourceVerified'
+        ]) &&
+        data.id == notificationId &&
+        data.userId == userId &&
+        data.category in ['deadline', 'opportunity', 'application', 'requirement', 'system'] &&
+        data.priority in ['urgent', 'high', 'normal', 'low'] &&
+        data.title is string && data.title.size() > 0 && data.title.size() <= 180 &&
+        data.message is string && data.message.size() > 0 && data.message.size() <= 600 &&
+        data.read is bool &&
+        data.createdAt is string && data.createdAt.size() > 0 && data.createdAt.size() <= 64 &&
+        data.updatedAt is string && data.updatedAt.size() > 0 && data.updatedAt.size() <= 64 &&
+        (!('dedupeKey' in data) || (data.dedupeKey is string && data.dedupeKey.size() <= 160)) &&
+        (!('opportunityId' in data) || (data.opportunityId is string && data.opportunityId.size() <= 128)) &&
+        (!('opportunityName' in data) || (data.opportunityName is string && data.opportunityName.size() <= 200)) &&
+        (!('actionTab' in data) || data.actionTab in ['overview', 'universities', 'scholarships', 'tracker', 'profile', 'resources', 'settings']) &&
+        (!('actionSection' in data) || data.actionSection in ['home', 'saved', 'applications', 'notifications']) &&
+        (!('deadlineDate' in data) || (data.deadlineDate is string && data.deadlineDate.size() <= 64)) &&
+        (!('daysRemaining' in data) || (data.daysRemaining is int || data.daysRemaining is float)) &&
+        (!('sourceVerified' in data) || data.sourceVerified is bool);
+    }
+
+    function isValidStudentPushToken(data, userId, tokenId) {
+      return data.keys().hasAll(['id', 'userId', 'token', 'platform', 'permissionState', 'enabled', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly([
+          'id',
+          'userId',
+          'token',
+          'platform',
+          'permissionState',
+          'enabled',
+          'createdAt',
+          'updatedAt'
+        ]) &&
+        data.id == tokenId &&
+        data.userId == userId &&
+        data.token is string && data.token.size() > 0 && data.token.size() <= 1024 &&
+        data.platform is string && data.platform.size() > 0 && data.platform.size() <= 64 &&
+        data.permissionState in ['granted', 'denied', 'default'] &&
+        data.enabled is bool &&
+        data.createdAt is string && data.createdAt.size() > 0 && data.createdAt.size() <= 64 &&
+        data.updatedAt is string && data.updatedAt.size() > 0 && data.updatedAt.size() <= 64;
+    }
+
     // 1. Public Opportunities Collection
     // Readable by all visitors and ordinary students; creation, editing, and deletion
     // are strictly restricted to server-verified platform administrators (custom claim) or Admin SDK.
@@ -124,6 +186,42 @@ service cloud.firestore {
           request.resource.data.userId == resource.data.userId &&
           request.resource.data.createdAt == resource.data.createdAt;
         allow delete: if isOwner(userId) && isValidId(userId) && isValidId(conversationId);
+      }
+
+      // 2b. Private In-App Notifications & Deadline Reminders Subcollection
+      match /notifications/{notificationId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidId(notificationId);
+        allow list: if isOwner(userId) && isValidId(userId) && resource.data.userId == request.auth.uid;
+        allow create: if isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(notificationId) &&
+          isValidStudentNotification(request.resource.data, userId, notificationId);
+        allow update: if isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(notificationId) &&
+          isValidStudentNotification(request.resource.data, userId, notificationId) &&
+          request.resource.data.userId == resource.data.userId &&
+          request.resource.data.createdAt == resource.data.createdAt &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read', 'updatedAt', 'title', 'message', 'priority', 'daysRemaining', 'deadlineDate']);
+        allow delete: if isOwner(userId) && isValidId(userId) && isValidId(notificationId);
+      }
+
+      // 2c. Private Browser Push Notification Tokens Subcollection
+      match /pushTokens/{tokenId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidId(tokenId);
+        allow list: if isOwner(userId) && isValidId(userId) && resource.data.userId == request.auth.uid;
+        allow create: if isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(tokenId) &&
+          isValidStudentPushToken(request.resource.data, userId, tokenId);
+        allow update: if isOwner(userId) &&
+          isValidId(userId) &&
+          isValidId(tokenId) &&
+          isValidStudentPushToken(request.resource.data, userId, tokenId) &&
+          request.resource.data.userId == resource.data.userId &&
+          request.resource.data.createdAt == resource.data.createdAt &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['token', 'platform', 'permissionState', 'enabled', 'updatedAt']);
+        allow delete: if isOwner(userId) && isValidId(userId) && isValidId(tokenId);
       }
     }
 

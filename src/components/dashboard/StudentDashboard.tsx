@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
   Search,
   Globe,
@@ -52,6 +52,7 @@ import {
   BookOpen,
   Settings,
 } from 'lucide-react';
+import { onAuthStateChanged } from 'firebase/auth';
 import { authenticOpportunities, OpportunityItem, evaluateOpportunityDeadline } from '../../data/opportunities';
 import { Button } from '../ui/Button';
 import {
@@ -63,6 +64,7 @@ import {
   ActiveApplicationStage,
 } from '../../services/auth';
 import {
+  auth,
   currentFirebaseProjectId,
   currentFirestoreDatabaseId,
   testFirestoreConnection,
@@ -70,7 +72,22 @@ import {
   fetchVerifiedOpportunitiesFromFirestore,
   saveStudentProfileToFirestore,
   checkCurrentUserIsAdmin,
+  StudentNotificationRecord,
+  subscribeToUserNotifications,
+  batchCreateUserNotificationsInFirestore,
+  markUserNotificationReadInFirestore,
+  markAllUserNotificationsReadInFirestore,
+  deleteUserNotificationInFirestore,
+  clearAllUserNotificationsInFirestore,
 } from '../../services/firebase';
+import {
+  generateSmartNotifications,
+  buildOpportunityRequirementSignature,
+  loadStoredCatalogBaseline,
+  saveStoredCatalogBaseline,
+  loadDismissedNotificationIds,
+  recordDismissedNotificationIds,
+} from '../../services/notifications';
 import { CountrySelect, CountryMultiSelect } from '../ui/CountrySelect';
 import { DashboardSidebar, DashboardNavTab } from './DashboardSidebar';
 import { UniversityCard } from './UniversityCard';
@@ -78,7 +95,8 @@ import { TargetTrackerBoard, ApplicationStage } from './TargetTrackerBoard';
 import { SavedOpportunitiesView } from './SavedOpportunitiesView';
 import { ApplicationsView } from './ApplicationsView';
 import { OpportunityDetailModal } from './OpportunityDetailModal';
-import { StudentSettingsCentre } from './StudentSettingsCentre';
+import { StudentSettingsCentre, SettingsTab } from './StudentSettingsCentre';
+import { NotificationBellCenter } from './NotificationBellCenter';
 import { UniversityLogo } from '../ui/UniversityLogo';
 import { CovaAssistant } from '../assistant/CovaAssistant';
 
@@ -143,9 +161,19 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
   // Dedicated sub-view inside Overview for Saved Opportunities & Applications
   const [overviewSection, setOverviewSection] = useState<'home' | 'saved' | 'applications'>('home');
+  const [settingsInitialTab, setSettingsInitialTab] = useState<SettingsTab>('account');
 
   // Mobile sidebar drawer state
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  // Smart Notification Centre state
+  const [notifications, setNotifications] = useState<StudentNotificationRecord[]>([]);
+  const [notificationsLoaded, setNotificationsLoaded] = useState<boolean>(false);
+  const [firebaseAuthResolved, setFirebaseAuthResolved] = useState<boolean>(false);
+  const [firebaseUid, setFirebaseUid] = useState<string | null>(() =>
+    auth.currentUser && !auth.currentUser.isAnonymous ? auth.currentUser.uid : null
+  );
+  const createdNotificationIdsRef = useRef<Set<string>>(new Set());
 
   // Search & Filter Dimensions
   const [searchQuery, setSearchQuery] = useState(initialQuery);
@@ -295,6 +323,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     tab: DashboardNavTab,
     section: 'home' | 'saved' | 'applications' = 'home'
   ) => {
+    if (tab !== 'settings') {
+      setSettingsInitialTab('account');
+    }
     setActiveTab(tab);
     setOverviewSection(section);
     setCurrentPage(1);
@@ -304,6 +335,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     } catch {
       // Ignore if history push is restricted
     }
+  };
+
+  const handleOpenNotificationSettings = () => {
+    setSettingsInitialTab('notifications');
+    navigateToDashboardView('settings', 'home');
   };
 
   const handleBackToOverview = () => {
@@ -392,6 +428,104 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         console.info('Live opportunities query fallback to verified registry:', err);
       });
   }, []);
+
+  // Track active Firebase Auth UID so Firestore notification listeners attach cleanly on reload
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (fbUser) => {
+      setFirebaseUid(fbUser && !fbUser.isAnonymous ? fbUser.uid : null);
+      setFirebaseAuthResolved(true);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Subscribe to real-time user-isolated notifications in Firestore
+  useEffect(() => {
+    createdNotificationIdsRef.current.clear();
+    if (!activeUser?.id) {
+      setNotifications([]);
+      setNotificationsLoaded(false);
+      return;
+    }
+    if (!firebaseAuthResolved) {
+      return;
+    }
+
+    if (firebaseUid === activeUser.id) {
+      setNotificationsLoaded(false);
+      const unsubscribe = subscribeToUserNotifications(
+        activeUser.id,
+        (items) => {
+          setNotifications((prev) => {
+            // Preserve any optimistic notifications created moments before snapshot echoes back
+            const byId = new Map<string, StudentNotificationRecord>();
+            for (const item of items) {
+              byId.set(item.id, item);
+              createdNotificationIdsRef.current.add(item.id);
+            }
+            for (const prevItem of prev) {
+              if (!byId.has(prevItem.id) && createdNotificationIdsRef.current.has(prevItem.id)) {
+                byId.set(prevItem.id, prevItem);
+              }
+            }
+            return Array.from(byId.values())
+              .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+              .slice(0, 100);
+          });
+          setNotificationsLoaded(true);
+        },
+        () => {
+          setNotificationsLoaded(true);
+        }
+      );
+      return () => unsubscribe();
+    }
+
+    setNotificationsLoaded(true);
+  }, [activeUser?.id, firebaseUid, firebaseAuthResolved]);
+
+  // Run idempotent Smart Notification Engine once notifications & catalog are loaded
+  useEffect(() => {
+    if (!activeUser?.id || !notificationsLoaded || opportunities.length === 0) {
+      return;
+    }
+
+    const dismissedIds = loadDismissedNotificationIds(activeUser.id);
+    const baseline = loadStoredCatalogBaseline(activeUser.id);
+
+    const generation = generateSmartNotifications({
+      user: activeUser,
+      opportunities,
+      existingNotifications: notifications,
+      dismissedIds,
+      baseline,
+    });
+
+    saveStoredCatalogBaseline(activeUser.id, generation.nextBaseline);
+
+    const freshToPersist = generation.newNotifications.filter(
+      (n) => !createdNotificationIdsRef.current.has(n.id)
+    );
+
+    if (freshToPersist.length === 0) {
+      return;
+    }
+
+    for (const item of freshToPersist) {
+      createdNotificationIdsRef.current.add(item.id);
+    }
+
+    setNotifications((prev) => {
+      const seen = new Set(prev.map((p) => p.id));
+      const merged = [...freshToPersist.filter((n) => !seen.has(n.id)), ...prev];
+      return merged
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .slice(0, 100);
+    });
+
+    if (firebaseUid === activeUser.id) {
+      void batchCreateUserNotificationsInFirestore(activeUser.id, freshToPersist);
+    }
+  }, [activeUser, opportunities, notificationsLoaded, firebaseUid, notifications]);
 
   // Profile Edit Form State (for the My Profile section)
   const userProfile = activeUser?.profile;
@@ -513,10 +647,23 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       showNotification(res.error || 'Could not start application.', true);
       return;
     }
-    if (res.user) {
-      setActiveUser({ ...res.user });
-      setActiveApplications(res.user.activeApplications || {});
-      setApplicationTracker((res.user.applicationTracker as Record<string, ApplicationStage>) || {});
+    let latestUser = res.user;
+    if (!res.alreadyExists) {
+      const matchedOpp = opportunities.find((o) => o.id === opportunityId);
+      if (matchedOpp) {
+        const snapshot = buildOpportunityRequirementSignature(matchedOpp);
+        const snapRes = await authService.updateActiveApplication(opportunityId, {
+          requirementSnapshot: snapshot,
+        });
+        if (snapRes.success && snapRes.user) {
+          latestUser = snapRes.user;
+        }
+      }
+    }
+    if (latestUser) {
+      setActiveUser({ ...latestUser });
+      setActiveApplications(latestUser.activeApplications || {});
+      setApplicationTracker((latestUser.applicationTracker as Record<string, ApplicationStage>) || {});
     }
     if (res.alreadyExists) {
       showNotification('This opportunity already has an active application.');
@@ -525,10 +672,16 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     }
   };
 
-  // Update Active Application (stage or task checklist)
+  // Update Active Application (stage, task checklist, notes, or follow-up reminder date)
   const handleUpdateActiveApplication = async (
     opportunityId: string,
-    patch: { stage?: ActiveApplicationStage; completedTasks?: string[]; notes?: string }
+    patch: {
+      stage?: ActiveApplicationStage;
+      completedTasks?: string[];
+      notes?: string;
+      followUpDate?: string | null;
+      requirementSnapshot?: string;
+    }
   ) => {
     const res = await authService.updateActiveApplication(opportunityId, patch);
     if (!res.success) {
@@ -547,6 +700,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         accepted: 'Accepted / Enrolled',
       };
       showNotification(`Application status updated to "${stageNames[patch.stage]}".`);
+    } else if (patch.followUpDate !== undefined) {
+      showNotification(
+        patch.followUpDate
+          ? 'Follow-up reminder date saved.'
+          : 'Follow-up reminder date cleared.'
+      );
     }
   };
 
@@ -563,6 +722,88 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       setApplicationTracker((res.user.applicationTracker as Record<string, ApplicationStage>) || {});
     }
     showNotification(`Removed "${title}" from active applications.`);
+  };
+
+  // In-App Notification Centre actions
+  const handleMarkNotificationRead = async (notificationId: string, read: boolean) => {
+    const nowIso = new Date().toISOString();
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === notificationId ? { ...n, read, updatedAt: nowIso } : n))
+    );
+    if (activeUser?.id && firebaseUid === activeUser.id) {
+      await markUserNotificationReadInFirestore(activeUser.id, notificationId, read);
+    }
+  };
+
+  const handleMarkAllNotificationsRead = async () => {
+    const unreadIds = notifications.filter((n) => !n.read).map((n) => n.id);
+    if (unreadIds.length === 0) return;
+    const nowIso = new Date().toISOString();
+    setNotifications((prev) => prev.map((n) => ({ ...n, read: true, updatedAt: nowIso })));
+    if (activeUser?.id && firebaseUid === activeUser.id) {
+      await markAllUserNotificationsReadInFirestore(activeUser.id, unreadIds);
+    }
+  };
+
+  const handleDeleteNotification = async (notificationId: string) => {
+    if (activeUser?.id) {
+      recordDismissedNotificationIds(activeUser.id, [notificationId]);
+    }
+    createdNotificationIdsRef.current.delete(notificationId);
+    setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
+    if (activeUser?.id && firebaseUid === activeUser.id) {
+      await deleteUserNotificationInFirestore(activeUser.id, notificationId);
+    }
+  };
+
+  const handleClearAllNotifications = async () => {
+    const allIds = notifications.map((n) => n.id);
+    if (activeUser?.id && allIds.length > 0) {
+      recordDismissedNotificationIds(activeUser.id, allIds);
+    }
+    createdNotificationIdsRef.current.clear();
+    setNotifications([]);
+    if (activeUser?.id && firebaseUid === activeUser.id) {
+      await clearAllUserNotificationsInFirestore(activeUser.id, allIds);
+    }
+  };
+
+  const handleNavigateNotification = (notif: StudentNotificationRecord) => {
+    if (!notif.read) {
+      void handleMarkNotificationRead(notif.id, true);
+    }
+
+    if (notif.actionTab === 'settings' || notif.actionSection === 'notifications') {
+      handleOpenNotificationSettings();
+      return;
+    }
+
+    const matchedOpp = notif.opportunityId
+      ? opportunities.find((o) => o.id === notif.opportunityId)
+      : undefined;
+
+    if (notif.category === 'application' || notif.actionSection === 'applications') {
+      navigateToDashboardView('overview', 'applications');
+      return;
+    }
+
+    if (notif.actionTab === 'tracker') {
+      navigateToDashboardView('tracker', 'home');
+      if (matchedOpp) {
+        setSelectedOpportunity(matchedOpp);
+      }
+      return;
+    }
+
+    if (matchedOpp) {
+      setSelectedOpportunity(matchedOpp);
+      return;
+    }
+
+    navigateToDashboardView(
+      notif.actionTab || 'overview',
+      notif.actionSection === 'saved' ? 'saved' : 'home'
+    );
   };
 
   // Legacy / COVA Application Tracker Stage callback
@@ -1211,8 +1452,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             </div>
           </div>
 
-          {/* Right: User Avatar Pill & Home Button matching mockup */}
-          <div className="flex items-center gap-3">
+          {/* Right: Notification Bell Centre, View Landing & User Avatar Pill */}
+          <div className="flex items-center gap-2 sm:gap-3">
             {onClose && (
               <button
                 type="button"
@@ -1223,6 +1464,16 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
               </button>
             )}
+
+            <NotificationBellCenter
+              notifications={notifications}
+              onMarkAsRead={handleMarkNotificationRead}
+              onMarkAllRead={handleMarkAllNotificationsRead}
+              onDeleteNotification={handleDeleteNotification}
+              onClearAllNotifications={handleClearAllNotifications}
+              onNavigateNotification={handleNavigateNotification}
+              onOpenNotificationSettings={handleOpenNotificationSettings}
+            />
 
             {/* Student Profile Pill matching mockup screen 4 */}
             <div className="flex items-center gap-2.5 p-1 sm:pr-3 rounded-full bg-slate-50 border border-slate-200">
@@ -2261,6 +2512,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 setCurrentPage(1);
               }}
               savedOpportunitiesCount={savedOpportunities.size}
+              initialTab={settingsInitialTab}
               onClearSavedOpportunities={() => {
                 setSavedOpportunities(new Set());
                 const updated = authService.clearSavedOpportunities();
