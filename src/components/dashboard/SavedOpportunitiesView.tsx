@@ -38,9 +38,11 @@ export interface SavedOpportunitiesViewProps {
   onOpenDetails: (item: OpportunityItem) => void;
   onExploreDirectory: (tab: 'universities' | 'scholarships') => void;
   onBack: () => void;
+  initialFilter?: BookmarkFilter;
+  filterNonce?: number;
 }
 
-type BookmarkFilter = 'all' | 'universities' | 'scholarships';
+export type BookmarkFilter = 'all' | 'universities' | 'scholarships';
 
 function isScholarshipItem(item: OpportunityItem): boolean {
   const fType = item.funding?.type || item.fundingDetails?.type || '';
@@ -59,14 +61,20 @@ export const SavedOpportunitiesView: React.FC<SavedOpportunitiesViewProps> = ({
   onOpenDetails,
   onExploreDirectory,
   onBack,
+  initialFilter = 'all',
+  filterNonce = 0,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [typeFilter, setTypeFilter] = useState<BookmarkFilter>('all');
+  const [typeFilter, setTypeFilter] = useState<BookmarkFilter>(initialFilter);
   const [confirmTargetItem, setConfirmTargetItem] = useState<OpportunityItem | null>(null);
   const [targetPriority, setTargetPriority] = useState<TargetPriority>('Medium');
   const [targetIntakeYear, setTargetIntakeYear] = useState<string>('2026');
   const [targetGoal, setTargetGoal] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState(false);
+
+  React.useEffect(() => {
+    setTypeFilter(initialFilter);
+  }, [initialFilter, filterNonce]);
 
   const filterCounts = useMemo(() => {
     const scholarships = savedItems.filter(isScholarshipItem).length;

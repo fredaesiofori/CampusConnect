@@ -210,11 +210,11 @@ export const UniversitySearchFilters: React.FC<UniversitySearchFiltersProps> = (
   return (
     <section
       aria-label="Search and filter universities"
-      className="bg-white rounded-2xl border border-[#E2E8F0] p-4 sm:p-5 lg:p-6 shadow-xs space-y-4"
+      className="space-y-3"
     >
-      {/* 1. Prominent Search Bar */}
+      {/* 1. Prominent Search Bar matching approved reference */}
       <form onSubmit={handleFormSubmit}>
-        <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-xl border border-[#CBD5E1] bg-slate-50/70 focus-within:bg-white focus-within:border-[#6846F5] focus-within:ring-4 focus-within:ring-[#6846F5]/10 transition-all">
+        <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl border border-[#E2E8F0] bg-white shadow-[0_1px_6px_rgba(15,23,42,0.04)] focus-within:border-[#6846F5] focus-within:ring-4 focus-within:ring-[#6846F5]/10 transition-all">
           <Search
             className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-slate-400 ml-2.5 shrink-0 pointer-events-none"
             aria-hidden="true"
@@ -226,11 +226,11 @@ export const UniversitySearchFilters: React.FC<UniversitySearchFiltersProps> = (
             onChange={(e) => onSearchQueryChange(e.target.value)}
             placeholder={
               isScholarshipsTab
-                ? 'Search scholarships, universities, countries, or fields...'
-                : 'Search universities by name, city, country, or field of study...'
+                ? 'Search scholarships, universities, or countries...'
+                : 'Search universities by name, city, or country...'
             }
-            aria-label="Search universities by name, city, country, or field of study"
-            className="flex-1 min-w-0 h-10 px-1.5 bg-transparent text-xs sm:text-sm font-medium text-[#10132D] placeholder:text-slate-400 focus:outline-none"
+            aria-label="Search universities by name, city, or country"
+            className="flex-1 min-w-0 h-9 sm:h-10 px-1.5 bg-transparent text-xs sm:text-sm font-medium text-[#10132D] placeholder:text-slate-400 focus:outline-none"
           />
           {searchQuery && (
             <button
@@ -247,17 +247,17 @@ export const UniversitySearchFilters: React.FC<UniversitySearchFiltersProps> = (
           )}
           <button
             type="submit"
-            className="h-10 px-4 sm:px-5 rounded-lg bg-[#6846F5] hover:bg-[#5835E5] active:scale-[0.99] text-white text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 whitespace-nowrap shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] focus-visible:ring-offset-1"
+            className="h-9 sm:h-10 px-4 sm:px-5 rounded-xl bg-[#6846F5] hover:bg-[#5835E5] active:scale-[0.99] text-white text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 whitespace-nowrap shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] focus-visible:ring-offset-1"
           >
             Search
           </button>
         </div>
       </form>
 
-      {/* 2. Primary Filter Row: Destination, Degree Level, Field of Study + More Filters */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3">
-        {/* Destination */}
-        <div className="lg:col-span-3 min-w-0">
+      {/* 2. Compact 3-Control Filter Row: Destination, Degree Level, More Filters */}
+      <div className="grid grid-cols-3 gap-2 sm:gap-3">
+        {/* Country / Destination */}
+        <div className="min-w-0">
           <CountrySelect
             id="dash-country-select"
             value={selectedDestination}
@@ -266,108 +266,112 @@ export const UniversitySearchFilters: React.FC<UniversitySearchFiltersProps> = (
             allLabel="All Destinations"
             allValue=""
             placeholder="All Destinations"
-            buttonClassName="h-11 min-h-[44px] bg-slate-50/70 hover:bg-white focus:bg-white border-[#E2E8F0] hover:border-[#CBD5E1] text-xs sm:text-[13px] font-medium rounded-xl"
+            buttonClassName={`h-10 sm:h-11 min-h-[40px] sm:min-h-[44px] px-2.5 sm:px-3.5 text-[11px] sm:text-[13px] font-medium rounded-full sm:rounded-xl ${
+              selectedDestination
+                ? 'bg-[#F3EFFF] border-[#D8CCFE] text-[#5B2EE6] font-semibold'
+                : 'bg-white border-[#E2E8F0] hover:border-[#CBD5E1] text-[#1E293B]'
+            }`}
           />
         </div>
 
         {/* Degree Level */}
-        <div className="lg:col-span-3 relative min-w-0">
+        <div className="relative min-w-0">
           <GraduationCap
-            className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
+            className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500 absolute left-2.5 sm:left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
             aria-hidden="true"
           />
           <select
             value={selectedLevel}
             onChange={(e) => onLevelChange(e.target.value)}
             aria-label="Filter by degree level"
-            className={`w-full h-11 min-h-[44px] pl-10 pr-8 text-xs sm:text-[13px] font-medium rounded-xl border transition-colors appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#6846F5]/15 ${
+            className={`w-full h-10 sm:h-11 min-h-[40px] sm:min-h-[44px] pl-7 sm:pl-10 pr-6 sm:pr-8 text-[11px] sm:text-[13px] font-medium rounded-full sm:rounded-xl border transition-colors appearance-none cursor-pointer truncate focus:outline-none focus:ring-2 focus:ring-[#6846F5]/15 ${
               selectedLevel !== 'all'
-                ? 'bg-[#F0EDFF]/50 border-[#6846F5]/50 text-[#10132D] font-semibold'
-                : 'bg-slate-50/70 hover:bg-white border-[#E2E8F0] hover:border-[#CBD5E1] text-[#10132D] focus:bg-white focus:border-[#6846F5]'
+                ? 'bg-[#F3EFFF] border-[#D8CCFE] text-[#5B2EE6] font-semibold'
+                : 'bg-white border-[#E2E8F0] hover:border-[#CBD5E1] text-[#1E293B] focus:border-[#6846F5]'
             }`}
           >
-            <option value="all">All Degree Levels</option>
-            <option value="undergraduate">Undergraduate / Bachelor&apos;s</option>
-            <option value="master">Master&apos;s / Postgraduate</option>
+            <option value="all">All Levels</option>
+            <option value="undergraduate">Undergraduate</option>
+            <option value="master">Master&apos;s / PG</option>
             <option value="phd">PhD / Doctorate</option>
           </select>
           <ChevronDown
-            className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
-            aria-hidden="true"
-          />
-        </div>
-
-        {/* Field of Study */}
-        <div className="lg:col-span-3 relative min-w-0">
-          <BookOpen
-            className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
-            aria-hidden="true"
-          />
-          <select
-            value={selectedField}
-            onChange={(e) => onFieldChange(e.target.value)}
-            aria-label="Filter by field of study"
-            className={`w-full h-11 min-h-[44px] pl-10 pr-8 text-xs sm:text-[13px] font-medium rounded-xl border transition-colors appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#6846F5]/15 ${
-              selectedField !== 'all'
-                ? 'bg-[#F0EDFF]/50 border-[#6846F5]/50 text-[#10132D] font-semibold'
-                : 'bg-slate-50/70 hover:bg-white border-[#E2E8F0] hover:border-[#CBD5E1] text-[#10132D] focus:bg-white focus:border-[#6846F5]'
-            }`}
-          >
-            <option value="all">All Fields of Study</option>
-            <option value="cs-tech">Computer Science &amp; AI</option>
-            <option value="engineering">Engineering &amp; Architecture</option>
-            <option value="business">Business &amp; Economics</option>
-            <option value="health">Medicine &amp; Health Sciences</option>
-            <option value="law">Law &amp; International Relations</option>
-            <option value="education">Education &amp; Social Sciences</option>
-          </select>
-          <ChevronDown
-            className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+            className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none"
             aria-hidden="true"
           />
         </div>
 
         {/* More Filters Toggle Button */}
-        <div className="lg:col-span-3 min-w-0">
+        <div className="min-w-0">
           <button
             type="button"
             onClick={onToggleAdvancedFilters}
             aria-expanded={showAdvancedFilters}
             aria-controls="advanced-university-filters"
-            className={`w-full h-11 min-h-[44px] px-3.5 rounded-xl border text-xs sm:text-[13px] font-semibold flex items-center justify-between gap-2 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]/20 ${
-              showAdvancedFilters || advancedCount > 0
-                ? 'bg-[#F0EDFF] border-[#6846F5] text-[#6846F5]'
-                : 'bg-slate-50/70 hover:bg-white border-[#E2E8F0] hover:border-[#CBD5E1] text-slate-700'
+            className={`w-full h-10 sm:h-11 min-h-[40px] sm:min-h-[44px] px-2.5 sm:px-3.5 rounded-full sm:rounded-xl border text-[11px] sm:text-[13px] font-medium flex items-center justify-center sm:justify-between gap-1.5 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]/20 ${
+              showAdvancedFilters || advancedCount > 0 || selectedField !== 'all'
+                ? 'bg-[#F3EFFF] border-[#6846F5] text-[#5B2EE6] font-semibold'
+                : 'bg-white border-[#E2E8F0] hover:border-[#CBD5E1] text-[#1E293B]'
             }`}
           >
-            <span className="flex items-center gap-2 min-w-0">
-              <SlidersHorizontal className="w-4 h-4 shrink-0" aria-hidden="true" />
+            <span className="flex items-center gap-1.5 min-w-0">
+              <SlidersHorizontal className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" aria-hidden="true" />
               <span className="truncate">More Filters</span>
-              {advancedCount > 0 && (
+              {advancedCount + (selectedField !== 'all' ? 1 : 0) > 0 && (
                 <span
-                  aria-label={`${advancedCount} active advanced filters`}
-                  className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-[#6846F5] text-white text-[11px] font-bold tabular-nums shrink-0"
+                  aria-label={`${advancedCount + (selectedField !== 'all' ? 1 : 0)} active advanced filters`}
+                  className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-[#6846F5] text-white text-[10px] font-bold tabular-nums shrink-0"
                 >
-                  {advancedCount}
+                  {advancedCount + (selectedField !== 'all' ? 1 : 0)}
                 </span>
               )}
             </span>
             {showAdvancedFilters ? (
-              <ChevronUp className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <ChevronUp className="hidden sm:block w-4 h-4 shrink-0" aria-hidden="true" />
             ) : (
-              <ChevronDown className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <ChevronDown className="hidden sm:block w-4 h-4 shrink-0" aria-hidden="true" />
             )}
           </button>
         </div>
       </div>
 
-      {/* 3. Expandable More Filters Panel */}
+      {/* 3. Expandable More Filters Panel (Includes Field of Study + All Genuine Structured Filters) */}
       {showAdvancedFilters && (
         <div
           id="advanced-university-filters"
-          className="pt-4 border-t border-slate-100 space-y-4 animate-in fade-in duration-150"
+          className="bg-white rounded-2xl border border-[#E2E8F0] p-4 shadow-sm space-y-4 animate-in fade-in duration-150"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {/* Field of Study */}
+            <div className="min-w-0">
+              <label
+                htmlFor="filter-field-of-study"
+                className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-600 mb-1.5"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-slate-400" aria-hidden="true" />
+                <span>Field of Study</span>
+              </label>
+              <div className="relative">
+                <select
+                  id="filter-field-of-study"
+                  value={selectedField}
+                  onChange={(e) => onFieldChange(e.target.value)}
+                  className="w-full h-10 min-h-[40px] pl-3 pr-8 text-xs font-medium bg-slate-50/70 hover:bg-white focus:bg-white border border-[#E2E8F0] focus:border-[#6846F5] rounded-xl text-[#10132D] focus:outline-none appearance-none cursor-pointer transition-colors"
+                >
+                  <option value="all">All Fields of Study</option>
+                  <option value="cs-tech">Computer Science &amp; AI</option>
+                  <option value="engineering">Engineering &amp; Architecture</option>
+                  <option value="business">Business &amp; Economics</option>
+                  <option value="health">Medicine &amp; Health Sciences</option>
+                  <option value="law">Law &amp; International Relations</option>
+                  <option value="education">Education &amp; Social Sciences</option>
+                </select>
+                <ChevronDown
+                  className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
             {/* Institution Type */}
             <div className="min-w-0">
               <label

@@ -1224,10 +1224,10 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
   return (
     <>
       <div
-        className={`fixed z-40 flex flex-col items-end pointer-events-none ${
+        className={`fixed flex flex-col items-end pointer-events-none ${
           isOpen
-            ? 'inset-0 sm:inset-auto sm:bottom-6 sm:right-6'
-            : 'bottom-5 right-5 sm:bottom-6 sm:right-6'
+            ? 'inset-0 z-50 sm:inset-auto sm:bottom-6 sm:right-6 sm:z-40'
+            : 'bottom-[76px] right-4 z-40 sm:bottom-6 sm:right-6'
         } ${className}`}
       >
         {/* 1. COVA Chat Panel Overlay (Responsive: Full-screen on mobile, Card on Desktop) */}

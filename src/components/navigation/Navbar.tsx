@@ -8,6 +8,8 @@ import { Menu, X, ArrowRight, Compass, HelpCircle, Info, LogIn, ShieldCheck } fr
 import { Logo } from '../brand/Logo';
 import { Button } from '../ui/Button';
 import { StudentInitialsAvatar } from '../ui/StudentInitialsAvatar';
+import { NotificationBellCenter } from '../dashboard/NotificationBellCenter';
+import { StudentNotificationRecord } from '../../services/notifications';
 
 export interface NavLinkItem {
   id: string;
@@ -26,6 +28,13 @@ export interface NavbarProps {
   userEmail?: string;
   userName?: string;
   onLogout?: () => void;
+  notifications?: StudentNotificationRecord[];
+  onMarkNotificationRead?: (notificationId: string, read: boolean) => Promise<void> | void;
+  onMarkAllNotificationsRead?: () => Promise<void> | void;
+  onDeleteNotification?: (notificationId: string) => Promise<void> | void;
+  onClearAllNotifications?: () => Promise<void> | void;
+  onNavigateNotification?: (notification: StudentNotificationRecord) => void;
+  onOpenNotificationSettings?: () => void;
   className?: string;
 }
 
@@ -45,6 +54,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   userEmail,
   userName,
   onLogout,
+  notifications = [],
+  onMarkNotificationRead,
+  onMarkAllNotificationsRead,
+  onDeleteNotification,
+  onClearAllNotifications,
+  onNavigateNotification,
+  onOpenNotificationSettings,
   className = '',
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -105,16 +121,96 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full bg-[#10132D] transition-all duration-200 ${
+      className={`sticky top-0 z-50 w-full bg-white md:bg-[#10132D] transition-all duration-200 ${
         isScrolled
-          ? 'border-b border-[#20254D] shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
-          : 'border-b border-[#1E234A]'
+          ? 'border-b border-slate-200 md:border-[#20254D] shadow-[0_4px_16px_rgba(16,19,45,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
+          : 'border-b border-slate-100 md:border-[#1E234A]'
       } ${className}`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18 md:h-20 gap-3 sm:gap-6 lg:gap-8">
-          {/* Zone 1: Brand Wordmark on Far Left */}
-          <div className="flex items-center shrink-0">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 md:h-20 gap-2 sm:gap-6 lg:gap-8">
+          {/* Mobile Left Cluster: Hamburger Menu + Brand Wordmark (< md) */}
+          <div className="flex md:hidden items-center gap-1.5 min-w-0 flex-1">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-nav-panel"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] -ml-1 flex items-center justify-center rounded-xl text-[#10132D] hover:bg-slate-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] cursor-pointer shrink-0"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5 text-[#10132D]" />
+              ) : (
+                <Menu className="w-5 h-5 text-[#10132D]" />
+              )}
+            </button>
+
+            <a
+              href={isLoggedIn ? '#/dashboard' : '#home'}
+              onClick={handleLogoClick}
+              aria-label={isLoggedIn ? 'Go to Campus Connect Student Dashboard' : 'Campus Connect Home'}
+              className="inline-flex items-center min-w-0 max-w-full rounded-xl py-1 pr-1 transition-opacity duration-150 hover:opacity-85 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] cursor-pointer"
+            >
+              <Logo size="sm" variant="light" iconShape="circle" showWordmark={true} />
+            </a>
+          </div>
+
+          {/* Mobile Right Cluster: Real Notification Bell + Student Initials (Authenticated) OR Clean Log In (Guest) */}
+          <div className="flex md:hidden items-center gap-1 shrink-0">
+            {isLoggedIn ? (
+              <>
+                <NotificationBellCenter
+                  notifications={notifications}
+                  onMarkAsRead={onMarkNotificationRead || (() => {})}
+                  onMarkAllRead={onMarkAllNotificationsRead || (() => {})}
+                  onDeleteNotification={onDeleteNotification || (() => {})}
+                  onClearAllNotifications={onClearAllNotifications || (() => {})}
+                  onNavigateNotification={
+                    onNavigateNotification ||
+                    (() => {
+                      if (onExploreHubClick) onExploreHubClick();
+                    })
+                  }
+                  onOpenNotificationSettings={
+                    onOpenNotificationSettings ||
+                    (() => {
+                      if (onExploreHubClick) onExploreHubClick();
+                    })
+                  }
+                />
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    if (onExploreHubClick) onExploreHubClick();
+                  }}
+                  aria-label="Open Student Dashboard"
+                  title="Open Student Dashboard"
+                  className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] active:scale-[0.96] transition-transform"
+                >
+                  <StudentInitialsAvatar
+                    fullName={userName}
+                    email={userEmail}
+                    size="md"
+                    className="w-9 h-9 text-xs"
+                  />
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                onClick={onLoginClick}
+                className="min-h-[44px] px-3 py-2 rounded-xl text-xs font-bold text-[#6846F5] hover:bg-[#F3F0FF] active:scale-[0.98] transition-all whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              >
+                Log In
+              </button>
+            )}
+          </div>
+
+          {/* Desktop & Tablet Zone 1: Brand Wordmark on Far Left (Preserved >= md) */}
+          <div className="hidden md:flex items-center shrink-0">
             <a
               href={isLoggedIn ? '#/dashboard' : '#home'}
               onClick={handleLogoClick}
@@ -210,24 +306,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               </>
             )}
           </div>
-
-          {/* Mobile Hamburger Button */}
-          <div className="flex md:hidden items-center shrink-0">
-            <button
-              type="button"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              aria-expanded={isMobileMenuOpen}
-              aria-controls="mobile-nav-panel"
-              className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl border border-[#2D336B] bg-[#161B3D] text-white hover:bg-[#1F2552] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8065FF] cursor-pointer"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-5 h-5 text-white" />
-              ) : (
-                <Menu className="w-5 h-5 text-white" />
-              )}
-            </button>
-          </div>
         </div>
       </div>
 
@@ -235,10 +313,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       {isMobileMenuOpen && (
         <div
           id="mobile-nav-panel"
-          className="md:hidden fixed inset-x-0 top-16 sm:top-18 md:top-20 bottom-0 z-40 bg-[#10132D]/98 backdrop-blur-xl border-t border-[#20254D] overflow-y-auto animate-in fade-in slide-in-from-top-2 duration-150 flex flex-col justify-between overscroll-contain pb-safe"
+          className="md:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-white border-t border-slate-100 overflow-y-auto animate-in fade-in slide-in-from-top-2 duration-150 flex flex-col justify-between overscroll-contain pb-safe"
         >
-          <div className="px-4 py-4 sm:px-6 sm:py-6 space-y-2">
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-400 px-3 pb-2">
+          <div className="px-4 py-4 space-y-1.5">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-[#64748B] px-3 pb-2">
               Menu Navigation
             </div>
 
@@ -249,26 +327,26 @@ export const Navbar: React.FC<NavbarProps> = ({
                   key={link.id}
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link)}
-                  className={`flex items-center justify-between w-full p-3.5 rounded-xl text-base font-medium transition-colors ${
+                  className={`flex items-center justify-between w-full p-3.5 rounded-xl text-base font-medium transition-colors cursor-pointer ${
                     isActive
-                      ? 'bg-[#8065FF]/15 text-[#C4B5FD] font-semibold border border-[#8065FF]/30'
-                      : 'text-slate-200 hover:bg-[#181D42] active:bg-[#1E2452]'
+                      ? 'bg-[#F3F0FF] text-[#6846F5] font-semibold border border-[#E6DFFF]'
+                      : 'text-[#10132D] hover:bg-slate-50 active:bg-slate-100'
                   }`}
                 >
                   <span className="flex items-center gap-3">
-                    <span className={`${isActive ? 'text-[#8065FF]' : 'text-slate-400'}`}>
+                    <span className={`${isActive ? 'text-[#6846F5]' : 'text-slate-400'}`}>
                       {link.icon}
                     </span>
                     {link.label}
                   </span>
-                  <ArrowRight className="w-4 h-4 text-slate-500" />
+                  <ArrowRight className="w-4 h-4 text-slate-400" />
                 </a>
               );
             })}
           </div>
 
           {/* Mobile Bottom Actions */}
-          <div className="p-4 sm:p-6 border-t border-[#20254D] bg-[#0C0E24] space-y-3">
+          <div className="p-4 border-t border-slate-100 bg-[#F8F9FD] space-y-2.5">
             {isLoggedIn ? (
               <>
                 <Button
@@ -292,7 +370,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       setIsMobileMenuOpen(false);
                       onLogout();
                     }}
-                    className="w-full py-3 text-center text-sm font-semibold text-rose-300 hover:text-rose-200 transition-colors rounded-xl border border-rose-900/40 bg-rose-950/20 flex items-center justify-center gap-2"
+                    className="w-full py-3 text-center text-sm font-semibold text-rose-600 hover:text-rose-700 transition-colors rounded-xl border border-rose-200 bg-rose-50/70 hover:bg-rose-50 flex items-center justify-center gap-2 cursor-pointer"
                   >
                     Log Out of Scholar Account
                   </button>
@@ -320,9 +398,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                     setIsMobileMenuOpen(false);
                     if (onLoginClick) onLoginClick();
                   }}
-                  className="w-full py-3 text-center text-sm font-semibold text-slate-200 hover:text-white transition-colors rounded-xl border border-[#2D336B] bg-[#161B3D] flex items-center justify-center gap-2"
+                  className="w-full py-3 text-center text-sm font-semibold text-[#10132D] hover:text-[#6846F5] transition-colors rounded-xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <LogIn className="w-4 h-4 text-slate-400" />
+                  <LogIn className="w-4 h-4 text-[#6846F5]" />
                   Log In to Scholar Account
                 </button>
               </>

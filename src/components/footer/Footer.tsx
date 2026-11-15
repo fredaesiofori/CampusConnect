@@ -29,8 +29,13 @@ export const Footer: React.FC<FooterProps> = ({
   const handleLinkClick = (e: React.MouseEvent, href: string, label: string) => {
     e.preventDefault();
     if (href.startsWith('#')) {
-      const el = document.querySelector(href);
-      if (el) {
+      const el = document.querySelector(href) as HTMLElement | null;
+      if (el && el.offsetParent !== null) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      } else if (href === '#benefits' || href === '#trust-transparency') {
+        const mobileEl = document.getElementById('mobile-why-campus-connect');
+        mobileEl?.scrollIntoView({ behavior: 'smooth' });
+      } else if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
       }
       if (onNavigateSection) {

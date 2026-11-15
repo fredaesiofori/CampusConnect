@@ -176,7 +176,7 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
       {isOpen && (
         <div
           role="listbox"
-          className="absolute z-50 left-0 right-0 mt-1.5 bg-white border border-[#CBD5E1] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in-50 zoom-in-95 duration-150 max-w-full"
+          className="absolute z-50 left-0 w-full min-w-[265px] sm:min-w-[290px] mt-1.5 bg-white border border-[#CBD5E1] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in-50 zoom-in-95 duration-150"
         >
           {/* Search Box with explicit Close Button */}
           <div className="p-2.5 border-b border-slate-100 bg-slate-50/80 sticky top-0 z-10">

@@ -48,9 +48,12 @@ export interface ApplicationsViewProps {
   onOpenTargetList: () => void;
   onExploreDirectory: () => void;
   onBack: () => void;
+  initialStageFilter?: StageFilter;
+  filterNonce?: number;
+  openStartPickerNonce?: number;
 }
 
-type StageFilter = 'all' | ActiveApplicationStage;
+export type StageFilter = 'all' | ActiveApplicationStage;
 
 function getRequiredTasksForOpportunity(item: OpportunityItem): string[] {
   const rawDocs = item.admissionsRequirements?.documents?.length
@@ -106,13 +109,26 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
   onOpenTargetList,
   onExploreDirectory,
   onBack,
+  initialStageFilter = 'all',
+  filterNonce = 0,
+  openStartPickerNonce = 0,
 }) => {
-  const [stageFilter, setStageFilter] = useState<StageFilter>('all');
+  const [stageFilter, setStageFilter] = useState<StageFilter>(initialStageFilter);
   const [showStartModal, setShowStartModal] = useState(false);
   const [pickerQuery, setPickerQuery] = useState('');
   const [pendingStartItem, setPendingStartItem] = useState<OpportunityItem | null>(null);
   const [pendingWithdrawItem, setPendingWithdrawItem] = useState<OpportunityItem | null>(null);
   const [isBusy, setIsBusy] = useState(false);
+
+  React.useEffect(() => {
+    setStageFilter(initialStageFilter);
+  }, [initialStageFilter, filterNonce]);
+
+  React.useEffect(() => {
+    if (openStartPickerNonce > 0) {
+      setShowStartModal(true);
+    }
+  }, [openStartPickerNonce]);
 
   const opportunityMap = useMemo(() => {
     const map = new Map<string, OpportunityItem>();

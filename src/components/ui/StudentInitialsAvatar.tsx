@@ -88,7 +88,7 @@ export const StudentInitialsAvatar: React.FC<StudentInitialsAvatarProps> = ({
     <div
       role="img"
       aria-label={`${labelName} avatar (${initials})`}
-      className={`${SIZE_CLASSES[size]} rounded-full bg-gradient-to-br from-[#10132D] via-[#1C204A] to-[#6846F5] text-white ring-1 ring-[#6846F5]/30 shadow-xs flex items-center justify-center font-display font-bold tracking-tight select-none shrink-0 ${className}`}
+      className={`${SIZE_CLASSES[size]} rounded-full bg-gradient-to-br from-[#5B2EE6] to-[#3B169C] text-white ring-1 ring-[#6846F5]/30 shadow-xs flex items-center justify-center font-display font-bold tracking-tight select-none shrink-0 ${className}`}
     >
       <span className="leading-none">{initials}</span>
     </div>

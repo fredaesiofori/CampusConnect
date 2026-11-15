@@ -176,7 +176,7 @@ export const NotificationBellCenter: React.FC<NotificationBellCenterProps> = ({
         {unreadCount > 0 && (
           <span
             data-testid="notification-unread-badge"
-            className="absolute top-1 right-1 sm:-top-1.5 sm:-right-1.5 min-w-[18px] sm:min-w-[20px] h-[18px] sm:h-5 px-1 rounded-full bg-[#6846F5] text-white text-[10px] font-bold flex items-center justify-center shadow-xs tabular-nums border-2 border-white"
+            className="absolute top-1 right-1 sm:-top-1.5 sm:-right-1.5 min-w-[17px] sm:min-w-[20px] h-[17px] sm:h-5 px-1 rounded-full bg-[#EF4444] sm:bg-[#6846F5] text-white text-[9.5px] sm:text-[10px] font-bold flex items-center justify-center shadow-xs tabular-nums border-2 border-white"
           >
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
