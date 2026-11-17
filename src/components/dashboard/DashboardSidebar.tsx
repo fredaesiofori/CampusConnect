@@ -5,6 +5,7 @@
 
 import React from 'react';
 import {
+  Home,
   LayoutDashboard,
   Building2,
   Award,
@@ -17,6 +18,7 @@ import {
 import { Logo } from '../brand/Logo';
 
 export type DashboardNavTab =
+  | 'home'
   | 'overview'
   | 'universities'
   | 'scholarships'
@@ -75,6 +77,11 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
     icon: React.ReactNode;
     badge?: number;
   }[] = [
+    {
+      id: 'home',
+      label: 'Home',
+      icon: <Home className="w-4 h-4" />,
+    },
     {
       id: 'overview',
       label: 'Dashboard',

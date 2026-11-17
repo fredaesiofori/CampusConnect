@@ -358,13 +358,13 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
   };
 
   return (
-    <div className="space-y-5 animate-in fade-in duration-150">
+    <div className="space-y-4 animate-in fade-in duration-150">
       {/* 1. Dashboard Page Heading */}
       <div className="space-y-0.5">
-        <h2 className="text-2xl sm:text-[28px] font-bold font-display text-[#10132D] tracking-tight leading-tight">
+        <h2 className="text-xl sm:text-2xl font-bold font-display text-[#10132D] tracking-tight leading-tight">
           Dashboard
         </h2>
-        <p className="text-xs sm:text-sm text-[#475569]">
+        <p className="text-xs sm:text-[13px] text-[#475569]">
           Your personal academic journey
         </p>
       </div>
@@ -372,9 +372,9 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
       {/* 2. Compact Personalized Lavender Welcome Banner */}
       <section
         aria-label="Welcome and profile completion"
-        className="rounded-[20px] bg-gradient-to-r from-[#F3EFFF] via-[#F7F4FF] to-[#EEEAFF] border border-[#E6DFFF] px-5 py-4 sm:px-6 sm:py-5 shadow-[0_2px_12px_rgba(104,70,245,0.05)]"
+        className="rounded-[18px] bg-gradient-to-r from-[#F3EFFF] via-[#F7F4FF] to-[#EEEAFF] border border-[#E6DFFF] px-4 py-3.5 sm:px-5 sm:py-4 shadow-[0_2px_12px_rgba(104,70,245,0.05)]"
       >
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-5">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3.5 sm:gap-4">
           {/* Left: Student Initials + Welcome Name + Degree Metadata */}
           <div className="flex items-center gap-3.5 sm:gap-4 min-w-0">
             <StudentInitialsAvatar
@@ -441,45 +441,45 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
       </section>
 
       {/* 3. ROW 1: My Applications (Left ~58%) + My Saved Opportunities (Right ~42%) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
         {/* My Applications Card (Genuinely supported stages only) */}
         <section
           aria-label="My Applications"
-          className="lg:col-span-7 bg-white rounded-2xl border border-[#E6EAF2] p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-4"
+          className="lg:col-span-7 bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-3"
         >
           <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5">
-              <FileText className="w-5 h-5 text-[#6846F5] shrink-0" />
-              <h3 className="text-base sm:text-lg font-bold font-display text-[#10132D]">
+            <div className="flex items-center gap-2">
+              <FileText className="w-[18px] h-[18px] text-[#6846F5] shrink-0" />
+              <h3 className="text-[15px] sm:text-base font-bold font-display text-[#10132D]">
                 My Applications
               </h3>
             </div>
             <button
               type="button"
               onClick={() => onOpenApplicationsFiltered('all')}
-              className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#6846F5] hover:text-[#4E2AD6] transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1 text-xs sm:text-[13px] font-semibold text-[#6846F5] hover:text-[#4E2AD6] transition-colors cursor-pointer"
             >
               <span>View All</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
             {/* Stage 1: In Progress (preparing) */}
             <button
               type="button"
               onClick={() => onOpenApplicationsFiltered('preparing')}
-              className="rounded-xl bg-[#EEF5FF] hover:bg-[#E2EEFF] border border-[#DCE9FE] px-4 py-3.5 text-left transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              className="rounded-xl bg-[#EEF5FF] hover:bg-[#E2EEFF] border border-[#DCE9FE] px-3.5 py-3 text-left transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
             >
-              <div className="flex items-center gap-2.5">
-                <span className="w-8 h-8 rounded-full bg-[#DCE9FE] text-[#2563EB] flex items-center justify-center shrink-0">
-                  <Clock className="w-4 h-4" />
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-full bg-[#DCE9FE] text-[#2563EB] flex items-center justify-center shrink-0">
+                  <Clock className="w-3.5 h-3.5" />
                 </span>
-                <span className="text-2xl font-extrabold font-display text-[#10132D] tabular-nums">
+                <span className="text-xl font-extrabold font-display text-[#10132D] tabular-nums">
                   {counts.preparingApps}
                 </span>
               </div>
-              <p className="text-xs sm:text-[13px] font-semibold text-[#1E293B] mt-2">
+              <p className="text-xs font-semibold text-[#1E293B] mt-1.5">
                 In Progress
               </p>
             </button>
@@ -488,17 +488,17 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
             <button
               type="button"
               onClick={() => onOpenApplicationsFiltered('submitted')}
-              className="rounded-xl bg-[#F4F0FF] hover:bg-[#EBE3FF] border border-[#E6DCFF] px-4 py-3.5 text-left transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              className="rounded-xl bg-[#F4F0FF] hover:bg-[#EBE3FF] border border-[#E6DCFF] px-3.5 py-3 text-left transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
             >
-              <div className="flex items-center gap-2.5">
-                <span className="w-8 h-8 rounded-full bg-[#E6DCFF] text-[#6846F5] flex items-center justify-center shrink-0">
-                  <Send className="w-4 h-4" />
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-full bg-[#E6DCFF] text-[#6846F5] flex items-center justify-center shrink-0">
+                  <Send className="w-3.5 h-3.5" />
                 </span>
-                <span className="text-2xl font-extrabold font-display text-[#10132D] tabular-nums">
+                <span className="text-xl font-extrabold font-display text-[#10132D] tabular-nums">
                   {counts.submittedApps}
                 </span>
               </div>
-              <p className="text-xs sm:text-[13px] font-semibold text-[#1E293B] mt-2">
+              <p className="text-xs font-semibold text-[#1E293B] mt-1.5">
                 Submitted
               </p>
             </button>
@@ -507,17 +507,17 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
             <button
               type="button"
               onClick={() => onOpenApplicationsFiltered('accepted')}
-              className="rounded-xl bg-[#EBF9EE] hover:bg-[#DCF4E2] border border-[#D2F0DA] px-4 py-3.5 text-left transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              className="rounded-xl bg-[#EBF9EE] hover:bg-[#DCF4E2] border border-[#D2F0DA] px-3.5 py-3 text-left transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
             >
-              <div className="flex items-center gap-2.5">
-                <span className="w-8 h-8 rounded-full bg-[#D2F0DA] text-[#16A34A] flex items-center justify-center shrink-0">
-                  <CheckCircle2 className="w-4 h-4" />
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-full bg-[#D2F0DA] text-[#16A34A] flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
                 </span>
-                <span className="text-2xl font-extrabold font-display text-[#10132D] tabular-nums">
+                <span className="text-xl font-extrabold font-display text-[#10132D] tabular-nums">
                   {counts.acceptedApps}
                 </span>
               </div>
-              <p className="text-xs sm:text-[13px] font-semibold text-[#1E293B] mt-2">
+              <p className="text-xs font-semibold text-[#1E293B] mt-1.5">
                 Accepted
               </p>
             </button>
@@ -527,39 +527,39 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
         {/* My Saved Opportunities Card */}
         <section
           aria-label="My Saved Opportunities"
-          className="lg:col-span-5 bg-white rounded-2xl border border-[#E6EAF2] p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-4"
+          className="lg:col-span-5 bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-3"
         >
           <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5">
-              <Bookmark className="w-5 h-5 text-[#6846F5] shrink-0" />
-              <h3 className="text-base sm:text-lg font-bold font-display text-[#10132D]">
+            <div className="flex items-center gap-2">
+              <Bookmark className="w-[18px] h-[18px] text-[#6846F5] shrink-0" />
+              <h3 className="text-[15px] sm:text-base font-bold font-display text-[#10132D]">
                 My Saved Opportunities
               </h3>
             </div>
             <button
               type="button"
               onClick={() => onOpenSavedFiltered('all')}
-              className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#6846F5] hover:text-[#4E2AD6] transition-colors cursor-pointer shrink-0"
+              className="inline-flex items-center gap-1 text-xs sm:text-[13px] font-semibold text-[#6846F5] hover:text-[#4E2AD6] transition-colors cursor-pointer shrink-0"
             >
               <span>View All</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             <button
               type="button"
               onClick={() => onOpenSavedFiltered('universities')}
-              className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-[#E8EAF2] bg-white hover:border-[#C4B5FD] hover:bg-[#FAF8FF] active:scale-[0.99] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              className="w-full flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl border border-[#E8EAF2] bg-white hover:border-[#C4B5FD] hover:bg-[#FAF8FF] active:scale-[0.99] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
             >
-              <div className="flex items-center gap-3 min-w-0">
-                <GraduationCap className="w-5 h-5 text-[#6846F5] shrink-0" />
-                <span className="text-sm font-semibold text-[#10132D] truncate">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <GraduationCap className="w-4 h-4 text-[#6846F5] shrink-0" />
+                <span className="text-xs sm:text-[13px] font-semibold text-[#10132D] truncate">
                   Universities Saved
                 </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <span className="px-2.5 py-0.5 rounded-full bg-[#EFEAFF] text-[#5B2EE6] text-xs font-bold tabular-nums">
+                <span className="px-2 py-0.5 rounded-full bg-[#EFEAFF] text-[#5B2EE6] text-xs font-bold tabular-nums">
                   {counts.savedUnis}
                 </span>
                 <ChevronRight className="w-4 h-4 text-slate-400" />
@@ -569,16 +569,16 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
             <button
               type="button"
               onClick={() => onOpenSavedFiltered('scholarships')}
-              className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-[#E8EAF2] bg-white hover:border-[#C4B5FD] hover:bg-[#FAF8FF] active:scale-[0.99] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              className="w-full flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl border border-[#E8EAF2] bg-white hover:border-[#C4B5FD] hover:bg-[#FAF8FF] active:scale-[0.99] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
             >
-              <div className="flex items-center gap-3 min-w-0">
-                <Award className="w-5 h-5 text-[#6846F5] shrink-0" />
-                <span className="text-sm font-semibold text-[#10132D] truncate">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <Award className="w-4 h-4 text-[#6846F5] shrink-0" />
+                <span className="text-xs sm:text-[13px] font-semibold text-[#10132D] truncate">
                   Scholarships Saved
                 </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <span className="px-2.5 py-0.5 rounded-full bg-[#EFEAFF] text-[#5B2EE6] text-xs font-bold tabular-nums">
+                <span className="px-2 py-0.5 rounded-full bg-[#EFEAFF] text-[#5B2EE6] text-xs font-bold tabular-nums">
                   {counts.savedScholarships}
                 </span>
                 <ChevronRight className="w-4 h-4 text-slate-400" />
@@ -589,11 +589,11 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
       </div>
 
       {/* 4. ROW 2: My Matches for You (Left ~58%) + Upcoming Deadlines (Right ~42%) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
         {/* My Matches for You */}
         <section
           aria-label="My Matches for You"
-          className="lg:col-span-7 bg-white rounded-2xl border border-[#E6EAF2] p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-4"
+          className="lg:col-span-7 bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-3"
         >
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-start gap-2.5 min-w-0">
@@ -733,19 +733,19 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
         {/* Upcoming Deadlines */}
         <section
           aria-label="Upcoming Deadlines"
-          className="lg:col-span-5 bg-white rounded-2xl border border-[#E6EAF2] p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-4"
+          className="lg:col-span-5 bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-3"
         >
           <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5">
-              <Calendar className="w-5 h-5 text-[#6846F5] shrink-0" />
-              <h3 className="text-base sm:text-lg font-bold font-display text-[#10132D]">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-[18px] h-[18px] text-[#6846F5] shrink-0" />
+              <h3 className="text-[15px] sm:text-base font-bold font-display text-[#10132D]">
                 Upcoming Deadlines
               </h3>
             </div>
             <button
               type="button"
               onClick={() => setShowAllDeadlinesModal(true)}
-              className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-[#6846F5] hover:text-[#4E2AD6] transition-colors cursor-pointer shrink-0"
+              className="inline-flex items-center gap-1 text-xs sm:text-[13px] font-semibold text-[#6846F5] hover:text-[#4E2AD6] transition-colors cursor-pointer shrink-0"
             >
               <span>View All</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -753,13 +753,13 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
           </div>
 
           {verifiedUpcomingDeadlines.length > 0 ? (
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               {verifiedUpcomingDeadlines.slice(0, 2).map((entry) => (
                 <button
                   key={entry.opportunity.id}
                   type="button"
                   onClick={() => onOpenOpportunity(entry.opportunity)}
-                  className="w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl border border-[#E8EAF2] bg-white hover:border-[#C4B5FD] hover:bg-[#FAF8FF] active:scale-[0.99] transition-all cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+                  className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl border border-[#E8EAF2] bg-white hover:border-[#C4B5FD] hover:bg-[#FAF8FF] active:scale-[0.99] transition-all cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="w-11 h-11 rounded-xl bg-[#F3EFFF] text-[#5B2EE6] flex flex-col items-center justify-center shrink-0 leading-none">
@@ -805,16 +805,16 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
       </div>
 
       {/* 5. ROW 3: My Goals & Progress (Left ~58%) + Quick Actions (Right ~42%) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
         {/* My Goals & Progress */}
         <section
           aria-label="My Goals and Progress"
-          className="lg:col-span-7 bg-white rounded-2xl border border-[#E6EAF2] p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-4"
+          className="lg:col-span-7 bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-3"
         >
           <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5">
-              <Target className="w-5 h-5 text-[#6846F5] shrink-0" />
-              <h3 className="text-base sm:text-lg font-bold font-display text-[#10132D]">
+            <div className="flex items-center gap-2">
+              <Target className="w-[18px] h-[18px] text-[#6846F5] shrink-0" />
+              <h3 className="text-[15px] sm:text-base font-bold font-display text-[#10132D]">
                 My Goals &amp; Progress
               </h3>
             </div>
@@ -898,34 +898,34 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
         {/* Quick Actions */}
         <section
           aria-label="Quick Actions"
-          className="lg:col-span-5 bg-white rounded-2xl border border-[#E6EAF2] p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-4"
+          className="lg:col-span-5 bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between space-y-3"
         >
-          <div className="flex items-center gap-2.5">
-            <Zap className="w-5 h-5 text-[#6846F5] shrink-0" />
-            <h3 className="text-base sm:text-lg font-bold font-display text-[#10132D]">
+          <div className="flex items-center gap-2">
+            <Zap className="w-[18px] h-[18px] text-[#6846F5] shrink-0" />
+            <h3 className="text-[15px] sm:text-base font-bold font-display text-[#10132D]">
               Quick Actions
             </h3>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <button
               type="button"
-              onClick={() => onOpenApplicationsFiltered('all', true)}
-              className="rounded-xl bg-[#F4F0FF] hover:bg-[#EAE2FF] border border-[#E6DCFF] px-2.5 py-3.5 flex flex-col items-center justify-center gap-2 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              onClick={() => onOpenApplicationsFiltered('all', false)}
+              className="rounded-xl bg-[#F4F0FF] hover:bg-[#EAE2FF] border border-[#E6DCFF] px-2 py-3 flex flex-col items-center justify-center gap-1.5 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
             >
-              <FilePlus2 className="w-5 h-5 text-[#6846F5]" />
-              <span className="text-xs font-semibold text-[#10132D] leading-tight">
-                Start Application
+              <FilePlus2 className="w-[18px] h-[18px] text-[#6846F5]" />
+              <span className="text-[11.5px] font-semibold text-[#10132D] leading-tight">
+                Track Application
               </span>
             </button>
 
             <button
               type="button"
               onClick={() => onNavigate('universities', 'home')}
-              className="rounded-xl bg-[#F4F0FF] hover:bg-[#EAE2FF] border border-[#E6DCFF] px-2.5 py-3.5 flex flex-col items-center justify-center gap-2 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              className="rounded-xl bg-[#F4F0FF] hover:bg-[#EAE2FF] border border-[#E6DCFF] px-2 py-3 flex flex-col items-center justify-center gap-1.5 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
             >
-              <Bookmark className="w-5 h-5 text-[#6846F5]" />
-              <span className="text-xs font-semibold text-[#10132D] leading-tight">
+              <Bookmark className="w-[18px] h-[18px] text-[#6846F5]" />
+              <span className="text-[11.5px] font-semibold text-[#10132D] leading-tight">
                 Save Opportunity
               </span>
             </button>
@@ -933,10 +933,10 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
             <button
               type="button"
               onClick={() => onNavigate('profile', 'home')}
-              className="rounded-xl bg-[#F4F0FF] hover:bg-[#EAE2FF] border border-[#E6DCFF] px-2.5 py-3.5 flex flex-col items-center justify-center gap-2 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              className="rounded-xl bg-[#F4F0FF] hover:bg-[#EAE2FF] border border-[#E6DCFF] px-2 py-3 flex flex-col items-center justify-center gap-1.5 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
             >
-              <Pencil className="w-5 h-5 text-[#6846F5]" />
-              <span className="text-xs font-semibold text-[#10132D] leading-tight">
+              <Pencil className="w-[18px] h-[18px] text-[#6846F5]" />
+              <span className="text-[11.5px] font-semibold text-[#10132D] leading-tight">
                 Update Profile
               </span>
             </button>
@@ -944,10 +944,10 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
             <button
               type="button"
               onClick={handleOpenSetDeadlineModal}
-              className="rounded-xl bg-[#F4F0FF] hover:bg-[#EAE2FF] border border-[#E6DCFF] px-2.5 py-3.5 flex flex-col items-center justify-center gap-2 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+              className="rounded-xl bg-[#F4F0FF] hover:bg-[#EAE2FF] border border-[#E6DCFF] px-2 py-3 flex flex-col items-center justify-center gap-1.5 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
             >
-              <BellRing className="w-5 h-5 text-[#6846F5]" />
-              <span className="text-xs font-semibold text-[#10132D] leading-tight">
+              <BellRing className="w-[18px] h-[18px] text-[#6846F5]" />
+              <span className="text-[11.5px] font-semibold text-[#10132D] leading-tight">
                 Set Deadline
               </span>
             </button>

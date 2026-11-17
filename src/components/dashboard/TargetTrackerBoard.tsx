@@ -203,9 +203,9 @@ export const TargetTrackerBoard: React.FC<TargetTrackerBoardProps> = ({
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-150">
+    <div className="space-y-4 animate-in fade-in duration-150">
       {/* Back Navigation + Header */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         {onBack && (
           <button
             type="button"
@@ -217,12 +217,12 @@ export const TargetTrackerBoard: React.FC<TargetTrackerBoardProps> = ({
           </button>
         )}
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E2E8F0]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-[#E2E8F0]">
           <div>
-            <h2 className="text-2xl font-bold font-display text-[#10132D] tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-bold font-display text-[#10132D] tracking-tight">
               Target List
             </h2>
-            <p className="text-xs sm:text-sm text-[#64748B] mt-0.5">
+            <p className="text-xs sm:text-[13px] text-[#64748B] mt-0.5">
               Organize your shortlist of future study goals with priorities and target intake years.
             </p>
           </div>
@@ -366,9 +366,9 @@ export const TargetTrackerBoard: React.FC<TargetTrackerBoardProps> = ({
             return (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs space-y-4 flex flex-col justify-between"
+                className="bg-white rounded-2xl border border-[#E2E8F0] p-4 shadow-xs space-y-3 flex flex-col justify-between"
               >
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {/* Top Header */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-3 min-w-0">

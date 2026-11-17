@@ -4,9 +4,8 @@
  */
 
 import React from 'react';
-import { ArrowRight, LogIn, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Award, CalendarCheck2, Compass, Globe } from 'lucide-react';
 import { Container } from '../ui/Container';
-import { Button } from '../ui/Button';
 
 export interface FinalCTAProps {
   onCreateAccountClick?: () => void;
@@ -14,85 +13,75 @@ export interface FinalCTAProps {
   className?: string;
 }
 
-export const FinalCTA: React.FC<FinalCTAProps> = ({
-  onCreateAccountClick,
-  onLoginClick,
-  className = '',
-}) => {
+const EDUCATIONAL_BENEFITS = [
+  {
+    title: 'Direct Official Portals',
+    description:
+      'Apply straight through verified university and scholarship websites with zero agent markups.',
+    icon: Globe,
+  },
+  {
+    title: 'Tuition & Waiver Clarity',
+    description:
+      'Compare application fee waivers, scholarships, and test-optional pathways side by side.',
+    icon: Award,
+  },
+  {
+    title: 'Organized Deadlines',
+    description:
+      'Keep intake dates, required records, and shortlisted applications structured in one place.',
+    icon: CalendarCheck2,
+  },
+  {
+    title: 'Goal-Matched Discovery',
+    description:
+      'Filter global institutions by degree level, field of study, funding type, and destination.',
+    icon: Compass,
+  },
+];
+
+export const FinalCTA: React.FC<FinalCTAProps> = ({ className = '' }) => {
   return (
     <section
-      id="cta"
-      aria-label="Call to Action"
-      className={`relative w-full overflow-hidden bg-[#15152F] py-14 sm:py-20 lg:py-24 text-white ${className}`}
+      id="educational-benefits"
+      aria-label="Educational Benefits"
+      className={`w-full bg-white py-7 sm:py-9 border-t border-slate-100 ${className}`}
     >
-      {/* Restrained decorative background shapes with high-contrast accessibility */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-40"
-        aria-hidden="true"
-      >
-        {/* Soft radial glow centered */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[#6846F5]/25 to-[#E7B75C]/10 blur-3xl" />
-        {/* Subtle geometric ring */}
-        <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full border border-white/5" />
-        <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full border border-white/5" />
-      </div>
-
-      <Container size="lg" className="relative z-10 text-center">
-        {/* Restrained Eyebrow */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold tracking-wider uppercase text-[#DDD6FE] mb-4 sm:mb-6">
-          <Sparkles className="w-3.5 h-3.5 text-[#E7B75C]" />
-          <span>START YOUR JOURNEY</span>
+      <Container size="xl">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 mb-5 sm:mb-6">
+          <div>
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#F3F0FF] border border-[#E5DCFF] text-[10.5px] font-bold tracking-wider uppercase text-[#5D35F5] mb-2">
+              Student Advantages
+            </span>
+            <h2 className="text-xl sm:text-2xl font-extrabold font-display tracking-tight text-[#10132D] [text-wrap:balance]">
+              Built to simplify global admissions planning.
+            </h2>
+          </div>
+          <p className="text-xs sm:text-sm text-[#64748B] max-w-md [text-wrap:pretty]">
+            Clear institutional details and planning tools designed for applicants worldwide.
+          </p>
         </div>
 
-        {/* Main Heading */}
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-display tracking-tight text-white [text-wrap:balance]">
-          Your next opportunity starts here.
-        </h2>
-
-        {/* Supporting Text */}
-        <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-[#DDD6FE] max-w-2xl mx-auto leading-relaxed [text-wrap:pretty]">
-          Create your free student account to explore universities worldwide, compare undergraduate and postgraduate admissions, discover scholarships and waiver options, and track your applications with COVA AI.
-        </p>
-
-        {/* Action Controls */}
-        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 sm:gap-4">
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={onCreateAccountClick}
-            rightIcon={<ArrowRight className="w-4 h-4" />}
-            className="w-full sm:w-auto shadow-[0_4px_20px_rgba(104,70,245,0.45)] hover:shadow-[0_6px_24px_rgba(104,70,245,0.6)]"
-          >
-            Create Your Free Account
-          </Button>
-
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={onLoginClick}
-            leftIcon={<LogIn className="w-4 h-4" />}
-            className="w-full sm:w-auto bg-transparent border-white/30 text-white hover:bg-white/10 hover:border-white focus-visible:ring-white"
-          >
-            Log In to Your Account
-          </Button>
-        </div>
-
-        {/* Reassurance Signals */}
-        <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-3.5 sm:gap-6 text-xs text-[#94A3B8]">
-          <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
-            <span>Universities Worldwide</span>
-          </div>
-          <span className="hidden sm:inline text-white/20">·</span>
-          <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
-            <span>Fee Waiver &amp; Test-Optional Filters</span>
-          </div>
-          <span className="hidden sm:inline text-white/20">·</span>
-          <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
-            <span>Application Planning &amp; COVA AI</span>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          {EDUCATIONAL_BENEFITS.map((benefit) => {
+            const IconComponent = benefit.icon;
+            return (
+              <div
+                key={benefit.title}
+                className="rounded-2xl bg-[#FAF8FF] border border-[#EAE4FF] p-4 sm:p-5 flex flex-col items-start gap-2.5 shadow-[0_2px_10px_rgba(91,46,230,0.04)]"
+              >
+                <div className="w-9 h-9 rounded-xl bg-white border border-[#E5DCFF] text-[#5D35F5] flex items-center justify-center shadow-2xs shrink-0">
+                  <IconComponent className="w-4.5 h-4.5" aria-hidden="true" />
+                </div>
+                <h3 className="text-sm font-bold font-display text-[#10132D] leading-snug">
+                  {benefit.title}
+                </h3>
+                <p className="text-xs text-[#64748B] leading-relaxed">
+                  {benefit.description}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </Container>
     </section>

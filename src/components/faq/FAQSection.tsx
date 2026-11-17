@@ -5,14 +5,12 @@
 
 import React, { useState, useId } from 'react';
 import {
-  Plus,
-  Minus,
+  ChevronDown,
+  HelpCircle,
   Sparkles,
   CheckCircle2,
-  MessageCircle,
 } from 'lucide-react';
 import { Container } from '../ui/Container';
-import { Button } from '../ui/Button';
 
 export interface FAQItem {
   id: string;
@@ -92,175 +90,174 @@ export const FAQSection: React.FC<FAQSectionProps> = ({
     <section
       id="faq"
       aria-labelledby="faq-main-heading"
-      className={`relative w-full overflow-hidden bg-white py-14 sm:py-16 lg:py-20 text-[#15152F] border-t border-slate-100 ${className}`}
+      className={`relative w-full overflow-hidden bg-gradient-to-b from-[#F4EFFD] via-[#F2ECFC] to-[#EFE8FB] pt-10 sm:pt-12 lg:pt-14 pb-10 sm:pb-12 text-[#15152F] ${className}`}
     >
-      {/* Subtle geometric background accents */}
-      <div className="absolute inset-0 pointer-events-none opacity-40 overflow-hidden" aria-hidden="true">
-        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#6846F5]/5 blur-3xl" />
-        <div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-[#E7B75C]/10 blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(#6846F50a_1px,transparent_1px)] [background-size:28px_28px] opacity-70" />
+      {/* Organic Soft Lavender Wave Transition from White Above */}
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 1440 56"
+        fill="none"
+        preserveAspectRatio="none"
+        className="pointer-events-none absolute top-0 inset-x-0 w-full h-7 sm:h-10 lg:h-12"
+      >
+        <path
+          d="M0 0 L1440 0 L1440 16 C1160 52 840 6 520 34 C290 54 115 26 0 14 Z"
+          fill="#FFFFFF"
+        />
+      </svg>
+
+      {/* Subtle Soft Lavender Orbs */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute -bottom-24 -left-20 w-72 h-72 rounded-full bg-[#7C4DFF]/8 blur-3xl" />
+        <div className="absolute top-1/3 right-0 w-80 h-80 rounded-full bg-[#FFFFFF]/50 blur-3xl" />
       </div>
 
-      <Container size="lg" className="relative z-10">
-        {/* Header Section */}
-        <div className="mx-auto max-w-2xl text-center space-y-3">
-          <p className="text-xs font-semibold tracking-wider uppercase text-[#6846F5]">
-            Common Admissions Questions
-          </p>
+      <Container size="xl" className="relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-10 items-start">
+          {/* Left Column: Badge + Heading + Subtitle + Curved Gold Underline */}
+          <div className="lg:col-span-5 space-y-3 text-left">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8DFFF] text-[#5D35F5] text-[11px] font-bold tracking-wider uppercase">
+              <HelpCircle className="w-3.5 h-3.5 text-[#5D35F5]" aria-hidden="true" />
+              <span>FAQ</span>
+            </div>
 
-          <h2
-            id="faq-main-heading"
-            className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-display tracking-tight text-[#10132D] [text-wrap:balance]"
-          >
-            Frequently Asked Questions
-          </h2>
+            <h2
+              id="faq-main-heading"
+              className="text-2xl sm:text-3xl lg:text-[34px] font-extrabold font-display tracking-tight text-[#10132D] leading-[1.12] [text-wrap:balance]"
+            >
+              Frequently
+              <br className="hidden sm:inline" /> Asked Questions
+            </h2>
 
-          <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed [text-wrap:pretty]">
-            Clear answers to help you explore universities worldwide, admissions requirements, fee waivers, test-optional pathways, and scholarships.
-          </p>
-        </div>
+            <p className="text-xs sm:text-sm text-[#475569] max-w-sm leading-relaxed [text-wrap:pretty]">
+              Quick answers to common questions about Campus Connect.
+            </p>
 
-        {/* Single-Open Accessible Accordion Container */}
-        <div className="mt-8 sm:mt-10 mx-auto max-w-3xl space-y-3">
-          {FAQ_DATA.map((item, index) => {
-            const isExpanded = expandedId === item.id;
-            const headerId = `${baseId}-header-${item.id}`;
-            const panelId = `${baseId}-panel-${item.id}`;
+            {/* Gold Brush Underline */}
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 148 12"
+              fill="none"
+              className="w-32 sm:w-40 h-2.5 pt-0.5"
+            >
+              <path
+                d="M2 8.5C44 2.5 102 2 146 6"
+                stroke="#F8C555"
+                strokeWidth="3.2"
+                strokeLinecap="round"
+              />
+            </svg>
 
-            return (
-              <div
-                key={item.id}
-                className={`border rounded-2xl transition-all duration-200 overflow-hidden bg-white ${
-                  isExpanded
-                    ? 'border-[#6846F5]/40 shadow-sm ring-1 ring-[#6846F5]/10'
-                    : 'border-slate-200 hover:border-slate-300 hover:shadow-2xs'
-                }`}
-              >
-                <h3>
+            {/* Compact COVA AI & Directory Help Strip */}
+            {(onOpenAssistant || onExploreUniversities) && (
+              <div className="pt-2 flex flex-wrap items-center gap-2.5">
+                {onOpenAssistant && (
                   <button
                     type="button"
-                    id={headerId}
-                    aria-controls={panelId}
-                    aria-expanded={isExpanded}
-                    onClick={() => toggleAccordion(item.id)}
-                    className="w-full min-h-[56px] text-left py-4 px-4 sm:px-6 flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#6846F5] select-none"
+                    onClick={onOpenAssistant}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white hover:bg-[#FAF8FF] border border-[#DDD6FE] text-xs font-bold text-[#5D35F5] shadow-2xs transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
                   >
-                    <span className="flex items-center gap-3 min-w-0">
-                      <span
-                        className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold tabular-nums transition-colors ${
-                          isExpanded
-                            ? 'bg-[#6846F5] text-white'
-                            : 'bg-slate-100 text-slate-600'
-                        }`}
-                      >
-                        {index + 1}
-                      </span>
-                      <span className="text-sm sm:text-base font-bold text-[#10132D] leading-snug">
-                        {item.question}
-                      </span>
-                    </span>
-
-                    <span
-                      className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors duration-200 ${
-                        isExpanded
-                          ? 'bg-[#6846F5]/10 text-[#6846F5]'
-                          : 'bg-slate-50 text-slate-500'
-                      }`}
-                      aria-hidden="true"
-                    >
-                      {isExpanded ? (
-                        <Minus className="w-4 h-4" />
-                      ) : (
-                        <Plus className="w-4 h-4" />
-                      )}
-                    </span>
+                    <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" aria-hidden="true" />
+                    <span>Ask COVA AI</span>
                   </button>
-                </h3>
+                )}
+                {onExploreUniversities && (
+                  <button
+                    type="button"
+                    onClick={onExploreUniversities}
+                    className="inline-flex items-center px-3 py-2 rounded-full text-xs font-semibold text-[#475569] hover:text-[#10132D] hover:bg-white/70 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+                  >
+                    <span>Explore Directory →</span>
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
 
-                {/* Accessible Smooth Accordion Panel */}
+          {/* Right Column: 4 Crisp White Rounded Accordion Cards */}
+          <div className="lg:col-span-7 space-y-2.5 sm:space-y-3">
+            {FAQ_DATA.map((item) => {
+              const isExpanded = expandedId === item.id;
+              const headerId = `${baseId}-header-${item.id}`;
+              const panelId = `${baseId}-panel-${item.id}`;
+
+              return (
                 <div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={headerId}
-                  aria-hidden={!isExpanded}
-                  className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${
+                  key={item.id}
+                  className={`rounded-xl sm:rounded-2xl bg-white border transition-all duration-200 overflow-hidden ${
                     isExpanded
-                      ? 'grid-rows-[1fr] opacity-100 border-t border-slate-100'
-                      : 'grid-rows-[0fr] opacity-0 invisible'
+                      ? 'border-[#C4B5FD] shadow-[0_8px_24px_rgba(91,46,230,0.1)] ring-1 ring-[#6846F5]/10'
+                      : 'border-white shadow-[0_4px_16px_rgba(91,46,230,0.06)] hover:border-[#E5DCFF] hover:shadow-[0_6px_20px_rgba(91,46,230,0.09)]'
                   }`}
                 >
-                  <div className="overflow-hidden">
-                    <div className="p-4 sm:p-6 bg-slate-50/50 space-y-3.5">
-                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed [text-wrap:pretty]">
-                        {item.answer}
-                      </p>
+                  <h3>
+                    <button
+                      type="button"
+                      id={headerId}
+                      aria-controls={panelId}
+                      aria-expanded={isExpanded}
+                      onClick={() => toggleAccordion(item.id)}
+                      className="w-full min-h-[50px] text-left py-3.5 px-4 sm:px-5 flex items-center justify-between gap-3.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#6846F5] select-none"
+                    >
+                      <span className="text-xs sm:text-[14px] font-bold text-[#10132D] leading-snug">
+                        {item.question}
+                      </span>
 
-                      {/* Bullet Highlights */}
-                      {item.highlights && item.highlights.length > 0 && (
-                        <div className="bg-white border border-slate-200/80 rounded-xl p-3.5 space-y-2">
-                          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                            Key Takeaways:
-                          </p>
-                          <ul className="space-y-1.5">
-                            {item.highlights.map((h, i) => (
-                              <li
-                                key={i}
-                                className="text-xs text-slate-600 flex items-start gap-2 leading-snug"
-                              >
-                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                                <span>{h}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                      <span
+                        className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-transform duration-200 ${
+                          isExpanded
+                            ? 'bg-[#F3F0FF] text-[#5D35F5] rotate-180'
+                            : 'text-[#1E293B]'
+                        }`}
+                        aria-hidden="true"
+                      >
+                        <ChevronDown className="w-4 h-4" />
+                      </span>
+                    </button>
+                  </h3>
+
+                  {/* Accessible Smooth Accordion Panel */}
+                  <div
+                    id={panelId}
+                    role="region"
+                    aria-labelledby={headerId}
+                    aria-hidden={!isExpanded}
+                    className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${
+                      isExpanded
+                        ? 'grid-rows-[1fr] opacity-100 border-t border-slate-100'
+                        : 'grid-rows-[0fr] opacity-0 invisible'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="p-4 sm:p-5 bg-[#FAF8FF]/60 space-y-3">
+                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed [text-wrap:pretty]">
+                          {item.answer}
+                        </p>
+
+                        {item.highlights && item.highlights.length > 0 && (
+                          <div className="bg-white border border-[#EAE8F5] rounded-xl p-3 space-y-1.5">
+                            <p className="text-[10.5px] font-bold uppercase tracking-wider text-slate-500">
+                              Key Takeaways:
+                            </p>
+                            <ul className="space-y-1.5">
+                              {item.highlights.map((h, i) => (
+                                <li
+                                  key={i}
+                                  className="text-xs text-slate-600 flex items-start gap-2 leading-snug"
+                                >
+                                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                                  <span>{h}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Bottom Help Banner / Interactive Bridge */}
-        <div className="mt-12 mx-auto max-w-3xl">
-          <div className="rounded-2xl bg-gradient-to-r from-[#15152F] via-[#1A1A3D] to-[#10132D] p-6 sm:p-8 text-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-6 border border-white/10">
-            <div className="space-y-2 text-center sm:text-left">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 text-[#DDD6FE] text-xs font-semibold">
-                <MessageCircle className="w-3.5 h-3.5 text-[#E7B75C]" />
-                <span>HAVE A SPECIFIC QUESTION?</span>
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold font-display text-white">
-                Still have questions about your eligibility?
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-300 max-w-md leading-relaxed">
-                Chat with COVA, our AI admissions and opportunity advisor, to review your background, target destinations, universities, and funding options.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
-              {onOpenAssistant && (
-                <Button
-                  variant="primary"
-                  size="md"
-                  onClick={onOpenAssistant}
-                  className="w-full sm:w-auto bg-[#6846F5] hover:bg-[#5b3adb] text-white font-bold py-2.5 px-5 rounded-xl shadow-md cursor-pointer flex items-center justify-center gap-2"
-                >
-                  <Sparkles className="w-4 h-4 text-[#E7B75C]" />
-                  <span>Ask COVA AI</span>
-                </Button>
-              )}
-              {onExploreUniversities && (
-                <Button
-                  variant="outline"
-                  size="md"
-                  onClick={onExploreUniversities}
-                  className="w-full sm:w-auto bg-transparent hover:bg-white/10 text-white border-white/20 font-semibold py-2.5 px-4 rounded-xl cursor-pointer"
-                >
-                  <span>Explore Directory</span>
-                </Button>
-              )}
-            </div>
+              );
+            })}
           </div>
         </div>
       </Container>

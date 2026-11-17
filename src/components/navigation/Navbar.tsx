@@ -121,14 +121,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full bg-white md:bg-[#10132D] transition-all duration-200 ${
+      className={`sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md transition-all duration-200 ${
         isScrolled
-          ? 'border-b border-slate-200 md:border-[#20254D] shadow-[0_4px_16px_rgba(16,19,45,0.06)] md:shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
-          : 'border-b border-slate-100 md:border-[#1E234A]'
+          ? 'border-b border-slate-200 shadow-[0_4px_16px_rgba(16,19,45,0.06)]'
+          : 'border-b border-slate-100'
       } ${className}`}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20 gap-2 sm:gap-6 lg:gap-8">
+        <div className="flex items-center justify-between h-14 md:h-16 gap-2 sm:gap-5 lg:gap-8">
           {/* Mobile Left Cluster: Hamburger Menu + Brand Wordmark (< md) */}
           <div className="flex md:hidden items-center gap-1.5 min-w-0 flex-1">
             <button
@@ -209,22 +209,22 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </div>
 
-          {/* Desktop & Tablet Zone 1: Brand Wordmark on Far Left (Preserved >= md) */}
+          {/* Desktop & Tablet Zone 1: Brand Wordmark on Far Left */}
           <div className="hidden md:flex items-center shrink-0">
             <a
               href={isLoggedIn ? '#/dashboard' : '#home'}
               onClick={handleLogoClick}
               aria-label={isLoggedIn ? 'Go to Campus Connect Student Dashboard' : 'Campus Connect Home'}
-              className="inline-flex items-center rounded-xl p-1 -m-1 transition-opacity duration-150 hover:opacity-90 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8065FF] cursor-pointer"
+              className="inline-flex items-center rounded-xl p-1 -m-1 transition-opacity duration-150 hover:opacity-90 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] cursor-pointer"
             >
-              <Logo size="md" variant="dark" showWordmark={true} />
+              <Logo size="sm" variant="light" iconShape="circle" showWordmark={true} />
             </a>
           </div>
 
           {/* Zone 2: Navigation Links Across Top (Desktop & Tablet) */}
           <nav
             aria-label="Main Navigation"
-            className="hidden md:flex items-center gap-6 lg:gap-10"
+            className="hidden md:flex items-center gap-5 lg:gap-8"
           >
             {defaultNavLinks.map((link) => {
               const isActive = activeLinkId === link.id;
@@ -233,17 +233,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                   key={link.id}
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link)}
-                  className={`text-xs lg:text-sm font-medium transition-colors duration-150 py-1.5 lg:py-2 relative whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8065FF] rounded ${
+                  className={`text-xs lg:text-[13px] font-medium transition-colors duration-150 py-1.5 relative whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] rounded ${
                     isActive
-                      ? 'text-white font-semibold'
-                      : 'text-slate-300 hover:text-white'
+                      ? 'text-[#5D35F5] font-semibold'
+                      : 'text-[#475569] hover:text-[#10132D]'
                   }`}
                 >
                   {link.label}
                   {isActive && (
                     <span
                       aria-hidden="true"
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#8065FF] rounded-full"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#6846F5] rounded-full"
                     />
                   )}
                 </a>
@@ -252,30 +252,50 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Zone 3: Actions on Far Right (Desktop & Tablet) */}
-          <div className="hidden md:flex items-center gap-2.5 lg:gap-4 shrink-0">
+          <div className="hidden md:flex items-center gap-2 lg:gap-3 shrink-0">
             {isLoggedIn ? (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5">
+                <NotificationBellCenter
+                  notifications={notifications}
+                  onMarkAsRead={onMarkNotificationRead || (() => {})}
+                  onMarkAllRead={onMarkAllNotificationsRead || (() => {})}
+                  onDeleteNotification={onDeleteNotification || (() => {})}
+                  onClearAllNotifications={onClearAllNotifications || (() => {})}
+                  onNavigateNotification={
+                    onNavigateNotification ||
+                    (() => {
+                      if (onExploreHubClick) onExploreHubClick();
+                    })
+                  }
+                  onOpenNotificationSettings={
+                    onOpenNotificationSettings ||
+                    (() => {
+                      if (onExploreHubClick) onExploreHubClick();
+                    })
+                  }
+                />
+
                 {onExploreHubClick && (
                   <button
                     type="button"
                     onClick={onExploreHubClick}
-                    className="text-xs font-semibold text-white bg-[#6846F5] hover:bg-[#5835E5] px-3.5 py-2 rounded-xl transition-colors flex items-center gap-1.5 shadow-[0_2px_10px_rgba(104,70,245,0.4)] cursor-pointer"
+                    className="text-xs font-semibold text-white bg-[#6846F5] hover:bg-[#5835E5] px-3.5 py-2 rounded-xl transition-colors flex items-center gap-1.5 shadow-[0_2px_10px_rgba(104,70,245,0.3)] cursor-pointer whitespace-nowrap"
                   >
                     <Compass className="w-3.5 h-3.5 text-[#E7B75C]" />
                     <span>Open Student Hub</span>
                   </button>
                 )}
 
-                <div className="flex items-center gap-2 pl-2 border-l border-[#20254D]">
+                <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
                   <StudentInitialsAvatar fullName={userName} email={userEmail} size="sm" />
-                  <span className="text-xs text-slate-300 font-medium truncate max-w-[130px]">
+                  <span className="text-xs text-[#10132D] font-semibold truncate max-w-[120px]">
                     {userName || userEmail}
                   </span>
                   {onLogout && (
                     <button
                       type="button"
                       onClick={onLogout}
-                      className="text-xs text-slate-400 hover:text-rose-300 transition-colors cursor-pointer px-1 py-1"
+                      className="text-xs text-slate-500 hover:text-rose-600 transition-colors cursor-pointer px-1.5 py-1 whitespace-nowrap"
                     >
                       Log Out
                     </button>
@@ -284,25 +304,21 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
             ) : (
               <>
-                {/* "Log In" Link */}
                 <button
                   type="button"
                   onClick={onLoginClick}
-                  className="text-xs lg:text-sm font-medium text-slate-300 hover:text-white transition-colors duration-150 py-1.5 px-2.5 lg:py-2 lg:px-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8065FF] cursor-pointer"
+                  className="text-xs lg:text-[13px] font-semibold text-[#10132D] hover:text-[#5D35F5] border border-slate-300 hover:border-[#6846F5] bg-white transition-colors duration-150 py-1.5 px-4 lg:px-5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] cursor-pointer whitespace-nowrap"
                 >
                   Log In
                 </button>
 
-                {/* Violet "Get Started Free →" Button */}
-                <Button
-                  variant="primary"
-                  size="sm"
+                <button
+                  type="button"
                   onClick={onGetStartedClick}
-                  rightIcon={<ArrowRight className="w-3.5 h-3.5 lg:w-4 lg:h-4" />}
-                  className="bg-[#6846F5] hover:bg-[#5835E5] text-white shadow-[0_4px_16px_rgba(104,70,245,0.4)] px-3.5 py-2 lg:px-5 lg:py-2.5 rounded-lg lg:rounded-xl text-xs lg:text-sm font-medium"
+                  className="bg-gradient-to-r from-[#5B2EE6] via-[#6846F5] to-[#7B3FE4] hover:from-[#4E23D4] hover:to-[#6B31D6] text-white shadow-[0_4px_14px_rgba(91,46,230,0.3)] px-4 lg:px-5 py-1.5 rounded-full text-xs lg:text-[13px] font-semibold transition-all duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] cursor-pointer whitespace-nowrap"
                 >
-                  Get Started Free
-                </Button>
+                  Create Free Account
+                </button>
               </>
             )}
           </div>
@@ -313,7 +329,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {isMobileMenuOpen && (
         <div
           id="mobile-nav-panel"
-          className="md:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-white border-t border-slate-100 overflow-y-auto animate-in fade-in slide-in-from-top-2 duration-150 flex flex-col justify-between overscroll-contain pb-safe"
+          className="md:hidden fixed inset-x-0 top-14 bottom-0 z-40 bg-white border-t border-slate-100 overflow-y-auto animate-in fade-in slide-in-from-top-2 duration-150 flex flex-col justify-between overscroll-contain pb-safe"
         >
           <div className="px-4 py-4 space-y-1.5">
             <div className="text-[11px] font-bold uppercase tracking-wider text-[#64748B] px-3 pb-2">

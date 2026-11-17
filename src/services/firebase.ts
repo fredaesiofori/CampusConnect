@@ -19,6 +19,13 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
   deleteUser,
+  GoogleAuthProvider,
+  signInWithPopup,
+  linkWithCredential,
+  OAuthCredential,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
   User as FirebaseUser,
   UserCredential,
 } from 'firebase/auth';
@@ -92,6 +99,43 @@ export function handleFirestoreError(
     path,
   };
   console.warn('Firestore Warning/Notice: ', JSON.stringify(errInfo));
+}
+
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+    return false;
+  }
+  const proto = Object.getPrototypeOf(value);
+  return proto === Object.prototype || proto === null;
+}
+
+/**
+ * Recursively omits `undefined` object keys and array entries before writing
+ * to Cloud Firestore so optional fields never trigger `Unsupported field value: undefined`.
+ * Preserves `null`, empty strings `""`, booleans, numbers, arrays, and non-plain objects.
+ */
+export function sanitizeFirestoreData<T>(value: T): T {
+  if (value === undefined) {
+    return undefined as unknown as T;
+  }
+  if (Array.isArray(value)) {
+    const cleanedArray = value
+      .map((item) => sanitizeFirestoreData(item))
+      .filter((item) => item !== undefined);
+    return cleanedArray as unknown as T;
+  }
+  if (isPlainObject(value)) {
+    const cleanedObj: Record<string, unknown> = {};
+    for (const [key, val] of Object.entries(value)) {
+      if (val === undefined) continue;
+      const sanitizedVal = sanitizeFirestoreData(val);
+      if (sanitizedVal !== undefined) {
+        cleanedObj[key] = sanitizedVal;
+      }
+    }
+    return cleanedObj as T;
+  }
+  return value;
 }
 
 export interface FirebaseConnectionStatus {
@@ -205,13 +249,75 @@ export async function registerWithFirebase(
   }
 }
 
+export async function applyFirebaseAuthPersistence(rememberMe: boolean): Promise<void> {
+  try {
+    await setPersistence(
+      auth,
+      rememberMe ? browserLocalPersistence : browserSessionPersistence
+    );
+  } catch (err) {
+    console.warn('Firebase auth persistence fallback notice:', err);
+  }
+}
+
 export async function loginWithFirebase(
   email: string,
-  pass: string
+  pass: string,
+  rememberMe = true
 ): Promise<{ userCredential?: UserCredential; error?: any }> {
   try {
+    await applyFirebaseAuthPersistence(rememberMe);
     const cred = await signInWithEmailAndPassword(auth, email, pass);
     return { userCredential: cred };
+  } catch (err: any) {
+    return { error: err };
+  }
+}
+
+export async function loginWithGoogleFirebase(rememberMe = true): Promise<{
+  userCredential?: UserCredential;
+  error?: any;
+  pendingCredential?: OAuthCredential | null;
+  pendingEmail?: string;
+}> {
+  try {
+    await applyFirebaseAuthPersistence(rememberMe);
+    const provider = new GoogleAuthProvider();
+    provider.addScope('email');
+    provider.addScope('profile');
+    provider.setCustomParameters({ prompt: 'select_account' });
+    const cred = await signInWithPopup(auth, provider);
+    return { userCredential: cred };
+  } catch (err: any) {
+    const code = err?.code || '';
+    let pendingCredential: OAuthCredential | null = null;
+    let pendingEmail: string | undefined;
+    if (code === 'auth/account-exists-with-different-credential') {
+      pendingCredential = GoogleAuthProvider.credentialFromError(err);
+      pendingEmail =
+        typeof err?.customData?.email === 'string'
+          ? err.customData.email
+          : undefined;
+    }
+    return {
+      error: err,
+      pendingCredential,
+      pendingEmail,
+    };
+  }
+}
+
+export async function linkPendingCredentialWithPasswordFirebase(
+  email: string,
+  password: string,
+  pendingCredential: OAuthCredential,
+  rememberMe = true
+): Promise<{ userCredential?: UserCredential; error?: any }> {
+  try {
+    await applyFirebaseAuthPersistence(rememberMe);
+    const existingCred = await signInWithEmailAndPassword(auth, email, password);
+    const linkedCred = await linkWithCredential(existingCred.user, pendingCredential);
+    return { userCredential: linkedCred };
   } catch (err: any) {
     return { error: err };
   }
@@ -432,7 +538,7 @@ export async function seedVerifiedOpportunitiesToFirestore(): Promise<number> {
         const docRef = doc(db, 'opportunities', item.id);
         batch.set(
           docRef,
-          {
+          sanitizeFirestoreData({
             id: item.id,
             officialName: item.officialName,
             institution: item.institution,
@@ -468,7 +574,7 @@ export async function seedVerifiedOpportunitiesToFirestore(): Promise<number> {
             officialUrl: item.officialUrl || item.sourceUrl || item.officialWebsite,
             logo: item.logo,
             lastSyncedAt: new Date().toISOString(),
-          },
+          }),
           { merge: true }
         );
       }
@@ -657,18 +763,16 @@ export async function saveStudentProfileWithStatusToFirestore(
   const path = `users/${targetUid}`;
   try {
     const userDocRef = doc(db, 'users', targetUid);
-    const cleanProfile = Object.fromEntries(
-      Object.entries(profile).filter(([, val]) => val !== undefined)
-    );
+    const cleanProfile = sanitizeFirestoreData(profile);
     await setDoc(
       userDocRef,
-      {
+      sanitizeFirestoreData({
         uid: targetUid,
         email: userEmail || fbUser.email || '',
         ...(fullName ? { fullName: fullName.slice(0, 120) } : {}),
         profile: cleanProfile,
         updatedAt: new Date().toISOString(),
-      },
+      }),
       { merge: true }
     );
     return { success: true, persistedToCloud: true };
@@ -682,19 +786,25 @@ export async function saveStudentProfileWithStatusToFirestore(
   }
 }
 
-export async function fetchStudentProfileFromFirestore(
+export interface FirestoreStudentProfileDocResult {
+  exists: boolean;
+  failed: boolean;
+  data: {
+    fullName?: string;
+    profile?: StudentProfile;
+    savedOpportunities?: string[];
+    applicationTracker?: Record<string, any>;
+    targetList?: Record<string, any>;
+    activeApplications?: Record<string, any>;
+  } | null;
+}
+
+export async function fetchStudentProfileDocFromFirestore(
   userId: string
-): Promise<{
-  fullName?: string;
-  profile?: StudentProfile;
-  savedOpportunities?: string[];
-  applicationTracker?: Record<string, any>;
-  targetList?: Record<string, any>;
-  activeApplications?: Record<string, any>;
-} | null> {
+): Promise<FirestoreStudentProfileDocResult> {
   const fbUser = auth.currentUser;
   if (!fbUser || !userId || fbUser.uid !== userId) {
-    return null;
+    return { exists: false, failed: true, data: null };
   }
   const targetUid = fbUser.uid;
   const path = `users/${targetUid}`;
@@ -707,13 +817,27 @@ export async function fetchStudentProfileFromFirestore(
       docSnap = await getDoc(userDocRef);
     }
     if (docSnap.exists()) {
-      return docSnap.data() as any;
+      return { exists: true, failed: false, data: docSnap.data() as any };
     }
-    return null;
+    return { exists: false, failed: false, data: null };
   } catch (error) {
     handleFirestoreError(error, OperationType.GET, path);
-    return null;
+    return { exists: false, failed: true, data: null };
   }
+}
+
+export async function fetchStudentProfileFromFirestore(
+  userId: string
+): Promise<{
+  fullName?: string;
+  profile?: StudentProfile;
+  savedOpportunities?: string[];
+  applicationTracker?: Record<string, any>;
+  targetList?: Record<string, any>;
+  activeApplications?: Record<string, any>;
+} | null> {
+  const res = await fetchStudentProfileDocFromFirestore(userId);
+  return res.data;
 }
 
 // 9. Saved Opportunities, Target List, and Active Applications Firestore Persistence
@@ -771,7 +895,7 @@ export async function syncStudentDashboardListsToFirestore(
       updateData.activeApplications = payload.activeApplications;
     }
 
-    await setDoc(userDocRef, updateData, { merge: true });
+    await setDoc(userDocRef, sanitizeFirestoreData(updateData), { merge: true });
     return { success: true, persistedToCloud: true };
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);
@@ -897,12 +1021,12 @@ export async function syncScholarshipAlertToFirestore(payload: {
     const userDocRef = doc(db, 'users', targetUid);
     await setDoc(
       userDocRef,
-      {
+      sanitizeFirestoreData({
         uid: targetUid,
         email: fbUser.email || cleanEmail,
         scholarshipAlerts: alertData,
         updatedAt,
-      },
+      }),
       { merge: true }
     );
     return { success: true, persistedToCloud: true };
@@ -1118,7 +1242,10 @@ export async function saveCovaConversationToFirestore(
       messages: compactMessages,
     };
 
-    await setDoc(doc(db, 'users', targetUid, 'covaConversations', convId), payload);
+    await setDoc(
+      doc(db, 'users', targetUid, 'covaConversations', convId),
+      sanitizeFirestoreData(payload)
+    );
     return true;
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);
@@ -1384,7 +1511,10 @@ export async function batchCreateUserNotificationsInFirestore(
       const chunk = toInsert.slice(i, i + 50);
       const batch = writeBatch(db);
       for (const item of chunk) {
-        batch.set(doc(db, 'users', targetUid, 'notifications', item.id), item);
+        batch.set(
+          doc(db, 'users', targetUid, 'notifications', item.id),
+          sanitizeFirestoreData(item)
+        );
       }
       await batch.commit();
       written += chunk.length;
@@ -1542,16 +1672,19 @@ export async function saveStudentPushTokenToFirestore(
   const targetUid = fbUser.uid;
   const path = `users/${targetUid}/pushTokens/${record.id}`;
   try {
-    await setDoc(doc(db, 'users', targetUid, 'pushTokens', record.id), {
-      id: record.id,
-      userId: targetUid,
-      token: String(record.token).slice(0, 1024),
-      platform: String(record.platform || 'web').slice(0, 64),
-      permissionState: record.permissionState,
-      enabled: Boolean(record.enabled),
-      createdAt: String(record.createdAt || new Date().toISOString()).slice(0, 64),
-      updatedAt: String(record.updatedAt || new Date().toISOString()).slice(0, 64),
-    });
+    await setDoc(
+      doc(db, 'users', targetUid, 'pushTokens', record.id),
+      sanitizeFirestoreData({
+        id: record.id,
+        userId: targetUid,
+        token: String(record.token).slice(0, 1024),
+        platform: String(record.platform || 'web').slice(0, 64),
+        permissionState: record.permissionState,
+        enabled: Boolean(record.enabled),
+        createdAt: String(record.createdAt || new Date().toISOString()).slice(0, 64),
+        updatedAt: String(record.updatedAt || new Date().toISOString()).slice(0, 64),
+      })
+    );
     return true;
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);

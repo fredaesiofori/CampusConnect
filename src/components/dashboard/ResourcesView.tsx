@@ -860,13 +860,13 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTab })
       : RESOURCE_CATEGORIES.find((cat) => cat.id === selectedCategory)?.title || null;
 
   return (
-    <div className="space-y-5 sm:space-y-6 animate-in fade-in duration-150">
+    <div className="space-y-4 animate-in fade-in duration-150">
       {/* 1. Page Heading */}
-      <div className="space-y-1">
-        <h2 className="text-2xl sm:text-[28px] font-bold font-display text-[#10132D] tracking-tight leading-tight">
+      <div className="space-y-0.5">
+        <h2 className="text-xl sm:text-2xl font-bold font-display text-[#10132D] tracking-tight leading-tight">
           Resources
         </h2>
-        <p className="text-xs sm:text-sm text-[#475569]">
+        <p className="text-xs sm:text-[13px] text-[#475569]">
           Essential tools, guides and materials to support your study journey.
         </p>
       </div>
@@ -874,7 +874,7 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTab })
       {/* 2. Student Resources Hub Hero Banner */}
       <section
         aria-label="Student Resources Hub"
-        className="relative overflow-hidden rounded-[20px] sm:rounded-[22px] bg-gradient-to-r from-[#240B63] via-[#461FB8] to-[#6846F5] text-white shadow-[0_14px_34px_rgba(67,24,184,0.24)]"
+        className="relative overflow-hidden rounded-[18px] sm:rounded-[20px] bg-gradient-to-r from-[#240B63] via-[#461FB8] to-[#6846F5] text-white shadow-[0_12px_28px_rgba(67,24,184,0.22)]"
       >
         {/* Warm gold decorative bottom-right curve matching reference */}
         <svg
@@ -895,19 +895,19 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTab })
           />
         </svg>
 
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 items-center gap-4 px-5 py-6 sm:px-8 sm:py-7 lg:py-8">
-          <div className="md:col-span-7 space-y-2.5 max-w-xl">
-            <h3 className="text-2xl sm:text-[32px] lg:text-[34px] font-extrabold font-display tracking-tight leading-[1.12]">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 items-center gap-3 px-4 py-4 sm:px-6 sm:py-5">
+          <div className="md:col-span-7 space-y-1.5 max-w-xl">
+            <h3 className="text-xl sm:text-2xl lg:text-[28px] font-extrabold font-display tracking-tight leading-[1.15]">
               Student{' '}
               <span className="text-[#F8C555] italic">Resources</span>{' '}
               Hub
             </h3>
-            <p className="text-xs sm:text-sm lg:text-[15px] text-white/90 leading-relaxed max-w-md">
+            <p className="text-xs sm:text-[13.5px] text-white/90 leading-relaxed max-w-md">
               Guides, templates, test prep and practical tools for scholarships, admissions and studying abroad.
             </p>
           </div>
 
-          <div className="md:col-span-5 flex justify-center md:justify-end items-end -mb-3 md:-mb-7">
+          <div className="md:col-span-5 flex justify-center md:justify-end items-end -mb-3 md:-mb-5">
             <StudyDeskBannerArtwork />
           </div>
         </div>
@@ -956,7 +956,7 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTab })
       </form>
 
       {/* 4. Four Horizontal Category Cards */}
-      <section aria-label="Resource categories" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+      <section aria-label="Resource categories" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {RESOURCE_CATEGORIES.map((category) => {
           const isSelected = selectedCategory === category.id;
           return (
@@ -965,7 +965,7 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTab })
               type="button"
               onClick={() => handleCategoryClick(category.id)}
               aria-pressed={isSelected}
-              className={`group text-left rounded-2xl border px-4 py-4 flex items-center gap-3.5 transition-all duration-150 cursor-pointer hover:-translate-y-0.5 hover:shadow-md active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] ${
+              className={`group text-left rounded-2xl border px-3.5 py-3 flex items-center gap-3 transition-all duration-150 cursor-pointer hover:-translate-y-0.5 hover:shadow-md active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] ${
                 category.cardBg
               } ${category.cardHoverBg} ${
                 isSelected
@@ -974,15 +974,15 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTab })
               }`}
             >
               <div
-                className={`w-11 h-11 rounded-xl ${category.iconBg} ${category.iconColor} flex items-center justify-center shrink-0 shadow-xs`}
+                className={`w-10 h-10 rounded-xl ${category.iconBg} ${category.iconColor} flex items-center justify-center shrink-0 shadow-xs`}
               >
                 {category.icon}
               </div>
               <div className="min-w-0">
-                <h3 className="text-sm font-bold text-[#10132D] leading-snug">
+                <h3 className="text-[13px] font-bold text-[#10132D] leading-snug">
                   {category.title}
                 </h3>
-                <p className="text-xs text-[#475569] leading-snug mt-0.5">
+                <p className="text-[11.5px] text-[#475569] leading-snug mt-0.5">
                   {category.subtitle}
                 </p>
               </div>
@@ -992,11 +992,11 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTab })
       </section>
 
       {/* 5. Two-Column Section: Popular Resources (Left) + Useful Tools (Right) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
         {/* Left: Popular Resources Card (~66%) */}
         <section
           aria-label="Popular Resources"
-          className="lg:col-span-8 bg-white rounded-2xl border border-[#E6EAF2] p-4 sm:p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-4"
+          className="lg:col-span-8 bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-3"
         >
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2 min-w-0">
@@ -1076,7 +1076,7 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({ onNavigateToTab })
         {/* Right: Useful Tools Card (~34%) */}
         <aside
           aria-label="Useful Tools"
-          className="lg:col-span-4 bg-white rounded-2xl border border-[#E6EAF2] p-4 sm:p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-3"
+          className="lg:col-span-4 bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-2.5"
         >
           <div className="flex items-center gap-2">
             <Rocket className="w-5 h-5 text-[#6846F5] shrink-0" aria-hidden="true" />

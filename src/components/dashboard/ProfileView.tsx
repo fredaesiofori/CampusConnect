@@ -421,14 +421,14 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   };
 
   return (
-    <div className="space-y-5 animate-in fade-in duration-150">
+    <div className="space-y-4 animate-in fade-in duration-150">
       {/* Page Title & Navigation Link */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
         <div className="space-y-0.5">
-          <h2 className="text-2xl sm:text-[28px] font-bold font-display text-[#10132D] tracking-tight leading-tight">
+          <h2 className="text-xl sm:text-2xl font-bold font-display text-[#10132D] tracking-tight leading-tight">
             My Profile
           </h2>
-          <p className="text-xs sm:text-sm text-[#475569]">
+          <p className="text-xs sm:text-[13px] text-[#475569]">
             Manage your information and study preferences.
           </p>
         </div>
@@ -446,7 +446,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
       {/* 1. Large Purple Profile Header Banner */}
       <section
         aria-label="Student profile summary"
-        className="relative overflow-hidden rounded-[20px] sm:rounded-[22px] bg-gradient-to-r from-[#2A0E72] via-[#5422D0] to-[#7448FA] text-white shadow-[0_14px_34px_rgba(74,28,185,0.22)] px-5 py-6 sm:px-8 sm:py-7"
+        className="relative overflow-hidden rounded-[18px] sm:rounded-[20px] bg-gradient-to-r from-[#2A0E72] via-[#5422D0] to-[#7448FA] text-white shadow-[0_12px_30px_rgba(74,28,185,0.2)] px-4 py-4 sm:px-6 sm:py-5"
       >
         {/* Subtle luminous curved background waves matching reference */}
         <svg
@@ -491,14 +491,14 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           </defs>
         </svg>
 
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           {/* Left: Circular Initials Badge + Student Info */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 min-w-0">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3.5 sm:gap-5 min-w-0">
             <div className="relative self-start sm:self-center shrink-0">
               <div
                 role="img"
                 aria-label={`${displayName} initials badge (${initials})`}
-                className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-[#3D1A94] to-[#210A5C] border-[2.5px] border-white/95 shadow-[0_10px_24px_rgba(17,6,51,0.38)] flex items-center justify-center font-display font-bold text-2xl sm:text-3xl tracking-tight text-white select-none"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-[#3D1A94] to-[#210A5C] border-[2.5px] border-white/95 shadow-[0_8px_20px_rgba(17,6,51,0.34)] flex items-center justify-center font-display font-bold text-xl sm:text-2xl tracking-tight text-white select-none"
               >
                 {initials}
               </div>
@@ -507,19 +507,19 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 onClick={() => openSectionForEdit('personal', 'prof-fullname')}
                 title="Edit personal identity"
                 aria-label="Edit personal identity"
-                className="absolute -bottom-0.5 -right-0.5 w-8 h-8 rounded-full bg-white text-[#5B2EE6] hover:bg-[#F5F2FF] hover:scale-105 active:scale-95 shadow-md flex items-center justify-center transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="absolute -bottom-0.5 -right-0.5 w-7 h-7 rounded-full bg-white text-[#5B2EE6] hover:bg-[#F5F2FF] hover:scale-105 active:scale-95 shadow-md flex items-center justify-center transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
-                <Pencil className="w-3.5 h-3.5" />
+                <Pencil className="w-3 h-3" />
               </button>
             </div>
 
-            <div className="hidden sm:block w-px h-14 bg-white/25 shrink-0" />
+            <div className="hidden sm:block w-px h-12 bg-white/25 shrink-0" />
 
-            <div className="min-w-0 space-y-1">
-              <h3 className="text-xl sm:text-2xl font-bold font-display text-white tracking-tight truncate">
+            <div className="min-w-0 space-y-0.5">
+              <h3 className="text-lg sm:text-xl font-bold font-display text-white tracking-tight truncate">
                 {displayName}
               </h3>
-              <p className="text-xs sm:text-sm text-white/90 truncate">
+              <p className="text-xs sm:text-[13px] text-white/90 truncate">
                 {bannerSubtitle}
               </p>
               <div className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-white/90 pt-0.5">
@@ -613,13 +613,13 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
 
       {/* 3A. TAB: OVERVIEW (Two-Column Layout Matching Reference) */}
       {activeSubTab === 'overview' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start animate-in fade-in duration-150">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start animate-in fade-in duration-150">
           {/* Left Column (~42%) */}
-          <div className="lg:col-span-5 space-y-5">
+          <div className="lg:col-span-5 space-y-4">
             {/* About Me Card */}
             <section
               aria-label="About Me"
-              className="bg-white rounded-2xl border border-[#E6EAF2] p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-3"
+              className="bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-2.5"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5">
@@ -665,12 +665,12 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             {/* Profile Checklist Card */}
             <section
               aria-label="Profile Checklist"
-              className="bg-white rounded-2xl border border-[#E6EAF2] p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-4"
+              className="bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-3"
             >
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2.5">
-                  <ClipboardCheck className="w-5 h-5 text-[#6846F5] shrink-0" />
-                  <h3 className="text-base font-bold font-display text-[#10132D]">
+                <div className="flex items-center gap-2">
+                  <ClipboardCheck className="w-[18px] h-[18px] text-[#6846F5] shrink-0" />
+                  <h3 className="text-[15px] font-bold font-display text-[#10132D]">
                     Profile Checklist
                   </h3>
                 </div>
@@ -686,13 +686,13 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 />
               </div>
 
-              <div className="space-y-2.5">
+              <div className="space-y-2">
                 {checklistItems.map((item) => (
                   <button
                     key={item.id}
                     type="button"
                     onClick={() => openSectionForEdit(item.targetTab, item.focusFieldId)}
-                    className="w-full flex items-center justify-between gap-3 px-3.5 py-3 rounded-xl border border-[#EAEDF4] bg-white hover:border-[#C4B5FD] hover:bg-[#FAF8FF] active:scale-[0.99] transition-all cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+                    className="w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl border border-[#EAEDF4] bg-white hover:border-[#C4B5FD] hover:bg-[#FAF8FF] active:scale-[0.99] transition-all cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       {item.completed ? (
@@ -718,11 +718,11 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           </div>
 
           {/* Right Column (~58%) */}
-          <div className="lg:col-span-7 space-y-5">
+          <div className="lg:col-span-7 space-y-4">
             {/* Academic Summary Card */}
             <section
               aria-label="Academic Summary"
-              className="bg-white rounded-2xl border border-[#E6EAF2] p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-4"
+              className="bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-3"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5">
@@ -804,7 +804,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             {/* Study Preferences Card */}
             <section
               aria-label="Study Preferences"
-              className="bg-white rounded-2xl border border-[#E6EAF2] p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-4"
+              className="bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-3"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5">
@@ -885,23 +885,23 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             {/* Quick Actions Card */}
             <section
               aria-label="Quick Actions"
-              className="bg-white rounded-2xl border border-[#E6EAF2] p-5 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-3.5"
+              className="bg-white rounded-2xl border border-[#E6EAF2] p-4 shadow-[0_2px_12px_rgba(15,23,42,0.03)] space-y-3"
             >
-              <div className="flex items-center gap-2.5">
-                <Zap className="w-5 h-5 text-[#6846F5] shrink-0" />
-                <h3 className="text-base font-bold font-display text-[#10132D]">
+              <div className="flex items-center gap-2">
+                <Zap className="w-[18px] h-[18px] text-[#6846F5] shrink-0" />
+                <h3 className="text-[15px] font-bold font-display text-[#10132D]">
                   Quick Actions
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 <button
                   type="button"
                   onClick={() => openSectionForEdit('personal', 'prof-fullname')}
-                  className="rounded-xl bg-[#F4F0FF] hover:bg-[#ECE5FF] border border-[#E6DCFF] px-4 py-4 flex flex-col items-center justify-center gap-2 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+                  className="rounded-xl bg-[#F4F0FF] hover:bg-[#ECE5FF] border border-[#E6DCFF] px-3 py-3 flex flex-col items-center justify-center gap-1.5 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
                 >
-                  <Pencil className="w-5 h-5 text-[#6846F5]" />
-                  <span className="text-xs sm:text-sm font-semibold text-[#1E293B]">
+                  <Pencil className="w-[18px] h-[18px] text-[#6846F5]" />
+                  <span className="text-xs font-semibold text-[#1E293B]">
                     Edit Profile
                   </span>
                 </button>
@@ -909,10 +909,10 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 <button
                   type="button"
                   onClick={() => openSectionForEdit('preferences', 'prof-intended-degree')}
-                  className="rounded-xl bg-[#F4F0FF] hover:bg-[#ECE5FF] border border-[#E6DCFF] px-4 py-4 flex flex-col items-center justify-center gap-2 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+                  className="rounded-xl bg-[#F4F0FF] hover:bg-[#ECE5FF] border border-[#E6DCFF] px-3 py-3 flex flex-col items-center justify-center gap-1.5 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
                 >
-                  <Target className="w-5 h-5 text-[#6846F5]" />
-                  <span className="text-xs sm:text-sm font-semibold text-[#1E293B]">
+                  <Target className="w-[18px] h-[18px] text-[#6846F5]" />
+                  <span className="text-xs font-semibold text-[#1E293B]">
                     Update Preferences
                   </span>
                 </button>
@@ -920,10 +920,10 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setActiveSubTab('security')}
-                  className="rounded-xl bg-[#F4F0FF] hover:bg-[#ECE5FF] border border-[#E6DCFF] px-4 py-4 flex flex-col items-center justify-center gap-2 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+                  className="rounded-xl bg-[#F4F0FF] hover:bg-[#ECE5FF] border border-[#E6DCFF] px-3 py-3 flex flex-col items-center justify-center gap-1.5 text-center transition-all duration-150 hover:-translate-y-0.5 hover:shadow-sm active:scale-[0.985] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
                 >
-                  <Lock className="w-5 h-5 text-[#6846F5]" />
-                  <span className="text-xs sm:text-sm font-semibold text-[#1E293B]">
+                  <Lock className="w-[18px] h-[18px] text-[#6846F5]" />
+                  <span className="text-xs font-semibold text-[#1E293B]">
                     Change Password
                   </span>
                 </button>

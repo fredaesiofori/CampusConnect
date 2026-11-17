@@ -229,9 +229,9 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-150">
+    <div className="space-y-4 animate-in fade-in duration-150">
       {/* Back Navigation + Header */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         <button
           type="button"
           onClick={onBack}
@@ -241,12 +241,12 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
           <span>Back to Dashboard Overview</span>
         </button>
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E2E8F0]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-[#E2E8F0]">
           <div>
-            <h2 className="text-2xl font-bold font-display text-[#10132D] tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-bold font-display text-[#10132D] tracking-tight">
               Applications
             </h2>
-            <p className="text-xs sm:text-sm text-[#64748B] mt-0.5">
+            <p className="text-xs sm:text-[13px] text-[#64748B] mt-0.5">
               Manage active applications you have started, verify deadlines, and complete required tasks.
             </p>
           </div>
@@ -266,7 +266,7 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
       </div>
 
       {/* Stage Filter & Summary Strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
         {[
           { id: 'all' as const, label: 'All Active', count: stageCounts.all, accent: 'text-[#10132D]' },
           { id: 'preparing' as const, label: 'Preparing', count: stageCounts.preparing, accent: 'text-[#6846F5]' },
@@ -279,14 +279,14 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
               key={stat.id}
               type="button"
               onClick={() => setStageFilter(stat.id)}
-              className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
+              className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                 isSelected
                   ? 'bg-[#F0EDFF] border-[#6846F5] shadow-xs'
                   : 'bg-white border-[#E2E8F0] hover:border-slate-300'
               }`}
             >
               <span className="text-[11px] font-semibold text-slate-500 block">{stat.label}</span>
-              <span className={`text-xl font-bold font-display mt-0.5 block ${stat.accent}`}>
+              <span className={`text-lg font-bold font-display mt-0.5 block ${stat.accent}`}>
                 {stat.count}
               </span>
             </button>
@@ -359,7 +359,7 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
             return (
               <div
                 key={app.opportunityId}
-                className="bg-white rounded-2xl border border-[#E2E8F0] p-5 sm:p-6 shadow-xs space-y-5"
+                className="bg-white rounded-2xl border border-[#E2E8F0] p-4 shadow-xs space-y-3.5"
               >
                 {/* Top Header */}
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">

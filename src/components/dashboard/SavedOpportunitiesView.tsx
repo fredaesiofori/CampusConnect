@@ -138,9 +138,9 @@ export const SavedOpportunitiesView: React.FC<SavedOpportunitiesViewProps> = ({
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-150">
+    <div className="space-y-4 animate-in fade-in duration-150">
       {/* Back Navigation + Header */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         <button
           type="button"
           onClick={onBack}
@@ -150,12 +150,12 @@ export const SavedOpportunitiesView: React.FC<SavedOpportunitiesViewProps> = ({
           <span>Back to Dashboard Overview</span>
         </button>
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E2E8F0]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-[#E2E8F0]">
           <div>
-            <h2 className="text-2xl font-bold font-display text-[#10132D] tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-bold font-display text-[#10132D] tracking-tight">
               Saved Opportunities
             </h2>
-            <p className="text-xs sm:text-sm text-[#64748B] mt-0.5">
+            <p className="text-xs sm:text-[13px] text-[#64748B] mt-0.5">
               Personal bookmarks of universities and scholarships for future reference.
             </p>
           </div>
@@ -306,7 +306,7 @@ export const SavedOpportunitiesView: React.FC<SavedOpportunitiesViewProps> = ({
                     onOpenDetails(item);
                   }
                 }}
-                className="bg-white rounded-2xl border border-[#E2E8F0] p-5 shadow-xs hover:shadow-md hover:border-[#6846F5]/35 active:scale-[0.99] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out flex flex-col justify-between space-y-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] group"
+                className="bg-white rounded-2xl border border-[#E2E8F0] p-4 shadow-xs hover:shadow-md hover:border-[#6846F5]/35 active:scale-[0.99] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out flex flex-col justify-between space-y-3 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] group"
               >
                 <div className="space-y-3">
                   {/* Top Row: Logo + Title + Category */}

@@ -7,6 +7,8 @@ import {
   auth,
   registerWithFirebase,
   loginWithFirebase,
+  loginWithGoogleFirebase,
+  linkPendingCredentialWithPasswordFirebase,
   logoutFromFirebase,
   sendFirebasePasswordReset,
   changeFirebasePassword,
@@ -17,6 +19,7 @@ import {
   syncSavedOpportunitiesToFirestore,
   syncStudentDashboardListsToFirestore,
   fetchStudentProfileFromFirestore,
+  fetchStudentProfileDocFromFirestore,
   subscribeToFirebaseAuthState,
   updateFirebaseUserEmail,
   updateFirebaseDisplayName,
@@ -24,7 +27,7 @@ import {
   checkCurrentUserIsAdmin,
 } from './firebase';
 import { getCountryByName } from '../data/countries';
-import { User as FirebaseUser } from 'firebase/auth';
+import { User as FirebaseUser, OAuthCredential } from 'firebase/auth';
 
 export type ReminderIntervalDays = 30 | 14 | 7 | 3 | 1 | 0;
 
@@ -324,6 +327,35 @@ function hydrateTargetList(rawTargets?: Record<string, any>): Record<string, Tar
   return result;
 }
 
+function normalizeActiveApplicationEntry(
+  oppId: string,
+  val: Record<string, any>
+): ActiveApplicationItem {
+  const stage: ActiveApplicationStage =
+    val.stage === 'submitted' || val.stage === 'accepted' ? val.stage : 'preparing';
+  const entry: ActiveApplicationItem = {
+    opportunityId: val.opportunityId || oppId,
+    stage,
+    completedTasks: Array.isArray(val.completedTasks)
+      ? Array.from(new Set(val.completedTasks.filter((t: unknown): t is string => typeof t === 'string')))
+      : [],
+    startedAt: typeof val.startedAt === 'string' ? val.startedAt : new Date().toISOString(),
+    updatedAt: typeof val.updatedAt === 'string' ? val.updatedAt : new Date().toISOString(),
+  };
+
+  if (typeof val.notes === 'string') {
+    entry.notes = val.notes;
+  }
+  if (typeof val.followUpDate === 'string' && val.followUpDate.trim()) {
+    entry.followUpDate = val.followUpDate.trim();
+  }
+  if (typeof val.requirementSnapshot === 'string') {
+    entry.requirementSnapshot = val.requirementSnapshot;
+  }
+
+  return entry;
+}
+
 function hydrateActiveApplications(
   rawActive?: Record<string, any>,
   legacyTracker?: Record<string, any>
@@ -333,20 +365,7 @@ function hydrateActiveApplications(
   if (rawActive && typeof rawActive === 'object') {
     Object.entries(rawActive).forEach(([oppId, val]) => {
       if (!oppId || !val || typeof val !== 'object') return;
-      const stage: ActiveApplicationStage =
-        val.stage === 'submitted' || val.stage === 'accepted' ? val.stage : 'preparing';
-      result[oppId] = {
-        opportunityId: val.opportunityId || oppId,
-        stage,
-        completedTasks: Array.isArray(val.completedTasks)
-          ? val.completedTasks.filter((t: unknown): t is string => typeof t === 'string')
-          : [],
-        notes: typeof val.notes === 'string' ? val.notes : undefined,
-        followUpDate: typeof val.followUpDate === 'string' && val.followUpDate.trim() ? val.followUpDate.trim() : undefined,
-        requirementSnapshot: typeof val.requirementSnapshot === 'string' ? val.requirementSnapshot : undefined,
-        startedAt: typeof val.startedAt === 'string' ? val.startedAt : new Date().toISOString(),
-        updatedAt: typeof val.updatedAt === 'string' ? val.updatedAt : new Date().toISOString(),
-      };
+      result[oppId] = normalizeActiveApplicationEntry(oppId, val);
     });
   }
 
@@ -371,6 +390,146 @@ function hydrateActiveApplications(
   return result;
 }
 
+
+async function hydrateAuthenticatedUser(
+  fbUser: FirebaseUser,
+  options: {
+    persistIfMissingProfile: boolean;
+    forceAdminRefresh?: boolean;
+    fallbackEmail?: string;
+  }
+): Promise<{ user: User; isNewStudent: boolean }> {
+  const uid = fbUser.uid;
+  const resolvedEmail = (fbUser.email || options.fallbackEmail || '').trim().toLowerCase();
+
+  const [fsResult, isAdminClaim] = await Promise.all([
+    fetchStudentProfileDocFromFirestore(uid),
+    checkCurrentUserIsAdmin(Boolean(options.forceAdminRefresh)),
+  ]);
+
+  const cachedSameUser = (() => {
+    const cached = getCachedUser();
+    return cached && cached.id === uid ? cached : null;
+  })();
+
+  const firestoreData = fsResult.data;
+  const hasStoredProfile = Boolean(fsResult.exists && firestoreData && firestoreData.profile);
+
+  let resolvedProfile: StudentProfile;
+  let resolvedSaved: string[] = [];
+  let resolvedTracker: Record<string, 'saved' | 'preparing' | 'submitted' | 'accepted'> = {};
+  let resolvedTargets: Record<string, TargetListItem> = {};
+  let resolvedActiveApps: Record<string, ActiveApplicationItem> = {};
+  let resolvedFullName = (fbUser.displayName || '').trim() || 'Scholar';
+  let isNewStudent = false;
+
+  if (hasStoredProfile && firestoreData?.profile) {
+    resolvedFullName =
+      (firestoreData.fullName && firestoreData.fullName.trim()) ||
+      (fbUser.displayName && fbUser.displayName.trim()) ||
+      'Scholar';
+    resolvedProfile = {
+      ...firestoreData.profile,
+      notificationPreferences: normalizeNotificationPreferences(
+        firestoreData.profile.notificationPreferences
+      ),
+      ...(Array.isArray(firestoreData.profile.dismissedNotificationIds)
+        ? {
+            dismissedNotificationIds: Array.from(
+              new Set(
+                firestoreData.profile.dismissedNotificationIds.filter(
+                  (id): id is string => typeof id === 'string' && id.length > 0
+                )
+              )
+            ).slice(-150),
+          }
+        : {}),
+    };
+    resolvedSaved = Array.from(new Set(firestoreData.savedOpportunities || []));
+    resolvedTracker = firestoreData.applicationTracker || {};
+    resolvedTargets = hydrateTargetList(firestoreData.targetList);
+    resolvedActiveApps = hydrateActiveApplications(
+      firestoreData.activeApplications,
+      resolvedTracker
+    );
+    isNewStudent = !resolvedProfile.onboardingCompleted;
+  } else if (fsResult.failed && cachedSameUser) {
+    resolvedFullName =
+      cachedSameUser.fullName || (fbUser.displayName && fbUser.displayName.trim()) || 'Scholar';
+    resolvedProfile = cachedSameUser.profile || {
+      nationality: 'Ghanaian',
+      countryOfResidence: 'Ghana',
+      preferredDestinations: ['Ghana', 'United States', 'United Kingdom', 'Canada'],
+      educationLevel: 'Senior High School / WASSCE',
+      intendedDegree: 'Undergraduate',
+      fieldOfStudy: 'Computer Science & Engineering',
+      graduationYear: '2026',
+      onboardingCompleted: false,
+      notificationPreferences: { ...DEFAULT_NOTIFICATION_PREFERENCES },
+    };
+    resolvedSaved = Array.from(new Set(cachedSameUser.savedOpportunities || []));
+    resolvedTracker = cachedSameUser.applicationTracker || {};
+    resolvedTargets = hydrateTargetList(cachedSameUser.targetList);
+    resolvedActiveApps = hydrateActiveApplications(
+      cachedSameUser.activeApplications,
+      resolvedTracker
+    );
+    isNewStudent = !resolvedProfile.onboardingCompleted;
+  } else {
+    resolvedFullName =
+      (firestoreData?.fullName && firestoreData.fullName.trim()) ||
+      (fbUser.displayName && fbUser.displayName.trim()) ||
+      'Scholar';
+    resolvedProfile = {
+      nationality: 'Ghanaian',
+      countryOfResidence: 'Ghana',
+      preferredDestinations: ['Ghana', 'United States', 'United Kingdom', 'Canada'],
+      educationLevel: 'Senior High School / WASSCE',
+      intendedDegree: 'Undergraduate',
+      fieldOfStudy: 'Computer Science & Engineering',
+      graduationYear: '2026',
+      onboardingCompleted: false,
+      notificationPreferences: { ...DEFAULT_NOTIFICATION_PREFERENCES },
+    };
+    resolvedSaved = Array.from(new Set(firestoreData?.savedOpportunities || []));
+    resolvedTracker = firestoreData?.applicationTracker || {};
+    resolvedTargets = hydrateTargetList(firestoreData?.targetList);
+    resolvedActiveApps = hydrateActiveApplications(
+      firestoreData?.activeApplications,
+      resolvedTracker
+    );
+    isNewStudent = true;
+
+    // Only write initial profile if Firestore confirmed the profile does not exist yet
+    if (options.persistIfMissingProfile && !fsResult.failed) {
+      await saveStudentProfileToFirestore(
+        uid,
+        resolvedEmail,
+        resolvedProfile,
+        resolvedFullName
+      ).catch(() => {});
+    }
+  }
+
+  const hydratedUser: User = {
+    id: uid,
+    fullName: resolvedFullName,
+    email: resolvedEmail,
+    country: resolvedProfile.countryOfResidence || 'Ghana',
+    countryCode: getCountryByName(resolvedProfile.countryOfResidence || '')?.code || 'GH',
+    degreeLevel: resolvedProfile.intendedDegree || 'Undergraduate',
+    studyField: resolvedProfile.fieldOfStudy || 'Computer Science & Engineering',
+    createdAt: fbUser.metadata.creationTime || new Date().toISOString(),
+    savedOpportunities: resolvedSaved,
+    applicationTracker: resolvedTracker,
+    targetList: resolvedTargets,
+    activeApplications: resolvedActiveApps,
+    profile: resolvedProfile,
+    isAdmin: isAdminClaim,
+  };
+
+  return { user: hydratedUser, isNewStudent };
+}
 
 let activeInMemoryUser: User | null = null;
 
@@ -489,7 +648,8 @@ export const authService = {
   // 2. User Login with Firebase Auth
   async login(
     email: string,
-    password: string
+    password: string,
+    rememberMe = true
   ): Promise<{
     success: boolean;
     user?: User;
@@ -507,7 +667,11 @@ export const authService = {
     }
 
     // Call real Firebase Auth API
-    const { userCredential, error: fbError } = await loginWithFirebase(normalizedEmail, password);
+    const { userCredential, error: fbError } = await loginWithFirebase(
+      normalizedEmail,
+      password,
+      rememberMe
+    );
 
     if (fbError || !userCredential) {
       const code = fbError?.code || '';
@@ -520,7 +684,11 @@ export const authService = {
             'Email and password sign-in is temporarily unavailable. Please try again shortly or contact support.',
         };
       }
-      if (code === 'auth/user-not-found' || code === 'auth/invalid-credential') {
+      if (
+        code === 'auth/user-not-found' ||
+        code === 'auth/invalid-credential' ||
+        code === 'auth/invalid-login-credentials'
+      ) {
         return {
           success: false,
           error:
@@ -540,90 +708,189 @@ export const authService = {
             'Access temporarily disabled due to multiple failed login attempts. Please reset your password or try again in a few moments.',
         };
       }
+      if (code === 'auth/network-request-failed') {
+        return {
+          success: false,
+          error: 'Network error while signing in. Please check your internet connection and try again.',
+        };
+      }
       return {
         success: false,
         error: fbError?.message || 'Login failed. Please verify your credentials and network connection.',
       };
     }
 
-    const fbUser = userCredential.user;
-    const uid = fbUser.uid;
-
-    // Fetch existing private profile, saved opportunities & tracker from Firestore
-    const firestoreData = await fetchStudentProfileFromFirestore(uid);
-
-    let resolvedProfile: StudentProfile;
-    let resolvedSaved: string[] = [];
-    let resolvedTracker: Record<string, 'saved' | 'preparing' | 'submitted' | 'accepted'> = {};
-    let resolvedTargets: Record<string, TargetListItem> = {};
-    let resolvedActiveApps: Record<string, ActiveApplicationItem> = {};
-    let resolvedFullName = fbUser.displayName || 'Scholar';
-
-    if (firestoreData && firestoreData.profile) {
-      resolvedFullName = firestoreData.fullName || fbUser.displayName || 'Scholar';
-      resolvedProfile = {
-        ...firestoreData.profile,
-        notificationPreferences: normalizeNotificationPreferences(firestoreData.profile.notificationPreferences),
-        ...(Array.isArray(firestoreData.profile.dismissedNotificationIds)
-          ? {
-              dismissedNotificationIds: Array.from(
-                new Set(
-                  firestoreData.profile.dismissedNotificationIds.filter(
-                    (id): id is string => typeof id === 'string' && id.length > 0
-                  )
-                )
-              ).slice(-150),
-            }
-          : {}),
-      };
-      resolvedSaved = Array.from(new Set(firestoreData.savedOpportunities || []));
-      resolvedTracker = firestoreData.applicationTracker || {};
-      resolvedTargets = hydrateTargetList(firestoreData.targetList);
-      resolvedActiveApps = hydrateActiveApplications(firestoreData.activeApplications, resolvedTracker);
-    } else {
-      // First-time sync for newly created Firebase user
-      resolvedProfile = {
-        nationality: 'Ghanaian',
-        countryOfResidence: 'Ghana',
-        preferredDestinations: ['Ghana', 'United States', 'United Kingdom', 'Canada'],
-        educationLevel: 'Senior High School / WASSCE',
-        intendedDegree: 'Undergraduate',
-        fieldOfStudy: 'Computer Science & Engineering',
-        graduationYear: '2026',
-        onboardingCompleted: false,
-        notificationPreferences: { ...DEFAULT_NOTIFICATION_PREFERENCES },
-      };
-      await saveStudentProfileToFirestore(
-        uid,
-        normalizedEmail,
-        resolvedProfile,
-        resolvedFullName
-      ).catch(() => {});
-    }
-
-    const isAdminClaim = await checkCurrentUserIsAdmin(true);
-
-    const loggedInUser: User = {
-      id: uid,
-      fullName: resolvedFullName,
-      email: normalizedEmail,
-      country: resolvedProfile.countryOfResidence || 'Ghana',
-      countryCode: getCountryByName(resolvedProfile.countryOfResidence || '')?.code || 'GH',
-      degreeLevel: resolvedProfile.intendedDegree || 'Undergraduate',
-      studyField: resolvedProfile.fieldOfStudy || 'Computer Science & Engineering',
-      createdAt: fbUser.metadata.creationTime || new Date().toISOString(),
-      savedOpportunities: resolvedSaved,
-      applicationTracker: resolvedTracker,
-      targetList: resolvedTargets,
-      activeApplications: resolvedActiveApps,
-      profile: resolvedProfile,
-      isAdmin: isAdminClaim,
-    };
+    const { user: loggedInUser } = await hydrateAuthenticatedUser(userCredential.user, {
+      persistIfMissingProfile: true,
+      forceAdminRefresh: true,
+      fallbackEmail: normalizedEmail,
+    });
 
     activeInMemoryUser = loggedInUser;
     setCachedUser(loggedInUser);
 
     return { success: true, user: loggedInUser };
+  },
+
+  // 2b. Google Sign-In with Firebase Auth (Popup flow for iframe & web compatibility)
+  async loginWithGoogle(rememberMe = true): Promise<{
+    success: boolean;
+    user?: User;
+    isNewStudent?: boolean;
+    error?: string;
+    cancelled?: boolean;
+    isConsoleSetupRequired?: boolean;
+    requiresAccountLinking?: boolean;
+    pendingCredential?: OAuthCredential | null;
+    pendingEmail?: string;
+  }> {
+    cleanupLegacyLocalStorage();
+
+    const { userCredential, error: fbError, pendingCredential, pendingEmail } =
+      await loginWithGoogleFirebase(rememberMe);
+
+    if (fbError || !userCredential) {
+      const code = fbError?.code || '';
+
+      if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
+        return {
+          success: false,
+          cancelled: true,
+          error: 'Google sign-in was cancelled before completion.',
+        };
+      }
+
+      if (code === 'auth/popup-blocked') {
+        return {
+          success: false,
+          error:
+            'Your browser blocked the Google sign-in popup. Please allow popups for this site and try again.',
+        };
+      }
+
+      if (code === 'auth/account-exists-with-different-credential') {
+        return {
+          success: false,
+          requiresAccountLinking: Boolean(pendingCredential),
+          pendingCredential: pendingCredential || null,
+          pendingEmail,
+          error: pendingEmail
+            ? `An account already exists for ${pendingEmail} with an email and password. Enter your password below to sign in and link Google Sign-In.`
+            : 'An account already exists with this email using email and password. Enter your password below to verify and link Google Sign-In.',
+        };
+      }
+
+      if (code === 'auth/operation-not-allowed') {
+        return {
+          success: false,
+          isConsoleSetupRequired: true,
+          error:
+            'Google Sign-In is not currently enabled in Firebase Authentication. Please sign in with your email and password or contact support.',
+        };
+      }
+
+      if (code === 'auth/unauthorized-domain') {
+        return {
+          success: false,
+          isConsoleSetupRequired: true,
+          error:
+            'This domain is not yet listed under Firebase Authorized Domains for Google Sign-In. Please sign in with your email and password or add this domain in Firebase Console.',
+        };
+      }
+
+      if (code === 'auth/network-request-failed') {
+        return {
+          success: false,
+          error:
+            'Network error while connecting to Google. Please check your connection and try again.',
+        };
+      }
+
+      return {
+        success: false,
+        error: fbError?.message || 'Google sign-in failed. Please try again.',
+      };
+    }
+
+    const { user: loggedInUser, isNewStudent } = await hydrateAuthenticatedUser(
+      userCredential.user,
+      {
+        persistIfMissingProfile: true,
+        forceAdminRefresh: true,
+      }
+    );
+
+    activeInMemoryUser = loggedInUser;
+    setCachedUser(loggedInUser);
+
+    return {
+      success: true,
+      user: loggedInUser,
+      isNewStudent,
+    };
+  },
+
+  // 2c. Complete secure account linking when Google sign-in matches an existing Email/Password account
+  async completeGoogleAccountLinking(params: {
+    email: string;
+    password: string;
+    pendingCredential: OAuthCredential;
+    rememberMe?: boolean;
+  }): Promise<{
+    success: boolean;
+    user?: User;
+    error?: string;
+  }> {
+    cleanupLegacyLocalStorage();
+    const normalizedEmail = (params.email || '').trim().toLowerCase();
+    if (!normalizedEmail || !params.password) {
+      return {
+        success: false,
+        error: 'Please enter your existing account email and password to link Google Sign-In.',
+      };
+    }
+
+    const { userCredential, error: fbError } = await linkPendingCredentialWithPasswordFirebase(
+      normalizedEmail,
+      params.password,
+      params.pendingCredential,
+      params.rememberMe ?? true
+    );
+
+    if (fbError || !userCredential) {
+      const code = fbError?.code || '';
+      if (
+        code === 'auth/wrong-password' ||
+        code === 'auth/invalid-credential' ||
+        code === 'auth/invalid-login-credentials'
+      ) {
+        return {
+          success: false,
+          error: 'Incorrect password. Please enter the password for your existing Campus Connect account to link Google.',
+        };
+      }
+      if (code === 'auth/too-many-requests') {
+        return {
+          success: false,
+          error: 'Too many verification attempts. Please wait a moment or use Forgot Password.',
+        };
+      }
+      return {
+        success: false,
+        error: fbError?.message || 'Could not link your Google account right now. Please try again.',
+      };
+    }
+
+    const { user: linkedUser } = await hydrateAuthenticatedUser(userCredential.user, {
+      persistIfMissingProfile: true,
+      forceAdminRefresh: true,
+      fallbackEmail: normalizedEmail,
+    });
+
+    activeInMemoryUser = linkedUser;
+    setCachedUser(linkedUser);
+
+    return { success: true, user: linkedUser };
   },
 
   // 3. User Logout
@@ -896,17 +1163,34 @@ export const authService = {
 
     if (status === 'preparing' || status === 'submitted' || status === 'accepted') {
       const now = new Date().toISOString();
-      const existing = currentUser.activeApplications?.[opportunityId];
+      const cleanedPrevApps: Record<string, ActiveApplicationItem> = {};
+      Object.entries(currentUser.activeApplications || {}).forEach(([id, entry]) => {
+        if (entry && typeof entry === 'object') {
+          cleanedPrevApps[id] = normalizeActiveApplicationEntry(id, entry);
+        }
+      });
+
+      const existing = cleanedPrevApps[opportunityId];
+      const nextAppItem: ActiveApplicationItem = {
+        opportunityId,
+        stage: status,
+        completedTasks: existing?.completedTasks || [],
+        startedAt: existing?.startedAt || now,
+        updatedAt: now,
+      };
+      if (typeof existing?.notes === 'string') {
+        nextAppItem.notes = existing.notes;
+      }
+      if (typeof existing?.followUpDate === 'string' && existing.followUpDate.trim()) {
+        nextAppItem.followUpDate = existing.followUpDate.trim();
+      }
+      if (typeof existing?.requirementSnapshot === 'string') {
+        nextAppItem.requirementSnapshot = existing.requirementSnapshot;
+      }
+
       currentUser.activeApplications = {
-        ...(currentUser.activeApplications || {}),
-        [opportunityId]: {
-          opportunityId,
-          stage: status,
-          completedTasks: existing?.completedTasks || [],
-          notes: existing?.notes,
-          startedAt: existing?.startedAt || now,
-          updatedAt: now,
-        },
+        ...cleanedPrevApps,
+        [opportunityId]: nextAppItem,
       };
     }
 
@@ -1249,21 +1533,34 @@ export const authService = {
     }
 
     const prevApps = { ...(currentUser.activeApplications || {}) };
+    const cleanedApps: Record<string, ActiveApplicationItem> = {};
+    Object.entries(prevApps).forEach(([id, entry]) => {
+      if (entry && typeof entry === 'object') {
+        cleanedApps[id] = normalizeActiveApplicationEntry(id, entry);
+      }
+    });
     const prevTracker = { ...(currentUser.applicationTracker || {}) };
-    const existing = prevApps[opportunityId];
+    const existing = cleanedApps[opportunityId];
     const now = new Date().toISOString();
 
     const resolvedFollowUp =
       patch.followUpDate === null
         ? undefined
-        : patch.followUpDate !== undefined
+        : typeof patch.followUpDate === 'string'
         ? patch.followUpDate.trim() || undefined
         : existing?.followUpDate;
 
     const resolvedSnapshot =
-      patch.requirementSnapshot !== undefined
+      typeof patch.requirementSnapshot === 'string'
         ? patch.requirementSnapshot
         : existing?.requirementSnapshot;
+
+    const resolvedNotes =
+      typeof patch.notes === 'string'
+        ? patch.notes
+        : typeof existing?.notes === 'string'
+        ? existing.notes
+        : undefined;
 
     const nextStage: ActiveApplicationStage = patch.stage || existing?.stage || 'preparing';
     const nextItem: ActiveApplicationItem = {
@@ -1273,18 +1570,20 @@ export const authService = {
         patch.completedTasks !== undefined
           ? Array.from(new Set(patch.completedTasks))
           : existing?.completedTasks || [],
-      ...(patch.notes !== undefined
-        ? { notes: patch.notes }
-        : existing?.notes !== undefined
-        ? { notes: existing.notes }
-        : {}),
-      ...(resolvedFollowUp ? { followUpDate: resolvedFollowUp } : {}),
-      ...(resolvedSnapshot ? { requirementSnapshot: resolvedSnapshot } : {}),
       startedAt: existing?.startedAt || now,
       updatedAt: now,
     };
+    if (resolvedNotes !== undefined) {
+      nextItem.notes = resolvedNotes;
+    }
+    if (resolvedFollowUp !== undefined) {
+      nextItem.followUpDate = resolvedFollowUp;
+    }
+    if (resolvedSnapshot !== undefined) {
+      nextItem.requirementSnapshot = resolvedSnapshot;
+    }
 
-    const nextApps = { ...prevApps, [opportunityId]: nextItem };
+    const nextApps = { ...cleanedApps, [opportunityId]: nextItem };
     const nextTracker = { ...prevTracker, [opportunityId]: nextStage };
 
     currentUser.activeApplications = nextApps;
@@ -1820,58 +2119,10 @@ export const authService = {
   initAuthListener(onUserChanged: (user: User | null) => void): () => void {
     return subscribeToFirebaseAuthState(async (fbUser: FirebaseUser | null) => {
       if (fbUser) {
-        const uid = fbUser.uid;
-        // Fetch fresh Firestore user data and server-minted admin custom claim
-        const [firestoreData, isAdminClaim] = await Promise.all([
-          fetchStudentProfileFromFirestore(uid),
-          checkCurrentUserIsAdmin(false),
-        ]);
-
-        const rawProfile: StudentProfile = firestoreData?.profile || {
-          nationality: 'Ghanaian',
-          countryOfResidence: 'Ghana',
-          preferredDestinations: ['Ghana', 'United States', 'United Kingdom', 'Canada'],
-          educationLevel: 'Senior High School / WASSCE',
-          intendedDegree: 'Undergraduate',
-          fieldOfStudy: 'Computer Science & Engineering',
-          graduationYear: '2026',
-          onboardingCompleted: false,
-        };
-        const profile: StudentProfile = {
-          ...rawProfile,
-          notificationPreferences: normalizeNotificationPreferences(rawProfile.notificationPreferences),
-          ...(Array.isArray(rawProfile.dismissedNotificationIds)
-            ? {
-                dismissedNotificationIds: Array.from(
-                  new Set(
-                    rawProfile.dismissedNotificationIds.filter(
-                      (id): id is string => typeof id === 'string' && id.length > 0
-                    )
-                  )
-                ).slice(-150),
-              }
-            : {}),
-        };
-
-        const syncedUser: User = {
-          id: uid,
-          fullName: firestoreData?.fullName || fbUser.displayName || 'Scholar',
-          email: fbUser.email || '',
-          country: profile.countryOfResidence || 'Ghana',
-          countryCode: getCountryByName(profile.countryOfResidence || '')?.code || 'GH',
-          degreeLevel: profile.intendedDegree || 'Undergraduate',
-          studyField: profile.fieldOfStudy || 'Computer Science & Engineering',
-          createdAt: fbUser.metadata.creationTime || new Date().toISOString(),
-          savedOpportunities: Array.from(new Set(firestoreData?.savedOpportunities || [])),
-          applicationTracker: firestoreData?.applicationTracker || {},
-          targetList: hydrateTargetList(firestoreData?.targetList),
-          activeApplications: hydrateActiveApplications(
-            firestoreData?.activeApplications,
-            firestoreData?.applicationTracker
-          ),
-          profile,
-          isAdmin: isAdminClaim,
-        };
+        const { user: syncedUser } = await hydrateAuthenticatedUser(fbUser, {
+          persistIfMissingProfile: false,
+          forceAdminRefresh: false,
+        });
 
         activeInMemoryUser = syncedUser;
         setCachedUser(syncedUser);

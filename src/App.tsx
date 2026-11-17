@@ -13,11 +13,8 @@ import {
 } from 'lucide-react';
 import { Navbar, defaultNavLinks } from './components/navigation/Navbar';
 import { MobileBottomNav } from './components/navigation/MobileBottomNav';
-import { Hero } from './components/hero/Hero';
 import { MobileLandingView } from './components/landing/MobileLandingView';
-import { Benefits } from './components/benefits/Benefits';
 import { HowItWorks } from './components/how-it-works/HowItWorks';
-import { TrustSection } from './components/trust/TrustSection';
 import { FAQSection } from './components/faq/FAQSection';
 import { FinalCTA } from './components/cta/FinalCTA';
 import { NewsletterSection } from './components/newsletter/NewsletterSection';
@@ -155,9 +152,21 @@ export default function App() {
         setCurrentPage('login');
       } else if (hash === 'forgot-password') {
         setCurrentPage('forgot-password');
+      } else if (hash === 'home') {
+        const user = authService.getCurrentUser();
+        if (user) {
+          setInitialDashboardTab('home');
+          setDashboardNavNonce((n) => n + 1);
+          setCurrentPage('dashboard');
+        } else {
+          setCurrentPage('login');
+          setAuthNotification('Please log in with your scholar account to access your Student Home.');
+          window.location.hash = '#/login';
+        }
       } else if (hash === 'dashboard') {
         const user = authService.getCurrentUser();
         if (user) {
+          setInitialDashboardTab((prev) => (prev === 'home' ? 'overview' : prev));
           setCurrentPage('dashboard');
         } else {
           setCurrentPage('login');
@@ -200,12 +209,16 @@ export default function App() {
     return () => unsubscribe();
   }, [isLoggedIn, currentUser?.id, firebaseUid]);
 
-  // Handle post-signup: immediately guide student to the onboarding page
+  // Handle post-signup: guide new scholars to onboarding, or existing onboarded Google users to dashboard
   const handleSignUpSuccess = (user: User) => {
     setCurrentUser(user);
     setIsLoggedIn(true);
     setAuthNotification(null);
-    navigateTo('onboarding', `Account created! Welcome, ${user.fullName}.`);
+    if (user.profile?.onboardingCompleted) {
+      navigateTo('dashboard', `Welcome back, ${user.fullName}! Directory Unlocked.`);
+    } else {
+      navigateTo('onboarding', `Account created! Welcome, ${user.fullName}.`);
+    }
   };
 
   // Handle login success
@@ -214,7 +227,7 @@ export default function App() {
     setIsLoggedIn(true);
     setAuthNotification(null);
     if (user.profile && !user.profile.onboardingCompleted) {
-      navigateTo('onboarding', `Welcome back, ${user.fullName}! Let's finish your profile.`);
+      navigateTo('onboarding', `Welcome, ${user.fullName}! Let's personalize your student profile.`);
     } else {
       navigateTo('dashboard', `Welcome back, ${user.fullName}! Directory Unlocked.`);
     }
@@ -224,6 +237,12 @@ export default function App() {
     await authService.logout();
     setCurrentUser(null);
     setIsLoggedIn(false);
+    setInitialDashboardTab(undefined);
+    setInitialSearchQuery('');
+    setInitialSearchDestination('');
+    setInitialDeadlineStatus(undefined);
+    setInitialSettingsTab(undefined);
+    setSearchPromptContext(null);
     navigateTo('landing', 'Logged out of Scholar Hub.');
   };
 
@@ -487,6 +506,8 @@ export default function App() {
         onLoginClick={() => navigateTo('login')}
         onGetStartedClick={() => navigateTo('signup')}
         onExploreHubClick={() => {
+          setInitialSearchQuery('');
+          setInitialSearchDestination('');
           setInitialDashboardTab('overview');
           setInitialDeadlineStatus('all');
           setInitialSettingsTab(undefined);
@@ -542,87 +563,75 @@ export default function App() {
         onClose={() => setInfoModalOpen(false)}
       />
 
-      {/* Full Public Landing Page Sequences */}
+      {/* Unified Public Landing Page Sequences (Consistent Mobile, Tablet & Desktop) */}
       <main className="flex-1">
-        {/* 1A. Refined Mobile Landing View (< md) */}
-        <div className="md:hidden">
-          <MobileLandingView
-            onExploreUniversities={() => handleHeroSearch('', 'All Countries')}
-            onOpenScholarships={() =>
+        <MobileLandingView
+          isLoggedIn={isLoggedIn}
+          onGetStartedClick={() => navigateTo('signup')}
+          onExploreUniversities={() => handleHeroSearch('', 'All Countries')}
+          onOpenScholarships={() =>
+            handleOpenDashboardQuickAction({
+              tab: 'scholarships',
+              guestMessage:
+                'Create a free student account to explore verified scholarships and funded university programs.',
+              toast: 'Opened Scholarships & Grants',
+            })
+          }
+          onOpenResources={() =>
+            handleOpenDashboardQuickAction({
+              tab: 'resources',
+              guestMessage:
+                'Create a free student account to access admissions guides, waiver playbooks, and preparation tips.',
+              toast: 'Opened Academic Resources',
+            })
+          }
+          onOpenDeadlines={() =>
+            handleOpenDashboardQuickAction({
+              tab: 'universities',
+              deadlineStatus: 'open-or-rolling',
+              guestMessage:
+                'Create a free student account to track open and rolling university intake deadlines.',
+              toast: 'Showing Open & Rolling Deadlines',
+            })
+          }
+          onSelectDestination={(country) => handleHeroSearch('', country)}
+          onTurnOnAlerts={() => {
+            if (isLoggedIn) {
               handleOpenDashboardQuickAction({
-                tab: 'scholarships',
-                guestMessage:
-                  'Create a free student account to explore verified scholarships and funded university programs.',
-                toast: 'Opened Scholarships & Grants',
-              })
+                tab: 'settings',
+                settingsTab: 'notifications',
+                guestMessage: 'Log in to manage your notification preferences.',
+                toast: 'Opened Notification Preferences',
+              });
+              return;
             }
-            onOpenResources={() =>
-              handleOpenDashboardQuickAction({
-                tab: 'resources',
-                guestMessage:
-                  'Create a free student account to access admissions guides, waiver playbooks, and preparation tips.',
-                toast: 'Opened Academic Resources',
-              })
+            const newsletterEl = document.getElementById('newsletter');
+            if (newsletterEl) {
+              newsletterEl.scrollIntoView({ behavior: 'smooth' });
+              setTimeout(() => {
+                const emailInput = document.getElementById('newsletter-email');
+                emailInput?.focus();
+              }, 400);
             }
-            onOpenDeadlines={() =>
-              handleOpenDashboardQuickAction({
-                tab: 'universities',
-                deadlineStatus: 'open-or-rolling',
-                guestMessage:
-                  'Create a free student account to track open and rolling university intake deadlines.',
-                toast: 'Showing Open & Rolling Deadlines',
-              })
-            }
-            onSelectDestination={(country) => handleHeroSearch('', country)}
-            onTurnOnAlerts={() => {
-              if (isLoggedIn) {
-                handleOpenDashboardQuickAction({
-                  tab: 'settings',
-                  settingsTab: 'notifications',
-                  guestMessage: 'Log in to manage your notification preferences.',
-                  toast: 'Opened Notification Preferences',
-                });
-                return;
-              }
-              const newsletterEl = document.getElementById('newsletter');
-              if (newsletterEl) {
-                newsletterEl.scrollIntoView({ behavior: 'smooth' });
-                setTimeout(() => {
-                  const emailInput = document.getElementById('newsletter-email');
-                  emailInput?.focus();
-                }, 400);
-              }
-            }}
-          />
-        </div>
-
-        {/* 1B. Tablet & Desktop Hero + Benefits (>= md, preserved unchanged) */}
-        <div className="hidden md:block">
-          <Hero onSearchSubmit={handleHeroSearch} />
-          <Benefits />
-        </div>
-
-        {/* 3. How It Works Section */}
-        <HowItWorks onGetStartedClick={() => navigateTo('signup')} />
-
-        {/* 4. Trust & Transparency Section (Tablet & Desktop, preserved unchanged) */}
-        <div className="hidden md:block">
-          <TrustSection />
-        </div>
-
-        {/* 5. Frequently Asked Questions (Accordion) */}
-        <FAQSection
-          onOpenAssistant={() => navigateTo('dashboard', 'Opening COVA AI Scholarship Advisor...')}
-          onExploreUniversities={() => navigateTo('dashboard', 'Opening University Directory...')}
+          }}
         />
 
-        {/* 6. Final Call to Action Section */}
+        {/* How It Works Section */}
+        <HowItWorks onGetStartedClick={() => navigateTo('signup')} />
+
+        {/* Frequently Asked Questions (Collapsed by Default) */}
+        <FAQSection
+          onOpenAssistant={() => navigateTo('dashboard', 'Opening COVA AI Scholarship Advisor...')}
+          onExploreUniversities={() => handleHeroSearch('', 'All Countries')}
+        />
+
+        {/* Final Call to Action Section */}
         <FinalCTA
           onCreateAccountClick={() => navigateTo('signup')}
           onLoginClick={() => navigateTo('login')}
         />
 
-        {/* 7. Opportunity Updates Signup Form */}
+        {/* Opportunity Updates Signup Form */}
         <NewsletterSection
           onSubscribed={(email) => {
             showToast(`Subscribed ${email} to opportunity updates!`);
@@ -630,7 +639,7 @@ export default function App() {
         />
       </main>
 
-      {/* 8. Comprehensive Professional Footer */}
+      {/* Comprehensive Professional Footer */}
       <Footer
         onNavigateSection={(href, label) => {
           showToast(`Jumped to ${label}`);
@@ -638,14 +647,35 @@ export default function App() {
         onPlaceholderClick={handlePlaceholderClick}
         onLoginClick={() => navigateTo('login')}
         onSignUpClick={() => navigateTo('signup')}
-        onLogoClick={isLoggedIn ? () => navigateTo('dashboard') : undefined}
-        className="pb-24 md:pb-12"
+        onLogoClick={
+          isLoggedIn
+            ? () => {
+                setInitialSearchQuery('');
+                setInitialSearchDestination('');
+                setInitialDashboardTab('overview');
+                setInitialDeadlineStatus('all');
+                setInitialSettingsTab(undefined);
+                setDashboardNavNonce((n) => n + 1);
+                navigateTo('dashboard');
+              }
+            : undefined
+        }
+        className="pb-22 md:pb-10"
       />
 
-      {/* 9. Mobile Bottom Navigation Bar (< md) matching reference screenshot */}
+      {/* Mobile Bottom Navigation Bar (< md) */}
       <MobileBottomNav
         activeTab="home"
-        onSelectHome={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        onSelectHome={() => {
+          if (isLoggedIn) {
+            handleOpenDashboardQuickAction({
+              tab: 'home',
+              guestMessage: 'Log in to access your Student Home.',
+            });
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }}
         onSelectExplore={() => handleHeroSearch('', 'All Countries')}
         onSelectDashboard={() =>
           handleOpenDashboardQuickAction({

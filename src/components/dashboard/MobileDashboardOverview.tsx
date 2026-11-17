@@ -156,11 +156,11 @@ export const MobileDashboardOverview: React.FC<MobileDashboardOverviewProps> = (
   }, [recommendedOpportunities, opportunities]);
 
   return (
-    <div className="space-y-4 animate-in fade-in duration-150">
+    <div className="space-y-3 animate-in fade-in duration-150">
       {/* 1. Compact Purple Gradient Welcome Banner */}
       <section
         aria-label="Welcome"
-        className="relative overflow-hidden rounded-[22px] bg-gradient-to-br from-[#734EF8] via-[#5E37EB] to-[#4722C5] px-4 py-4 min-[375px]:px-5 min-[375px]:py-5 text-white shadow-[0_12px_28px_-10px_rgba(94,55,235,0.5)]"
+        className="relative overflow-hidden rounded-[20px] bg-gradient-to-br from-[#734EF8] via-[#5E37EB] to-[#4722C5] px-4 py-3.5 text-white shadow-[0_10px_24px_-10px_rgba(94,55,235,0.48)]"
       >
         {/* Subtle ambient radial depth */}
         <div
@@ -238,16 +238,16 @@ export const MobileDashboardOverview: React.FC<MobileDashboardOverviewProps> = (
       </section>
 
       {/* 2. Quick Access Cards — 2-Column Responsive Pastel Grid */}
-      <section aria-label="Quick access" className="grid grid-cols-2 gap-3">
+      <section aria-label="Quick access" className="grid grid-cols-2 gap-2.5">
         <button
           type="button"
           onClick={() => onNavigate('universities', 'home')}
-          className="min-h-[96px] rounded-2xl bg-[#F0ECFF] hover:bg-[#E7E0FF] hover:shadow-[0_6px_16px_rgba(16,19,45,0.07)] border border-[#DFD6FF] px-3 py-3.5 flex flex-col items-center justify-center text-center gap-2 transition-[box-shadow,background-color,border-color,transform] duration-150 ease-out active:scale-[0.98] active:shadow-2xs cursor-pointer shadow-[0_2px_8px_rgba(16,19,45,0.03)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+          className="min-h-[82px] rounded-2xl bg-[#F0ECFF] hover:bg-[#E7E0FF] hover:shadow-[0_6px_16px_rgba(16,19,45,0.07)] border border-[#DFD6FF] px-3 py-2.5 flex flex-col items-center justify-center text-center gap-1.5 transition-[box-shadow,background-color,border-color,transform] duration-150 ease-out active:scale-[0.98] active:shadow-2xs cursor-pointer shadow-[0_2px_8px_rgba(16,19,45,0.03)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
         >
-          <span className="w-10 h-10 rounded-xl bg-white/85 flex items-center justify-center shadow-2xs text-[#5D35F5]">
-            <Search className="w-5 h-5" strokeWidth={2.2} aria-hidden="true" />
+          <span className="w-9 h-9 rounded-xl bg-white/85 flex items-center justify-center shadow-2xs text-[#5D35F5]">
+            <Search className="w-[18px] h-[18px]" strokeWidth={2.2} aria-hidden="true" />
           </span>
-          <span className="text-[12.5px] font-bold text-[#10132D] leading-tight">
+          <span className="text-[12px] font-bold text-[#10132D] leading-tight">
             Explore Universities
           </span>
         </button>
@@ -255,12 +255,12 @@ export const MobileDashboardOverview: React.FC<MobileDashboardOverviewProps> = (
         <button
           type="button"
           onClick={() => onNavigate('scholarships', 'home')}
-          className="min-h-[96px] rounded-2xl bg-[#FFF6E3] hover:bg-[#FFEFCE] hover:shadow-[0_6px_16px_rgba(16,19,45,0.07)] border border-[#F5E2B8] px-3 py-3.5 flex flex-col items-center justify-center text-center gap-2 transition-[box-shadow,background-color,border-color,transform] duration-150 ease-out active:scale-[0.98] active:shadow-2xs cursor-pointer shadow-[0_2px_8px_rgba(16,19,45,0.03)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+          className="min-h-[82px] rounded-2xl bg-[#FFF6E3] hover:bg-[#FFEFCE] hover:shadow-[0_6px_16px_rgba(16,19,45,0.07)] border border-[#F5E2B8] px-3 py-2.5 flex flex-col items-center justify-center text-center gap-1.5 transition-[box-shadow,background-color,border-color,transform] duration-150 ease-out active:scale-[0.98] active:shadow-2xs cursor-pointer shadow-[0_2px_8px_rgba(16,19,45,0.03)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
         >
-          <span className="w-10 h-10 rounded-xl bg-white/85 flex items-center justify-center shadow-2xs text-[#C68615]">
-            <Award className="w-5 h-5" strokeWidth={2.2} aria-hidden="true" />
+          <span className="w-9 h-9 rounded-xl bg-white/85 flex items-center justify-center shadow-2xs text-[#C68615]">
+            <Award className="w-[18px] h-[18px]" strokeWidth={2.2} aria-hidden="true" />
           </span>
-          <span className="text-[12.5px] font-bold text-[#10132D] leading-tight">
+          <span className="text-[12px] font-bold text-[#10132D] leading-tight">
             Scholarships
           </span>
         </button>
@@ -268,12 +268,12 @@ export const MobileDashboardOverview: React.FC<MobileDashboardOverviewProps> = (
         <button
           type="button"
           onClick={() => onNavigate('overview', 'applications')}
-          className="min-h-[96px] rounded-2xl bg-[#EAF2FF] hover:bg-[#DFECFF] hover:shadow-[0_6px_16px_rgba(16,19,45,0.07)] border border-[#D1E1FC] px-3 py-3.5 flex flex-col items-center justify-center text-center gap-2 transition-[box-shadow,background-color,border-color,transform] duration-150 ease-out active:scale-[0.98] active:shadow-2xs cursor-pointer shadow-[0_2px_8px_rgba(16,19,45,0.03)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+          className="min-h-[82px] rounded-2xl bg-[#EAF2FF] hover:bg-[#DFECFF] hover:shadow-[0_6px_16px_rgba(16,19,45,0.07)] border border-[#D1E1FC] px-3 py-2.5 flex flex-col items-center justify-center text-center gap-1.5 transition-[box-shadow,background-color,border-color,transform] duration-150 ease-out active:scale-[0.98] active:shadow-2xs cursor-pointer shadow-[0_2px_8px_rgba(16,19,45,0.03)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
         >
-          <span className="w-10 h-10 rounded-xl bg-white/85 flex items-center justify-center shadow-2xs text-[#2258BD]">
-            <FileText className="w-5 h-5" strokeWidth={2.2} aria-hidden="true" />
+          <span className="w-9 h-9 rounded-xl bg-white/85 flex items-center justify-center shadow-2xs text-[#2258BD]">
+            <FileText className="w-[18px] h-[18px]" strokeWidth={2.2} aria-hidden="true" />
           </span>
-          <span className="text-[12.5px] font-bold text-[#10132D] leading-tight">
+          <span className="text-[12px] font-bold text-[#10132D] leading-tight">
             Applications
           </span>
         </button>
@@ -281,12 +281,12 @@ export const MobileDashboardOverview: React.FC<MobileDashboardOverviewProps> = (
         <button
           type="button"
           onClick={() => onNavigate('overview', 'saved')}
-          className="min-h-[96px] rounded-2xl bg-[#FDEBF1] hover:bg-[#FCE0EA] hover:shadow-[0_6px_16px_rgba(16,19,45,0.07)] border border-[#F7CFE0] px-3 py-3.5 flex flex-col items-center justify-center text-center gap-2 transition-[box-shadow,background-color,border-color,transform] duration-150 ease-out active:scale-[0.98] active:shadow-2xs cursor-pointer shadow-[0_2px_8px_rgba(16,19,45,0.03)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+          className="min-h-[82px] rounded-2xl bg-[#FDEBF1] hover:bg-[#FCE0EA] hover:shadow-[0_6px_16px_rgba(16,19,45,0.07)] border border-[#F7CFE0] px-3 py-2.5 flex flex-col items-center justify-center text-center gap-1.5 transition-[box-shadow,background-color,border-color,transform] duration-150 ease-out active:scale-[0.98] active:shadow-2xs cursor-pointer shadow-[0_2px_8px_rgba(16,19,45,0.03)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
         >
-          <span className="w-10 h-10 rounded-xl bg-white/85 flex items-center justify-center shadow-2xs text-[#C43767]">
-            <Bookmark className="w-5 h-5" strokeWidth={2.2} aria-hidden="true" />
+          <span className="w-9 h-9 rounded-xl bg-white/85 flex items-center justify-center shadow-2xs text-[#C43767]">
+            <Bookmark className="w-[18px] h-[18px]" strokeWidth={2.2} aria-hidden="true" />
           </span>
-          <span className="text-[12.5px] font-bold text-[#10132D] leading-tight">
+          <span className="text-[12px] font-bold text-[#10132D] leading-tight">
             Saved Opportunities
           </span>
         </button>
@@ -297,7 +297,7 @@ export const MobileDashboardOverview: React.FC<MobileDashboardOverviewProps> = (
         type="button"
         onClick={() => onNavigate('profile', 'home')}
         aria-label={`Your Progress: ${percentage}% profile completion. Open profile`}
-        className="w-full text-left bg-white rounded-2xl border border-[#EAEEF5] p-4 shadow-[0_2px_12px_rgba(16,19,45,0.04)] hover:shadow-[0_6px_18px_rgba(16,19,45,0.07)] hover:border-[#6846F5]/35 active:scale-[0.985] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out flex items-center gap-3.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] group"
+        className="w-full text-left bg-white rounded-2xl border border-[#EAEEF5] p-3.5 shadow-[0_2px_12px_rgba(16,19,45,0.04)] hover:shadow-[0_6px_18px_rgba(16,19,45,0.07)] hover:border-[#6846F5]/35 active:scale-[0.985] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out flex items-center gap-3 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] group"
       >
         {/* SVG Ring */}
         <div className="relative w-16 h-16 shrink-0 flex items-center justify-center">
@@ -358,7 +358,7 @@ export const MobileDashboardOverview: React.FC<MobileDashboardOverviewProps> = (
         type="button"
         onClick={nextJourneyAction.onClick}
         aria-label={`Continue Your Journey: ${nextJourneyAction.title}`}
-        className="w-full text-left bg-white rounded-2xl border border-[#EAEEF5] p-4 shadow-[0_2px_12px_rgba(16,19,45,0.04)] hover:shadow-[0_6px_18px_rgba(16,19,45,0.07)] hover:border-[#6846F5]/35 active:scale-[0.985] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out space-y-3 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] group"
+        className="w-full text-left bg-white rounded-2xl border border-[#EAEEF5] p-3.5 shadow-[0_2px_12px_rgba(16,19,45,0.04)] hover:shadow-[0_6px_18px_rgba(16,19,45,0.07)] hover:border-[#6846F5]/35 active:scale-[0.985] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out space-y-2.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] group"
       >
         <div className="flex items-center gap-2">
           <CheckSquare className="w-4 h-4 text-[#374151] shrink-0" aria-hidden="true" />
@@ -367,7 +367,7 @@ export const MobileDashboardOverview: React.FC<MobileDashboardOverviewProps> = (
           </h3>
         </div>
 
-        <div className="w-full min-h-[56px] rounded-xl bg-[#F4F2FF] group-hover:bg-[#ECE8FF] border border-[#E5DFFF] px-3 py-3 flex items-center gap-3 transition-colors duration-150">
+        <div className="w-full min-h-[52px] rounded-xl bg-[#F4F2FF] group-hover:bg-[#ECE8FF] border border-[#E5DFFF] px-3 py-2.5 flex items-center gap-3 transition-colors duration-150">
           <span className="w-10 h-10 rounded-xl bg-white border border-[#E3DCFF] flex items-center justify-center shrink-0 shadow-2xs">
             {nextJourneyAction.icon}
           </span>
