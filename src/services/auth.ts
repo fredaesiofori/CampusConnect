@@ -588,9 +588,10 @@ export const authService = {
           error: 'Please enter a valid email address.',
         };
       }
+      console.warn('Registration failed:', fbError);
       return {
         success: false,
-        error: fbError?.message || 'Registration failed. Please check your network and credentials.',
+        error: 'Registration could not be completed. Please check your details and internet connection.',
       };
     }
 
@@ -714,9 +715,10 @@ export const authService = {
           error: 'Network error while signing in. Please check your internet connection and try again.',
         };
       }
+      console.warn('Login failed:', fbError);
       return {
         success: false,
-        error: fbError?.message || 'Login failed. Please verify your credentials and network connection.',
+        error: 'Sign-in could not be completed. Please verify your email and password and try again.',
       };
     }
 
@@ -785,7 +787,7 @@ export const authService = {
           success: false,
           isConsoleSetupRequired: true,
           error:
-            'Google Sign-In is not currently enabled in Firebase Authentication. Please sign in with your email and password or contact support.',
+            'Google Sign-In is temporarily unavailable. Please sign in with your email and password or contact support.',
         };
       }
 
@@ -794,7 +796,7 @@ export const authService = {
           success: false,
           isConsoleSetupRequired: true,
           error:
-            'This domain is not yet listed under Firebase Authorized Domains for Google Sign-In. Please sign in with your email and password or add this domain in Firebase Console.',
+            'Google Sign-In is temporarily unavailable on this preview link. Please sign in with your email and password.',
         };
       }
 
@@ -806,9 +808,10 @@ export const authService = {
         };
       }
 
+      console.warn('Google sign-in failed:', fbError);
       return {
         success: false,
-        error: fbError?.message || 'Google sign-in failed. Please try again.',
+        error: 'Google sign-in could not be completed right now. Please try again.',
       };
     }
 
@@ -875,9 +878,10 @@ export const authService = {
           error: 'Too many verification attempts. Please wait a moment or use Forgot Password.',
         };
       }
+      console.warn('Google linking failed:', fbError);
       return {
         success: false,
-        error: fbError?.message || 'Could not link your Google account right now. Please try again.',
+        error: 'Could not link your Google account right now. Please try again.',
       };
     }
 
@@ -968,9 +972,10 @@ export const authService = {
       };
     }
 
+    console.warn('Password reset dispatch failed:', error);
     return {
       success: false,
-      error: error?.message || 'Failed to dispatch password reset request.',
+      error: 'Unable to send password reset email right now. Please try again shortly.',
     };
   },
 
@@ -1136,7 +1141,7 @@ export const authService = {
         persistedToCloud: false,
         isSaved: !nowSaved,
         user: activeInMemoryUser,
-        error: syncRes.error || 'Could not update bookmark in cloud database.',
+        error: 'Could not save this bookmark to your account right now. Please try again.',
       };
     }
 
@@ -1333,7 +1338,7 @@ export const authService = {
         success: false,
         persistedToCloud: false,
         user: prevUser,
-        error: fsRes.error || 'Failed to save profile to Firestore.',
+        error: 'Failed to save your profile changes right now. Please try again.',
       };
     }
 
@@ -1388,7 +1393,7 @@ export const authService = {
         success: false,
         persistedToCloud: false,
         user: activeInMemoryUser,
-        error: syncRes.error || 'Could not save Target List item to Firestore.',
+        error: 'Could not save this Target List item right now. Please try again.',
       };
     }
 
@@ -1430,7 +1435,7 @@ export const authService = {
         success: false,
         persistedToCloud: false,
         user: activeInMemoryUser,
-        error: syncRes.error || 'Could not remove target from Firestore.',
+        error: 'Could not remove this target right now. Please try again.',
       };
     }
 
@@ -1505,7 +1510,7 @@ export const authService = {
         success: false,
         persistedToCloud: false,
         user: activeInMemoryUser,
-        error: syncRes.error || 'Could not start application in Firestore.',
+        error: 'Could not start this application right now. Please try again.',
       };
     }
 
@@ -1605,7 +1610,7 @@ export const authService = {
         success: false,
         persistedToCloud: false,
         user: activeInMemoryUser,
-        error: syncRes.error || 'Could not update application in Firestore.',
+        error: 'Could not save application updates right now. Please try again.',
       };
     }
 
@@ -1661,7 +1666,7 @@ export const authService = {
         success: false,
         persistedToCloud: false,
         user: activeInMemoryUser,
-        error: syncRes.error || 'Could not remove application from Firestore.',
+        error: 'Could not remove this application right now. Please try again.',
       };
     }
 
@@ -1909,7 +1914,7 @@ export const authService = {
         setCachedUser(currentUser);
         return {
           success: false,
-          error: saveRes.error || 'Could not save notification preferences to Firestore.',
+          error: 'Could not save your notification preferences right now. Please try again.',
         };
       }
     }

@@ -943,7 +943,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
           if (dataLine) {
             try {
               const parsed = JSON.parse(dataLine.replace(/^data:\s*/, ''));
-              if (parsed?.error) parsedErrMsg = parsed.error;
+              if (parsed?.error) parsedErrMsg = 'COVA is temporarily unavailable right now. Please try again shortly.';
             } catch {}
           }
           receivedStreamError = true;
@@ -1033,7 +1033,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
       }
 
       if (!accumulatedText.trim() && abortReasonRef.current !== 'stop') {
-        const emptyErr = 'COVA received an empty response from Gemini. Please retry.';
+        const emptyErr = 'COVA could not complete that response right now. Please retry.';
         setMessages((prev) => {
           const errMsgs = prev.map((msg) =>
             msg.id === botMessageId
@@ -1073,7 +1073,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
       if (err?.name === 'AbortError') {
         if (abortReasonRef.current === 'timeout') {
           const timeoutMsg =
-            'The AI request timed out while waiting for Gemini. Please click Retry to try again.';
+            'The request timed out while waiting for a response. Please click Retry to try again.';
           setMessages((prev) => {
             const errMsgs = prev.map((msg) =>
               msg.id === botMessageId
@@ -1094,7 +1094,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
       }
 
       const errorMessage =
-        err?.message || 'A network error occurred while communicating with COVA. Please try again.';
+        'COVA is temporarily unreachable. Please check your internet connection and try again.';
 
       setMessages((prev) => {
         const errorList = prev.map((msg) =>
@@ -1226,17 +1226,17 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
       <div
         className={`fixed flex flex-col items-end pointer-events-none ${
           isOpen
-            ? 'inset-0 z-50 sm:inset-auto sm:bottom-6 sm:right-6 sm:z-40'
-            : 'bottom-[76px] right-4 z-40 sm:bottom-6 sm:right-6'
+            ? 'inset-0 z-50 md:inset-auto md:bottom-6 md:right-6 md:z-40'
+            : 'bottom-[76px] right-3 z-40 md:bottom-6 md:right-6'
         } ${className}`}
       >
-        {/* 1. COVA Chat Panel Overlay (Responsive: Full-screen on mobile, Card on Desktop) */}
+        {/* 1. COVA Chat Panel Overlay (Responsive: Full-screen on mobile/small tablet, Card on md+) */}
         {isOpen && (
           <div
             role="dialog"
             aria-modal="true"
             aria-labelledby="cova-chat-title"
-            className="pointer-events-auto w-full h-[100dvh] sm:w-[480px] sm:h-[620px] sm:max-h-[calc(100vh-5.5rem)] sm:mb-3 bg-white rounded-none sm:rounded-2xl shadow-[0_20px_50px_rgba(16,19,45,0.28)] border-0 sm:border border-slate-200/90 flex flex-col overflow-hidden animate-in fade-in duration-200 relative"
+            className="pointer-events-auto w-full h-[100dvh] md:w-[480px] md:h-[620px] md:max-h-[calc(100vh-5.5rem)] md:mb-3 bg-white rounded-none md:rounded-2xl shadow-[0_20px_50px_rgba(16,19,45,0.28)] border-0 md:border border-slate-200/90 flex flex-col overflow-hidden animate-in fade-in duration-200 relative"
           >
             {/* Slide-in Conversation History Drawer */}
             <CovaHistoryDrawer
@@ -1361,7 +1361,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
               <div className="text-center">
                 <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 bg-white border border-slate-200 rounded-full px-3 py-0.5 shadow-2xs">
                   <Sparkles className="w-3 h-3 text-[#E7B75C]" />
-                  Account Sync &amp; Gemini 4 Hydrogen
+                  Synced Student Advisor
                 </span>
               </div>
 
@@ -1606,14 +1606,14 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
                 </div>
               )}
 
-              {/* API Key Pending Notice */}
+              {/* Offline Advisor Notice */}
               {apiConfigured === false && (
                 <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2.5 shadow-2xs">
                   <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                   <div className="space-y-1">
-                    <p className="font-bold text-amber-900 text-[11px]">Gemini API Key Required</p>
+                    <p className="font-bold text-amber-900 text-[11px]">COVA Advisor Offline</p>
                     <p className="text-[11px] text-amber-800 leading-snug">
-                      To activate live AI responses, add your <code>GEMINI_API_KEY</code> in AI Studio project secrets. The server will automatically connect to Gemini 4 Hydrogen.
+                      Live AI responses are temporarily unavailable right now. You can still browse verified programs, scholarships, and deadlines.
                     </p>
                   </div>
                 </div>

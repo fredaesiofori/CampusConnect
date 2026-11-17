@@ -74,7 +74,7 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="flex flex-col md:flex-row items-center justify-between gap-5 pb-5 sm:pb-6 border-b border-white/10">
           {/* Left: White-Circle Purple Graduation Brand Mark */}
           <a
-            href={onLogoClick ? '#/dashboard' : '#home'}
+            href={onLogoClick ? '#/home' : '#home'}
             onClick={(e) => {
               e.preventDefault();
               if (onLogoClick) {
@@ -83,7 +83,7 @@ export const Footer: React.FC<FooterProps> = ({
               }
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            aria-label={onLogoClick ? 'Go to Campus Connect Student Dashboard' : 'Campus Connect Home'}
+            aria-label={onLogoClick ? 'Go to Campus Connect Student Home' : 'Campus Connect Home'}
             className="inline-block transition-opacity hover:opacity-90 cursor-pointer shrink-0"
           >
             <Logo size="sm" variant="dark" iconShape="circle" onPurple={true} showWordmark={true} />

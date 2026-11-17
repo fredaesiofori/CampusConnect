@@ -180,10 +180,10 @@ export const UniversityCard: React.FC<UniversityCardProps> = ({
           onOpenDetails(item);
         }
       }}
-      className="bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#6846F5]/40 shadow-[0_1px_6px_rgba(15,23,42,0.04)] hover:shadow-md active:scale-[0.992] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out p-3 sm:px-4 sm:py-3.5 flex items-center gap-3 sm:gap-4 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
+      className="bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#6846F5]/40 shadow-[0_1px_6px_rgba(15,23,42,0.04)] hover:shadow-md active:scale-[0.992] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out p-3 sm:px-4 sm:py-3.5 flex items-center gap-2.5 min-[375px]:gap-3 sm:gap-4 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
     >
       {/* Left: Flag + Country Code Badge & Authentic University Crest (or Initials Fallback) */}
-      <div className="relative w-[108px] sm:w-[144px] h-[74px] sm:h-[82px] rounded-xl bg-slate-50/70 border border-slate-100 shrink-0 flex items-center justify-center p-2 pt-5 sm:p-2.5 sm:pt-5 overflow-hidden">
+      <div className="relative w-[96px] min-[375px]:w-[108px] sm:w-[144px] h-[74px] sm:h-[82px] rounded-xl bg-slate-50/70 border border-slate-100 shrink-0 flex items-center justify-center p-2 pt-5 sm:p-2.5 sm:pt-5 overflow-hidden">
         <span className="absolute top-1.5 left-1.5 z-10 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#111827] text-white text-[10px] font-bold leading-none shadow-2xs">
           <span aria-hidden="true">{item.countryFlag}</span>
           <span>{item.countryCode}</span>

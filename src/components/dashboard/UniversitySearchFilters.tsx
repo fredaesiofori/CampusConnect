@@ -255,7 +255,7 @@ export const UniversitySearchFilters: React.FC<UniversitySearchFiltersProps> = (
       </form>
 
       {/* 2. Compact 3-Control Filter Row: Destination, Degree Level, More Filters */}
-      <div className="grid grid-cols-3 gap-2 sm:gap-3">
+      <div className="grid grid-cols-2 min-[400px]:grid-cols-3 gap-2 sm:gap-3">
         {/* Country / Destination */}
         <div className="min-w-0">
           <CountrySelect
@@ -302,7 +302,7 @@ export const UniversitySearchFilters: React.FC<UniversitySearchFiltersProps> = (
         </div>
 
         {/* More Filters Toggle Button */}
-        <div className="min-w-0">
+        <div className="min-w-0 col-span-2 min-[400px]:col-span-1">
           <button
             type="button"
             onClick={onToggleAdvancedFilters}

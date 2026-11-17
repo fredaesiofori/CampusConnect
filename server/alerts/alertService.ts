@@ -205,12 +205,13 @@ export class AlertNotificationService {
     }
 
     if (!firestoreConfigured) {
+      console.warn('[Alerts] Subscribe attempted while persistent alert storage is not configured.');
       return {
         statusCode: 503,
         body: {
           error:
-            'Persistent Firestore storage is not configured on the server yet (missing FIREBASE_SERVICE_ACCOUNT_JSON).',
-          code: 'FIRESTORE_UNCONFIGURED',
+            'Opportunity alert subscriptions are temporarily unavailable right now. Please try again shortly.',
+          code: 'SERVICE_UNAVAILABLE',
           firestoreConfigured: false,
           emailDeliveryConfigured: providerStatus.configured,
         },
@@ -317,12 +318,10 @@ export class AlertNotificationService {
           updatedAt: prep.record.updatedAt,
         },
         message: !providerStatus.configured
-          ? 'Preferences saved to Firestore, but email delivery is not active yet because provider credentials are not configured.'
+          ? 'Your preferences are saved. Outbound email alerts are temporarily paused right now.'
           : confirmationEmailSent
           ? 'Confirmation email sent! Please check your inbox and click the confirmation link to activate opportunity alerts.'
-          : deliveryError
-          ? `Preferences saved, but confirmation email was not delivered: ${deliveryError}`
-          : 'Preferences saved, but confirmation email could not be sent.',
+          : 'Preferences saved, but we could not deliver your confirmation email right now. Please try resending shortly.',
       },
     };
   }
@@ -332,11 +331,12 @@ export class AlertNotificationService {
     const firestoreConfigured = this.deps.store.isConfigured();
 
     if (!firestoreConfigured) {
+      console.warn('[Alerts] Confirm attempted while persistent alert storage is not configured.');
       return {
         statusCode: 503,
         body: {
           confirmed: false,
-          error: 'Persistent Firestore storage is not configured.',
+          error: 'Email alert confirmation is temporarily unavailable right now.',
           firestoreConfigured: false,
           emailDeliveryConfigured: providerStatus.configured,
         },
@@ -507,10 +507,11 @@ export class AlertNotificationService {
     const firestoreConfigured = this.deps.store.isConfigured();
 
     if (!firestoreConfigured) {
+      console.warn('[Alerts] Update preferences attempted while persistent alert storage is not configured.');
       return {
         statusCode: 503,
         body: {
-          error: 'Persistent Firestore storage is not configured.',
+          error: 'Alert preferences are temporarily unavailable right now.',
           firestoreConfigured: false,
           emailDeliveryConfigured: providerStatus.configured,
         },
@@ -587,10 +588,11 @@ export class AlertNotificationService {
     const firestoreConfigured = this.deps.store.isConfigured();
 
     if (!firestoreConfigured) {
+      console.warn('[Alerts] Unsubscribe attempted while persistent alert storage is not configured.');
       return {
         statusCode: 503,
         body: {
-          error: 'Persistent Firestore storage is not configured.',
+          error: 'Alert preferences are temporarily unavailable right now.',
           firestoreConfigured: false,
           emailDeliveryConfigured: providerStatus.configured,
         },

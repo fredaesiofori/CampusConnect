@@ -158,8 +158,8 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         <div className="flex items-center justify-between pb-4 border-b border-white/15">
           <button
             type="button"
-            onClick={() => handleItemClick('overview')}
-            aria-label="Go to Campus Connect Dashboard"
+            onClick={() => handleItemClick('home')}
+            aria-label="Go to Campus Connect Student Home"
             className="text-left rounded-xl p-1 -m-1 transition-opacity duration-150 hover:opacity-90 active:scale-[0.99] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
           >
             <Logo size="md" variant="dark" iconShape="circle" onPurple={true} showWordmark={true} />

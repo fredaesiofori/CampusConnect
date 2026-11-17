@@ -26,6 +26,7 @@ import {
   getCurrentUserIdToken,
   syncScholarshipAlertToFirestore,
 } from '../../services/firebase';
+import { getStudentFriendlyError } from '../../utils/errorMessages';
 
 export interface NewsletterSectionProps {
   className?: string;
@@ -360,7 +361,10 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
     if (!response.ok || !data?.success || !data?.manageToken || !data?.subscription) {
       setStatus('error');
       setErrorMessage(
-        data?.error || 'Unable to save your subscription right now. Please try again.'
+        getStudentFriendlyError(
+          data?.error,
+          'Unable to save your subscription right now. Please try again.'
+        )
       );
       return;
     }
@@ -428,7 +432,7 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
     } catch (err: any) {
       setStatus('error');
       setErrorMessage(
-        err?.message || 'Unable to connect to the server. Please try again.'
+        getStudentFriendlyError(err, 'Unable to connect right now. Please try again.')
       );
     }
   };
@@ -442,7 +446,9 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
       await submitSubscription(activeSubscription.email, true);
     } catch (err: any) {
       setStatus('error');
-      setErrorMessage(err?.message || 'Unable to resend confirmation email right now.');
+      setErrorMessage(
+        getStudentFriendlyError(err, 'Unable to resend confirmation email right now.')
+      );
     } finally {
       setActionLoading(null);
     }
@@ -496,7 +502,12 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
           setIsEditingPreferences(false);
         }
         setStatus('error');
-        setErrorMessage(data?.error || 'Could not update your preferences. Please try again.');
+        setErrorMessage(
+          getStudentFriendlyError(
+            data?.error,
+            'Could not update your preferences. Please try again.'
+          )
+        );
         return;
       }
 
@@ -560,7 +571,12 @@ export const NewsletterSection: React.FC<NewsletterSectionProps> = ({
 
       if (!res.ok && res.status !== 404) {
         setStatus('error');
-        setErrorMessage(data?.error || 'Could not complete unsubscribe. Please try again.');
+        setErrorMessage(
+          getStudentFriendlyError(
+            data?.error,
+            'Could not complete unsubscribe. Please try again.'
+          )
+        );
         return;
       }
 

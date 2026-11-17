@@ -197,7 +197,7 @@ export const NotificationBellCenter: React.FC<NotificationBellCenterProps> = ({
         <div
           role="dialog"
           aria-label="Notification Centre"
-          className="fixed inset-x-3 top-[72px] max-h-[calc(100vh-88px)] sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-2 sm:w-[420px] sm:max-h-[min(560px,calc(100vh-96px))] z-40 bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150"
+          className="fixed inset-x-3 top-[72px] max-h-[calc(100vh-88px)] sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-2 sm:w-[420px] sm:max-w-[calc(100vw-2rem)] sm:max-h-[min(560px,calc(100vh-96px))] z-40 bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150"
         >
           {/* Header */}
           <div className="px-4 py-3.5 border-b border-[#E2E8F0] bg-[#F8F9FD] flex items-center justify-between gap-2">

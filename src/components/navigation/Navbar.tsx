@@ -24,6 +24,7 @@ export interface NavbarProps {
   onLoginClick?: () => void;
   onGetStartedClick?: () => void;
   onExploreHubClick?: () => void;
+  onLogoClick?: () => void;
   isLoggedIn?: boolean;
   userEmail?: string;
   userName?: string;
@@ -50,6 +51,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onLoginClick,
   onGetStartedClick,
   onExploreHubClick,
+  onLogoClick,
   isLoggedIn = false,
   userEmail,
   userName,
@@ -109,9 +111,15 @@ export const Navbar: React.FC<NavbarProps> = ({
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
-    if (isLoggedIn && onExploreHubClick) {
-      onExploreHubClick();
-      return;
+    if (isLoggedIn) {
+      if (onLogoClick) {
+        onLogoClick();
+        return;
+      }
+      if (onExploreHubClick) {
+        onExploreHubClick();
+        return;
+      }
     }
     if (onNavigate) {
       onNavigate('home');
@@ -147,9 +155,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             <a
-              href={isLoggedIn ? '#/dashboard' : '#home'}
+              href={isLoggedIn ? '#/home' : '#home'}
               onClick={handleLogoClick}
-              aria-label={isLoggedIn ? 'Go to Campus Connect Student Dashboard' : 'Campus Connect Home'}
+              aria-label={isLoggedIn ? 'Go to Campus Connect Student Home' : 'Campus Connect Home'}
               className="inline-flex items-center min-w-0 max-w-full rounded-xl py-1 pr-1 transition-opacity duration-150 hover:opacity-85 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] cursor-pointer"
             >
               <Logo size="sm" variant="light" iconShape="circle" showWordmark={true} />
@@ -212,9 +220,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Desktop & Tablet Zone 1: Brand Wordmark on Far Left */}
           <div className="hidden md:flex items-center shrink-0">
             <a
-              href={isLoggedIn ? '#/dashboard' : '#home'}
+              href={isLoggedIn ? '#/home' : '#home'}
               onClick={handleLogoClick}
-              aria-label={isLoggedIn ? 'Go to Campus Connect Student Dashboard' : 'Campus Connect Home'}
+              aria-label={isLoggedIn ? 'Go to Campus Connect Student Home' : 'Campus Connect Home'}
               className="inline-flex items-center rounded-xl p-1 -m-1 transition-opacity duration-150 hover:opacity-90 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] cursor-pointer"
             >
               <Logo size="sm" variant="light" iconShape="circle" showWordmark={true} />
@@ -224,7 +232,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Zone 2: Navigation Links Across Top (Desktop & Tablet) */}
           <nav
             aria-label="Main Navigation"
-            className="hidden md:flex items-center gap-5 lg:gap-8"
+            className="hidden md:flex items-center gap-4 lg:gap-8"
           >
             {defaultNavLinks.map((link) => {
               const isActive = activeLinkId === link.id;
@@ -252,9 +260,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Zone 3: Actions on Far Right (Desktop & Tablet) */}
-          <div className="hidden md:flex items-center gap-2 lg:gap-3 shrink-0">
+          <div className="hidden md:flex items-center gap-1.5 lg:gap-3 shrink-0">
             {isLoggedIn ? (
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-1.5 lg:gap-2.5">
                 <NotificationBellCenter
                   notifications={notifications}
                   onMarkAsRead={onMarkNotificationRead || (() => {})}
@@ -279,16 +287,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button
                     type="button"
                     onClick={onExploreHubClick}
-                    className="text-xs font-semibold text-white bg-[#6846F5] hover:bg-[#5835E5] px-3.5 py-2 rounded-xl transition-colors flex items-center gap-1.5 shadow-[0_2px_10px_rgba(104,70,245,0.3)] cursor-pointer whitespace-nowrap"
+                    className="text-xs font-semibold text-white bg-[#6846F5] hover:bg-[#5835E5] px-2.5 lg:px-3.5 py-2 rounded-xl transition-colors flex items-center gap-1.5 shadow-[0_2px_10px_rgba(104,70,245,0.3)] cursor-pointer whitespace-nowrap"
                   >
                     <Compass className="w-3.5 h-3.5 text-[#E7B75C]" />
-                    <span>Open Student Hub</span>
+                    <span className="hidden lg:inline">Open Student Hub</span>
+                    <span className="lg:hidden">Student Hub</span>
                   </button>
                 )}
 
                 <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
                   <StudentInitialsAvatar fullName={userName} email={userEmail} size="sm" />
-                  <span className="text-xs text-[#10132D] font-semibold truncate max-w-[120px]">
+                  <span className="hidden lg:inline text-xs text-[#10132D] font-semibold truncate max-w-[120px]">
                     {userName || userEmail}
                   </span>
                   {onLogout && (
@@ -307,7 +316,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   type="button"
                   onClick={onLoginClick}
-                  className="text-xs lg:text-[13px] font-semibold text-[#10132D] hover:text-[#5D35F5] border border-slate-300 hover:border-[#6846F5] bg-white transition-colors duration-150 py-1.5 px-4 lg:px-5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] cursor-pointer whitespace-nowrap"
+                  className="text-xs lg:text-[13px] font-semibold text-[#10132D] hover:text-[#5D35F5] border border-slate-300 hover:border-[#6846F5] bg-white transition-colors duration-150 py-1.5 px-3 lg:px-5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] cursor-pointer whitespace-nowrap"
                 >
                   Log In
                 </button>
@@ -315,7 +324,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   type="button"
                   onClick={onGetStartedClick}
-                  className="bg-gradient-to-r from-[#5B2EE6] via-[#6846F5] to-[#7B3FE4] hover:from-[#4E23D4] hover:to-[#6B31D6] text-white shadow-[0_4px_14px_rgba(91,46,230,0.3)] px-4 lg:px-5 py-1.5 rounded-full text-xs lg:text-[13px] font-semibold transition-all duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] cursor-pointer whitespace-nowrap"
+                  className="bg-gradient-to-r from-[#5B2EE6] via-[#6846F5] to-[#7B3FE4] hover:from-[#4E23D4] hover:to-[#6B31D6] text-white shadow-[0_4px_14px_rgba(91,46,230,0.3)] px-3 lg:px-5 py-1.5 rounded-full text-xs lg:text-[13px] font-semibold transition-all duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] cursor-pointer whitespace-nowrap"
                 >
                   Create Free Account
                 </button>

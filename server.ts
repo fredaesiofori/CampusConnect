@@ -258,6 +258,7 @@ function extractGeminiErrorDetails(err: any): {
   status: number;
   code: string;
   message: string;
+  internalMessage: string;
   isFallbackEligible: boolean;
 } {
   const rawMessage = err?.message ? String(err.message) : String(err || 'Unknown error');
@@ -282,13 +283,14 @@ function extractGeminiErrorDetails(err: any): {
     return {
       status: 504,
       code: 'REQUEST_TIMEOUT',
-      message: 'COVA AI took too long to respond. Please try sending your message again.',
+      message: 'COVA took too long to respond. Please try sending your message again.',
+      internalMessage: parsedMessage,
       isFallbackEligible: false,
     };
   }
 
   if (
-    parsedStatus === 400 && upper.includes('API_KEY') ||
+    (parsedStatus === 400 && upper.includes('API_KEY')) ||
     parsedStatus === 401 ||
     parsedStatus === 403 ||
     upper.includes('API_KEY_INVALID') ||
@@ -296,8 +298,9 @@ function extractGeminiErrorDetails(err: any): {
   ) {
     return {
       status: 503,
-      code: 'GEMINI_AUTH_ERROR',
-      message: 'COVA AI could not authenticate with Gemini. Please verify GEMINI_API_KEY in Settings > Secrets.',
+      code: 'ADVISOR_UNAVAILABLE',
+      message: 'COVA Advisor is temporarily unavailable right now. Please try again shortly.',
+      internalMessage: parsedMessage,
       isFallbackEligible: false,
     };
   }
@@ -306,7 +309,8 @@ function extractGeminiErrorDetails(err: any): {
     return {
       status: 429,
       code: 'RATE_LIMIT_OR_QUOTA',
-      message: 'Gemini API quota or rate limit reached temporarily. Please wait a moment and try again.',
+      message: 'COVA Advisor is receiving high traffic right now. Please wait a moment and try again.',
+      internalMessage: parsedMessage,
       isFallbackEligible: false,
     };
   }
@@ -314,8 +318,9 @@ function extractGeminiErrorDetails(err: any): {
   if (parsedStatus === 404 || upper.includes('NOT_FOUND')) {
     return {
       status: 502,
-      code: 'MODEL_NOT_FOUND',
-      message: 'The configured AI model is temporarily unavailable. Please try again shortly.',
+      code: 'ADVISOR_TEMPORARILY_UNAVAILABLE',
+      message: 'COVA Advisor is temporarily unavailable. Please try again shortly.',
+      internalMessage: parsedMessage,
       isFallbackEligible: true,
     };
   }
@@ -323,16 +328,18 @@ function extractGeminiErrorDetails(err: any): {
   if (parsedStatus === 503 || upper.includes('UNAVAILABLE') || upper.includes('HIGH DEMAND')) {
     return {
       status: 503,
-      code: 'MODEL_UNAVAILABLE',
-      message: 'Gemini AI is currently experiencing high demand. Please try again in a few moments.',
+      code: 'ADVISOR_BUSY',
+      message: 'COVA Advisor is experiencing high demand right now. Please try again in a few moments.',
+      internalMessage: parsedMessage,
       isFallbackEligible: true,
     };
   }
 
   return {
     status: parsedStatus >= 400 && parsedStatus < 600 ? parsedStatus : 502,
-    code: parsedCode || 'GEMINI_REQUEST_FAILED',
-    message: parsedMessage || 'An unexpected error occurred while communicating with COVA. Please try again.',
+    code: 'ADVISOR_REQUEST_FAILED',
+    message: 'Something went wrong while connecting with COVA. Please try again.',
+    internalMessage: parsedMessage,
     isFallbackEligible: false,
   };
 }
@@ -489,21 +496,22 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
   // 3. API Key Validation
   const apiKey = process.env.GEMINI_API_KEY?.trim();
   if (!apiKey) {
+    console.warn('[COVA] Missing GEMINI_API_KEY in server environment.');
     const missingKeyMessage =
-      'COVA AI is currently awaiting its Gemini API key. Please add your GEMINI_API_KEY in Settings > Secrets to enable live AI responses.';
+      'COVA Advisor is currently paused while your opportunities catalog remains available.';
 
     if (stream) {
       res.setHeader('Content-Type', 'text/event-stream');
       res.setHeader('Cache-Control', 'no-cache');
       res.setHeader('Connection', 'keep-alive');
-      res.write(`event: error\ndata: ${JSON.stringify({ error: missingKeyMessage, code: 'MISSING_API_KEY' })}\n\n`);
+      res.write(`event: error\ndata: ${JSON.stringify({ error: missingKeyMessage, code: 'ADVISOR_PAUSED' })}\n\n`);
       res.end();
       return;
     }
 
     res.status(503).json({
       error: missingKeyMessage,
-      code: 'MISSING_API_KEY',
+      code: 'ADVISOR_PAUSED',
     });
     return;
   }
@@ -768,7 +776,7 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
       }
 
       if (!emittedText.trim()) {
-        throw new Error('COVA received an empty response from Gemini. Please retry.');
+        throw new Error('COVA did not receive a reply. Please try again.');
       }
 
       const topMatches = relevantOpportunities.slice(0, 4);
@@ -822,7 +830,7 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
 
       const replyText = response.text || '';
       if (!replyText.trim()) {
-        throw new Error('COVA received an empty response from Gemini. Please retry.');
+        throw new Error('COVA did not receive a reply. Please try again.');
       }
 
       const topMatches = relevantOpportunities.slice(0, 4);
@@ -846,11 +854,12 @@ app.post('/api/cova/chat', async (req: Request<{}, {}, ChatRequestBody>, res: Re
       ? {
           status: 504,
           code: 'REQUEST_TIMEOUT',
-          message: 'COVA AI took too long to respond. Please try sending your message again.',
+          message: 'COVA took too long to respond. Please try sending your message again.',
+          internalMessage: 'Request timed out',
         }
       : extractGeminiErrorDetails(error);
 
-    console.error(`[COVA] Gemini generation error (${details.code}, ${details.status}):`, details.message);
+    console.error(`[COVA] Gemini generation error (${details.code}, ${details.status}):`, details.internalMessage);
 
     if (stream && !res.headersSent) {
       res.setHeader('Content-Type', 'text/event-stream');

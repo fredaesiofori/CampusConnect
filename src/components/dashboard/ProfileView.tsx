@@ -38,6 +38,7 @@ import {
 import { Button } from '../ui/Button';
 import { CountryMultiSelect, CountrySelect } from '../ui/CountrySelect';
 import { getStudentInitials } from '../ui/StudentInitialsAvatar';
+import { getStudentFriendlyError } from '../../utils/errorMessages';
 
 export type ProfileSubTab =
   | 'overview'
@@ -371,7 +372,10 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
       const res = await authService.changePassword(currentPassword, newPassword);
       if (!res.success) {
         setPasswordError(
-          res.error || 'Failed to update password. Please verify your credentials.'
+          getStudentFriendlyError(
+            res.error,
+            'Failed to update password. Please verify your credentials.'
+          )
         );
         return;
       }
@@ -383,7 +387,10 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
       onShowToast?.('Password updated securely.');
     } catch (err: any) {
       setPasswordError(
-        err?.message || 'An unexpected error occurred while updating your password.'
+        getStudentFriendlyError(
+          err,
+          'An unexpected error occurred while updating your password.'
+        )
       );
     } finally {
       setIsChangingPassword(false);
@@ -410,11 +417,16 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         onShowToast?.('Password reset link sent.');
       } else {
         setResetError(
-          res.error || 'Unable to send password reset email right now.'
+          getStudentFriendlyError(
+            res.error,
+            'Unable to send password reset email right now.'
+          )
         );
       }
     } catch (err: any) {
-      setResetError(err?.message || 'Failed to contact authentication service.');
+      setResetError(
+        getStudentFriendlyError(err, 'Unable to send password reset email right now.')
+      );
     } finally {
       setIsSendingReset(false);
     }

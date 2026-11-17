@@ -206,8 +206,8 @@ export const MobileLandingView: React.FC<MobileLandingViewProps> = ({
             </svg>
 
             {/* Unified Hero Foreground Content */}
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-4.5 min-[375px]:px-5 sm:px-8 sm:py-7 lg:px-8 lg:py-12">
-              <div className="w-[63%] min-[390px]:w-[60%] sm:w-[56%] md:w-[54%] lg:w-[50%] flex flex-col items-start text-left pb-0 md:pb-5">
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-3.5 py-4.5 min-[375px]:px-5 sm:px-8 sm:py-7 lg:px-8 lg:py-12">
+              <div className="w-[65%] min-[390px]:w-[60%] sm:w-[56%] md:w-[54%] lg:w-[50%] flex flex-col items-start text-left pb-0 md:pb-5">
                 <h1 className="font-display font-extrabold text-[18px] min-[375px]:text-[20px] sm:text-3xl md:text-[36px] lg:text-[44px] leading-[1.08] tracking-tight text-white drop-shadow-[0_2px_10px_rgba(16,19,45,0.28)]">
                   Your Global
                   <br />
@@ -243,7 +243,7 @@ export const MobileLandingView: React.FC<MobileLandingViewProps> = ({
                   <button
                     type="button"
                     onClick={onExploreUniversities}
-                    className="inline-flex items-center gap-1.5 px-3.5 sm:px-5 md:px-6 py-2 sm:py-2.5 min-h-[38px] sm:min-h-[42px] md:min-h-[44px] rounded-full bg-white hover:bg-slate-50 active:scale-[0.98] text-[#15152F] text-[11.5px] sm:text-xs md:text-[13.5px] font-bold shadow-[0_6px_18px_rgba(16,19,45,0.24)] transition-[transform,box-shadow,background-color] duration-150 ease-out cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white whitespace-nowrap shrink-0"
+                    className="inline-flex items-center gap-1.5 px-3 min-[375px]:px-3.5 sm:px-5 md:px-6 py-2 sm:py-2.5 min-h-[38px] sm:min-h-[42px] md:min-h-[44px] rounded-full bg-white hover:bg-slate-50 active:scale-[0.98] text-[#15152F] text-[11px] min-[375px]:text-[11.5px] sm:text-xs md:text-[13.5px] font-bold shadow-[0_6px_18px_rgba(16,19,45,0.24)] transition-[transform,box-shadow,background-color] duration-150 ease-out cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white whitespace-nowrap shrink-0"
                   >
                     <span>Explore Universities</span>
                     <ArrowRight className="w-3.5 h-3.5 text-[#5D35F5] shrink-0" aria-hidden="true" />
@@ -417,7 +417,7 @@ export const MobileLandingView: React.FC<MobileLandingViewProps> = ({
           </div>
 
           {/* Mobile 6-Chip Destination Strip (< md) */}
-          <div className="grid md:hidden grid-cols-6 gap-1.5">
+          <div className="grid md:hidden grid-cols-3 min-[375px]:grid-cols-6 gap-1.5">
             {POPULAR_DESTINATIONS.map((dest) => (
               <button
                 key={dest.label}
@@ -491,7 +491,7 @@ export const MobileLandingView: React.FC<MobileLandingViewProps> = ({
 
         {/* 4. Mobile (< md): Get Opportunity Alerts Banner */}
         <section aria-label="Opportunity alerts" className="md:hidden">
-          <div className="rounded-2xl bg-[#F3F0FF] border border-[#E6DFFF] px-3 py-3 flex items-center justify-between gap-2.5 shadow-[0_2px_10px_rgba(93,53,245,0.05)]">
+          <div className="rounded-2xl bg-[#F3F0FF] border border-[#E6DFFF] px-3 py-3 flex flex-col min-[360px]:flex-row min-[360px]:items-center justify-between gap-2.5 shadow-[0_2px_10px_rgba(93,53,245,0.05)]">
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <div aria-hidden="true" className="relative w-9 h-9 shrink-0 flex items-center justify-center">
                 <svg viewBox="0 0 36 36" fill="none" className="w-9 h-9">

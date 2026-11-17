@@ -440,9 +440,10 @@ export async function changeFirebasePassword(
           error: 'Too many attempts. Access is temporarily restricted. Please try again later.',
         };
       }
+      console.warn('Password reauthentication error:', reauthErr);
       return {
         success: false,
-        error: reauthErr?.message || 'Authentication failed with the provided current password.',
+        error: 'Could not verify your current password. Please check and try again.',
       };
     }
 
@@ -455,7 +456,7 @@ export async function changeFirebasePassword(
       return {
         success: false,
         requiresReauth: true,
-        error: 'For security reasons, please re-authenticate to confirm this password change.',
+        error: 'For security reasons, please sign out and sign back in to confirm this password change.',
       };
     }
     if (code === 'auth/weak-password') {
@@ -464,9 +465,10 @@ export async function changeFirebasePassword(
         error: 'The new password must be at least 8 characters long and include both letters and numbers.',
       };
     }
+    console.warn('Password update error:', err);
     return {
       success: false,
-      error: err?.message || 'Failed to update password. Please try again.',
+      error: 'Failed to update password. Please try again.',
     };
   }
 }
@@ -502,12 +504,13 @@ export async function refreshFirebaseSessionToken(): Promise<{ success: boolean;
   try {
     const user = auth.currentUser;
     if (!user) {
-      return { success: false, error: 'No active Firebase session found.' };
+      return { success: false, error: 'No active student session found.' };
     }
     await user.getIdToken(true);
     return { success: true };
   } catch (err: any) {
-    return { success: false, error: err?.message || 'Failed to refresh session token.' };
+    console.warn('Session refresh error:', err);
+    return { success: false, error: 'Failed to refresh your active session.' };
   }
 }
 
@@ -522,7 +525,7 @@ export async function seedVerifiedOpportunitiesToFirestore(): Promise<number> {
   const hasAdminClaim = await checkCurrentUserIsAdmin(true);
   if (!hasAdminClaim) {
     throw new Error(
-      'Administrator privileges (verified Firebase custom claim) are required to modify university and opportunity records.'
+      'Administrator privileges are required to modify university and opportunity records.'
     );
   }
 
@@ -756,7 +759,7 @@ export async function saveStudentProfileWithStatusToFirestore(
     return {
       success: false,
       persistedToCloud: false,
-      error: 'No active Firebase authentication session.',
+      error: 'Please sign in again to save changes to your account.',
     };
   }
   const targetUid = fbUser.uid;
@@ -781,7 +784,7 @@ export async function saveStudentProfileWithStatusToFirestore(
     return {
       success: false,
       persistedToCloud: false,
-      error: error instanceof Error ? error.message : 'Failed to save profile to Firestore.',
+      error: 'Could not save your profile changes right now. Please try again.',
     };
   }
 }
@@ -869,7 +872,7 @@ export async function syncStudentDashboardListsToFirestore(
     return {
       success: false,
       persistedToCloud: false,
-      error: 'No active Firebase authentication session.',
+      error: 'Please sign in again to sync your records.',
     };
   }
   const targetUid = fbUser.uid;
@@ -902,7 +905,7 @@ export async function syncStudentDashboardListsToFirestore(
     return {
       success: false,
       persistedToCloud: false,
-      error: error instanceof Error ? error.message : 'Failed to sync records to Firestore.',
+      error: 'Could not save your updates right now. Please try again.',
     };
   }
 }
@@ -948,9 +951,10 @@ export async function deleteStudentAccountFromFirebase(
               'For security, your credentials have expired. Please sign out and sign back in to confirm permanent account deletion.',
           };
         }
+        console.warn('Account deletion auth error:', authErr);
         return {
           success: false,
-          error: authErr?.message || 'Failed to delete authentication credentials.',
+          error: 'Could not delete your account right now. Please try signing in again and retry.',
         };
       }
     }
@@ -1035,7 +1039,7 @@ export async function syncScholarshipAlertToFirestore(payload: {
     return {
       success: false,
       persistedToCloud: false,
-      error: error instanceof Error ? error.message : 'Failed to save scholarship alerts to Firestore.',
+      error: 'Could not save alert settings right now. Please try again.',
     };
   }
 }

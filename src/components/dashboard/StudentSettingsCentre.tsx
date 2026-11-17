@@ -69,6 +69,7 @@ import {
 import { CountrySelect, CountryMultiSelect } from '../ui/CountrySelect';
 import { Button } from '../ui/Button';
 import { StudentInitialsAvatar } from '../ui/StudentInitialsAvatar';
+import { getStudentFriendlyError } from '../../utils/errorMessages';
 
 export type SettingsTab = 'account' | 'security' | 'notifications' | 'study' | 'privacy' | 'admin';
 
@@ -76,6 +77,7 @@ export interface StudentSettingsCentreProps {
   user: User | null;
   onUpdateUser: (user: User) => void;
   onLogout: () => void;
+  onAccountDeleted?: () => void;
   onShowNotification: (msg: string) => void;
   opportunitiesCount: number;
   dbState: {
@@ -98,6 +100,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
   user,
   onUpdateUser,
   onLogout,
+  onAccountDeleted,
   onShowNotification,
   opportunitiesCount,
   dbState,
@@ -534,7 +537,9 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       });
 
       if (!res.success || !res.user) {
-        setAccountError(res.error || 'Failed to update account. Please try again.');
+        setAccountError(
+          getStudentFriendlyError(res.error, 'Failed to update account. Please try again.')
+        );
         setIsSavingAccount(false);
         return;
       }
@@ -545,12 +550,14 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       }
 
       const successMsg = res.warning
-        ? `Profile updated successfully! Note: ${res.warning}`
-        : 'Profile and account details saved successfully and synchronized with your cloud database.';
+        ? `Profile updated! ${getStudentFriendlyError(res.warning, 'Changes saved on this device.')}`
+        : 'Profile and account details saved successfully.';
       setAccountSuccess(successMsg);
       onShowNotification('Account & Profile updated successfully.');
     } catch (err: any) {
-      setAccountError(err?.message || 'An unexpected error occurred while saving your profile.');
+      setAccountError(
+        getStudentFriendlyError(err, 'An unexpected error occurred while saving your profile.')
+      );
     } finally {
       setIsSavingAccount(false);
     }
@@ -604,7 +611,9 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
     try {
       const res = await authService.changePassword(currentPassword, newPassword);
       if (!res.success) {
-        setPasswordChangeError(res.error || 'Failed to update password. Please check your credentials.');
+        setPasswordChangeError(
+          getStudentFriendlyError(res.error, 'Failed to update password. Please check your credentials.')
+        );
         return;
       }
 
@@ -616,7 +625,9 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       setConfirmPassword('');
       onShowNotification('Password successfully updated.');
     } catch (err: any) {
-      setPasswordChangeError(err?.message || 'An unexpected error occurred while updating your password.');
+      setPasswordChangeError(
+        getStudentFriendlyError(err, 'An unexpected error occurred while updating your password.')
+      );
     } finally {
       setIsChangingPassword(false);
     }
@@ -644,10 +655,14 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
         );
         onShowNotification('Password reset link dispatched.');
       } else {
-        setResetError(res.error || 'Unable to dispatch password reset email. Please try again.');
+        setResetError(
+          getStudentFriendlyError(res.error, 'Unable to dispatch password reset email. Please try again.')
+        );
       }
     } catch (err: any) {
-      setResetError(err?.message || 'Failed to connect to authentication recovery service.');
+      setResetError(
+        getStudentFriendlyError(err, 'Unable to send password recovery email right now. Please try again.')
+      );
     } finally {
       setIsSendingReset(false);
     }
@@ -662,30 +677,21 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       if (res.success) {
         const details = await authService.getActiveSessionDetails();
         setSessionDetails(details);
-        setSessionNotice('Session token refreshed and verified securely.');
-        onShowNotification('Session token refreshed.');
+        setSessionNotice('Session verified and refreshed securely.');
+        onShowNotification('Session refreshed.');
       } else {
-        setSessionNotice(res.error || 'Failed to refresh session token.');
+        setSessionNotice(getStudentFriendlyError(res.error, 'Failed to refresh session details.'));
       }
     } catch (err: any) {
-      setSessionNotice(err?.message || 'Failed to refresh token.');
+      setSessionNotice(getStudentFriendlyError(err, 'Failed to refresh session details.'));
     } finally {
       setIsRefreshingSession(false);
     }
   };
 
-  // Handle Secure Sign Out
-  const handleSecureSignOut = async () => {
-    setIsSigningOut(true);
-    try {
-      await authService.logout();
-      onShowNotification('Signed out of student account securely.');
-      onLogout();
-    } catch {
-      onLogout();
-    } finally {
-      setIsSigningOut(false);
-    }
+  // Handle Secure Sign Out via unified Sign-Out Confirmation Dialog
+  const handleSecureSignOut = () => {
+    onLogout();
   };
 
   // Handle Save Notification Preferences
@@ -699,14 +705,18 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       if (res.success && res.user) {
         onUpdateUser(res.user);
         setNotificationSuccessMessage(
-          'Notification preferences saved to your student profile and synchronized with the cloud database.'
+          'Notification preferences saved to your student profile.'
         );
         onShowNotification('Notification preferences saved successfully.');
       } else {
-        setNotificationErrorMessage(res.error || 'Failed to save notification preferences.');
+        setNotificationErrorMessage(
+          getStudentFriendlyError(res.error, 'Failed to save notification preferences.')
+        );
       }
     } catch (err: any) {
-      setNotificationErrorMessage(err?.message || 'Failed to save notification preferences.');
+      setNotificationErrorMessage(
+        getStudentFriendlyError(err, 'Failed to save notification preferences.')
+      );
     } finally {
       setIsSavingNotifications(false);
     }
@@ -856,7 +866,12 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       }
 
       if (!res.ok) {
-        setEmailAlertError(data?.error || 'Could not update your email opportunity alerts right now.');
+        setEmailAlertError(
+          getStudentFriendlyError(
+            data?.error,
+            'Could not update your email opportunity alerts right now.'
+          )
+        );
         return;
       }
 
@@ -876,7 +891,9 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       );
       onShowNotification('Email opportunity alert preferences saved.');
     } catch (err: any) {
-      setEmailAlertError(err?.message || 'Failed to update email opportunity alerts.');
+      setEmailAlertError(
+        getStudentFriendlyError(err, 'Failed to update email opportunity alerts.')
+      );
     } finally {
       setIsSavingEmailAlerts(false);
     }
@@ -898,7 +915,9 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       });
       const data = await res.json().catch(() => null);
       if (!res.ok && res.status !== 404) {
-        setEmailAlertError(data?.error || 'Unable to unsubscribe right now.');
+        setEmailAlertError(
+          getStudentFriendlyError(data?.error, 'Unable to unsubscribe right now.')
+        );
         return;
       }
 
@@ -914,7 +933,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       setEmailAlertSuccess('You have been unsubscribed from Campus Connect email opportunity alerts.');
       onShowNotification('Unsubscribed from email opportunity alerts.');
     } catch (err: any) {
-      setEmailAlertError(err?.message || 'Unable to unsubscribe right now.');
+      setEmailAlertError(getStudentFriendlyError(err, 'Unable to unsubscribe right now.'));
     } finally {
       setIsSavingEmailAlerts(false);
     }
@@ -967,7 +986,9 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       });
 
       if (!res.success || !res.user) {
-        setStudyPrefsError(res.error || 'Failed to save study preferences. Please try again.');
+        setStudyPrefsError(
+          getStudentFriendlyError(res.error, 'Failed to save study preferences. Please try again.')
+        );
         setIsSavingStudyPrefs(false);
         return;
       }
@@ -979,11 +1000,11 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
 
       const priorityLabel = studyPriorityCountry || studyDestinations[0];
       setStudyPrefsSuccess(
-        `Study preferences saved to your student profile and synchronized with the cloud database. Universities in ${priorityLabel} and matching ${studyDegreeLevel} programs will appear first.`
+        `Study preferences saved to your student profile. Universities in ${priorityLabel} and matching ${studyDegreeLevel} programs will appear first.`
       );
       onShowNotification('Study preferences saved successfully.');
     } catch (err: any) {
-      setStudyPrefsError(err?.message || 'Failed to save study preferences.');
+      setStudyPrefsError(getStudentFriendlyError(err, 'Failed to save study preferences.'));
     } finally {
       setIsSavingStudyPrefs(false);
     }
@@ -1111,21 +1132,11 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
     }
   };
 
-  // Handle Sign Out from All Supported Sessions
-  const handleSignOutAllSessions = async () => {
-    setIsSigningOutAllSessions(true);
+  // Handle Sign Out from All Supported Sessions via unified Sign-Out Confirmation Dialog
+  const handleSignOutAllSessions = () => {
     setSignOutAllError(null);
     setSignOutAllSuccess(null);
-    try {
-      await authService.logoutAllSessions();
-      setSignOutAllSuccess('Signed out of all active sessions securely.');
-      onShowNotification('Signed out of all active sessions.');
-      onLogout();
-    } catch (err: any) {
-      setSignOutAllError(err?.message || 'Failed to sign out of all sessions.');
-    } finally {
-      setIsSigningOutAllSessions(false);
-    }
+    onLogout();
   };
 
   // Handle Permanent Account Deletion
@@ -1147,7 +1158,9 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
             'For your security, re-authentication is required. Please sign out and sign back in to delete your account.'
           );
         } else {
-          setAccountDeletionError(res.error || 'Failed to delete account. Please try again.');
+          setAccountDeletionError(
+            getStudentFriendlyError(res.error, 'Failed to delete account. Please try again.')
+          );
         }
         setIsDeletingAccount(false);
         return;
@@ -1156,10 +1169,14 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       setAccountDeletionSuccess('Your student account and all personal records have been permanently erased.');
       onShowNotification('Account permanently deleted.');
       setTimeout(() => {
-        onLogout();
+        if (onAccountDeleted) {
+          onAccountDeleted();
+        } else {
+          onLogout();
+        }
       }, 1500);
     } catch (err: any) {
-      setAccountDeletionError(err?.message || 'Failed to delete account.');
+      setAccountDeletionError(getStudentFriendlyError(err, 'Failed to delete account.'));
       setIsDeletingAccount(false);
     }
   };
@@ -2146,7 +2163,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                         ? `Permission: ${pushStatus.permissionState} · ${
                             pushStatus.vapidKeyConfigured && pushStatus.serverDispatchConfigured
                               ? 'Active'
-                              : 'Background delivery inactive until deployment VAPID & server credentials'
+                              : 'Browser alerts active on this device; background push paused'
                           }`
                         : 'Checking browser notification support...'}
                     </span>
@@ -2265,9 +2282,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                 <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-start gap-2">
                   <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                   <span>
-                    {!firestoreAlertsReady
-                      ? 'Email opportunity alerts are temporarily disabled until server-side Firebase access is configured at deployment. Your in-app notification preferences above remain active.'
-                      : 'Email delivery credentials (RESEND_API_KEY) are not yet configured on the server.'}
+                    Email opportunity alerts are temporarily unavailable right now. Your in-app notification preferences above remain active.
                   </span>
                 </div>
               )}
@@ -2951,7 +2966,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
 
             {/* 4. Platform Privacy Policy */}
             <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-4 shadow-xs">
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
                 <div className="flex items-start gap-3.5">
                   <div className="w-10 h-10 rounded-xl bg-purple-50 text-[#6846F5] flex items-center justify-center shrink-0">
                     <FileText className="w-5 h-5" />

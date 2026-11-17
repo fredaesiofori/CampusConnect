@@ -17,6 +17,7 @@ import {
 import { OAuthCredential } from 'firebase/auth';
 import { AuthSplitLayout, GoogleIcon } from '../components/auth/AuthSplitLayout';
 import { authService, User } from '../services/auth';
+import { getStudentFriendlyError } from '../utils/errorMessages';
 
 export interface LoginPageProps {
   onNavigateHome: () => void;
@@ -86,7 +87,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
         if (!linkRes.success || !linkRes.user) {
           setLoginError(
-            linkRes.error || 'Could not link your Google account. Please verify your password.'
+            getStudentFriendlyError(
+              linkRes.error,
+              'Could not link your Google account. Please verify your password.'
+            )
           );
           setIsSubmitting(false);
           return;
@@ -102,7 +106,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
       if (!result.success || !result.user) {
         setLoginError(
-          result.error || 'Invalid credentials. Please verify your email and password.'
+          getStudentFriendlyError(
+            result.error,
+            'Invalid credentials. Please verify your email and password.'
+          )
         );
         setIsSubmitting(false);
         return;
@@ -147,7 +154,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
       if (!result.cancelled) {
         setLoginError(
-          result.error || 'Unable to sign in with Google right now. Please try again.'
+          getStudentFriendlyError(
+            result.error,
+            'Unable to sign in with Google right now. Please try again.'
+          )
         );
       }
       setIsGoogleSubmitting(false);

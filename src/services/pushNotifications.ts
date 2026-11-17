@@ -66,15 +66,15 @@ export async function getPushCapabilityStatus(): Promise<PushCapabilityStatus> {
 
   let summary = '';
   if (!hasNotification || !serviceWorkerSupported || !fcmSupported) {
-    summary = 'This browser environment does not support Web Push notifications.';
+    summary = 'This browser environment does not support browser push notifications.';
   } else if (permissionState === 'denied') {
     summary = 'Browser notification permission is blocked in your browser site settings.';
   } else if (!vapidKeyConfigured) {
     summary =
-      'Browser permission can be enabled for active sessions, but background FCM push delivery remains disabled until a Web Push VAPID key and deployed Firebase Admin service are configured.';
+      'Browser notification permission can be saved for this device while background push notifications are currently paused.';
   } else {
     summary =
-      'Browser push token registration is available; background push dispatch awaits deployed Firebase Admin credentials.';
+      'Browser notifications are ready on this device; background push delivery is currently paused.';
   }
 
   return {
@@ -134,7 +134,7 @@ export async function enableBrowserPushNotifications(userId: string): Promise<En
       permissionState: 'granted',
       tokenRegistered: false,
       message:
-        'Browser permission granted. Background push delivery remains disabled until Web Push VAPID key & deployed notification server are configured.',
+        'Browser notification permission granted. Your in-app alerts remain active while background push delivery is paused.',
     };
   }
 
@@ -160,7 +160,7 @@ export async function enableBrowserPushNotifications(userId: string): Promise<En
         success: true,
         permissionState: 'granted',
         tokenRegistered: false,
-        message: 'Permission granted, but no FCM device token was issued by the browser.',
+        message: 'Permission granted, though this browser could not complete device registration right now.',
       };
     }
 
@@ -190,15 +190,16 @@ export async function enableBrowserPushNotifications(userId: string): Promise<En
       tokenRegistered: true,
       tokenId,
       message:
-        'Browser notification token saved securely to your account. Automated background push delivery will activate once server-side push dispatch is deployed.',
+        'Browser notification preferences saved to your account for this device.',
     };
   } catch (err: any) {
+    console.warn('Browser push setup failed:', err);
     return {
       success: false,
       permissionState: 'granted',
       tokenRegistered: false,
-      error: err?.message || 'Could not register Web Push service worker token.',
-      message: 'Push token registration failed.',
+      error: 'Could not enable browser notifications on this device right now.',
+      message: 'Could not enable browser notifications right now.',
     };
   }
 }

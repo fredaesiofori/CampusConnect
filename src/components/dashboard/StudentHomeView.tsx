@@ -27,6 +27,41 @@ import { ActiveApplicationItem, User } from '../../services/auth';
 import { StudentNotificationRecord } from '../../services/firebase';
 import { UniversityLogo } from '../ui/UniversityLogo';
 import { DashboardNavTab } from './DashboardSidebar';
+import campusHistoricQuadImg from '../../assets/images/campus_historic_quad_1794926300997.jpg';
+import campusModernGlassImg from '../../assets/images/campus_modern_glass_1794926301324.jpg';
+import campusGrandLibraryImg from '../../assets/images/campus_grand_library_1794926301715.jpg';
+import campusWalkwayTreesImg from '../../assets/images/campus_walkway_trees_1794926302413.jpg';
+import campusCourtyardArchImg from '../../assets/images/campus_courtyard_arch_1794926303162.jpg';
+
+interface CampusBannerSlide {
+  src: string;
+  alt: string;
+}
+
+const CAMPUS_BANNER_SLIDES: CampusBannerSlide[] = [
+  {
+    src: campusHistoricQuadImg,
+    alt: 'Historic limestone university campus quad and sunlit green lawns',
+  },
+  {
+    src: campusModernGlassImg,
+    alt: 'Modern university innovation building with glass facade and reflecting plaza',
+  },
+  {
+    src: campusGrandLibraryImg,
+    alt: 'Classical sandstone university library portico overlooking courtyard gardens',
+  },
+  {
+    src: campusWalkwayTreesImg,
+    alt: 'Tree-lined collegiate walkway flanked by warm brick academic halls',
+  },
+  {
+    src: campusCourtyardArchImg,
+    alt: 'Sunlit stone university archway framing a campus clocktower courtyard',
+  },
+];
+
+const BANNER_SLIDE_INTERVAL_MS = 5000;
 
 export interface StudentHomeViewProps {
   activeUser: User | null;
@@ -71,6 +106,17 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
 }) => {
   const [isDestinationsModalOpen, setIsDestinationsModalOpen] = useState(false);
   const [countryFilter, setCountryFilter] = useState('');
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [isBannerHovered, setIsBannerHovered] = useState(false);
+  const [isDocumentHidden, setIsDocumentHidden] = useState(() =>
+    typeof document !== 'undefined' ? document.visibilityState === 'hidden' : false
+  );
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
+    typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false
+  );
+  const [failedSlideIndices, setFailedSlideIndices] = useState<Set<number>>(() => new Set());
 
   // Derived student profile values strictly from real saved user record
   const firstName = useMemo(() => {
@@ -272,17 +318,117 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isDestinationsModalOpen]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleMotionChange = () => setPrefersReducedMotion(mediaQuery.matches);
+    handleMotionChange();
+    mediaQuery.addEventListener('change', handleMotionChange);
+    return () => mediaQuery.removeEventListener('change', handleMotionChange);
+  }, []);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const handleVisibilityChange = () => {
+      setIsDocumentHidden(document.visibilityState === 'hidden');
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
+  // Preload upcoming campus slides so crossfades never flicker or blank
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const nextIndex = (activeSlideIndex + 1) % CAMPUS_BANNER_SLIDES.length;
+    const indicesToPreload = [nextIndex, (nextIndex + 1) % CAMPUS_BANNER_SLIDES.length];
+    indicesToPreload.forEach((idx) => {
+      const preloader = new window.Image();
+      preloader.src = CAMPUS_BANNER_SLIDES[idx].src;
+    });
+  }, [activeSlideIndex]);
+
+  useEffect(() => {
+    if (isBannerHovered || isDocumentHidden || prefersReducedMotion) return;
+    const timer = window.setInterval(() => {
+      setActiveSlideIndex((prev) => (prev + 1) % CAMPUS_BANNER_SLIDES.length);
+    }, BANNER_SLIDE_INTERVAL_MS);
+    return () => window.clearInterval(timer);
+  }, [isBannerHovered, isDocumentHidden, prefersReducedMotion]);
+
   return (
     <div className="space-y-4 sm:space-y-5 animate-in fade-in duration-150">
       {/* A. Compact Welcome Section */}
       <section
         aria-label="Student Home Welcome"
+        onMouseEnter={() => setIsBannerHovered(true)}
+        onMouseLeave={() => setIsBannerHovered(false)}
         className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#451EC4] via-[#5F31EC] to-[#7448FA] text-white px-4 py-4 sm:px-6 sm:py-5 shadow-[0_8px_22px_-8px_rgba(91,46,230,0.45)]"
       >
+        {/* Background Campus Photography Slideshow */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          {CAMPUS_BANNER_SLIDES.map((slide, index) => {
+            const isActive = index === activeSlideIndex && !failedSlideIndices.has(index);
+            return (
+              <img
+                key={slide.src}
+                src={slide.src}
+                alt=""
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                referrerPolicy="no-referrer"
+                onError={() => {
+                  setFailedSlideIndices((prev) => {
+                    if (prev.has(index)) return prev;
+                    const next = new Set(prev);
+                    next.add(index);
+                    return next;
+                  });
+                }}
+                className={`absolute inset-0 h-full w-full object-cover object-center ${
+                  prefersReducedMotion
+                    ? 'transition-none'
+                    : 'transition-opacity duration-1000 ease-in-out'
+                } ${isActive ? 'opacity-100' : 'opacity-0'}`}
+              />
+            );
+          })}
+
+          {/* Consistent purple gradient scrim & gold accents for contrast and brand harmony */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#3A17B0]/95 via-[#5329E2]/80 sm:via-[#5329E2]/74 to-[#6D41F5]/46" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#3816AA]/45 via-transparent to-[#451EC4]/25" />
+          <div className="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-[#F8C555]/15 blur-2xl" />
+          <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-[#F8C555]/85 via-[#F8C555]/40 to-transparent" />
+        </div>
+
+        {/* Subtle non-intrusive slide indicators anchored in top-right corner */}
         <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-12 -top-12 w-44 h-44 rounded-full bg-white/10 blur-2xl"
-        />
+          className="absolute top-3.5 right-4 sm:top-4 sm:right-6 z-20 flex items-center gap-1"
+          role="group"
+          aria-label="Campus banner slideshow controls"
+        >
+          {CAMPUS_BANNER_SLIDES.map((slide, index) => {
+            const isActive = index === activeSlideIndex;
+            return (
+              <button
+                key={slide.src}
+                type="button"
+                onClick={() => setActiveSlideIndex(index)}
+                aria-label={`Show campus photo ${index + 1} of ${CAMPUS_BANNER_SLIDES.length}`}
+                aria-current={isActive ? 'true' : undefined}
+                className="p-0.5 rounded-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F8C555]"
+              >
+                <span
+                  className={`block h-1.5 rounded-full transition-all duration-300 ${
+                    isActive
+                      ? 'w-4 bg-[#F8C555]'
+                      : 'w-1.5 bg-white/45 hover:bg-white/75'
+                  }`}
+                />
+              </button>
+            );
+          })}
+        </div>
+
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-1 min-w-0">
             <p className="text-[11px] font-bold uppercase tracking-wider text-[#F8C555]">
@@ -291,7 +437,7 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
             <h2 className="font-display font-bold text-lg sm:text-2xl tracking-tight leading-snug text-white">
               Welcome, {firstName}
             </h2>
-            <p className="text-xs sm:text-sm text-white/90 leading-relaxed max-w-2xl">
+            <p className="text-xs sm:text-sm text-white/95 leading-relaxed max-w-2xl">
               {journeySummaryText
                 ? `${journeySummaryText}. Ready to continue discovering verified global programs and funding.`
                 : 'Add your preferred study field, degree level, and destination in Profile to personalize your discovery feed.'}
@@ -303,7 +449,7 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
               <button
                 type="button"
                 onClick={() => onNavigate('profile', 'home')}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 min-h-[40px] rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-white text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 min-h-[40px] rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-white text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap backdrop-blur-[2px]"
               >
                 <UserRound className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Set Study Focus</span>
@@ -487,7 +633,7 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
           </button>
         </div>
 
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-2.5">
+        <div className="grid grid-cols-2 min-[375px]:grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-2.5">
           {visibleDestinations.map((dest) => (
             <button
               key={dest.queryValue}

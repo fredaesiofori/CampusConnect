@@ -549,7 +549,7 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
 
                 {/* Footer Actions */}
                 <div className="pt-1 flex flex-wrap items-center justify-between gap-3 text-xs">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <button
                       type="button"
                       onClick={() => onOpenDetails(item)}

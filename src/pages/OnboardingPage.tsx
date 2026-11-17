@@ -32,12 +32,14 @@ export interface OnboardingPageProps {
   currentUser: User | null;
   onComplete: (updatedUser: User) => void;
   onSkip: () => void;
+  onNavigateHome?: () => void;
 }
 
 export const OnboardingPage: React.FC<OnboardingPageProps> = ({
   currentUser,
   onComplete,
   onSkip,
+  onNavigateHome,
 }) => {
   const existingProfile = currentUser?.profile;
 
@@ -160,8 +162,15 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({
       {/* Top Header */}
       <header className="w-full bg-[#10132D] border-b border-[#20254D] py-4 px-4 sm:px-6 lg:px-8 sticky top-0 z-30">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Logo size="md" variant="dark" showWordmark={true} />
+          <div className="flex items-center gap-3 min-w-0">
+            <button
+              type="button"
+              onClick={onNavigateHome || onSkip}
+              aria-label="Go to Campus Connect Student Home"
+              className="rounded-xl p-1 -m-1 text-left transition-opacity hover:opacity-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 shrink-0"
+            >
+              <Logo size="md" variant="dark" showWordmark={true} />
+            </button>
             <span className="hidden sm:inline-block text-xs font-semibold text-[#8065FF] border-l border-[#20254D] pl-3">
               Scholar Profile Setup
             </span>
@@ -399,7 +408,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({
                 </div>
 
                 {/* Step 1 Actions */}
-                <div className="pt-4 border-t border-[#E2E8F0] flex items-center justify-between gap-3">
+                <div className="pt-4 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-2 sm:gap-3">
                   <button
                     type="button"
                     onClick={onSkip}
@@ -463,7 +472,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({
                 </div>
 
                 {/* Step 2 Actions */}
-                <div className="pt-4 border-t border-[#E2E8F0] flex items-center justify-between gap-3">
+                <div className="pt-4 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-2 sm:gap-3">
                   <button
                     type="button"
                     onClick={() => setCurrentStep(1)}
@@ -545,7 +554,7 @@ export const OnboardingPage: React.FC<OnboardingPageProps> = ({
                 </div>
 
                 {/* Step 3 Actions */}
-                <div className="pt-4 border-t border-[#E2E8F0] flex items-center justify-between gap-3">
+                <div className="pt-4 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-2 sm:gap-3">
                   <button
                     type="button"
                     onClick={() => setCurrentStep(2)}

@@ -96,10 +96,11 @@ import { StudentHomeView } from './StudentHomeView';
 import { FeaturedUniversityBanner } from './FeaturedUniversityBanner';
 import {
   doesOpportunityMatchCountry,
-  resolveExploreBannerOpportunity,
+  resolveExploreBannerShowcase,
   resolveStudentProfileCountry,
   sortRelevantExploreOpportunities,
 } from '../../utils/universityDirectory';
+import { getStudentFriendlyError } from '../../utils/errorMessages';
 
 export interface InstitutionBadgeProps {
   item?: OpportunityItem;
@@ -146,6 +147,7 @@ export interface StudentDashboardProps {
   currentUser?: User | null;
   userEmail?: string;
   onLogout?: () => void;
+  onAccountDeleted?: () => void;
 }
 
 export const StudentDashboard: React.FC<StudentDashboardProps> = ({
@@ -159,6 +161,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   currentUser,
   userEmail = 'scholar@campusconnect.edu',
   onLogout,
+  onAccountDeleted,
 }) => {
   const initialUser = currentUser || authService.getCurrentUser();
   const [activeUser, setActiveUser] = useState<User | null>(initialUser);
@@ -635,7 +638,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const toggleSave = async (opportunityId: string, title: string) => {
     const res = await authService.toggleSavedOpportunitySynced(opportunityId);
     if (!res.success) {
-      showNotification(res.error || 'Could not update bookmark. Please check your connection.', true);
+      showNotification(
+        getStudentFriendlyError(res.error, 'Could not update bookmark. Please check your connection.'),
+        true
+      );
       return;
     }
 
@@ -660,7 +666,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   }) => {
     const res = await authService.upsertTargetListItem(input);
     if (!res.success) {
-      showNotification(res.error || 'Could not save Target List item.', true);
+      showNotification(
+        getStudentFriendlyError(res.error, 'Could not save Target List item.'),
+        true
+      );
       return;
     }
     if (res.user) {
@@ -678,7 +687,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const handleRemoveTarget = async (opportunityId: string, title: string) => {
     const res = await authService.removeTargetListItem(opportunityId);
     if (!res.success) {
-      showNotification(res.error || 'Could not remove target.', true);
+      showNotification(
+        getStudentFriendlyError(res.error, 'Could not remove target.'),
+        true
+      );
       return;
     }
     if (res.user) {
@@ -695,7 +707,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   ) => {
     const res = await authService.startActiveApplication(opportunityId, initialStage);
     if (!res.success) {
-      showNotification(res.error || 'Could not start application.', true);
+      showNotification(
+        getStudentFriendlyError(res.error, 'Could not start application.'),
+        true
+      );
       return;
     }
     let latestUser = res.user;
@@ -736,7 +751,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   ) => {
     const res = await authService.updateActiveApplication(opportunityId, patch);
     if (!res.success) {
-      showNotification(res.error || 'Could not update application.', true);
+      showNotification(
+        getStudentFriendlyError(res.error, 'Could not update application.'),
+        true
+      );
       return;
     }
     if (res.user) {
@@ -764,7 +782,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const handleRemoveActiveApplication = async (opportunityId: string, title: string) => {
     const res = await authService.removeActiveApplication(opportunityId);
     if (!res.success) {
-      showNotification(res.error || 'Could not remove application.', true);
+      showNotification(
+        getStudentFriendlyError(res.error, 'Could not remove application.'),
+        true
+      );
       return;
     }
     if (res.user) {
@@ -918,7 +939,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       });
 
       if (!res.success || !res.user) {
-        const errMsg = res.error || 'Failed to save profile changes. Please try again.';
+        const errMsg = getStudentFriendlyError(
+          res.error,
+          'Failed to save profile changes. Please try again.'
+        );
         setProfileSaveFeedback({ type: 'error', text: errMsg });
         showNotification(errMsg, true);
         return;
@@ -935,7 +959,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         showNotification(msg);
       } else {
         const msg =
-          'Profile updated locally, but cloud persistence could not be confirmed. Please sign in again to sync to your account.';
+          'Profile updated for this session. Please sign in again to sync changes to your account.';
         setProfileSaveFeedback({ type: 'info', text: msg });
         showNotification(msg);
       }
@@ -954,7 +978,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       const isAdmin = await checkCurrentUserIsAdmin(true);
       if (!isAdmin) {
         showNotification(
-          'Administrator privileges (verified Firebase custom claim) are required to edit directory records.',
+          'Administrator privileges are required to edit directory records.',
           true
         );
         return;
@@ -966,8 +990,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         setOpportunities(live);
       }
     } catch (err: any) {
+      console.warn('Manual directory sync failed:', err);
       showNotification(
-        err?.message || 'Permission denied: administrator privileges are required to modify university records.',
+        getStudentFriendlyError(
+          err,
+          'Administrator privileges are required to update directory records.'
+        ),
         true
       );
     } finally {
@@ -1292,9 +1320,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     );
   }, [filteredOpportunities, sortBy, selectedUserCountry, selectedDestination]);
 
-  // Contextual Featured University Banner (shown only on country filter or specific university/country search)
+  // Dynamic Featured University Banner Showcase (worldwide rotation, country-scoped, or search-matched)
   const exploreBanner = useMemo(() => {
-    return resolveExploreBannerOpportunity({
+    return resolveExploreBannerShowcase({
       opportunities,
       filteredOpportunities: prioritizedOpportunities,
       selectedDestination,
@@ -1650,7 +1678,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       {/* Floating Action Feedback Toast */}
       {toastMessage && (
         <div
-          className={`fixed bottom-20 md:bottom-6 right-4 md:right-6 z-50 text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border animate-in fade-in slide-in-from-bottom-2 duration-150 ${
+          className={`fixed bottom-20 md:bottom-6 right-4 md:right-6 z-50 max-w-[calc(100vw-2rem)] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border animate-in fade-in slide-in-from-bottom-2 duration-150 ${
             toastMessage.isError
               ? 'bg-rose-700 border-rose-500'
               : 'bg-[#10132D] border-[#25254D]'
@@ -1669,7 +1697,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Header Bar: Mobile Brand Header & Tablet/Desktop Header */}
         <header className="sticky top-0 z-20 bg-white border-b border-[#E2E8F0] px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-3 shadow-xs">
-          {/* Left: Hamburger + Clickable Brand Logo (routes to Dashboard on all viewports) + Desktop Breadcrumb */}
+          {/* Left: Hamburger + Clickable Brand Logo (routes to Student Home on all viewports) + Desktop Breadcrumb */}
           <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 flex-1">
             <button
               type="button"
@@ -1681,12 +1709,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               <span className="hidden sm:inline text-xs font-semibold text-slate-700">Menu</span>
             </button>
 
-            {/* Brand Lockup (Visible & Clickable to Dashboard on Mobile, Tablet & Desktop) */}
+            {/* Brand Lockup (Visible & Clickable to Student Home on Mobile, Tablet & Desktop) */}
             <div className="min-w-0 sm:flex-none overflow-hidden">
               <button
                 type="button"
-                onClick={() => navigateToDashboardView('overview', 'home')}
-                aria-label="Go to Campus Connect Dashboard"
+                onClick={() => navigateToDashboardView('home', 'home')}
+                aria-label="Go to Campus Connect Student Home"
                 className="min-w-0 max-w-full inline-flex items-center text-left rounded-xl py-0.5 pr-1 transition-opacity duration-150 hover:opacity-85 active:scale-[0.99] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
               >
                 <Logo size="sm" variant="light" iconShape="circle" showWordmark={true} />
@@ -1767,7 +1795,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         </header>
 
         {/* Main Content Body */}
-        <main className="flex-1 p-3.5 sm:p-5 lg:p-6 max-w-7xl w-full mx-auto space-y-4 sm:space-y-5 pb-24 sm:pb-14">
+        <main className="flex-1 p-3.5 sm:p-5 lg:p-6 max-w-7xl w-full mx-auto space-y-4 sm:space-y-5 pb-32 md:pb-14">
           {/* ========================================================================= */}
           {/* VIEW 0: AUTHENTICATED STUDENT HOME (COMPACT PERSONALIZED PORTAL HOME)     */}
           {/* ========================================================================= */}
@@ -1869,14 +1897,6 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
           {/* ========================================================================= */}
           {(activeTab === 'universities' || activeTab === 'scholarships') && (
             <div className="space-y-4 sm:space-y-5 animate-in fade-in duration-150">
-              {/* Contextual Featured University Banner (above heading on country filter / specific search) */}
-              {activeTab === 'universities' && exploreBanner && (
-                <FeaturedUniversityBanner
-                  item={exploreBanner.opportunity}
-                  onOpenDetails={setSelectedOpportunity}
-                />
-              )}
-
               {/* Header Title & Dynamic Subtitle */}
               <div className="space-y-1">
                 <h2 className="text-2xl sm:text-3xl font-bold font-display text-[#10132D] tracking-tight leading-tight">
@@ -1890,6 +1910,15 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                     : `Find your dream university from ${totalItems} verified institutions worldwide.`}
                 </p>
               </div>
+
+              {/* Dynamic Featured University Banner directly below Explore Universities heading and above search */}
+              {activeTab === 'universities' && exploreBanner && (
+                <FeaturedUniversityBanner
+                  showcase={exploreBanner}
+                  onOpenDetails={setSelectedOpportunity}
+                  onResetFilters={resetAllFilters}
+                />
+              )}
 
               {/* Search Bar & Compact 3-Button Filter Bar */}
               <UniversitySearchFilters
@@ -1946,7 +1975,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               />
 
               {/* Compact Results Count & Sort By Bar */}
-              <div className="flex items-center justify-between gap-2 pt-0.5">
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
                 <p className="text-xs sm:text-sm font-bold text-[#10132D] tabular-nums">
                   {totalItems}{' '}
                   {activeTab === 'scholarships'
@@ -2171,6 +2200,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 }
               }}
               onLogout={onLogout || (() => {})}
+              onAccountDeleted={onAccountDeleted}
               onShowNotification={showNotification}
               opportunitiesCount={opportunities.length}
               dbState={dbState}

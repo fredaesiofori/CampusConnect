@@ -6,6 +6,7 @@
 import { ALL_COUNTRIES } from '../data/countries';
 import { OpportunityItem } from '../data/opportunities';
 import { User } from '../services/auth';
+import { getVerifiedCampusPhotoUrl } from './verifiedCampusPhotos';
 
 /**
  * Curated map of well-known verified institutions per country for the
@@ -353,6 +354,286 @@ export function resolveExploreBannerOpportunity(params: {
   }
 
   return null;
+}
+
+export interface ExploreBannerShowcase {
+  mode: 'worldwide' | 'country' | 'university' | 'empty';
+  slides: OpportunityItem[];
+  fallbackItem: OpportunityItem | null;
+  countryLabel?: string;
+}
+
+const WORLDWIDE_ROTATION_COUNTRIES = [
+  'United Kingdom',
+  'Ghana',
+  'Canada',
+  'United States',
+  'Germany',
+  'Australia',
+  'South Africa',
+  'Japan',
+  'Switzerland',
+  'Nigeria',
+  'Singapore',
+  'Kenya',
+  'Netherlands',
+  'India',
+  'France',
+];
+
+function dedupeOpportunitiesById(items: OpportunityItem[]): OpportunityItem[] {
+  const seen = new Set<string>();
+  const out: OpportunityItem[] = [];
+  for (const item of items) {
+    if (!item || !item.id || seen.has(item.id)) continue;
+    seen.add(item.id);
+    out.push(item);
+  }
+  return out;
+}
+
+function orderCountryShowcaseCandidates(
+  candidates: OpportunityItem[],
+  countryName: string
+): OpportunityItem[] {
+  const flagshipId =
+    FLAGSHIP_INSTITUTION_IDS_BY_COUNTRY[countryName.toLowerCase()];
+
+  return [...candidates].sort((a, b) => {
+    const aFlagship = flagshipId && a.id === flagshipId ? 1 : 0;
+    const bFlagship = flagshipId && b.id === flagshipId ? 1 : 0;
+    if (aFlagship !== bFlagship) return bFlagship - aFlagship;
+
+    const scoreDiff = scoreFeaturedCandidate(b) - scoreFeaturedCandidate(a);
+    if (scoreDiff !== 0) return scoreDiff;
+    return (a.officialName || '').localeCompare(b.officialName || '');
+  });
+}
+
+function scoreNameMatch(item: OpportunityItem, queryLower: string): number {
+  const official = (item.officialName || item.institution || '').toLowerCase();
+  const short = (item.shortName || '').toLowerCase();
+  let score = 0;
+
+  if (official === queryLower || (short && short === queryLower)) score += 1000;
+  else if (official.startsWith(queryLower) || (short && short.startsWith(queryLower))) score += 700;
+  else if (official.includes(queryLower) || (short && short.includes(queryLower))) score += 450;
+  else if ((item.city || '').toLowerCase().includes(queryLower)) score += 200;
+
+  if (getVerifiedCampusPhotoUrl(item)) score += 300;
+  if (FLAGSHIP_INSTITUTION_IDS_BY_COUNTRY[(item.country || '').toLowerCase()] === item.id) {
+    score += 120;
+  }
+  score += scoreFeaturedCandidate(item);
+  return score;
+}
+
+/**
+ * Resolves the dynamic Featured University Showcase for Explore Universities:
+ * - Default (no active country or search): rotates through flagship institutions across multiple countries
+ * - Country filter or country search: rotates strictly through eligible universities in that country
+ *   (prominent flagship first, static when 1 photo exists, tasteful branded fallback when 0 exist)
+ * - Specific university / keyword search: prioritizes matching institutions with authentic campus photos
+ */
+export function resolveExploreBannerShowcase(params: {
+  opportunities: OpportunityItem[];
+  filteredOpportunities: OpportunityItem[];
+  selectedDestination: string;
+  searchQuery: string;
+  isScholarshipsTab: boolean;
+}): ExploreBannerShowcase | null {
+  const {
+    opportunities,
+    filteredOpportunities,
+    selectedDestination,
+    searchQuery,
+    isScholarshipsTab,
+  } = params;
+
+  if (isScholarshipsTab) return null;
+
+  const verifiedFiltered = dedupeOpportunitiesById(
+    filteredOpportunities.filter((o) => o && hasAcceptableBranding(o))
+  );
+
+  // 1. Detect explicit destination dropdown OR search query matching a country
+  const explicitDestination =
+    selectedDestination &&
+    !selectedDestination.toLowerCase().includes('all destination')
+      ? normalizeCountryName(selectedDestination)
+      : '';
+
+  const trimmedQuery = searchQuery.trim();
+  const qLower = trimmedQuery.toLowerCase();
+
+  let searchMatchedCountry = '';
+  if (!explicitDestination && qLower.length >= 2 && !AMBIGUOUS_SEARCH_TERMS.has(qLower)) {
+    const availableCountries = Array.from(
+      new Set(
+        opportunities
+          .filter((o) => o && o.isVerified && o.country)
+          .map((o) => o.country)
+      )
+    );
+    const aliasMatch = COUNTRY_NAME_ALIASES[qLower];
+    if (
+      aliasMatch &&
+      availableCountries.some((c) => c.toLowerCase() === aliasMatch.toLowerCase())
+    ) {
+      searchMatchedCountry = aliasMatch;
+    } else {
+      searchMatchedCountry =
+        availableCountries.find((c) => c.toLowerCase() === qLower) || '';
+    }
+  }
+
+  const activeCountry = explicitDestination || searchMatchedCountry;
+
+  // 2. Country-scoped showcase
+  if (activeCountry) {
+    const filteredInCountry = verifiedFiltered.filter((o) =>
+      doesOpportunityMatchCountry(o, activeCountry)
+    );
+
+    if (filteredInCountry.length === 0) {
+      return {
+        mode: 'empty',
+        slides: [],
+        fallbackItem: null,
+        countryLabel: activeCountry,
+      };
+    }
+
+    const orderedCountry = orderCountryShowcaseCandidates(
+      filteredInCountry,
+      activeCountry
+    );
+    const photographed = orderedCountry.filter((o) =>
+      Boolean(getVerifiedCampusPhotoUrl(o))
+    );
+
+    if (photographed.length > 0) {
+      return {
+        mode: 'country',
+        countryLabel: activeCountry,
+        slides: photographed.slice(0, 6),
+        fallbackItem: null,
+      };
+    }
+
+    return {
+      mode: 'country',
+      countryLabel: activeCountry,
+      slides: [],
+      fallbackItem: orderedCountry[0] || null,
+    };
+  }
+
+  // 3. Specific search query (university name, city, or study field)
+  if (trimmedQuery.length > 0) {
+    if (verifiedFiltered.length === 0) {
+      return {
+        mode: 'empty',
+        slides: [],
+        fallbackItem: null,
+      };
+    }
+
+    const ranked = [...verifiedFiltered].sort(
+      (a, b) => scoreNameMatch(b, qLower) - scoreNameMatch(a, qLower)
+    );
+    const photographed = ranked.filter((o) => Boolean(getVerifiedCampusPhotoUrl(o)));
+
+    if (photographed.length > 0) {
+      return {
+        mode: 'university',
+        slides: photographed.slice(0, 6),
+        fallbackItem: null,
+      };
+    }
+
+    return {
+      mode: 'university',
+      slides: [],
+      fallbackItem: ranked[0] || null,
+    };
+  }
+
+  // 4. Default worldwide multi-country rotation
+  if (verifiedFiltered.length === 0) {
+    return {
+      mode: 'empty',
+      slides: [],
+      fallbackItem: null,
+    };
+  }
+
+  const photographedWorldwide = verifiedFiltered.filter((o) =>
+    Boolean(getVerifiedCampusPhotoUrl(o))
+  );
+
+  if (photographedWorldwide.length === 0) {
+    return {
+      mode: 'worldwide',
+      slides: [],
+      fallbackItem: verifiedFiltered[0] || null,
+    };
+  }
+
+  // Build global multi-country selection rotating across distinct countries
+  const byCountry = new Map<string, OpportunityItem[]>();
+  for (const item of photographedWorldwide) {
+    const key = item.country;
+    const list = byCountry.get(key) || [];
+    list.push(item);
+    byCountry.set(key, list);
+  }
+  for (const [countryName, list] of byCountry.entries()) {
+    byCountry.set(countryName, orderCountryShowcaseCandidates(list, countryName));
+  }
+
+  const slides: OpportunityItem[] = [];
+  const usedIds = new Set<string>();
+
+  for (const countryName of WORLDWIDE_ROTATION_COUNTRIES) {
+    const list = byCountry.get(countryName);
+    if (!list || list.length === 0) continue;
+    const candidate = list.find((o) => !usedIds.has(o.id));
+    if (candidate) {
+      usedIds.add(candidate.id);
+      slides.push(candidate);
+    }
+    if (slides.length >= 12) break;
+  }
+
+  // Include remaining distinct countries if any slots remain
+  if (slides.length < 12) {
+    for (const [, list] of byCountry.entries()) {
+      const candidate = list.find((o) => !usedIds.has(o.id));
+      if (candidate) {
+        usedIds.add(candidate.id);
+        slides.push(candidate);
+      }
+      if (slides.length >= 12) break;
+    }
+  }
+
+  // If non-country filters left < 2 countries, top up up to 6 slides from photographed matches
+  if (slides.length < 2) {
+    for (const item of photographedWorldwide) {
+      if (!usedIds.has(item.id)) {
+        usedIds.add(item.id);
+        slides.push(item);
+      }
+      if (slides.length >= 6) break;
+    }
+  }
+
+  return {
+    mode: 'worldwide',
+    slides,
+    fallbackItem: null,
+  };
 }
 
 const FLAGSHIP_PRIORITY_SET = new Set(

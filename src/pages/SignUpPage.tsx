@@ -17,6 +17,7 @@ import {
 import { AuthSplitLayout, GoogleIcon } from '../components/auth/AuthSplitLayout';
 import { CountrySelect } from '../components/ui/CountrySelect';
 import { authService, User, validatePasswordPolicy } from '../services/auth';
+import { getStudentFriendlyError } from '../utils/errorMessages';
 
 export interface SignUpPageProps {
   onNavigateHome: () => void;
@@ -130,7 +131,12 @@ export const SignUpPage: React.FC<SignUpPageProps> = ({
       });
 
       if (!result.success || !result.user) {
-        setGeneralError(result.error || 'Failed to register account. Please try again.');
+        setGeneralError(
+          getStudentFriendlyError(
+            result.error,
+            'Failed to register account. Please try again.'
+          )
+        );
         setIsSubmitting(false);
         return;
       }
@@ -170,7 +176,10 @@ export const SignUpPage: React.FC<SignUpPageProps> = ({
 
       if (!result.cancelled) {
         setGeneralError(
-          result.error || 'Unable to continue with Google right now. Please try again.'
+          getStudentFriendlyError(
+            result.error,
+            'Unable to continue with Google right now. Please try again.'
+          )
         );
       }
       setIsGoogleSubmitting(false);

@@ -15,6 +15,7 @@ import {
 import { Logo } from '../components/brand/Logo';
 import { Button } from '../components/ui/Button';
 import { authService } from '../services/auth';
+import { getStudentFriendlyError } from '../utils/errorMessages';
 
 export interface ForgotPasswordPageProps {
   onNavigateHome: () => void;
@@ -50,7 +51,12 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({
       const res = await authService.requestPasswordReset(email);
 
       if (!res.success) {
-        setError(res.error || 'Failed to send password reset email. Please check your email address.');
+        setError(
+          getStudentFriendlyError(
+            res.error,
+            'Failed to send password reset email. Please check your email address.'
+          )
+        );
         setIsSubmitting(false);
         return;
       }
@@ -75,7 +81,8 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({
           <button
             type="button"
             onClick={onNavigateHome}
-            className="flex items-center gap-2 group cursor-pointer focus:outline-none"
+            aria-label="Return to Campus Connect home"
+            className="flex items-center gap-2 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 rounded-xl p-1 -m-1"
           >
             <Logo size="md" variant="dark" showWordmark={true} />
           </button>

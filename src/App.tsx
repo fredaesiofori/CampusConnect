@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   CheckCircle2,
   Sparkles,
@@ -20,6 +20,7 @@ import { FinalCTA } from './components/cta/FinalCTA';
 import { NewsletterSection } from './components/newsletter/NewsletterSection';
 import { Footer } from './components/footer/Footer';
 import { InfoModal } from './components/ui/InfoModal';
+import { SignOutConfirmModal } from './components/ui/SignOutConfirmModal';
 import { StudentDashboard } from './components/dashboard/StudentDashboard';
 import { DashboardNavTab } from './components/dashboard/DashboardSidebar';
 import { SettingsTab } from './components/dashboard/StudentSettingsCentre';
@@ -62,6 +63,9 @@ export default function App() {
     auth.currentUser && !auth.currentUser.isAnonymous ? auth.currentUser.uid : null
   );
   const [feedbackToast, setFeedbackToast] = useState<string | null>(null);
+  const [signOutModalOpen, setSignOutModalOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const isExplicitSignOutRef = useRef(false);
 
   // Informational modal for About, Contact, Privacy, Terms & Social Placeholders
   const [infoModalOpen, setInfoModalOpen] = useState(false);
@@ -98,14 +102,39 @@ export default function App() {
       }
 
       // Sync window hash for clean URL state & history
-      const hash = page === 'landing' ? '' : `#/${page}`;
-      if (window.location.hash !== hash) {
-        window.location.hash = hash;
+      if (page === 'landing') {
+        if (window.location.hash) {
+          window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+      } else {
+        const hash = `#/${page}`;
+        if (window.location.hash !== hash) {
+          window.location.hash = hash;
+        }
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     []
   );
+
+  const navigateToStudentHome = useCallback(() => {
+    setInitialSearchQuery('');
+    setInitialSearchDestination('');
+    setInitialDashboardTab('home');
+    setInitialDeadlineStatus('all');
+    setInitialSettingsTab(undefined);
+    setDashboardNavNonce((n) => n + 1);
+    if (!authService.getCurrentUser()) {
+      navigateTo('landing');
+      return;
+    }
+    setCurrentPage('dashboard');
+    setAuthNotification(null);
+    if (window.location.hash !== '#/home') {
+      window.location.hash = '#/home';
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [navigateTo]);
 
   // Initialize session and hash router listener on mount
   useEffect(() => {
@@ -124,14 +153,16 @@ export default function App() {
       } else {
         setCurrentUser(null);
         setIsLoggedIn(false);
-        setCurrentPage((prev) => {
-          if (prev === 'dashboard' || prev === 'onboarding') {
-            setAuthNotification('Please log in with your scholar account to access the private Student Hub.');
-            window.location.hash = '#/login';
-            return 'login';
-          }
-          return prev;
-        });
+        if (!isExplicitSignOutRef.current) {
+          setCurrentPage((prev) => {
+            if (prev === 'dashboard' || prev === 'onboarding') {
+              setAuthNotification('Please log in with your scholar account to access the private Student Hub.');
+              window.location.hash = '#/login';
+              return 'login';
+            }
+            return prev;
+          });
+        }
       }
     });
 
@@ -147,6 +178,7 @@ export default function App() {
         } else {
           setCurrentPage('login');
           setAuthNotification('Please log in first to configure your profile.');
+          window.location.hash = '#/login';
         }
       } else if (hash === 'login') {
         setCurrentPage('login');
@@ -171,6 +203,7 @@ export default function App() {
         } else {
           setCurrentPage('login');
           setAuthNotification('Please log in with your scholar credentials to access the private Student Hub.');
+          window.location.hash = '#/login';
         }
       } else {
         setCurrentPage('landing');
@@ -233,18 +266,60 @@ export default function App() {
     }
   };
 
-  const handleLogout = async () => {
-    await authService.logout();
-    setCurrentUser(null);
-    setIsLoggedIn(false);
-    setInitialDashboardTab(undefined);
-    setInitialSearchQuery('');
-    setInitialSearchDestination('');
-    setInitialDeadlineStatus(undefined);
-    setInitialSettingsTab(undefined);
-    setSearchPromptContext(null);
-    navigateTo('landing', 'Logged out of Scholar Hub.');
-  };
+  const requestSignOut = useCallback(() => {
+    setSignOutModalOpen(true);
+  }, []);
+
+  const cancelSignOut = useCallback(() => {
+    if (!isSigningOut) {
+      setSignOutModalOpen(false);
+    }
+  }, [isSigningOut]);
+
+  const confirmSignOut = useCallback(async () => {
+    setIsSigningOut(true);
+    isExplicitSignOutRef.current = true;
+    try {
+      await authService.logoutAllSessions();
+      setCurrentUser(null);
+      setIsLoggedIn(false);
+      setInitialDashboardTab(undefined);
+      setInitialSearchQuery('');
+      setInitialSearchDestination('');
+      setInitialDeadlineStatus(undefined);
+      setInitialSettingsTab(undefined);
+      setLandingNotifications([]);
+      setSearchPromptContext(null);
+      setSignOutModalOpen(false);
+      navigateTo('landing', 'Signed out of Campus Connect.');
+    } finally {
+      setIsSigningOut(false);
+      setTimeout(() => {
+        isExplicitSignOutRef.current = false;
+      }, 100);
+    }
+  }, [navigateTo]);
+
+  const handleAccountDeleted = useCallback(async () => {
+    isExplicitSignOutRef.current = true;
+    try {
+      setCurrentUser(null);
+      setIsLoggedIn(false);
+      setInitialDashboardTab(undefined);
+      setInitialSearchQuery('');
+      setInitialSearchDestination('');
+      setInitialDeadlineStatus(undefined);
+      setInitialSettingsTab(undefined);
+      setLandingNotifications([]);
+      setSearchPromptContext(null);
+      setSignOutModalOpen(false);
+      navigateTo('landing', 'Account permanently deleted.');
+    } finally {
+      setTimeout(() => {
+        isExplicitSignOutRef.current = false;
+      }, 100);
+    }
+  }, [navigateTo]);
 
   const handleNavigate = (id: string) => {
     setActiveLinkId(id);
@@ -382,13 +457,13 @@ export default function App() {
     return (
       <>
         {feedbackToast && (
-          <div className="fixed bottom-6 right-6 z-50 bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
-            <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
+          <div className="fixed bottom-6 right-4 sm:right-6 z-50 max-w-[calc(100vw-2rem)] bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
+            <CheckCircle2 className="w-4 h-4 text-[#E7B75C] shrink-0" />
             <span>{feedbackToast}</span>
           </div>
         )}
         <SignUpPage
-          onNavigateHome={() => navigateTo('landing')}
+          onNavigateHome={() => (isLoggedIn ? navigateToStudentHome() : navigateTo('landing'))}
           onNavigateLogin={() => navigateTo('login')}
           onSuccess={handleSignUpSuccess}
           searchContext={searchPromptContext}
@@ -404,13 +479,14 @@ export default function App() {
     return (
       <>
         {feedbackToast && (
-          <div className="fixed bottom-6 right-6 z-50 bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
-            <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
+          <div className="fixed bottom-6 right-4 sm:right-6 z-50 max-w-[calc(100vw-2rem)] bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
+            <CheckCircle2 className="w-4 h-4 text-[#E7B75C] shrink-0" />
             <span>{feedbackToast}</span>
           </div>
         )}
         <OnboardingPage
           currentUser={currentUser}
+          onNavigateHome={() => (isLoggedIn ? navigateToStudentHome() : navigateTo('landing'))}
           onComplete={(updatedUser) => {
             setCurrentUser(updatedUser);
             navigateTo('dashboard', 'Academic preferences saved securely! Welcome to your Student Hub.');
@@ -430,13 +506,13 @@ export default function App() {
     return (
       <>
         {feedbackToast && (
-          <div className="fixed bottom-6 right-6 z-50 bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
-            <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
+          <div className="fixed bottom-6 right-4 sm:right-6 z-50 max-w-[calc(100vw-2rem)] bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
+            <CheckCircle2 className="w-4 h-4 text-[#E7B75C] shrink-0" />
             <span>{feedbackToast}</span>
           </div>
         )}
         <LoginPage
-          onNavigateHome={() => navigateTo('landing')}
+          onNavigateHome={() => (isLoggedIn ? navigateToStudentHome() : navigateTo('landing'))}
           onNavigateSignUp={() => navigateTo('signup')}
           onNavigateForgotPassword={() => navigateTo('forgot-password')}
           onSuccess={handleLoginSuccess}
@@ -453,13 +529,13 @@ export default function App() {
     return (
       <>
         {feedbackToast && (
-          <div className="fixed bottom-6 right-6 z-50 bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
-            <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
+          <div className="fixed bottom-6 right-4 sm:right-6 z-50 max-w-[calc(100vw-2rem)] bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
+            <CheckCircle2 className="w-4 h-4 text-[#E7B75C] shrink-0" />
             <span>{feedbackToast}</span>
           </div>
         )}
         <ForgotPasswordPage
-          onNavigateHome={() => navigateTo('landing')}
+          onNavigateHome={() => (isLoggedIn ? navigateToStudentHome() : navigateTo('landing'))}
           onNavigateLogin={() => navigateTo('login')}
         />
       </>
@@ -473,11 +549,17 @@ export default function App() {
     return (
       <>
         {feedbackToast && (
-          <div className="fixed bottom-6 right-6 z-50 bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
-            <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
+          <div className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-50 max-w-[calc(100vw-2rem)] bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
+            <CheckCircle2 className="w-4 h-4 text-[#E7B75C] shrink-0" />
             <span>{feedbackToast}</span>
           </div>
         )}
+        <SignOutConfirmModal
+          isOpen={signOutModalOpen}
+          isBusy={isSigningOut}
+          onCancel={cancelSignOut}
+          onConfirm={confirmSignOut}
+        />
         <StudentDashboard
           initialQuery={initialSearchQuery}
           initialDestination={initialSearchDestination}
@@ -488,7 +570,8 @@ export default function App() {
           currentUser={currentUser}
           userEmail={currentUser?.email || 'scholar@campusconnect.edu'}
           onClose={() => navigateTo('landing')}
-          onLogout={handleLogout}
+          onLogout={requestSignOut}
+          onAccountDeleted={handleAccountDeleted}
         />
       </>
     );
@@ -505,6 +588,7 @@ export default function App() {
         onNavigate={handleNavigate}
         onLoginClick={() => navigateTo('login')}
         onGetStartedClick={() => navigateTo('signup')}
+        onLogoClick={navigateToStudentHome}
         onExploreHubClick={() => {
           setInitialSearchQuery('');
           setInitialSearchDestination('');
@@ -517,7 +601,7 @@ export default function App() {
         isLoggedIn={isLoggedIn}
         userEmail={currentUser?.email}
         userName={currentUser?.fullName}
-        onLogout={handleLogout}
+        onLogout={requestSignOut}
         notifications={landingNotifications}
         onMarkNotificationRead={handleLandingMarkRead}
         onMarkAllNotificationsRead={handleLandingMarkAllRead}
@@ -549,11 +633,18 @@ export default function App() {
 
       {/* Floating Action Feedback Toast */}
       {feedbackToast && (
-        <div className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-50 bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
-          <CheckCircle2 className="w-4 h-4 text-[#E7B75C]" />
+        <div className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-50 max-w-[calc(100vw-2rem)] bg-[#15152F] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-[#25254D] animate-in fade-in slide-in-from-bottom-2 duration-150">
+          <CheckCircle2 className="w-4 h-4 text-[#E7B75C] shrink-0" />
           <span>{feedbackToast}</span>
         </div>
       )}
+
+      <SignOutConfirmModal
+        isOpen={signOutModalOpen}
+        isBusy={isSigningOut}
+        onCancel={cancelSignOut}
+        onConfirm={confirmSignOut}
+      />
 
       {/* Informational Modal for About, Contact, Privacy Policy, Terms of Use, & Social channels */}
       <InfoModal
@@ -647,19 +738,7 @@ export default function App() {
         onPlaceholderClick={handlePlaceholderClick}
         onLoginClick={() => navigateTo('login')}
         onSignUpClick={() => navigateTo('signup')}
-        onLogoClick={
-          isLoggedIn
-            ? () => {
-                setInitialSearchQuery('');
-                setInitialSearchDestination('');
-                setInitialDashboardTab('overview');
-                setInitialDeadlineStatus('all');
-                setInitialSettingsTab(undefined);
-                setDashboardNavNonce((n) => n + 1);
-                navigateTo('dashboard');
-              }
-            : undefined
-        }
+        onLogoClick={isLoggedIn ? navigateToStudentHome : undefined}
         className="pb-22 md:pb-10"
       />
 

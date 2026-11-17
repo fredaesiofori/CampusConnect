@@ -140,9 +140,10 @@ async function sendViaResend(
     }
 
     const rateLimited = res.status === 429;
-    const errMsg = sanitizeProviderError(
-      data?.message || data?.error?.message || `Resend API returned HTTP ${res.status}`
-    );
+    const rawProviderMsg =
+      data?.message || data?.error?.message || `Email provider returned HTTP ${res.status}`;
+    console.warn('[Alerts/Email] Delivery returned non-OK:', rawProviderMsg);
+    const errMsg = sanitizeProviderError('Unable to deliver email right now. Please try again shortly.');
 
     return {
       delivered: false,
@@ -153,13 +154,14 @@ async function sendViaResend(
     };
   } catch (err: any) {
     const isAbort = err?.name === 'AbortError';
+    console.warn('[Alerts/Email] Delivery network/timeout error:', err?.message || err);
     return {
       delivered: false,
       provider: 'resend',
       statusCode: isAbort ? 504 : 502,
       error: isAbort
-        ? 'Email delivery request to Resend timed out.'
-        : sanitizeProviderError(err?.message || 'Network error sending via Resend.'),
+        ? 'Email delivery request timed out.'
+        : 'Unable to deliver email right now. Please try again shortly.',
     };
   } finally {
     clearTimeout(timer);
@@ -175,11 +177,12 @@ export async function sendTransactionalEmail(
   const status = getEmailProviderStatus(env);
 
   if (!status.configured || !status.provider || !status.senderIdentity) {
+    console.warn('[Alerts/Email] Missing server configuration:', status.missingRequirements.join(', '));
     return {
       delivered: false,
       provider: 'none',
       statusCode: 503,
-      error: `Email delivery is not configured on the server. Missing: ${status.missingRequirements.join(', ')}.`,
+      error: 'Email delivery is temporarily unavailable right now.',
     };
   }
 
@@ -193,7 +196,7 @@ export async function sendTransactionalEmail(
         statusCode: 403,
         blockedByTestMode: true,
         error:
-          'Testing mode is active (onboarding@resend.dev): emails can only be sent to your verified Resend account email address. Real student emails are blocked.',
+          'Outbound email alerts are currently restricted while email verification is being completed.',
       };
     }
   }
