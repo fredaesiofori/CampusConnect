@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { OpportunityItem } from '../../data/opportunities';
 import { UniversityLogo } from '../ui/UniversityLogo';
+import { CountryFlag } from '../ui/CountryFlagSvg';
 
 export interface CovaOpportunityCardProps {
   item: OpportunityItem;
@@ -45,15 +46,19 @@ export const CovaOpportunityCard: React.FC<CovaOpportunityCardProps> = ({
             <h4 className="text-xs font-bold text-slate-900 truncate group-hover:text-[#6846F5] transition-colors">
               {officialName}
             </h4>
-            <p className="text-[11px] text-slate-500 truncate flex items-center gap-1">
-              <span>{item.countryFlag || '🌍'}</span>
+            <p className="text-[11px] text-slate-500 truncate flex items-center gap-1.5">
+              <CountryFlag
+                code={item.countryCode}
+                country={item.country}
+                className="w-3.5 h-[10px] rounded-[1.5px] ring-1 ring-black/10 overflow-hidden shrink-0"
+              />
               <span>{item.country}</span>
               {item.city && <span className="text-slate-400">• {item.city}</span>}
             </p>
           </div>
         </div>
 
-        {/* Save to Target Tracker Button */}
+        {/* Save Opportunity Button */}
         <button
           type="button"
           onClick={(e) => {
@@ -65,8 +70,8 @@ export const CovaOpportunityCard: React.FC<CovaOpportunityCardProps> = ({
               ? 'bg-amber-50 border-amber-300 text-amber-600 shadow-2xs'
               : 'bg-slate-50 hover:bg-violet-50 border-slate-200 hover:border-violet-300 text-slate-400 hover:text-[#6846F5]'
           }`}
-          title={isSaved ? 'Saved to Target Tracker' : 'Save to Target Tracker'}
-          aria-label={isSaved ? `Remove ${officialName} from saved` : `Save ${officialName}`}
+          title={isSaved ? 'Remove from Saved Opportunities' : 'Save Opportunity'}
+          aria-label={isSaved ? `Remove ${officialName} from Saved Opportunities` : `Save ${officialName} to Saved Opportunities`}
         >
           {isSaved ? (
             <BookmarkCheck className="w-3.5 h-3.5 fill-amber-500 text-amber-600" />

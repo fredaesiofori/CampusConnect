@@ -21,6 +21,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { authenticOpportunities } from '../../data/opportunities';
+import { CountryFlag, CountryFlagSvg, DestinationFlagCode } from '../ui/CountryFlagSvg';
 
 export interface MobileLandingViewProps {
   onExploreUniversities: () => void;
@@ -36,15 +37,15 @@ export interface MobileLandingViewProps {
 interface DestinationChip {
   label: string;
   queryValue: string;
-  flag: string;
+  code: DestinationFlagCode;
 }
 
 const POPULAR_DESTINATIONS: DestinationChip[] = [
-  { label: 'Canada', queryValue: 'Canada', flag: '🇨🇦' },
-  { label: 'Australia', queryValue: 'Australia', flag: '🇦🇺' },
-  { label: 'Germany', queryValue: 'Germany', flag: '🇩🇪' },
-  { label: 'UK', queryValue: 'United Kingdom', flag: '🇬🇧' },
-  { label: 'USA', queryValue: 'United States', flag: '🇺🇸' },
+  { label: 'Canada', queryValue: 'Canada', code: 'CA' },
+  { label: 'Australia', queryValue: 'Australia', code: 'AU' },
+  { label: 'Germany', queryValue: 'Germany', code: 'DE' },
+  { label: 'UK', queryValue: 'United Kingdom', code: 'GB' },
+  { label: 'USA', queryValue: 'United States', code: 'US' },
 ];
 
 export const MobileLandingView: React.FC<MobileLandingViewProps> = ({
@@ -78,7 +79,7 @@ export const MobileLandingView: React.FC<MobileLandingViewProps> = ({
 
   // Full list of countries represented in the verified registry
   const availableCountries = useMemo(() => {
-    const map = new Map<string, { name: string; flag: string; count: number }>();
+    const map = new Map<string, { name: string; code: string; count: number }>();
     for (const item of authenticOpportunities) {
       if (!item.country) continue;
       const existing = map.get(item.country);
@@ -87,7 +88,7 @@ export const MobileLandingView: React.FC<MobileLandingViewProps> = ({
       } else {
         map.set(item.country, {
           name: item.country,
-          flag: item.countryFlag || '🌐',
+          code: item.countryCode || '',
           count: 1,
         });
       }
@@ -425,8 +426,11 @@ export const MobileLandingView: React.FC<MobileLandingViewProps> = ({
                 onClick={() => onSelectDestination(dest.queryValue)}
                 className="rounded-xl bg-white hover:bg-[#FAF9FF] border border-[#E8ECF4] hover:border-[#D4C9FF] px-0.5 py-2 min-h-[60px] flex flex-col items-center justify-center gap-1 shadow-[0_2px_6px_rgba(16,19,45,0.04)] active:scale-[0.96] transition-[transform,box-shadow,border-color,background-color] duration-150 ease-out cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
               >
-                <span className="text-[19px] leading-none" aria-hidden="true">
-                  {dest.flag}
+                <span className="h-[19px] flex items-center justify-center" aria-hidden="true">
+                  <CountryFlagSvg
+                    code={dest.code}
+                    className="w-[26px] h-[18px] rounded-[3px] shadow-2xs ring-1 ring-black/10 overflow-hidden"
+                  />
                 </span>
                 <span className="text-[9.5px] min-[390px]:text-[10.5px] font-semibold text-[#10132D] leading-tight truncate max-w-full">
                   {dest.label}
@@ -464,8 +468,11 @@ export const MobileLandingView: React.FC<MobileLandingViewProps> = ({
                 onClick={() => onSelectDestination(dest.queryValue)}
                 className="group rounded-2xl bg-white hover:bg-[#FAF8FF] border border-[#EAE8F5] hover:border-[#C4B5FD] px-4 py-4.5 flex flex-col items-center justify-center gap-2 shadow-[0_6px_20px_rgba(16,19,45,0.04)] hover:shadow-[0_10px_24px_rgba(93,53,245,0.1)] hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
               >
-                <span className="text-3xl lg:text-4xl leading-none drop-shadow-2xs select-none" aria-hidden="true">
-                  {dest.flag}
+                <span className="h-9 lg:h-10 flex items-center justify-center select-none" aria-hidden="true">
+                  <CountryFlagSvg
+                    code={dest.code}
+                    className="w-11 h-[30px] lg:w-12 lg:h-[34px] rounded-[5px] shadow-xs ring-1 ring-black/10 overflow-hidden"
+                  />
                 </span>
                 <span className="text-sm font-bold text-[#10132D] group-hover:text-[#5D35F5] transition-colors">
                   {dest.label}
@@ -653,7 +660,7 @@ export const MobileLandingView: React.FC<MobileLandingViewProps> = ({
                 className="w-full flex items-center justify-between px-3.5 py-3 rounded-xl bg-[#F3F0FF] hover:bg-[#EAE3FF] border border-[#DDD6FE] text-left cursor-pointer transition-colors"
               >
                 <span className="flex items-center gap-2.5 font-bold text-sm text-[#5D35F5]">
-                  <span>🌐</span>
+                  <Globe className="w-4 h-4 text-[#5D35F5] shrink-0" aria-hidden="true" />
                   <span>Explore All Countries Worldwide</span>
                 </span>
                 <span className="text-xs font-bold text-[#6846F5] tabular-nums">
@@ -672,9 +679,11 @@ export const MobileLandingView: React.FC<MobileLandingViewProps> = ({
                   className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-100 text-left cursor-pointer transition-colors"
                 >
                   <span className="flex items-center gap-2.5 text-sm font-semibold text-[#10132D]">
-                    <span className="text-lg leading-none" aria-hidden="true">
-                      {country.flag}
-                    </span>
+                    <CountryFlag
+                      code={country.code}
+                      country={country.name}
+                      className="w-[22px] h-[15px] rounded-[2px] shadow-2xs ring-1 ring-black/10 overflow-hidden shrink-0"
+                    />
                     <span>{country.name}</span>
                   </span>
                   <span className="text-xs font-semibold text-[#64748B] bg-slate-100 px-2 py-0.5 rounded-md tabular-nums">

@@ -17,6 +17,7 @@ import {
 import { OpportunityItem, evaluateOpportunityDeadline } from '../../data/opportunities';
 import { Button } from '../ui/Button';
 import { UniversityLogo, UniversityCrestCardImage } from '../ui/UniversityLogo';
+import { CountryFlag } from '../ui/CountryFlagSvg';
 
 export interface UniversityCardProps {
   item: OpportunityItem;
@@ -77,8 +78,12 @@ export const UniversityCard: React.FC<UniversityCardProps> = ({
             item={item}
             variant="cover"
             countryBadge={
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-[#10132D]/85 backdrop-blur-sm text-white shadow-xs">
-                <span>{item.countryFlag}</span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-[#10132D]/85 backdrop-blur-sm text-white shadow-xs">
+                <CountryFlag
+                  code={item.countryCode}
+                  country={item.country}
+                  className="w-4 h-[11px] rounded-[2px] ring-1 ring-white/25 overflow-hidden shrink-0"
+                />
                 <span>{item.country}</span>
               </span>
             }
@@ -94,7 +99,8 @@ export const UniversityCard: React.FC<UniversityCardProps> = ({
                     ? 'bg-white text-[#6846F5]'
                     : 'bg-[#10132D]/70 text-white hover:bg-white hover:text-[#6846F5]'
                 }`}
-                title={isSaved ? 'Remove from Saved' : 'Save Opportunity'}
+                title={isSaved ? 'Remove from Saved Opportunities' : 'Save Opportunity'}
+                aria-label={isSaved ? `Remove ${displayName} from Saved Opportunities` : `Save ${displayName} to Saved Opportunities`}
               >
                 {isSaved ? (
                   <BookmarkCheck className="w-4 h-4 fill-[#6846F5]" />
@@ -182,11 +188,17 @@ export const UniversityCard: React.FC<UniversityCardProps> = ({
       }}
       className="bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#6846F5]/40 shadow-[0_1px_6px_rgba(15,23,42,0.04)] hover:shadow-md active:scale-[0.992] active:shadow-xs transition-[box-shadow,border-color,transform] duration-150 ease-out p-3 sm:px-4 sm:py-3.5 flex items-center gap-2.5 min-[375px]:gap-3 sm:gap-4 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
     >
-      {/* Left: Flag + Country Code Badge & Authentic University Crest (or Initials Fallback) */}
+      {/* Left: Authentic Country Flag Badge & University Crest (or Initials Fallback) */}
       <div className="relative w-[96px] min-[375px]:w-[108px] sm:w-[144px] h-[74px] sm:h-[82px] rounded-xl bg-slate-50/70 border border-slate-100 shrink-0 flex items-center justify-center p-2 pt-5 sm:p-2.5 sm:pt-5 overflow-hidden">
-        <span className="absolute top-1.5 left-1.5 z-10 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#111827] text-white text-[10px] font-bold leading-none shadow-2xs">
-          <span aria-hidden="true">{item.countryFlag}</span>
-          <span>{item.countryCode}</span>
+        <span
+          className="absolute top-1.5 left-1.5 z-10 inline-flex items-center justify-center rounded-[3px] shadow-xs ring-1 ring-black/15 overflow-hidden bg-white"
+          title={item.country}
+        >
+          <CountryFlag
+            code={item.countryCode}
+            country={item.country}
+            className="w-[22px] h-[15px] block"
+          />
         </span>
 
         {logoUrl && !crestError ? (

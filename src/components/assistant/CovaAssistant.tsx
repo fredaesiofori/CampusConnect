@@ -59,6 +59,8 @@ export interface CovaAssistantProps {
   activeApplications?: Record<string, ActiveApplicationItem>;
   applicationTracker?: Record<string, ApplicationStage>;
   onToggleSave?: (opportunityId: string, title: string) => void;
+  onAddToTargetList?: (item: OpportunityItem) => void | Promise<void>;
+  onRemoveFromTargetList?: (opportunityId: string, title: string) => void | Promise<void>;
   onUpdateApplicationStatus?: (opportunityId: string, stage: ApplicationStage) => void;
   onSelectOpportunity?: (opportunity: OpportunityItem) => void;
   onNavigateToTracker?: () => void;
@@ -164,6 +166,8 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
   activeApplications: propActiveApplications,
   applicationTracker: propApplicationTracker,
   onToggleSave,
+  onAddToTargetList,
+  onRemoveFromTargetList,
   onUpdateApplicationStatus,
   onSelectOpportunity,
   onNavigateToTracker,
@@ -554,6 +558,45 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
     } else {
       void authService.toggleSavedOpportunitySynced(opportunityId);
     }
+  };
+
+  // Handle adding/removing from Target List independently from Saved Opportunities
+  const handleAddToTarget = async (item: OpportunityItem) => {
+    if (onAddToTargetList) {
+      await onAddToTargetList(item);
+      return;
+    }
+    const now = new Date().toISOString();
+    setTargetListMap((prev) => ({
+      ...prev,
+      [item.id]: {
+        opportunityId: item.id,
+        priority: prev[item.id]?.priority || 'Medium',
+        intakeYear: prev[item.id]?.intakeYear || '2026',
+        personalGoal: prev[item.id]?.personalGoal || '',
+        addedAt: prev[item.id]?.addedAt || now,
+        updatedAt: now,
+      },
+    }));
+    await authService.upsertTargetListItem({
+      opportunityId: item.id,
+      priority: 'Medium',
+      intakeYear: '2026',
+      personalGoal: '',
+    });
+  };
+
+  const handleRemoveFromTarget = async (opportunityId: string, title: string) => {
+    if (onRemoveFromTargetList) {
+      await onRemoveFromTargetList(opportunityId, title);
+      return;
+    }
+    setTargetListMap((prev) => {
+      const next = { ...prev };
+      delete next[opportunityId];
+      return next;
+    });
+    await authService.removeTargetListItem(opportunityId);
   };
 
   // Handle updating an application stage from a COVA card
@@ -1708,6 +1751,9 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
           onClose={() => setModalOpportunity(null)}
           isSaved={savedIds.has(modalOpportunity.id)}
           onToggleSave={handleToggleSave}
+          isInTargetList={Boolean(targetListMap[modalOpportunity.id])}
+          onAddToTargetList={handleAddToTarget}
+          onRemoveFromTargetList={handleRemoveFromTarget}
         />
       )}
     </>

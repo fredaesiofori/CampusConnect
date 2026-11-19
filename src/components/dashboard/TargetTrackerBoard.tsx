@@ -25,6 +25,7 @@ import { OpportunityItem, evaluateOpportunityDeadline } from '../../data/opportu
 import { ActiveApplicationItem, TargetListItem, TargetPriority } from '../../services/auth';
 import { Button } from '../ui/Button';
 import { UniversityLogo } from '../ui/UniversityLogo';
+import { CountryFlag } from '../ui/CountryFlagSvg';
 
 // Kept exported for COVA Assistant backward compatibility
 export type ApplicationStage = 'saved' | 'preparing' | 'submitted' | 'accepted';
@@ -389,11 +390,14 @@ export const TargetTrackerBoard: React.FC<TargetTrackerBoardProps> = ({
                         <h3 className="text-sm sm:text-base font-bold text-[#10132D] leading-snug">
                           {displayName}
                         </h3>
-                        <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
+                        <p className="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5 min-w-0">
                           <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
-                          <span className="truncate">
-                            {item.countryFlag} {displayLocation}
-                          </span>
+                          <CountryFlag
+                            code={item.countryCode}
+                            country={item.country}
+                            className="w-4 h-[11px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+                          />
+                          <span className="truncate">{displayLocation}</span>
                         </p>
                       </div>
                     </div>
@@ -605,8 +609,13 @@ export const TargetTrackerBoard: React.FC<TargetTrackerBoardProps> = ({
                     <h4 className="text-sm font-bold text-[#10132D] truncate">
                       {selectedNewOpp.officialName || selectedNewOpp.institution}
                     </h4>
-                    <p className="text-xs text-slate-500">
-                      {selectedNewOpp.countryFlag} {selectedNewOpp.country}
+                    <p className="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5">
+                      <CountryFlag
+                        code={selectedNewOpp.countryCode}
+                        country={selectedNewOpp.country}
+                        className="w-4 h-[11px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+                      />
+                      <span>{selectedNewOpp.country}</span>
                     </p>
                   </div>
                 </div>
@@ -704,9 +713,16 @@ export const TargetTrackerBoard: React.FC<TargetTrackerBoardProps> = ({
                             <p className="text-xs font-bold text-[#10132D] truncate">
                               {opp.officialName || opp.institution}
                             </p>
-                            <p className="text-[11px] text-slate-500">
-                              {opp.countryFlag} {opp.country} ·{' '}
-                              {opp.fundingDetails?.type || opp.funding?.type || 'Tuition Aid'}
+                            <p className="text-[11px] text-slate-500 flex items-center gap-1.5 truncate">
+                              <CountryFlag
+                                code={opp.countryCode}
+                                country={opp.country}
+                                className="w-3.5 h-[10px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+                              />
+                              <span className="truncate">
+                                {opp.country} ·{' '}
+                                {opp.fundingDetails?.type || opp.funding?.type || 'Tuition Aid'}
+                              </span>
                             </p>
                           </div>
                         </div>

@@ -21,16 +21,21 @@ import {
   Calendar,
   Check,
   Info,
+  Target,
 } from 'lucide-react';
 import { OpportunityItem, evaluateOpportunityDeadline } from '../../data/opportunities';
 import { Button } from '../ui/Button';
 import { UniversityLogo, UniversityCrestCardImage } from '../ui/UniversityLogo';
+import { CountryFlag } from '../ui/CountryFlagSvg';
 
 export interface OpportunityDetailModalProps {
   item: OpportunityItem | null;
   onClose: () => void;
   isSaved: boolean;
   onToggleSave: (id: string, name: string) => void;
+  isInTargetList?: boolean;
+  onAddToTargetList?: (item: OpportunityItem) => void | Promise<void>;
+  onRemoveFromTargetList?: (id: string, name: string) => void | Promise<void>;
 }
 
 export type ModalTab = 'overview' | 'requirements' | 'financial' | 'process';
@@ -40,8 +45,12 @@ export const OpportunityDetailModal: React.FC<OpportunityDetailModalProps> = ({
   onClose,
   isSaved,
   onToggleSave,
+  isInTargetList = false,
+  onAddToTargetList,
+  onRemoveFromTargetList,
 }) => {
   const [activeTab, setActiveTab] = useState<ModalTab>('overview');
+  const [isTargetBusy, setIsTargetBusy] = useState(false);
 
   // Support closing with Escape key
   useEffect(() => {
@@ -88,8 +97,12 @@ export const OpportunityDetailModal: React.FC<OpportunityDetailModalProps> = ({
             item={item}
             variant="banner"
             countryBadge={
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-bold bg-[#10132D]/85 backdrop-blur-sm text-white shadow-xs">
-                <span>{item.countryFlag}</span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-[#10132D]/85 backdrop-blur-sm text-white shadow-xs">
+                <CountryFlag
+                  code={item.countryCode}
+                  country={item.country}
+                  className="w-[18px] h-3 rounded-[2px] ring-1 ring-white/25 overflow-hidden shrink-0"
+                />
                 <span>{item.country}</span>
               </span>
             }
@@ -136,7 +149,7 @@ export const OpportunityDetailModal: React.FC<OpportunityDetailModalProps> = ({
                 </div>
               </div>
 
-              {/* Bookmark CTA */}
+              {/* Save Opportunity Bookmark CTA */}
               <button
                 type="button"
                 onClick={() => onToggleSave(item.id, displayName)}
@@ -145,7 +158,9 @@ export const OpportunityDetailModal: React.FC<OpportunityDetailModalProps> = ({
                     ? 'bg-[#F0EDFF] text-[#6846F5]'
                     : 'text-slate-400 hover:text-[#6846F5] hover:bg-slate-100'
                 }`}
-                title={isSaved ? 'Remove from Target List' : 'Save to Target List'}
+                title={isSaved ? 'Remove from Saved Opportunities' : 'Save Opportunity'}
+                aria-label={isSaved ? 'Remove from Saved Opportunities' : 'Save Opportunity'}
+                aria-pressed={isSaved}
               >
                 {isSaved ? (
                   <BookmarkCheck className="w-5 h-5 fill-[#6846F5]" />
@@ -470,17 +485,59 @@ export const OpportunityDetailModal: React.FC<OpportunityDetailModalProps> = ({
                 </div>
               </div>
 
-              {/* Target List quick toggle */}
-              <Button
-                variant="outline"
-                size="md"
-                fullWidth
-                onClick={() => onToggleSave(item.id, displayName)}
-                leftIcon={isSaved ? <BookmarkCheck className="w-4 h-4 text-[#6846F5]" /> : <Bookmark className="w-4 h-4" />}
-                className="justify-center text-xs font-semibold min-h-[44px]"
-              >
-                {isSaved ? 'Saved in Target Tracker' : 'Save to Target Tracker'}
-              </Button>
+              {/* Independent Actions: Saved Opportunities & Target List */}
+              <div className="space-y-2.5">
+                <Button
+                  variant="outline"
+                  size="md"
+                  fullWidth
+                  onClick={() => onToggleSave(item.id, displayName)}
+                  leftIcon={isSaved ? <BookmarkCheck className="w-4 h-4 text-[#6846F5]" /> : <Bookmark className="w-4 h-4" />}
+                  title={isSaved ? 'Remove from Saved Opportunities' : 'Save Opportunity'}
+                  className={`justify-center text-xs font-semibold min-h-[44px] ${
+                    isSaved ? 'border-[#DDD6FE] bg-[#F0EDFF]/60 text-[#6846F5]' : ''
+                  }`}
+                >
+                  {isSaved ? 'Saved in Opportunities' : 'Save Opportunity'}
+                </Button>
+
+                {(onAddToTargetList || onRemoveFromTargetList) && (
+                  <Button
+                    variant="outline"
+                    size="md"
+                    fullWidth
+                    disabled={isTargetBusy}
+                    onClick={async () => {
+                      if (isTargetBusy) return;
+                      setIsTargetBusy(true);
+                      try {
+                        if (isInTargetList) {
+                          await onRemoveFromTargetList?.(item.id, displayName);
+                        } else {
+                          await onAddToTargetList?.(item);
+                        }
+                      } finally {
+                        setIsTargetBusy(false);
+                      }
+                    }}
+                    leftIcon={
+                      isInTargetList ? (
+                        <CheckCircle2 className="w-4 h-4 text-amber-600" />
+                      ) : (
+                        <Target className="w-4 h-4 text-[#6846F5]" />
+                      )
+                    }
+                    title={isInTargetList ? 'Remove from Target List' : 'Add to Target List'}
+                    className={`justify-center text-xs font-semibold min-h-[44px] ${
+                      isInTargetList
+                        ? 'border-amber-200 bg-amber-50/70 text-amber-800 hover:bg-rose-50 hover:text-rose-700 hover:border-rose-200'
+                        : ''
+                    }`}
+                  >
+                    {isInTargetList ? 'Remove from Target List' : 'Add to Target List'}
+                  </Button>
+                )}
+              </div>
 
               {/* Close Button on mobile */}
               <div className="pt-1 sm:hidden">

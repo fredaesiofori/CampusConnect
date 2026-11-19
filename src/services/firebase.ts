@@ -18,7 +18,6 @@ import {
   updatePassword,
   reauthenticateWithCredential,
   EmailAuthProvider,
-  deleteUser,
   GoogleAuthProvider,
   signInWithPopup,
   linkWithCredential,
@@ -898,7 +897,16 @@ export async function syncStudentDashboardListsToFirestore(
       updateData.activeApplications = payload.activeApplications;
     }
 
-    await setDoc(userDocRef, sanitizeFirestoreData(updateData), { merge: true });
+    const cleanUpdateData = sanitizeFirestoreData(updateData);
+    try {
+      await updateDoc(userDocRef, cleanUpdateData);
+    } catch (updateErr: any) {
+      if (updateErr?.code === 'not-found') {
+        await setDoc(userDocRef, cleanUpdateData, { merge: true });
+      } else {
+        throw updateErr;
+      }
+    }
     return { success: true, persistedToCloud: true };
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);
@@ -910,60 +918,14 @@ export async function syncStudentDashboardListsToFirestore(
   }
 }
 
-// 10. Student Account Permanent Deletion (Right to Erasure)
+// 10. Student Account Deletion (Temporarily Disabled on Starter Tier)
 export async function deleteStudentAccountFromFirebase(
-  userId: string
+  _userId: string
 ): Promise<{ success: boolean; error?: string; requiresReauth?: boolean }> {
-  const path = `users/${userId}`;
-  try {
-    const user = auth.currentUser;
-
-    // 1. Delete student Firestore subcollections & profile doc under users/{userId} if authenticated
-    if (user && user.uid === userId) {
-      try {
-        await clearAllUserNotificationsInFirestore(userId).catch(() => {});
-        const tokensSnap = await getDocs(
-          query(collection(db, 'users', userId, 'pushTokens'), where('userId', '==', userId))
-        ).catch(() => null);
-        if (tokensSnap && !tokensSnap.empty) {
-          const tokenBatch = writeBatch(db);
-          tokensSnap.forEach((docSnap) => tokenBatch.delete(docSnap.ref));
-          await tokenBatch.commit().catch(() => {});
-        }
-        const userDocRef = doc(db, 'users', userId);
-        await deleteDoc(userDocRef);
-      } catch (fsErr) {
-        console.warn('Firestore user doc delete notice:', fsErr);
-      }
-    }
-
-    // 2. Delete Firebase Auth account if user is signed in
-    if (user && user.uid === userId) {
-      try {
-        await deleteUser(user);
-      } catch (authErr: any) {
-        const code = authErr?.code || '';
-        if (code === 'auth/requires-recent-login') {
-          return {
-            success: false,
-            requiresReauth: true,
-            error:
-              'For security, your credentials have expired. Please sign out and sign back in to confirm permanent account deletion.',
-          };
-        }
-        console.warn('Account deletion auth error:', authErr);
-        return {
-          success: false,
-          error: 'Could not delete your account right now. Please try signing in again and retry.',
-        };
-      }
-    }
-
-    return { success: true };
-  } catch (error) {
-    handleFirestoreError(error, OperationType.DELETE, path);
-    return { success: false, error: 'Failed to complete student account deletion.' };
-  }
+  return {
+    success: false,
+    error: 'Account deletion is temporarily unavailable. Please contact support for assistance.',
+  };
 }
 
 // 11. Scholarship Alert Subscription Firestore Sync (Authenticated Students)

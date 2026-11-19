@@ -6,6 +6,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Search, ChevronDown, Check, X, Globe } from 'lucide-react';
 import { ALL_COUNTRIES, Country, searchCountries } from '../../data/countries';
+import { CountryFlag } from './CountryFlagSvg';
 
 export interface CountrySelectProps {
   id?: string;
@@ -34,7 +35,7 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
   mode = 'country',
   placeholder,
   allowAll = false,
-  allLabel = 'All Countries 🌐',
+  allLabel = 'All Countries',
   allValue = '',
   className = '',
   buttonClassName = '',
@@ -109,9 +110,9 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
     }
     if (selectedCountry) {
       if (mode === 'nationality') {
-        return `${selectedCountry.nationality} ${selectedCountry.flag}`;
+        return selectedCountry.nationality;
       }
-      return `${selectedCountry.name} ${selectedCountry.flag}`;
+      return selectedCountry.name;
     }
     if (value) {
       return value;
@@ -152,10 +153,12 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
         } ${error ? 'border-rose-400 focus:border-rose-500' : ''} ${buttonClassName}`}
       >
         <span className="truncate flex items-center gap-2">
-          {showFlag && selectedCountry?.flag && (
-            <span className="text-base shrink-0 leading-none" aria-hidden="true">
-              {selectedCountry.flag}
-            </span>
+          {showFlag && selectedCountry && (
+            <CountryFlag
+              code={selectedCountry.code}
+              country={selectedCountry.name}
+              className="w-5 h-[14px] rounded-[2px] shadow-2xs ring-1 ring-black/10 overflow-hidden shrink-0"
+            />
           )}
           {!selectedCountry && allowAll && (!value || value === allValue) && (
             <Globe className="w-4 h-4 text-slate-400 shrink-0" />
@@ -281,7 +284,11 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
                     }`}
                   >
                     <span className="flex items-center gap-2.5 truncate">
-                      <span className="text-base shrink-0 leading-none">{c.flag}</span>
+                      <CountryFlag
+                        code={c.code}
+                        country={c.name}
+                        className="w-5 h-[14px] rounded-[2px] shadow-2xs ring-1 ring-black/10 overflow-hidden shrink-0"
+                      />
                       <span className="truncate">
                         {mode === 'nationality' ? c.nationality : c.name}
                       </span>
@@ -387,9 +394,13 @@ export const CountryMultiSelect: React.FC<CountryMultiSelectProps> = ({
           return (
             <span
               key={cName}
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#F0EDFF] border border-[#DDD6FE] text-[#6846F5] text-xs font-semibold"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F0EDFF] border border-[#DDD6FE] text-[#6846F5] text-xs font-semibold"
             >
-              <span>{c?.flag || '🌐'}</span>
+              <CountryFlag
+                code={c?.code}
+                country={cName}
+                className="w-4 h-[11px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+              />
               <span>{cName}</span>
               {selectedCountries.length > 1 && (
                 <button
@@ -425,8 +436,12 @@ export const CountryMultiSelect: React.FC<CountryMultiSelectProps> = ({
                     : 'border-[#CBD5E1] bg-white text-slate-700 hover:bg-slate-50'
                 }`}
               >
-                <span className="truncate flex items-center gap-1.5">
-                  <span>{dest.flag}</span>
+                <span className="truncate flex items-center gap-2">
+                  <CountryFlag
+                    code={dest.code}
+                    country={dest.name}
+                    className="w-4 h-[11px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+                  />
                   <span className="truncate">{dest.name}</span>
                 </span>
                 {isSelected && <Check className="w-3.5 h-3.5 text-[#6846F5] shrink-0" />}
@@ -477,7 +492,11 @@ export const CountryMultiSelect: React.FC<CountryMultiSelectProps> = ({
                     }`}
                   >
                     <span className="flex items-center gap-2">
-                      <span>{c.flag}</span>
+                      <CountryFlag
+                        code={c.code}
+                        country={c.name}
+                        className="w-4 h-[11px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+                      />
                       <span>{c.name}</span>
                     </span>
                     {isSelected ? (

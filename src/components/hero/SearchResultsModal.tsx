@@ -71,10 +71,10 @@ export const SearchResultsModal: React.FC<SearchResultsModalProps> = ({
     const next = new Set(savedIds);
     if (next.has(id)) {
       next.delete(id);
-      setToastMessage(`Removed ${name} from your Target List.`);
+      setToastMessage(`Removed ${name} from Saved Opportunities.`);
     } else {
       next.add(id);
-      setToastMessage(`Saved ${name} to your Target List!`);
+      setToastMessage(`Saved ${name} to Saved Opportunities!`);
     }
     setSavedIds(next);
     try {
@@ -297,7 +297,8 @@ export const SearchResultsModal: React.FC<SearchResultsModalProps> = ({
                               ? 'bg-[#F0EDFF] border-[#DDD6FE] text-[#6846F5]'
                               : 'border-slate-200 text-slate-400 hover:text-[#6846F5]'
                           }`}
-                          title={isSaved ? 'Saved in Target List' : 'Save to Target List'}
+                          title={isSaved ? 'Remove from Saved Opportunities' : 'Save Opportunity'}
+                          aria-label={isSaved ? `Remove ${item.officialName} from Saved Opportunities` : `Save ${item.officialName} to Saved Opportunities`}
                         >
                           {isSaved ? (
                             <BookmarkCheck className="w-4 h-4 fill-[#6846F5]" />

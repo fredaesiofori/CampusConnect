@@ -212,7 +212,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const [selectedDeadlineStatus, setSelectedDeadlineStatus] = useState<string>(initialDeadlineStatus || 'all');
   const [sortBy, setSortBy] = useState<'relevant' | 'name-asc' | 'free-fee' | 'funded'>('relevant');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pageSize] = useState<number>(6);
+  const pageSize = activeTab === 'universities' ? 12 : 6;
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   // User's saved country strictly from student profile/account (never hardcodes any default country)
@@ -291,6 +291,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     if (initialQuery !== undefined && initialQuery !== '') {
       setSearchQuery(initialQuery);
       setActiveTab('universities');
+      setCurrentPage(1);
     }
   }, [initialQuery]);
 
@@ -300,6 +301,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         !initialDestination || initialDestination.toLowerCase().includes('all') ? '' : initialDestination
       );
       setActiveTab('universities');
+      setCurrentPage(1);
     }
   }, [initialDestination]);
 
@@ -1331,24 +1333,31 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     });
   }, [opportunities, prioritizedOpportunities, selectedDestination, searchQuery, activeTab]);
 
-  // Total items and pagination (6 cards per page)
+  // Total items and pagination (12 cards per page on Explore Universities, 6 per page on Scholarships)
   const totalItems = prioritizedOpportunities.length;
   const totalPages = pageSize > 0 ? Math.max(1, Math.ceil(totalItems / pageSize)) : 1;
+  const safeCurrentPage = Math.min(Math.max(1, currentPage), totalPages);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
 
   const paginatedOpportunities = useMemo(() => {
     if (pageSize <= 0) return prioritizedOpportunities;
-    const start = (currentPage - 1) * pageSize;
+    const start = (safeCurrentPage - 1) * pageSize;
     return prioritizedOpportunities.slice(start, start + pageSize);
-  }, [prioritizedOpportunities, currentPage, pageSize]);
+  }, [prioritizedOpportunities, safeCurrentPage, pageSize]);
 
   const paginationTokens = useMemo<(number | 'ellipsis')[]>(() => {
     if (totalPages <= 7) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
-    if (currentPage <= 4) {
+    if (safeCurrentPage <= 4) {
       return [1, 2, 3, 4, 5, 'ellipsis', totalPages];
     }
-    if (currentPage >= totalPages - 3) {
+    if (safeCurrentPage >= totalPages - 3) {
       return [
         1,
         'ellipsis',
@@ -1359,8 +1368,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         totalPages,
       ];
     }
-    return [1, 'ellipsis', currentPage - 1, currentPage, currentPage + 1, 'ellipsis', totalPages];
-  }, [currentPage, totalPages]);
+    return [1, 'ellipsis', safeCurrentPage - 1, safeCurrentPage, safeCurrentPage + 1, 'ellipsis', totalPages];
+  }, [safeCurrentPage, totalPages]);
 
   // Saved Items List for Saved Opportunities View
   const savedItemsList = useMemo(() => {
@@ -1795,7 +1804,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         </header>
 
         {/* Main Content Body */}
-        <main className="flex-1 p-3.5 sm:p-5 lg:p-6 max-w-7xl w-full mx-auto space-y-4 sm:space-y-5 pb-32 md:pb-14">
+        <main className="flex-1 p-3.5 sm:p-5 lg:p-6 max-w-7xl w-full mx-auto space-y-4 sm:space-y-5 pb-36 md:pb-24">
           {/* ========================================================================= */}
           {/* VIEW 0: AUTHENTICATED STUDENT HOME (COMPACT PERSONALIZED PORTAL HOME)     */}
           {/* ========================================================================= */}
@@ -2006,7 +2015,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 </div>
               </div>
 
-              {/* Compact University Cards List (6 per page) */}
+              {/* Compact University Cards List (12 per page: 2 columns x 6 on lg+, 1 column x 12 on mobile) */}
               {paginatedOpportunities.length === 0 ? (
                 <div className="bg-white rounded-2xl border border-[#E2E8F0] p-10 text-center space-y-3">
                   <Building2 className="w-10 h-10 text-slate-300 mx-auto" />
@@ -2038,15 +2047,15 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 </div>
               )}
 
-              {/* Numbered Pagination Bar matching approved reference */}
+              {/* Numbered Pagination Bar matching approved reference (with clearance for floating COVA button) */}
               {pageSize > 0 && totalPages > 1 && (
                 <nav
                   aria-label="Universities pagination"
-                  className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+                  className="pt-2 flex flex-col sm:flex-row sm:flex-wrap sm:items-center justify-between gap-3 sm:pr-36 md:pr-40 text-xs"
                 >
                   <div className="text-slate-600 leading-tight tabular-nums shrink-0">
                     <span className="font-semibold text-[#10132D]">
-                      Page {currentPage} of {totalPages}
+                      Page {safeCurrentPage} of {totalPages}
                     </span>{' '}
                     <span className="text-slate-400">
                       ({totalItems} {activeTab === 'scholarships' ? 'opportunities' : 'universities'})
@@ -2056,9 +2065,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                   <div className="flex flex-wrap items-center gap-1">
                     <button
                       type="button"
-                      disabled={currentPage <= 1}
+                      disabled={safeCurrentPage <= 1}
                       onClick={() => {
-                        setCurrentPage((p) => Math.max(1, p - 1));
+                        setCurrentPage((p) => Math.max(1, Math.min(totalPages, p) - 1));
                         window.scrollTo({ top: 120, behavior: 'smooth' });
                       }}
                       className="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg border border-[#E2E8F0] bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-45 disabled:pointer-events-none font-medium transition-colors cursor-pointer"
@@ -2085,9 +2094,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                             window.scrollTo({ top: 120, behavior: 'smooth' });
                           }}
                           aria-label={`Page ${token}`}
-                          aria-current={currentPage === token ? 'page' : undefined}
+                          aria-current={safeCurrentPage === token ? 'page' : undefined}
                           className={`min-w-[30px] h-8 px-2 rounded-lg text-xs tabular-nums transition-colors cursor-pointer ${
-                            currentPage === token
+                            safeCurrentPage === token
                               ? 'bg-[#6846F5] text-white font-bold shadow-xs'
                               : 'bg-white border border-[#E2E8F0] text-[#10132D] hover:bg-slate-50 font-medium'
                           }`}
@@ -2099,9 +2108,9 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
                     <button
                       type="button"
-                      disabled={currentPage >= totalPages}
+                      disabled={safeCurrentPage >= totalPages}
                       onClick={() => {
-                        setCurrentPage((p) => Math.min(totalPages, p + 1));
+                        setCurrentPage((p) => Math.min(totalPages, Math.max(1, p) + 1));
                         window.scrollTo({ top: 120, behavior: 'smooth' });
                       }}
                       className="inline-flex items-center gap-1 h-8 px-3 rounded-lg bg-[#6846F5] hover:bg-[#5734E6] text-white disabled:bg-slate-200 disabled:text-slate-400 disabled:pointer-events-none font-semibold transition-colors cursor-pointer shadow-xs"
@@ -2231,6 +2240,16 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         onClose={() => setSelectedOpportunity(null)}
         isSaved={selectedOpportunity ? savedOpportunities.has(selectedOpportunity.id) : false}
         onToggleSave={toggleSave}
+        isInTargetList={selectedOpportunity ? Boolean(targetList[selectedOpportunity.id]) : false}
+        onAddToTargetList={(opp) =>
+          handleUpsertTarget({
+            opportunityId: opp.id,
+            priority: 'Medium',
+            intakeYear: '2026',
+            personalGoal: '',
+          })
+        }
+        onRemoveFromTargetList={handleRemoveTarget}
       />
 
       {/* 3. COVA AI Virtual Assistant Interface */}
@@ -2243,6 +2262,15 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         activeApplications={activeApplications}
         applicationTracker={applicationTracker}
         onToggleSave={toggleSave}
+        onAddToTargetList={(opp) =>
+          handleUpsertTarget({
+            opportunityId: opp.id,
+            priority: 'Medium',
+            intakeYear: '2026',
+            personalGoal: '',
+          })
+        }
+        onRemoveFromTargetList={handleRemoveTarget}
         onUpdateApplicationStatus={updateAppStatus}
         onSelectOpportunity={(opp) => setSelectedOpportunity(opp)}
         onNavigateToTracker={() => setActiveTab('tracker')}

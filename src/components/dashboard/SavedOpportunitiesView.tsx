@@ -24,6 +24,7 @@ import { OpportunityItem, evaluateOpportunityDeadline } from '../../data/opportu
 import { TargetListItem, TargetPriority } from '../../services/auth';
 import { Button } from '../ui/Button';
 import { UniversityLogo } from '../ui/UniversityLogo';
+import { CountryFlag } from '../ui/CountryFlagSvg';
 
 export interface SavedOpportunitiesViewProps {
   savedItems: OpportunityItem[];
@@ -336,11 +337,14 @@ export const SavedOpportunitiesView: React.FC<SavedOpportunitiesViewProps> = ({
                         <h3 className="text-sm sm:text-base font-bold text-[#10132D] group-hover:text-[#6846F5] transition-colors leading-snug">
                           {displayName}
                         </h3>
-                        <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
+                        <p className="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5">
                           <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
-                          <span className="truncate">
-                            {item.countryFlag} {displayLocation}
-                          </span>
+                          <CountryFlag
+                            code={item.countryCode}
+                            country={item.country}
+                            className="w-4 h-[11px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+                          />
+                          <span className="truncate">{displayLocation}</span>
                         </p>
                       </div>
                     </div>
@@ -352,7 +356,7 @@ export const SavedOpportunitiesView: React.FC<SavedOpportunitiesViewProps> = ({
                         onRemoveBookmark(item.id, displayName);
                       }}
                       className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer shrink-0"
-                      title="Remove bookmark"
+                      title="Remove from Saved Opportunities"
                       aria-label={`Remove ${displayName} from Saved Opportunities`}
                     >
                       <Trash2 className="w-4 h-4" />
