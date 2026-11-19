@@ -443,7 +443,11 @@ export const OpportunityDetailModal: React.FC<OpportunityDetailModalProps> = ({
                       <li>Review verified entry requirements on this portal.</li>
                       <li>Prepare academic transcripts and English verification.</li>
                       <li>Visit the official university portal via the button on the right.</li>
-                      <li>Submit before the official intake deadline ({item.deadlines?.deadlineText || 'Upcoming Intake'}).</li>
+                      <li>
+                        {evalDeadline.isExpired
+                          ? 'Current intake deadline passed — confirm upcoming cycle dates on the official university portal.'
+                          : `Submit before the official intake deadline (${evalDeadline.displayText}).`}
+                      </li>
                     </ol>
                   </div>
                 </div>

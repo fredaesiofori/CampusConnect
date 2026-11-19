@@ -52,6 +52,9 @@ export interface CompactOpportunityInput {
   cycle?: ApplicationCycleStatus;
   verSrc?: string;
   verAt?: string;
+  isVerified?: boolean;
+  linkStatus?: 'verified' | 'needs-review';
+  reviewNote?: string;
   summary?: string;
   ruleSummary?: string;
   eligCat?: string;
@@ -171,6 +174,11 @@ export function hydrateOpportunityRecord(input: CompactOpportunityInput): Opport
       ? `${knownAuth.authority} · Official Institutional Portal & Wikidata Registry`
       : `Official Institutional Portal & Wikidata Academic Registry (${countryName})`);
 
+  const derivedVerified =
+    input.isVerified !== undefined
+      ? input.isVerified
+      : Boolean(input.logoUrl && input.linkStatus !== 'needs-review');
+
   return {
     id: input.id,
     officialName: input.name,
@@ -186,9 +194,11 @@ export function hydrateOpportunityRecord(input: CompactOpportunityInput): Opport
     category: input.cat || 'university',
     institutionType: input.type || 'Public University',
     title: input.title || `${input.name} — Degree Programs & Admissions`,
-    isVerified: true,
+    isVerified: derivedVerified,
     verificationSource,
     verifiedAt: input.verAt || 'Verified November 2026',
+    ...(input.linkStatus ? { linkStatus: input.linkStatus } : {}),
+    ...(input.reviewNote ? { reviewNote: input.reviewNote } : {}),
     logo: {
       bg: input.bg || palette.bg,
       text: input.text || palette.text,
@@ -229,7 +239,11 @@ export function hydrateOpportunityRecord(input: CompactOpportunityInput): Opport
     },
     studyFields: input.fields || ['Engineering & Technology', 'Natural Sciences', 'Business & Economics', 'Social Sciences & Humanities'],
     intakeTerm: input.term || '2026/2027 Intake',
-    verifiedBadge: input.cat === 'scholarship' ? 'Verified Official Scholarship' : 'Verified Accredited Institution',
+    verifiedBadge: derivedVerified
+      ? input.cat === 'scholarship'
+        ? 'Verified Official Scholarship'
+        : 'Verified Accredited Institution'
+      : 'Pending Verification',
     summary:
       input.summary ||
       `${input.name} is a recognized degree-awarding higher education institution located in ${input.city ? `${input.city}, ` : ''}${countryName}.`,

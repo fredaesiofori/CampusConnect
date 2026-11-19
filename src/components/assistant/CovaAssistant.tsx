@@ -41,7 +41,11 @@ import {
   ActiveApplicationItem,
 } from '../../services/auth';
 import { auth, subscribeToFirebaseAuthState } from '../../services/firebase';
-import { OpportunityItem, authenticOpportunities } from '../../data/opportunities';
+import {
+  OpportunityItem,
+  authenticOpportunities,
+  evaluateOpportunityDeadline,
+} from '../../data/opportunities';
 import { CovaOpportunityCard } from './CovaOpportunityCard';
 import { CovaTrackerCard } from './CovaTrackerCard';
 import { CovaHistoryDrawer } from './CovaHistoryDrawer';
@@ -856,7 +860,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
         officialName: opp?.officialName || opp?.title || id,
         country: opp?.country || 'Global',
         category: opp?.category || 'university',
-        deadlineText: opp?.deadlines?.deadlineText || 'Rolling Admissions',
+        deadlineText: opp ? evaluateOpportunityDeadline(opp.deadlines).displayText : 'Rolling Admissions',
         feeStatus: opp?.applicationFees?.status || 'Standard',
         testStatus: opp?.testWaiverRules?.status || 'Standard',
         fundingType: opp?.fundingDetails?.type || 'Standard',
@@ -872,7 +876,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
         priority: target.priority,
         intakeYear: target.intakeYear,
         personalGoal: target.personalGoal,
-        deadlineText: opp?.deadlines?.deadlineText || 'Rolling Admissions',
+        deadlineText: opp ? evaluateOpportunityDeadline(opp.deadlines).displayText : 'Rolling Admissions',
         feeStatus: opp?.applicationFees?.status || 'Standard',
         fundingType: opp?.fundingDetails?.type || 'Standard',
       };
@@ -890,7 +894,7 @@ export const CovaAssistant: React.FC<CovaAssistantProps> = ({
         totalTasksCount: 6,
         completedTasks,
         notes: app.notes,
-        deadlineText: opp?.deadlines?.deadlineText || 'Rolling Admissions',
+        deadlineText: opp ? evaluateOpportunityDeadline(opp.deadlines).displayText : 'Rolling Admissions',
         feeStatus: opp?.applicationFees?.status || 'Standard',
         testStatus: opp?.testWaiverRules?.status || 'Standard',
         fundingType: opp?.fundingDetails?.type || 'Standard',
