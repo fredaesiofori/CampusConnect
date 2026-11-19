@@ -16,14 +16,12 @@ import {
   refreshFirebaseSessionToken,
   saveStudentProfileToFirestore,
   saveStudentProfileWithStatusToFirestore,
-  syncSavedOpportunitiesToFirestore,
   syncStudentDashboardListsToFirestore,
   fetchStudentProfileFromFirestore,
   fetchStudentProfileDocFromFirestore,
   subscribeToFirebaseAuthState,
   updateFirebaseUserEmail,
   updateFirebaseDisplayName,
-  deleteStudentAccountFromFirebase,
   checkCurrentUserIsAdmin,
 } from './firebase';
 import { getCountryByName } from '../data/countries';
@@ -2073,37 +2071,19 @@ export const authService = {
     activeInMemoryUser = currentUser;
     setCachedUser(currentUser);
 
-    syncSavedOpportunitiesToFirestore(
-      currentUser.id,
-      currentUser.email,
-      [],
-      currentUser.applicationTracker || {}
-    ).catch(() => {});
+    syncStudentDashboardListsToFirestore(currentUser.id, currentUser.email, {
+      savedOpportunities: [],
+    }).catch(() => {});
 
     return currentUser;
   },
 
-  // 12. Delete Student Account & All Associated Records (Right to Erasure)
+  // 12. Delete Student Account (Temporarily Disabled on Starter Tier)
   async deleteAccount(): Promise<{ success: boolean; error?: string; requiresReauth?: boolean }> {
-    const currentUser = this.getCurrentUser();
-    if (!currentUser || !auth.currentUser) {
-      return { success: false, error: 'No active student session found.' };
-    }
-
-    // Real Firebase student account and Firestore record deletion
-    const res = await deleteStudentAccountFromFirebase(currentUser.id);
-    if (!res.success) {
-      return res;
-    }
-
-    activeInMemoryUser = null;
-    setCachedUser(null);
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      localStorage.removeItem(CACHED_USER_KEY);
-      sessionStorage.removeItem(SESSION_STORAGE_KEY);
-    }
-
-    return { success: true };
+    return {
+      success: false,
+      error: 'Account deletion is temporarily unavailable. Please contact support for assistance.',
+    };
   },
 
   // 13. Secure Sign Out from All Supported Sessions

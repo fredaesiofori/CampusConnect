@@ -22,6 +22,7 @@ import { OpportunityItem, evaluateOpportunityDeadline } from '../../data/opportu
 import { ActiveApplicationItem, TargetListItem } from '../../services/auth';
 import { DashboardNavTab } from './DashboardSidebar';
 import { UniversityLogo } from '../ui/UniversityLogo';
+import { CountryFlag } from '../ui/CountryFlagSvg';
 
 export interface MobileDashboardOverviewProps {
   firstName: string;
@@ -134,9 +135,18 @@ export const MobileDashboardOverview: React.FC<MobileDashboardOverviewProps> = (
       title: topMatch
         ? `Explore ${topMatch.shortName || topMatch.officialName || topMatch.institution}`
         : 'Explore verified universities',
-      subtitle: topMatch
-        ? `${topMatch.countryFlag} ${topMatch.country} · Top match for your profile`
-        : 'Discover programs tailored to your academic goals',
+      subtitle: topMatch ? (
+        <span className="inline-flex items-center gap-1.5 max-w-full">
+          <CountryFlag
+            code={topMatch.countryCode}
+            country={topMatch.country}
+            className="w-3.5 h-[10px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+          />
+          <span className="truncate">{topMatch.country} · Top match for your profile</span>
+        </span>
+      ) : (
+        'Discover programs tailored to your academic goals'
+      ),
       onClick: () => (topMatch ? onOpenOpportunity(topMatch) : onNavigate('universities', 'home')),
     };
   }, [
@@ -450,9 +460,11 @@ export const MobileDashboardOverview: React.FC<MobileDashboardOverviewProps> = (
                         {displayName}
                       </h4>
                       <div className="flex items-center gap-1.5 text-[11.5px] text-[#64748B] truncate">
-                        <span className="shrink-0" aria-hidden="true">
-                          {item.countryFlag}
-                        </span>
+                        <CountryFlag
+                          code={item.countryCode}
+                          country={item.country}
+                          className="w-4 h-[11px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+                        />
                         <span className="truncate font-medium text-slate-700">{item.country}</span>
                         <span aria-hidden="true" className="text-slate-300">
                           ·
@@ -471,7 +483,8 @@ export const MobileDashboardOverview: React.FC<MobileDashboardOverviewProps> = (
                       e.stopPropagation();
                       onToggleSave(item.id, displayName);
                     }}
-                    aria-label={isSaved ? `Remove ${displayName} from saved` : `Save ${displayName}`}
+                    title={isSaved ? 'Remove from Saved Opportunities' : 'Save Opportunity'}
+                    aria-label={isSaved ? `Remove ${displayName} from Saved Opportunities` : `Save ${displayName} to Saved Opportunities`}
                     aria-pressed={isSaved}
                     className={`w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl flex items-center justify-center transition-colors cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5] ${
                       isSaved

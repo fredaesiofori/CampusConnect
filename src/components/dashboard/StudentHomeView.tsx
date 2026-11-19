@@ -26,6 +26,7 @@ import { OpportunityItem, evaluateOpportunityDeadline } from '../../data/opportu
 import { ActiveApplicationItem, User } from '../../services/auth';
 import { StudentNotificationRecord } from '../../services/firebase';
 import { UniversityLogo } from '../ui/UniversityLogo';
+import { CountryFlag, resolveCountryIsoCode } from '../ui/CountryFlagSvg';
 import { DashboardNavTab } from './DashboardSidebar';
 import campusHistoricQuadImg from '../../assets/images/campus_historic_quad_1794926300997.jpg';
 import campusModernGlassImg from '../../assets/images/campus_modern_glass_1794926301324.jpg';
@@ -80,15 +81,15 @@ export interface StudentHomeViewProps {
 interface DestinationItem {
   label: string;
   queryValue: string;
-  flag: string;
+  code: string;
 }
 
 const DEFAULT_POPULAR_DESTINATIONS: DestinationItem[] = [
-  { label: 'Canada', queryValue: 'Canada', flag: '🇨🇦' },
-  { label: 'Australia', queryValue: 'Australia', flag: '🇦🇺' },
-  { label: 'Germany', queryValue: 'Germany', flag: '🇩🇪' },
-  { label: 'UK', queryValue: 'United Kingdom', flag: '🇬🇧' },
-  { label: 'USA', queryValue: 'United States', flag: '🇺🇸' },
+  { label: 'Canada', queryValue: 'Canada', code: 'CA' },
+  { label: 'Australia', queryValue: 'Australia', code: 'AU' },
+  { label: 'Germany', queryValue: 'Germany', code: 'DE' },
+  { label: 'UK', queryValue: 'United Kingdom', code: 'GB' },
+  { label: 'USA', queryValue: 'United States', code: 'US' },
 ];
 
 export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
@@ -202,7 +203,7 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
 
   // Build available countries map dynamically from verified catalog
   const availableCountries = useMemo(() => {
-    const map = new Map<string, { name: string; flag: string; count: number }>();
+    const map = new Map<string, { name: string; code: string; count: number }>();
     for (const item of verifiedOpportunities) {
       if (!item.country) continue;
       const existing = map.get(item.country);
@@ -211,7 +212,7 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
       } else {
         map.set(item.country, {
           name: item.country,
-          flag: item.countryFlag || '🌐',
+          code: resolveCountryIsoCode(item.countryCode, item.country) || item.countryCode || '',
           count: 1,
         });
       }
@@ -256,7 +257,7 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
               ? 'USA'
               : catalogMatch.name,
           queryValue: catalogMatch.name,
-          flag: catalogMatch.flag,
+          code: catalogMatch.code,
         });
       } else if (defaultMatch && !usedQueries.has(defaultMatch.queryValue.toLowerCase())) {
         usedQueries.add(defaultMatch.queryValue.toLowerCase());
@@ -573,9 +574,15 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
                             />
                           )}
                         </div>
-                        <p className="text-[11px] text-[#64748B] truncate">
-                          <span aria-hidden="true">{item.countryFlag} </span>
-                          {item.country} · {fundingLabel}
+                        <p className="text-[11px] text-[#64748B] flex items-center gap-1.5 truncate">
+                          <CountryFlag
+                            code={item.countryCode}
+                            country={item.country}
+                            className="w-4 h-[11px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+                          />
+                          <span className="truncate">
+                            {item.country} · {fundingLabel}
+                          </span>
                         </p>
                         <p className="text-[10.5px] text-slate-500 truncate">
                           {deadlineInfo.displayText}
@@ -589,7 +596,8 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
                         e.stopPropagation();
                         onToggleSave(item.id, displayName);
                       }}
-                      aria-label={isSaved ? `Remove ${displayName} from saved` : `Save ${displayName}`}
+                      title={isSaved ? 'Remove from Saved Opportunities' : 'Save Opportunity'}
+                      aria-label={isSaved ? `Remove ${displayName} from Saved Opportunities` : `Save ${displayName} to Saved Opportunities`}
                       aria-pressed={isSaved}
                       className={`w-10 h-10 min-w-[40px] min-h-[40px] rounded-xl flex items-center justify-center transition-colors shrink-0 cursor-pointer ${
                         isSaved
@@ -641,9 +649,11 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
               onClick={() => onSelectDestination(dest.queryValue)}
               className="rounded-xl bg-white hover:bg-[#FAF9FF] border border-[#E6EAF2] hover:border-[#C4B5FD] px-2.5 py-2.5 min-h-[56px] flex items-center justify-center gap-2 shadow-2xs hover:shadow-sm active:scale-[0.98] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6846F5]"
             >
-              <span className="text-lg leading-none shrink-0" aria-hidden="true">
-                {dest.flag}
-              </span>
+              <CountryFlag
+                code={dest.code}
+                country={dest.queryValue}
+                className="w-[22px] h-[15px] rounded-[2px] shadow-2xs ring-1 ring-black/10 overflow-hidden shrink-0"
+              />
               <span className="text-xs font-semibold text-[#10132D] truncate">
                 {dest.label}
               </span>
@@ -818,9 +828,11 @@ export const StudentHomeView: React.FC<StudentHomeViewProps> = ({
                   className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-100 text-left cursor-pointer transition-colors"
                 >
                   <span className="flex items-center gap-2.5 text-sm font-semibold text-[#10132D]">
-                    <span className="text-lg leading-none" aria-hidden="true">
-                      {country.flag}
-                    </span>
+                    <CountryFlag
+                      code={country.code}
+                      country={country.name}
+                      className="w-[22px] h-[15px] rounded-[2px] shadow-2xs ring-1 ring-black/10 overflow-hidden shrink-0"
+                    />
                     <span>{country.name}</span>
                   </span>
                   <span className="text-xs font-semibold text-[#64748B] bg-slate-100 px-2 py-0.5 rounded-md tabular-nums">

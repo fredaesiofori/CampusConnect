@@ -27,6 +27,7 @@ import { OpportunityItem, evaluateOpportunityDeadline } from '../../data/opportu
 import { ActiveApplicationItem, ActiveApplicationStage, TargetListItem } from '../../services/auth';
 import { Button } from '../ui/Button';
 import { UniversityLogo } from '../ui/UniversityLogo';
+import { CountryFlag } from '../ui/CountryFlagSvg';
 
 export interface ApplicationsViewProps {
   opportunities: OpportunityItem[];
@@ -391,9 +392,14 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
                         {displayName}
                       </h3>
                       <p className="text-xs text-slate-500 flex flex-wrap items-center gap-x-3 gap-y-1">
-                        <span className="inline-flex items-center gap-1">
-                          <MapPin className="w-3.5 h-3.5 text-slate-400" />
-                          {item.countryFlag} {displayLocation}
+                        <span className="inline-flex items-center gap-1.5">
+                          <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                          <CountryFlag
+                            code={item.countryCode}
+                            country={item.country}
+                            className="w-4 h-[11px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+                          />
+                          <span>{displayLocation}</span>
                         </span>
                         <span>·</span>
                         <span>
@@ -627,9 +633,16 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
                     <h4 className="text-sm font-bold text-[#10132D] truncate">
                       {pendingStartItem.officialName || pendingStartItem.institution}
                     </h4>
-                    <p className="text-xs text-slate-500">
-                      {pendingStartItem.countryFlag} {pendingStartItem.country} · Deadline:{' '}
-                      {evaluateOpportunityDeadline(pendingStartItem.deadlines).displayText}
+                    <p className="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5">
+                      <CountryFlag
+                        code={pendingStartItem.countryCode}
+                        country={pendingStartItem.country}
+                        className="w-4 h-[11px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+                      />
+                      <span className="truncate">
+                        {pendingStartItem.country} · Deadline:{' '}
+                        {evaluateOpportunityDeadline(pendingStartItem.deadlines).displayText}
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -689,8 +702,13 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
                               {opp.officialName || opp.institution}
                             </p>
                             <p className="text-[11px] text-slate-500 flex items-center gap-1.5">
-                              <span>
-                                {opp.countryFlag} {opp.country}
+                              <span className="inline-flex items-center gap-1.5">
+                                <CountryFlag
+                                  code={opp.countryCode}
+                                  country={opp.country}
+                                  className="w-3.5 h-[10px] rounded-[2px] ring-1 ring-black/10 overflow-hidden shrink-0"
+                                />
+                                <span>{opp.country}</span>
                               </span>
                               {isTarget && (
                                 <span className="inline-flex items-center gap-0.5 text-amber-700 font-semibold">

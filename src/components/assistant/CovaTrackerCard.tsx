@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { OpportunityItem } from '../../data/opportunities';
 import { UniversityLogo } from '../ui/UniversityLogo';
+import { CountryFlag } from '../ui/CountryFlagSvg';
 import { ApplicationStage } from '../dashboard/TargetTrackerBoard';
 
 export interface CovaTrackerCardProps {
@@ -116,8 +117,12 @@ export const CovaTrackerCard: React.FC<CovaTrackerCardProps> = ({
             <h4 className="text-xs font-bold text-slate-900 truncate">
               {officialName}
             </h4>
-            <p className="text-[11px] text-slate-500 truncate flex items-center gap-1">
-              <span>{item.countryFlag || '🌍'}</span>
+            <p className="text-[11px] text-slate-500 truncate flex items-center gap-1.5">
+              <CountryFlag
+                code={item.countryCode}
+                country={item.country}
+                className="w-3.5 h-[10px] rounded-[1.5px] ring-1 ring-black/10 overflow-hidden shrink-0"
+              />
               <span>{item.country}</span>
               {item.city && <span className="text-slate-400">• {item.city}</span>}
             </p>

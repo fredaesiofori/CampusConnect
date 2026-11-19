@@ -448,11 +448,8 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
   // TAB 5: PRIVACY & ACCOUNT MANAGEMENT STATE
   // =========================================================================
   const [showClearConfirm, setShowClearConfirm] = useState(false);
-  const [showDeleteConfirmStep, setShowDeleteConfirmStep] = useState(false);
-  const [deleteConfirmationInput, setDeleteConfirmationInput] = useState('');
-  const [isDeletingAccount, setIsDeletingAccount] = useState(false);
-  const [accountDeletionError, setAccountDeletionError] = useState<string | null>(null);
-  const [accountDeletionSuccess, setAccountDeletionSuccess] = useState<string | null>(null);
+  const [accountDeletionError] = useState<string | null>(null);
+  const [accountDeletionSuccess] = useState<string | null>(null);
 
   const [isSigningOutAllSessions, setIsSigningOutAllSessions] = useState(false);
   const [signOutAllSuccess, setSignOutAllSuccess] = useState<string | null>(null);
@@ -1139,49 +1136,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
     onLogout();
   };
 
-  // Handle Permanent Account Deletion
-  const handleDeleteAccount = async () => {
-    setAccountDeletionError(null);
-    setAccountDeletionSuccess(null);
-
-    if (deleteConfirmationInput.trim().toUpperCase() !== 'DELETE') {
-      setAccountDeletionError('Please type "DELETE" into the confirmation box to proceed.');
-      return;
-    }
-
-    setIsDeletingAccount(true);
-    try {
-      const res = await authService.deleteAccount();
-      if (!res.success) {
-        if (res.requiresReauth) {
-          setAccountDeletionError(
-            'For your security, re-authentication is required. Please sign out and sign back in to delete your account.'
-          );
-        } else {
-          setAccountDeletionError(
-            getStudentFriendlyError(res.error, 'Failed to delete account. Please try again.')
-          );
-        }
-        setIsDeletingAccount(false);
-        return;
-      }
-
-      setAccountDeletionSuccess('Your student account and all personal records have been permanently erased.');
-      onShowNotification('Account permanently deleted.');
-      setTimeout(() => {
-        if (onAccountDeleted) {
-          onAccountDeleted();
-        } else {
-          onLogout();
-        }
-      }, 1500);
-    } catch (err: any) {
-      setAccountDeletionError(getStudentFriendlyError(err, 'Failed to delete account.'));
-      setIsDeletingAccount(false);
-    }
-  };
-
-  // Handle Clear Target List
+  // Handle Clear Saved Opportunities
   const handleConfirmClearSaved = () => {
     if (onClearSavedOpportunities) {
       onClearSavedOpportunities();
@@ -1192,7 +1147,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
       }
     }
     setShowClearConfirm(false);
-    onShowNotification('Target list cleared.');
+    onShowNotification('Saved Opportunities cleared.');
   };
 
   return (
@@ -3058,16 +3013,18 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
               )}
             </div>
 
-            {/* Target List Data Cleanup */}
+            {/* Saved Opportunities Cleanup */}
             <div className="p-5 rounded-2xl bg-white border border-[#E2E8F0] space-y-3 shadow-xs">
               <div className="flex items-start gap-3.5">
                 <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
                   <Trash2 className="w-5 h-5" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-sm font-bold text-[#10132D]">Manage Target Radar List</h3>
+                  <h3 className="text-sm font-bold text-[#10132D]">Manage Saved Opportunities</h3>
                   <p className="text-xs text-slate-500 leading-relaxed">
-                    You currently have <strong>{savedOpportunitiesCount}</strong> universities saved in your personal radar board.
+                    You currently have <strong>{savedOpportunitiesCount}</strong> bookmarked{' '}
+                    {savedOpportunitiesCount === 1 ? 'item' : 'items'} in Saved Opportunities. Clearing
+                    bookmarks will not remove anything from your Target List.
                   </p>
                 </div>
               </div>
@@ -3075,7 +3032,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
               {showClearConfirm ? (
                 <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 space-y-2 animate-in fade-in duration-150">
                   <p className="text-xs font-semibold text-rose-800">
-                    Are you sure you want to remove all saved universities from your target list?
+                    Are you sure you want to remove all bookmarked opportunities from Saved Opportunities?
                   </p>
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                     <Button
@@ -3085,7 +3042,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                       onClick={handleConfirmClearSaved}
                       className="w-full sm:w-auto min-h-[44px] justify-center bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold"
                     >
-                      Yes, Clear Target List
+                      Yes, Clear Saved Opportunities
                     </Button>
                     <Button
                       type="button"
@@ -3108,7 +3065,7 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                     disabled={savedOpportunitiesCount === 0}
                     className="w-full sm:w-auto min-h-[44px] justify-center text-xs font-semibold text-slate-700 border-slate-300 disabled:opacity-40"
                   >
-                    Clear Target List
+                    Clear Saved Opportunities
                   </Button>
                 </div>
               )}
@@ -3139,78 +3096,28 @@ export const StudentSettingsCentre: React.FC<StudentSettingsCentreProps> = ({
                 </ul>
               </div>
 
-              {showDeleteConfirmStep ? (
-                <div className="p-4 rounded-xl bg-rose-50 border border-rose-300 space-y-3 animate-in fade-in duration-150">
-                  <div className="space-y-1">
-                    <label htmlFor="confirm-delete-input" className="block text-xs font-bold text-rose-950">
-                      Confirmation Required: Type &ldquo;DELETE&rdquo; to proceed
-                    </label>
-                    <p className="text-[11px] text-rose-700">
-                      Please confirm that you understand this action cannot be undone.
-                    </p>
-                  </div>
+              <div
+                role="status"
+                className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex items-start gap-2.5"
+              >
+                <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <span className="font-medium leading-relaxed">
+                  Account deletion is temporarily unavailable. Please contact support for assistance.
+                </span>
+              </div>
 
-                  <input
-                    id="confirm-delete-input"
-                    type="text"
-                    value={deleteConfirmationInput}
-                    onChange={(e) => setDeleteConfirmationInput(e.target.value)}
-                    placeholder="Type DELETE"
-                    className="w-full h-11 px-3 rounded-xl border border-rose-300 bg-white text-xs font-bold text-rose-900 placeholder:text-rose-300 focus:outline-none focus:border-rose-600 focus:ring-1 focus:ring-rose-600"
-                  />
-
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-1">
-                    <Button
-                      type="button"
-                      variant="primary"
-                      size="sm"
-                      onClick={handleDeleteAccount}
-                      disabled={isDeletingAccount || deleteConfirmationInput.trim().toUpperCase() !== 'DELETE'}
-                      className="w-full sm:w-auto min-h-[44px] justify-center bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold disabled:opacity-40"
-                    >
-                      {isDeletingAccount ? (
-                        <>
-                          <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                          <span>Deleting Account...</span>
-                        </>
-                      ) : (
-                        <span>Permanently Delete My Account</span>
-                      )}
-                    </Button>
-
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        setShowDeleteConfirmStep(false);
-                        setDeleteConfirmationInput('');
-                        setAccountDeletionError(null);
-                      }}
-                      disabled={isDeletingAccount}
-                      className="w-full sm:w-auto min-h-[44px] justify-center text-xs font-semibold text-slate-700 border-slate-300 hover:bg-slate-50"
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setShowDeleteConfirmStep(true);
-                      setDeleteConfirmationInput('');
-                      setAccountDeletionError(null);
-                    }}
-                    className="w-full sm:w-auto min-h-[44px] justify-center text-xs font-bold text-rose-600 border-rose-300 hover:bg-rose-50"
-                  >
-                    Request Permanent Account Deletion
-                  </Button>
-                </div>
-              )}
+              <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  disabled
+                  aria-disabled="true"
+                  className="w-full sm:w-auto min-h-[44px] justify-center text-xs font-bold text-rose-400 border-rose-200 bg-rose-50/40 cursor-not-allowed opacity-65"
+                >
+                  Request Permanent Account Deletion (Temporarily Unavailable)
+                </Button>
+              </div>
             </div>
           </div>
         )}

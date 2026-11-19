@@ -671,10 +671,11 @@ export const DesktopDashboardOverview: React.FC<DesktopDashboardOverviewProps> =
                           e.stopPropagation();
                           onToggleSave(item.id, displayName);
                         }}
+                        title={isSaved ? 'Remove from Saved Opportunities' : 'Save Opportunity'}
                         aria-label={
                           isSaved
-                            ? `Remove ${displayName} from saved`
-                            : `Save ${displayName}`
+                            ? `Remove ${displayName} from Saved Opportunities`
+                            : `Save ${displayName} to Saved Opportunities`
                         }
                         className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors shrink-0 cursor-pointer ${
                           isSaved

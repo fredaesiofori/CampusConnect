@@ -9,6 +9,7 @@ import { OpportunityItem } from '../../data/opportunities';
 import { ExploreBannerShowcase } from '../../utils/universityDirectory';
 import { getVerifiedCampusPhotoUrl } from '../../utils/verifiedCampusPhotos';
 import { UniversityLogo } from '../ui/UniversityLogo';
+import { CountryFlag } from '../ui/CountryFlagSvg';
 
 export interface FeaturedUniversityBannerProps {
   showcase: ExploreBannerShowcase;
@@ -292,8 +293,12 @@ export const FeaturedUniversityBanner: React.FC<FeaturedUniversityBannerProps> =
             </div>
 
             <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-white/90">
-              <span className="inline-flex items-center gap-1 font-medium min-w-0">
-                <span aria-hidden="true">{currentItem.countryFlag}</span>
+              <span className="inline-flex items-center gap-1.5 font-medium min-w-0">
+                <CountryFlag
+                  code={currentItem.countryCode}
+                  country={currentItem.country}
+                  className="w-4 h-[11px] rounded-[2px] ring-1 ring-white/30 overflow-hidden shrink-0"
+                />
                 <MapPin className="w-3 h-3 text-[#F8C555] shrink-0" aria-hidden="true" />
                 <span className="truncate">{displayLocation}</span>
               </span>
