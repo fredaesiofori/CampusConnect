@@ -18,7 +18,7 @@ import {
   X,
   ChevronRight,
 } from 'lucide-react';
-import { OpportunityItem } from '../../data/opportunities';
+import { OpportunityItem, evaluateOpportunityDeadline } from '../../data/opportunities';
 import { UniversityLogo } from '../ui/UniversityLogo';
 import { CountryFlag } from '../ui/CountryFlagSvg';
 import { ApplicationStage } from '../dashboard/TargetTrackerBoard';
@@ -43,7 +43,8 @@ export const CovaTrackerCard: React.FC<CovaTrackerCardProps> = ({
   const [successNotice, setSuccessNotice] = useState<string | null>(null);
 
   const officialName = item.officialName || item.title;
-  const deadlineText = item.deadlines?.deadlineText || item.deadlines?.term || 'Rolling Admissions';
+  const evalDeadline = evaluateOpportunityDeadline(item.deadlines);
+  const deadlineText = evalDeadline.displayText;
 
   const stages: {
     id: ApplicationStage;
@@ -141,8 +142,11 @@ export const CovaTrackerCard: React.FC<CovaTrackerCardProps> = ({
       {/* Deadline Info */}
       <div className="mt-2 flex items-center justify-between text-[10px] text-slate-500 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100">
         <div className="flex items-center gap-1.5 truncate">
-          <Clock className="w-3 h-3 text-slate-400 shrink-0" />
-          <span className="truncate">Deadline: <strong>{deadlineText}</strong></span>
+          <Clock className={`w-3 h-3 shrink-0 ${evalDeadline.isExpired ? 'text-amber-600' : 'text-slate-400'}`} />
+          <span className="truncate">
+            Deadline:{' '}
+            <strong className={evalDeadline.isExpired ? 'text-amber-700' : undefined}>{deadlineText}</strong>
+          </span>
         </div>
         {item.fundingDetails?.type && (
           <span className="text-emerald-700 font-medium shrink-0">

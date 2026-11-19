@@ -86,6 +86,29 @@ export function computeDaysUntilUtcDate(dateStr?: string | null, now: Date = new
   return Math.round((targetMidnightMs - todayMidnightMs) / 86_400_000);
 }
 
+export function isActiveStudentNotification(
+  notif: StudentNotificationRecord,
+  opportunityLookup: Map<string, OpportunityItem>,
+  now: Date = new Date()
+): boolean {
+  if (!notif) return false;
+  if (notif.category === 'deadline') {
+    if (notif.deadlineDate) {
+      const daysRemaining = computeDaysUntilUtcDate(notif.deadlineDate, now);
+      if (daysRemaining !== null && daysRemaining < 0) {
+        return false;
+      }
+    }
+    if (notif.opportunityId) {
+      const opp = opportunityLookup.get(notif.opportunityId);
+      if (opp && evaluateOpportunityDeadline(opp.deadlines, now).isExpired) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 export function getRequiredTasksForOpportunity(item: OpportunityItem): string[] {
   const rawDocs = item.admissionsRequirements?.documents?.length
     ? item.admissionsRequirements.documents
@@ -541,10 +564,14 @@ export function generateSmartNotifications(
         const incompleteCount = requiredTasks.filter((t) => !completedSet.has(t)).length;
 
         if (incompleteCount > 0) {
-          const daysRemaining = opp.deadlines?.deadlineDate
-            ? computeDaysUntilUtcDate(opp.deadlines.deadlineDate, now)
-            : null;
-          const isApproaching = daysRemaining !== null && daysRemaining >= 0 && daysRemaining <= 14;
+          const evalOppDeadline = evaluateOpportunityDeadline(opp.deadlines, now);
+          const rawDaysRemaining =
+            !evalOppDeadline.isExpired && opp.deadlines?.deadlineDate
+              ? computeDaysUntilUtcDate(opp.deadlines.deadlineDate, now)
+              : null;
+          const daysRemaining =
+            rawDaysRemaining !== null && rawDaysRemaining >= 0 ? rawDaysRemaining : null;
+          const isApproaching = daysRemaining !== null && daysRemaining <= 14;
           const notifId = makeSafeNotificationId('app_tasks', opp.id, `${incompleteCount}left`);
 
           pushNotification({
@@ -569,7 +596,9 @@ export function generateSmartNotifications(
             opportunityName: opp.officialName,
             actionTab: 'overview',
             actionSection: 'applications',
-            ...(opp.deadlines?.deadlineDate ? { deadlineDate: opp.deadlines.deadlineDate } : {}),
+            ...(!evalOppDeadline.isExpired && opp.deadlines?.deadlineDate
+              ? { deadlineDate: opp.deadlines.deadlineDate }
+              : {}),
             ...(typeof daysRemaining === 'number' ? { daysRemaining } : {}),
             sourceVerified: Boolean(opp.isVerified),
             createdAt: nowIso,

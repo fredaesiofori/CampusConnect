@@ -592,7 +592,7 @@ export async function seedVerifiedOpportunitiesToFirestore(): Promise<number> {
   }
 }
 
-const DATA_REVISION_ISO = '2026-11-13T16:30:00.000Z';
+const DATA_REVISION_ISO = '2026-11-19T03:00:00.000Z';
 
 // 7. Fetch Verified Opportunities from Cloud Firestore (Read-Only for Students)
 export async function fetchVerifiedOpportunitiesFromFirestore(): Promise<OpportunityItem[]> {
@@ -618,7 +618,7 @@ export async function fetchVerifiedOpportunitiesFromFirestore(): Promise<Opportu
 
     snapshot.forEach((docSnap) => {
       const data = docSnap.data() as Partial<OpportunityItem> & { lastSyncedAt?: string };
-      if (data && data.isVerified && data.officialName) {
+      if (data && data.officialName) {
         const docId = data.id || docSnap.id;
         const curated = curatedById.get(docId);
 
@@ -630,6 +630,10 @@ export async function fetchVerifiedOpportunitiesFromFirestore(): Promise<Opportu
             seenNames.add(normCuratedName);
             firestoreItems.push(curated);
           }
+          return;
+        }
+
+        if (!data.isVerified && !curated) {
           return;
         }
 
@@ -667,7 +671,7 @@ export async function fetchVerifiedOpportunitiesFromFirestore(): Promise<Opportu
             category: data.category || 'university',
             institutionType: data.institutionType || 'Public University',
             title: data.title || `${data.officialName} Admissions`,
-            isVerified: true,
+            isVerified: Boolean(data.isVerified),
             verificationSource: data.verificationSource || 'Official Accreditation',
             verifiedAt: data.verifiedAt || 'Academic Year 2026/2027',
             linkStatus: data.linkStatus,

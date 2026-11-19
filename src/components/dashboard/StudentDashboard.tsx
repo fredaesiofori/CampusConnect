@@ -69,6 +69,7 @@ import {
 import {
   generateSmartNotifications,
   buildOpportunityRequirementSignature,
+  isActiveStudentNotification,
   loadStoredCatalogBaseline,
   saveStoredCatalogBaseline,
   loadDismissedNotificationIds,
@@ -583,6 +584,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
     }
   }, [activeUser, opportunities, notificationsLoaded, firebaseUid, notifications]);
 
+  const visibleNotifications = useMemo(() => {
+    const oppLookup = new Map<string, OpportunityItem>(opportunities.map((o) => [o.id, o]));
+    return notifications.filter((n) => isActiveStudentNotification(n, oppLookup));
+  }, [notifications, opportunities]);
+
   // Profile Edit Form State (for the My Profile section)
   const userProfile = activeUser?.profile;
   const [profFullName, setProfFullName] = useState(activeUser?.fullName || '');
@@ -810,7 +816,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   };
 
   const handleMarkAllNotificationsRead = async () => {
-    const unreadIds = notifications.filter((n) => !n.read).map((n) => n.id);
+    const unreadIds = visibleNotifications.filter((n) => !n.read).map((n) => n.id);
     if (unreadIds.length === 0) return;
     const nowIso = new Date().toISOString();
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true, updatedAt: nowIso })));
@@ -1770,7 +1776,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
             )}
 
             <NotificationBellCenter
-              notifications={notifications}
+              notifications={visibleNotifications}
               onMarkAsRead={handleMarkNotificationRead}
               onMarkAllRead={handleMarkAllNotificationsRead}
               onDeleteNotification={handleDeleteNotification}
@@ -1815,7 +1821,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               recommendedOpportunities={recommendedUniversities}
               savedOpportunities={savedOpportunities}
               activeApplications={activeApplications}
-              notifications={notifications}
+              notifications={visibleNotifications}
               onNavigate={navigateToDashboardView}
               onSelectDestination={handleSelectHomeDestination}
               onOpenOpportunity={setSelectedOpportunity}

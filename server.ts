@@ -9,7 +9,11 @@ import { createServer as createViteServer } from 'vite';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI, ThinkingLevel } from '@google/genai';
-import { authenticOpportunities, OpportunityItem } from './src/data/opportunities';
+import {
+  authenticOpportunities,
+  evaluateOpportunityDeadline,
+  OpportunityItem,
+} from './src/data/opportunities';
 import { FirebaseAdminFirestoreAdapter, OpportunitySubscriberStore } from './server/alerts/firestoreStore';
 import { AlertNotificationService } from './server/alerts/alertService';
 import { createAlertRouter } from './server/alerts/router';
@@ -216,7 +220,7 @@ function buildGroundingPrompt(opportunities: OpportunityItem[]): string {
       const fees = o.applicationFees?.status ? `${o.applicationFees.status}: ${o.applicationFees.details || ''}` : 'Standard';
       const tests = o.testWaiverRules?.status ? `${o.testWaiverRules.status}: ${o.testWaiverRules.details || ''}` : 'Standard';
       const funding = o.fundingDetails?.type ? `${o.fundingDetails.type} (${o.fundingDetails.amount || 'Varies'})` : 'Standard';
-      const deadline = o.deadlines?.deadlineText || o.deadlines?.term || 'Rolling';
+      const deadline = evaluateOpportunityDeadline(o.deadlines).displayText;
 
       return `[Match ${idx + 1}]
 Name: ${o.title || o.officialName}

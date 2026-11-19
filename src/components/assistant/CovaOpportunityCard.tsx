@@ -15,7 +15,7 @@ import {
   ArrowUpRight,
   ShieldCheck,
 } from 'lucide-react';
-import { OpportunityItem } from '../../data/opportunities';
+import { OpportunityItem, evaluateOpportunityDeadline } from '../../data/opportunities';
 import { UniversityLogo } from '../ui/UniversityLogo';
 import { CountryFlag } from '../ui/CountryFlagSvg';
 
@@ -34,7 +34,8 @@ export const CovaOpportunityCard: React.FC<CovaOpportunityCardProps> = ({
 }) => {
   const officialName = item.officialName || item.title;
   const officialUrl = item.officialWebsite || item.officialUrl || item.sourceUrl || '#';
-  const deadlineText = item.deadlines?.deadlineText || item.deadlines?.term || 'Rolling / Check Portal';
+  const evalDeadline = evaluateOpportunityDeadline(item.deadlines);
+  const deadlineText = evalDeadline.displayText;
 
   return (
     <div className="bg-white border border-slate-200/90 hover:border-[#6846F5]/50 rounded-xl p-3 shadow-2xs hover:shadow-sm transition-all duration-150 text-left group">
@@ -118,8 +119,12 @@ export const CovaOpportunityCard: React.FC<CovaOpportunityCardProps> = ({
 
       {/* Footer: Verified Deadline & Actions */}
       <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1 text-[10px] text-slate-500 truncate">
-          <Clock className="w-3 h-3 text-slate-400 shrink-0" />
+        <div
+          className={`flex items-center gap-1 text-[10px] truncate ${
+            evalDeadline.isExpired ? 'text-amber-700 font-semibold' : 'text-slate-500'
+          }`}
+        >
+          <Clock className={`w-3 h-3 shrink-0 ${evalDeadline.isExpired ? 'text-amber-600' : 'text-slate-400'}`} />
           <span className="truncate">{deadlineText}</span>
         </div>
 

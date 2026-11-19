@@ -105,6 +105,7 @@ export function evaluateOpportunityDeadline(
   const lowerText = text.toLowerCase();
   const dDate = parseDeadlineEndUtc(deadlines.deadlineDate);
 
+  const isDatePassed = Boolean(dDate && dDate < now);
   const isExplicitExpired =
     deadlines.cycleStatus === 'expired' ||
     lowerText.includes('expired') ||
@@ -112,23 +113,25 @@ export function evaluateOpportunityDeadline(
     lowerText.includes('concluded');
 
   const isRolling =
+    !isDatePassed &&
     !isExplicitExpired &&
     (deadlines.cycleStatus === 'rolling' ||
       Boolean(deadlines.isRolling) ||
       lowerText.includes('rolling') ||
       lowerText.includes('continuous'));
 
-  if (isExplicitExpired) {
+  // Always enforce date-based and explicit expiration before rolling/open checks
+  if (isDatePassed || isExplicitExpired) {
     return {
       status: 'expired',
-      badgeText: 'Deadline Expired',
+      badgeText: 'Deadline passed',
       badgeVariant: 'expired',
       isExpired: true,
       isOpen: false,
-      displayText: text,
+      displayText: 'Deadline passed',
       cycleNotice:
         deadlines.statusNotice ||
-        'Application cycle closed for current intake. Check official portal for next cycle announcements.',
+        'This application deadline has passed. Check the official institutional portal for upcoming intake dates.',
     };
   }
 
@@ -145,20 +148,7 @@ export function evaluateOpportunityDeadline(
     };
   }
 
-  // Always enforce real-time date check before marking fixed deadlines open
   if (dDate) {
-    if (dDate < now) {
-      return {
-        status: 'expired',
-        badgeText: 'Deadline Expired',
-        badgeVariant: 'expired',
-        isExpired: true,
-        isOpen: false,
-        displayText: lowerText.includes('cycle concluded') ? text : `${text} (Cycle Concluded)`,
-        cycleNotice:
-          'This deadline date has passed. Check the official institutional portal for upcoming intake dates.',
-      };
-    }
     return {
       status: 'open',
       badgeText: 'Applications Open',
